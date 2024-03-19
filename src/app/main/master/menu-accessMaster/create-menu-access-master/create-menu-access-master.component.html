@@ -1,0 +1,207 @@
+<div class="main-contianer">
+    <span class="float-left title">
+       <a routerLink="/master/menu-access-master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+    </span>
+    <span class="float-end title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+    </span>
+    <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+       <h5 class="card-title">New Role Master
+       </h5>
+       <form [formGroup]="menuAccform">
+          <div class="row">
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                     Web Page Name <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                    <ng-select class="pb-2 form-control" placeholder="Country Select" 
+                    formControlName="webPageId"
+                    [searchable]="true" [clearable]="true"
+                    [ngClass]="{'is-invalid':submitted && f['webPageId'].errors}">
+                    <ng-option value="" selected>Select</ng-option>
+               <ng-option [disabled]='!item.isActive'
+               [value]="item.webPageId"*ngFor="let item of web_pageList">{{item.webPageName}}</ng-option>
+                    
+                    </ng-select>
+ 
+                      <div *ngIf="submitted && f['webPageId'].errors">
+                         <small class="text-danger" *ngIf="f['webPageId'].errors?.['required']">Please enter your
+                             webPageId</small>
+                         <small class="text-danger" *ngIf="f['webPageId'].errors?.['pattern']">webPageId name can
+                            not
+                            be
+                            blank</small>
+                         <small class="text-danger" *ngIf="f['webPageId'].errors?.serverError">{{
+                            f['webPageId'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                    Role Name <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                    <ng-select class="pb-2 form-control" placeholder="Country Select" 
+                    formControlName="roleId"
+                    [searchable]="true" [clearable]="true"
+                    [ngClass]="{'is-invalid':submitted && f['roleId'].errors}">
+                    <ng-option value="" selected>Select</ng-option>
+               <ng-option [disabled]='!item.isActive'
+               [value]="item.roleId"*ngFor="let item of rolemasterList">{{item.roleName}}</ng-option>
+                    
+                    </ng-select>
+ 
+                      <div *ngIf="submitted && f['roleId'].errors">
+                         <small class="text-danger" *ngIf="f['roleId'].errors?.['required']">Please enter your
+                             roleId</small>
+                         <small class="text-danger" *ngIf="f['roleId'].errors?.['pattern']">roleId name can
+                            not
+                            be
+                            blank</small>
+                         <small class="text-danger" *ngIf="f['webPageId'].errors?.serverError">{{
+                            f['roleId'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Have Add
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveAdd">
+                         <small class="text-danger" *ngIf="f['haveAdd'].errors?.serverError">{{
+                            f['haveAdd'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Have Read
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveRead">
+                         <small class="text-danger" *ngIf="f['haveRead'].errors?.serverError">{{
+                            f['haveRead'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active?
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="isActive">
+                         <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                            f['isActive'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Have Update
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveUpdate">
+                         <small class="text-danger" *ngIf="f['haveUpdate'].errors?.serverError">{{
+                            f['haveUpdate'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Have Delete
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveDelete">
+                         <small class="text-danger" *ngIf="f['haveDelete'].errors?.serverError">{{
+                            f['haveDelete'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">haveAddTCode
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveAddTCode">
+                         <small class="text-danger" *ngIf="f['haveAddTCode'].errors?.serverError">{{
+                            f['haveAddTCode'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">haveReadTCode
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveReadTCode">
+                         <small class="text-danger" *ngIf="f['haveReadTCode'].errors?.serverError">{{
+                            f['haveReadTCode'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">haveDeleteTCode
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveDeleteTCode">
+                         <small class="text-danger" *ngIf="f['haveDeleteTCode'].errors?.serverError">{{
+                            f['haveDeleteTCode'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">haveUpdateTCode
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="haveUpdateTCode">
+                         <small class="text-danger" *ngIf="f['haveUpdateTCode'].errors?.serverError">{{
+                            f['haveUpdateTCode'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="row pb-2">
+                <div class="col-lg-12">
+                   <div class="float-end">
+ 
+                      <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                         (click)="submit()">Submit</button>
+                   </div>
+                </div>
+ 
+             </div>
+          </div>
+ 
+       </form>
+    </ng-container>
+ 
+    <ng-container *ngIf="viewPagecom=='view'">
+       <h5 class="card-title"> Role Master
+       </h5>
+       <p>view page works</p>
+    </ng-container>
+ 
+ </div>

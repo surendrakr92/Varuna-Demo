@@ -1,0 +1,1886 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/driver-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Driver Master " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+      <h5 class="card-title">{{viewPagecom=='edit'?'Update Driver Master':' New Driver Master'}}
+      </h5>
+      <form [formGroup]="driverMasterForm" (ngSubmit)="onsubmit()">
+         <div class="row">
+            <div class="card-title text-center" style="background-color:#52456314">Basic Information
+            </div>
+            <div class="row">
+               <!-- .. -->
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver Profile Photo
+                        <span class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-0">
+                           <div class="avatar-upload ">
+                              <div class="avatar-edit">
+                                 <input type="file" id="imageUpload" accept=".png, .jpg, .jpeg" #fileInput
+                                    (change)="uploadFile($event)" />
+                              </div>
+                              <div class="avatar-preview">
+                                 <div id="imagePreview" [style.backgroundImage]="'url(' + imageUrl + ')'">
+                                 </div>
+                              </div>
+                           </div>
+                           <div class="uploadbuton text-center">
+                              <button type="button" class="btn btn-primary btn-block" (click)="fileInput.click()">
+                                 Upload Profile
+                              </button>
+                           </div>
+                           <div *ngIf="submitted && f['driverStatusId'].errors">
+                              <small class="text-danger mx-5" *ngIf="f['driverStatusId'].errors?.['required']">
+                                 upload driver profile photo</small>
+                              <small class="text-danger" *ngIf="f['driverStatusId'].errors?.serverError">{{
+                                 f['driverStatusId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- .. -->
+               <div class="col-lg-9">
+                  <div class="row">
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Manual Driver Code
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="text" class="form-control" formControlName="manualDriverCode" maxlength="6"
+                                 [readonly]="this.driverDetailsById!=''"
+                                 [ngClass]="{'is-invalid':submitted && f['manualDriverCode'].errors}">
+                              <div *ngIf="submitted && f['manualDriverCode'].errors">
+                                 <small class="text-danger" *ngIf="f['manualDriverCode'].errors?.['required']">Please
+                                    enter
+                                    manual driver code</small>
+                                 <small class="text-danger" *ngIf="f['manualDriverCode'].errors?.['pattern']">Invalid
+                                    manual driver code</small>
+                                 <small class="text-danger" *ngIf="f['manualDriverCode'].errors?.serverError">{{
+                                    f['manualDriverCode'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Driver Name
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="text" class="form-control" formControlName="driverName" maxlength="30"
+                                 [ngClass]="{'is-invalid':submitted && f['driverName'].errors}">
+                              <div *ngIf="submitted && f['driverName'].errors">
+                                 <small class="text-danger" *ngIf="f['driverName'].errors?.['required']">Please enter
+                                    driver name</small>
+
+                                 <small class="text-danger" *ngIf="f['driverName'].errors?.serverError">{{
+                                    f['driverName'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Date Of Birth
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="date" class="form-control" formControlName="driverDob" datePicker
+                                 [ngClass]="{'is-invalid':submitted && f['driverDob'].errors}"
+                                 [value]="f['driverDob'].value | date:'yyyy-MM-dd'">
+                              <div *ngIf="submitted && f['driverDob'].errors">
+                                 <small class="text-danger" *ngIf="f['driverDob'].errors?.['required']">Please enter
+                                    date of birth</small>
+                                 <small class="text-danger" *ngIf="f['driverDob'].errors?.['futureDate']">Date of birth
+                                    cannot be in the future</small>
+                                 <small class="text-danger" *ngIf="f['driverDob'].errors?.['underage']">Driver must be
+                                    at least 21 years old</small>
+                                 <small class="text-danger" *ngIf="f['driverDob'].errors?.serverError">{{
+                                    f['driverDob'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Qualification
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="pb-2 " placeholder="Qualification Select"
+                                 formControlName="driverQualificationId" [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverQualificationId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of qualificationlist ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverQualificationId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="f['driverQualificationId'].errors?.['required']">Please select Qualification
+                                 </small>
+                                 <small class="text-danger" *ngIf="f['driverQualificationId'].errors?.serverError">{{
+                                    f['driverQualificationId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Marital Status
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="pb-2 " placeholder="Marital Select"
+                                 formControlName="driverMaritalStatusId" [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverMaritalStatusId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of maritalList ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverMaritalStatusId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="f['driverMaritalStatusId'].errors?.['required']">Please select
+                                    marital status</small>
+                                 <small class="text-danger" *ngIf="f['driverMaritalStatusId'].errors?.serverError">{{
+                                    f['driverMaritalStatusId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Religion <span
+                                 class="text-danger">*</span>
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2 " placeholder="Religion Select" formControlName="driverReligionId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverReligionId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of religionList ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverReligionId'].errors">
+                                 <small class="text-danger" *ngIf="f['driverReligionId'].errors?.['required']">Please
+                                    select religion </small>
+                                 <small class="text-danger" *ngIf="f['driverReligionId'].errors?.serverError">{{
+                                    f['driverReligionId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+
+
+
+
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Ethnicity <span
+                                 class="text-danger">*</span>
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2 " placeholder="Ethnicity Select"
+                                 formControlName="driverEthnicityId" [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverEthnicityId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of ethnicityList ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverEthnicityId'].errors">
+                                 <small class="text-danger" *ngIf="f['driverEthnicityId'].errors?.['required']">Please
+                                    enter
+                                    ethnicity</small>
+                                 <small class="text-danger" *ngIf="f['driverEthnicityId'].errors?.serverError">{{
+                                    f['driverEthnicityId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Blood Group <span
+                                 class="text-danger">*</span>
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2 " placeholder="Qualification Select"
+                                 formControlName="driverBloodGroupId" [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverBloodGroupId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of blood_group_lists ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverBloodGroupId'].errors">
+                                 <small class="text-danger" *ngIf="f['driverBloodGroupId'].errors?.['required']">Please
+                                    select
+                                    blood group</small>
+                                 <small class="text-danger" *ngIf="f['driverBloodGroupId'].errors?.serverError">{{
+                                    f['driverBloodGroupId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contact Number
+                              <span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="tel" class="form-control" formControlName="driverMobileNo" maxlength="10"
+                                 [ngClass]="{'is-invalid':submitted && f['driverMobileNo'].errors}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                              <div *ngIf="submitted && f['driverMobileNo'].errors">
+                                 <small class="text-danger" *ngIf="f['driverMobileNo'].errors?.['required']">please
+                                    enter contact number
+                                 </small>
+                                 <small class="text-danger" *ngIf="f['driverMobileNo'].errors?.['pattern']">please enter
+                                    only numbers for mobile number</small>
+                                 <small class="text-danger" *ngIf="f['driverMobileNo'].errors?.serverError">{{
+                                    f['driverMobileNo'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">WhatsApp Number
+                           </label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="tel" class="form-control" formControlName="driverWhatsappNo" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                                 [ngClass]="{'is-invalid':submitted && f['driverWhatsappNo'].errors}">
+                              <div *ngIf="submitted && f['driverWhatsappNo'].errors">
+                                 <small class="text-danger" *ngIf="f['driverWhatsappNo'].errors?.['required']">Please
+                                    enter
+                                    Driver WhatsApp Number</small>
+                                 <small class="text-danger" *ngIf="f['driverWhatsappNo'].errors?.['pattern']">Invalid
+                                    WhatsApp no</small>
+                                 <small class="text-danger" *ngIf="f['driverWhatsappNo'].errors?.serverError">{{
+                                    f['driverWhatsappNo'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Location <span
+                                 class="text-danger">*</span>
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2 " placeholder="Ethnicity Select" formControlName="driverLocationId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverLocationId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.branchId"
+                                    *ngFor="let item of branch_master_List ">{{item.branchName}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverLocationId'].errors">
+                                 <small class="text-danger" *ngIf="f['driverLocationId'].errors?.['required']">Please
+                                    select location</small>
+                                 <small class="text-danger" *ngIf="f['driverLocationId'].errors?.serverError">{{
+                                    f['driverLocationId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver Category <span
+                                 class="text-danger">*</span>
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select placeholder="Qualification Select" formControlName="driverCategoryId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['driverCategoryId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of category_list ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['driverCategoryId'].errors">
+                                 <small class="text-danger" *ngIf="f['driverCategoryId'].errors?.['required']">Please
+                                    select
+                                    driver category </small>
+                                 <small class="text-danger" *ngIf="f['driverCategoryId'].errors?.serverError">{{
+                                    f['driverCategoryId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-4">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Active
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+
+                              <div class="form-check listcls"><input type="checkbox"
+                                    class="form-check-input m-1 checklistcls" formControlName="isDriverActive"> </div>
+
+
+                              <small class="text-danger" *ngIf="f['isDriverActive'].errors?.serverError">{{
+                                 f['isDriverActive'].errors?.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div class="card-title text-center mt-2" style="background-color:#52456314">Driver Family Details
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver's Father Name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverFatherName"
+                        [ngClass]="{'is-invalid':submitted && f['driverFatherName'].errors}">
+                     <div *ngIf="submitted && f['driverFatherName'].errors">
+                        <small class="text-danger" *ngIf="f['driverFatherName'].errors?.['required']">Please
+                           enter
+                           driver's father name</small>
+                        <small class="text-danger" *ngIf="f['driverFatherName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverFatherName'].errors?.serverError">{{
+                           f['driverFatherName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver's Mother Name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverMotherName"
+                        [ngClass]="{'is-invalid':submitted && f['driverMotherName'].errors}">
+                     <div *ngIf="submitted && f['driverMotherName'].errors">
+                        <small class="text-danger" *ngIf="f['driverMotherName'].errors?.['required']">Please
+                           enter
+                           driver's mother name</small>
+                        <small class="text-danger" *ngIf="f['driverMotherName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverMotherName'].errors?.serverError">{{
+                           f['driverMotherName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Guardian Name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverGuardianName"
+                        [ngClass]="{'is-invalid':submitted && f['driverGuardianName'].errors}" maxlength="30">
+                     <div *ngIf="submitted && f['driverGuardianName'].errors">
+                        <small class="text-danger" *ngIf="f['driverGuardianName'].errors?.['required']">Please enter
+                           guardian name
+                        </small>
+                        <small class="text-danger" *ngIf="f['driverGuardianName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverGuardianName'].errors?.serverError">{{
+                           f['driverGuardianName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Guardian Phone Number <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverGuardianContactNo" maxlength="10"
+                        [ngClass]="{'is-invalid':submitted && f['driverGuardianContactNo'].errors}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                     <div *ngIf="submitted && f['driverGuardianContactNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverGuardianContactNo'].errors?.['required']">Please
+                           enter
+                           guardian phone number</small>
+                        <small class="text-danger" *ngIf="f['driverGuardianContactNo'].errors?.['pattern']">Invalid
+                           conctact no</small>
+                        <small class="text-danger" *ngIf="f['driverGuardianContactNo'].errors?.serverError">{{
+                           f['driverGuardianContactNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Nominee Name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverNomineeName"
+                        [ngClass]="{'is-invalid':submitted && f['driverNomineeName'].errors}" maxlength="30">
+                     <div *ngIf="submitted && f['driverNomineeName'].errors">
+                        <small class="text-danger" *ngIf="f['driverNomineeName'].errors?.['required']">Please enter
+                           nominee name</small>
+                        <small class="text-danger" *ngIf="f['driverNomineeName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverNomineeName'].errors?.serverError">{{
+                           f['driverNomineeName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Family Contact <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverFamilyContactNo"
+                        [ngClass]="{'is-invalid':submitted && f['driverFamilyContactNo'].errors}" maxlength="10" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                     <div *ngIf="submitted && f['driverFamilyContactNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverFamilyContactNo'].errors?.['required']">Please
+                           enter
+                           family contact</small>
+                        <small class="text-danger" *ngIf="f['driverFamilyContactNo'].errors?.['pattern']">Invalid
+                           conctact no</small>
+                        <small class="text-danger" *ngIf="f['driverFamilyContactNo'].errors?.serverError">{{
+                           f['driverFamilyContactNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Neighbor Contact <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverNeighbourContactNo" maxlength="10"
+                        [ngClass]="{'is-invalid':submitted && f['driverNeighbourContactNo'].errors}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                     <div *ngIf="submitted && f['driverNeighbourContactNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverNeighbourContactNo'].errors?.['required']">Please
+                           enter
+                           neighbor contact Number</small>
+                        <small class="text-danger" *ngIf="f['driverNeighbourContactNo'].errors?.['pattern']">Invalid
+                           conctact no</small>
+                        <small class="text-danger" *ngIf="f['driverNeighbourContactNo'].errors?.serverError">{{
+                           f['driverNeighbourContactNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <!-- <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver Status
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select class="pb-2 " placeholder="Ethnicity Select" formControlName="driverStatusId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['driverStatusId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.generalId"
+                           *ngFor="let item of driver_master_status_list ">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['driverStatusId'].errors">
+                        <small class="text-danger" *ngIf="f['driverStatusId'].errors?.['required']">Please
+                           select
+                           driver status</small>
+                        <small class="text-danger" *ngIf="f['driverStatusId'].errors?.serverError">{{
+                           f['driverStatusId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div> -->
+
+
+
+
+
+
+
+
+            <div class="card-title text-center mt-2" style="background-color:#52456314">Permanent Address </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Permanent Address <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <textarea formControlName="driverPerAddress" class="form-control p-2" maxlength="250"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerAddress'].errors}">
+                                         </textarea>
+                     <div *ngIf="submitted && f['driverPerAddress'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerAddress'].errors?.['required']">Please
+                           enter
+                           permanent address</small>
+                        <small class="text-danger" *ngIf="f['driverPerAddress'].errors?.serverError">{{
+                           f['driverPerAddress'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">City <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerCityName"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerCityName'].errors}" maxlength="30">
+                     <div *ngIf="submitted && f['driverPerCityName'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerCityName'].errors?.['required']">Please enter
+                           city name</small>
+                        <small class="text-danger" *ngIf="f['driverPerCityName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerCityName'].errors?.serverError">{{
+                           f['driverPerCityName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Village <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPervillageName"
+                        [ngClass]="{'is-invalid':submitted && f['driverPervillageName'].errors}" maxlength="30">
+                     <div *ngIf="submitted && f['driverPervillageName'].errors">
+                        <small class="text-danger" *ngIf="f['driverPervillageName'].errors?.['required']">Please
+                           enter
+                           village name</small>
+                        <small class="text-danger" *ngIf="f['driverPervillageName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPervillageName'].errors?.serverError">{{
+                           f['driverPervillageName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Post <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerpostName"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerpostName'].errors}">
+                     <div *ngIf="submitted && f['driverPerpostName'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerpostName'].errors?.['required']">Please enter
+                           post name</small>
+                        <small class="text-danger" *ngIf="f['driverPerpostName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerpostName'].errors?.serverError">{{
+                           f['driverPerpostName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Thana <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerthanaName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerthanaName'].errors}">
+                     <div *ngIf="submitted && f['driverPerthanaName'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerthanaName'].errors?.['required']">Please
+                           enter
+                           thana name</small>
+                        <small class="text-danger" *ngIf="f['driverPerthanaName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerthanaName'].errors?.serverError">{{
+                           f['driverPerthanaName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Tehsil <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerthesilName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerthesilName'].errors}">
+                     <div *ngIf="submitted && f['driverPerthesilName'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerthesilName'].errors?.['required']">Please enter
+                           tehsil name</small>
+                        <small class="text-danger" *ngIf="f['driverPerthesilName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerthesilName'].errors?.serverError">{{
+                           f['driverPerthesilName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">District <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerdistrict" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerdistrict'].errors}">
+                     <div *ngIf="submitted && f['driverPerdistrict'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerdistrict'].errors?.['required']">Please enter
+                           district name</small>
+                        <small class="text-danger" *ngIf="f['driverPerdistrict'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerdistrict'].errors?.serverError">{{
+                           f['driverPerdistrict'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 ">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Pin Code <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPerpin"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerpin'].errors}">
+                     <div *ngIf="submitted && f['driverPerpin'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerpin'].errors?.['required']">Please
+                           enter
+                           pin code</small>
+                        <small class="text-danger" *ngIf="f['driverPerpin'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverPerpin'].errors?.serverError">{{
+                           f['driverPerpin'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">State <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select formControlName="driverPerStateId"
+                        [ngClass]="{'is-invalid':submitted && f['driverPerStateId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="data.stateId"
+                           *ngFor="let data of state_master_list">{{data.stateName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['driverPerStateId'].errors">
+                        <small class="text-danger" *ngIf="f['driverPerStateId'].errors?.['required']">Please
+                           select
+                           state</small>
+                        <small class="text-danger" *ngIf="f['driverPerStateId'].errors?.serverError">{{
+                           f['driverPerStateId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-title text-center mt-2" style="background-color:#52456314">
+               Current Address
+            </div>
+            <div>
+               <span><input type="checkbox" #data (click)="checForAddressPatch(data)" class="m-2 checklistcls"
+                     formControlName="isAddressSame">Same as present
+                  Address ?</span>
+            </div>
+            <!-- ... -->
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Current Address <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <textarea formControlName="driverCurAddress" class="form-control"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurAddress'].errors}" maxlength="250">
+                                         </textarea>
+                     <div *ngIf="submitted && f['driverCurAddress'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurAddress'].errors?.['required']">Please
+                           enter
+                           current address name</small>
+                        <small class="text-danger" *ngIf="f['driverCurAddress'].errors?.serverError">{{
+                           f['driverCurAddress'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">City <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurCityName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurCityName'].errors}">
+                     <div *ngIf="submitted && f['driverCurCityName'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurCityName'].errors?.['required']">Please enter
+                           city name</small>
+                        <small class="text-danger" *ngIf="f['driverCurCityName'].errors?.['pattern']">invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurCityName'].errors?.serverError">{{
+                           f['driverCurCityName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Village <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurVillageName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurVillageName'].errors}">
+                     <div *ngIf="submitted && f['driverCurVillageName'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurVillageName'].errors?.['required']">Please
+                           enter village name</small>
+                        <small class="text-danger" *ngIf="f['driverCurVillageName'].errors?.['pattern']">invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurVillageName'].errors?.serverError">{{
+                           f['driverCurVillageName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Post <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurPostName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurPostName'].errors}">
+                     <div *ngIf="submitted && f['driverCurPostName'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurPostName'].errors?.['required']">Please enter
+                           post name</small>
+                        <small class="text-danger" *ngIf="f['driverCurPostName'].errors?.['pattern']">invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurPostName'].errors?.serverError">{{
+                           f['driverCurPostName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Thana <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurThanaName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurThanaName'].errors}">
+                     <div *ngIf="submitted && f['driverCurThanaName'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurThanaName'].errors?.['required']">Please
+                           enter
+                           thana name</small>
+                        <small class="text-danger" *ngIf="f['driverCurThanaName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurThanaName'].errors?.serverError">{{
+                           f['driverCurThanaName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Tehsil <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurThesilName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurThesilName'].errors}">
+                     <div *ngIf="submitted && f['driverCurThesilName'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurThesilName'].errors?.['required']">Please enter
+                           tehsil name</small>
+                        <small class="text-danger" *ngIf="f['driverCurThesilName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurThesilName'].errors?.serverError">{{
+                           f['driverCurThesilName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">District <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurDistrict" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurDistrict'].errors}">
+                     <div *ngIf="submitted && f['driverCurDistrict'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurDistrict'].errors?.['required']">Please enter
+                           district name</small>
+                        <small class="text-danger" *ngIf="f['driverCurDistrict'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurDistrict'].errors?.serverError">{{
+                           f['driverCurDistrict'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 ">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Pin Code <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverCurPin"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurPin'].errors}">
+                     <div *ngIf="submitted && f['driverCurPin'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurPin'].errors?.['required']">Please
+                           enter
+                           pin code</small>
+                        <small class="text-danger" *ngIf="f['driverCurPin'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverCurPin'].errors?.serverError">{{
+                           f['driverCurPin'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">State <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select formControlName="driverCurStateId"
+                        [ngClass]="{'is-invalid':submitted && f['driverCurStateId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="data.stateId"
+                           *ngFor="let data of state_master_list">{{data.stateName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['driverCurStateId'].errors">
+                        <small class="text-danger" *ngIf="f['driverCurStateId'].errors?.['required']">Please
+                           select
+                           state name</small>
+                        <small class="text-danger" *ngIf="f['driverCurStateId'].errors?.serverError">{{
+                           f['driverCurStateId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Address Verified
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check "><input type="checkbox" id="gridCheck2" (change)="addressHandliung()"
+                           class="form-check-input m-1 checklistcls" formControlName="isAddressVerificationStatus">
+                     </div>
+
+                     <div *ngIf="submitted && f['isAddressVerificationStatus'].errors">
+                        <small class="text-danger" *ngIf="f['isAddressVerificationStatus'].errors?.['required']">Please
+                           enter
+                           address verified </small>
+                        <small class="text-danger" *ngIf="f['isAddressVerificationStatus'].errors?.serverError">{{
+                           f['isAddressVerificationStatus'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Address Verified By
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="addressVerifiedBy"[readOnly]="this.handlinf" 
+                        [ngClass]="{'is-invalid':submitted && f['addressVerifiedBy'].errors}" maxlength="20">
+                     <div *ngIf="submitted && f['addressVerifiedBy'].errors">
+                        <small class="text-danger" *ngIf="f['addressVerifiedBy'].errors?.['required']">Please enter
+                           Address Verified By</small>
+                        <small class="text-danger" *ngIf="f['addressVerifiedBy'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['addressVerifiedBy'].errors?.serverError">{{
+                           f['addressVerifiedBy'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-title text-center mt-2" style="background-color:#52456314">Driver Document Details (DDD)
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License No <span
+                        class="text-danger">*</span>
+                     <!-- <span class="" style="font-size: 9px;color: blue;"><b>exp</b>:HR-0619850034761</span> -->
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverLicenseNo" maxlength="50"
+                        [ngClass]="{'is-invalid':submitted && f['driverLicenseNo'].errors}">
+                     <div *ngIf="submitted && f['driverLicenseNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverLicenseNo'].errors?.['required']">Please
+                           enter
+                           driver license no
+                        </small>
+                        <small class="text-danger" *ngIf="f['driverLicenseNo'].errors?.['pattern']">Invalid data
+                        </small>
+                        <small class="text-danger" *ngIf="f['driverLicenseNo'].errors?.serverError">{{
+                           f['driverLicenseNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Validity Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="licensenoValidityDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['licensenoValidityDate'].errors}"
+                        [value]="f['licensenoValidityDate'].value | date:'yyyy-MM-dd'" min="{{minDatePast}}">
+                     <div *ngIf="submitted && f['licensenoValidityDate'].errors">
+                        <small class="text-danger" *ngIf="f['licensenoValidityDate'].errors?.['required']">Please
+                           enter
+                           validity date
+                        </small>
+                        <small class="text-danger" *ngIf="f['licensenoValidityDate'].errors?.serverError">{{
+                           f['licensenoValidityDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License Initial Issue Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="licensenoInitialIssueDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['licensenoInitialIssueDate'].errors}"
+                        [value]="f['licensenoInitialIssueDate'].value | date:'yyyy-MM-dd'" max="{{minDatePast}}">
+                     <div *ngIf="submitted && f['licensenoInitialIssueDate'].errors">
+                        <small class="text-danger" *ngIf="f['licensenoInitialIssueDate'].errors?.['required']">Please
+                           enter
+                           license initial issue date</small>
+                        <small class="text-danger" *ngIf="f['licensenoInitialIssueDate'].errors?.serverError">{{
+                           f['licensenoInitialIssueDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License Current Issue Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="licensenoCurrentIssueDate" datePicker
+                        [ngClass]="{'is-invalicensenoCurrentIssueDatelid':submitted && f['licensenoCurrentIssueDate'].errors}"
+                        [value]="f['licensenoCurrentIssueDate'].value | date:'yyyy-MM-dd'" max="{{minDatePast}}">
+                     <div *ngIf="submitted && f['licensenoCurrentIssueDate'].errors">
+                        <small class="text-danger" *ngIf="f['licensenoCurrentIssueDate'].errors?.['required']">Please
+                           enter
+                           license current issue date</small>
+                        <small class="text-danger" *ngIf="f['licensenoCurrentIssueDate'].errors?.serverError">{{
+                           f['licensenoCurrentIssueDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License Verified
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check listcls"><input type="checkbox" class="form-check-input m-1 checklistcls"
+                           formControlName="islicensenoVerified"> </div>
+
+                     <div *ngIf="submitted && f['islicensenoVerified'].errors">
+                        <small class="text-danger" *ngIf="f['islicensenoVerified'].errors?.['required']">Please enter
+                           license verified</small>
+                        <small class="text-danger" *ngIf="f['islicensenoVerified'].errors?.serverError">{{
+                           f['islicensenoVerified'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License No (by RTO) <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="licensenoIssueByRto"
+                        [ngClass]="{'is-invalid':submitted && f['licensenoIssueByRto'].errors}">
+                     <div *ngIf="submitted && f['licensenoIssueByRto'].errors">
+                        <small class="text-danger" *ngIf="f['licensenoIssueByRto'].errors?.['required']">Please enter
+                           license no (by RTO)</small>
+                        <small class="text-danger" *ngIf="f['licensenoIssueByRto'].errors?.['pattern']">Invalid data
+                        </small>
+                        <small class="text-danger" *ngIf="f['licensenoIssueByRto'].errors?.serverError">{{
+                           f['licensenoIssueByRto'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">License Verified Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="licensenoVerificationDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['licensenoVerificationDate'].errors}"
+                        [value]="f['licensenoVerificationDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && f['licensenoVerificationDate'].errors">
+                        <small class="text-danger" *ngIf="f['licensenoVerificationDate'].errors?.['required']">Please
+                           enter
+                           license verified date</small>
+                        <small class="text-danger" *ngIf="f['licensenoVerificationDate'].errors?.serverError">{{
+                           f['licensenoVerificationDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">HMV Issue Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="hmvIssueDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['hmvIssueDate'].errors}"
+                        [value]="f['hmvIssueDate'].value | date:'yyyy-MM-dd'" max="{{minDatePast}}">
+                     <div *ngIf="submitted && f['hmvIssueDate'].errors">
+                        <small class="text-danger" *ngIf="f['hmvIssueDate'].errors?.['required']">Please
+                           enter
+                           HMV issue date</small>
+                        <small class="text-danger" *ngIf="f['hmvIssueDate'].errors?.serverError">{{
+                           f['hmvIssueDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">HMV Expiry Date <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="hmvExpiryDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['hmvExpiryDate'].errors}"
+                        [value]="f['hmvExpiryDate'].value | date:'yyyy-MM-dd'" min="{{minDatePast}}">
+                     <div *ngIf="submitted && f['hmvExpiryDate'].errors">
+                        <small class="text-danger" *ngIf="f['hmvExpiryDate'].errors?.['required']">Please
+                           enter driver HMV expiry date
+                        </small>
+                        <small class="text-danger" *ngIf="f['hmvExpiryDate'].errors?.serverError">{{
+                           f['hmvExpiryDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Driver's Aadhaar No <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverAadharNo" maxlength="12"
+                        [readonly]="this.driverDetailsById!=''"
+                        [ngClass]="{'is-invalid':submitted && f['driverAadharNo'].errors}" oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                     <div *ngIf="submitted && f['driverAadharNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverAadharNo'].errors?.['required']">Please
+                           enter
+                           driver's aadhar number</small>
+                        <small class="text-danger" *ngIf="f['driverAadharNo'].errors?.['pattern']">Invalid
+                           aadhaar</small>
+                        <small class="text-danger" *ngIf="f['driverAadharNo'].errors?.serverError">{{
+                           f['driverAadharNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Verification Status of Aadhar 
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" formControlName="isVerifiedAadhar">
+
+                        <small class="text-danger" *ngIf="f['isVerifiedAadhar'].errors?.serverError">{{
+                           f['isVerifiedAadhar'].errors?.serverError}}</small>
+                     </div>
+
+                     <div *ngIf="submitted && f['isVerifiedAadhar'].errors">
+                        <small class="text-danger" *ngIf="f['isVerifiedAadhar'].errors?.['required']">Please
+                           enter
+                           driver verification status of aadhar
+                        </small>
+                        <small class="text-danger" *ngIf="f['isVerifiedAadhar'].errors?.serverError">{{
+                           f['isVerifiedAadhar'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Verification Date Of Aadhar <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="aadharVerificationDate" datePicker
+                        [ngClass]="{'is-invalid':submitted && f['aadharVerificationDate'].errors}"
+                        [value]="f['aadharVerificationDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && f['aadharVerificationDate'].errors">
+                        <small class="text-danger" *ngIf="f['aadharVerificationDate'].errors?.['required']">Please
+                           enter
+                           driver verification date of aadhar
+                        </small>
+                        <small class="text-danger" *ngIf="f['aadharVerificationDate'].errors?.serverError">{{
+                           f['aadharVerificationDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Pan No <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverPanNo" maxlength="10"
+                        [ngClass]="{'is-invalid':submitted && f['driverPanNo'].errors}"
+                        [readonly]="this.driverDetailsById!=''" appUpperCase id="code">
+                     <div *ngIf="submitted && f['driverPanNo'].errors">
+                        <small class="text-danger" *ngIf="f['driverPanNo'].errors?.['required']">Please
+                           enter
+                           driver pan no</small>
+                        <small class="text-danger" *ngIf="f['driverPanNo'].errors?.['pattern']">Invalid data</small>
+                        <small class="text-danger" *ngIf="f['driverPanNo'].errors?.serverError">{{
+                           f['driverPanNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Payment Mode <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select class="pb-2 " placeholder="Qualification Select" formControlName="driverPaymentModeId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['driverPaymentModeId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.generalId"
+                           *ngFor="let item of payment_mode_list ">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['driverPaymentModeId'].errors">
+                        <small class="text-danger" *ngIf="f['driverPaymentModeId'].errors?.['required']">Please enter
+                           driver payment mode</small>
+                        <small class="text-danger" *ngIf="f['driverPaymentModeId'].errors?.serverError">{{
+                           f['driverPaymentModeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+
+
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Guarantor Name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="driverGuarantorName" maxlength="30"
+                        [ngClass]="{'is-invalid':submitted && f['driverGuarantorName'].errors}">
+                     <div *ngIf="submitted && f['driverGuarantorName'].errors">
+                        <small class="text-danger" *ngIf="f['driverGuarantorName'].errors?.['required']">Please enter
+                           driver guarantor name </small>
+                        <small class="text-danger" *ngIf="f['driverGuarantorName'].errors?.['pattern']">Invalid
+                           data</small>
+                        <small class="text-danger" *ngIf="f['driverGuarantorName'].errors?.serverError">{{
+                           f['driverGuarantorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Verification Status of Driver
+                     Like 
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 display">
+
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" formControlName="driverVerificationStatus">
+
+                        <small class="text-danger" *ngIf="f['driverVerificationStatus'].errors?.serverError">{{
+                           f['driverVerificationStatus'].errors?.serverError}}</small>
+                     </div>
+
+
+
+                     <!-- 
+                     <ng-select formControlName="driverVerificationStatus"
+                        [ngClass]="{'is-invalid':submitted && f['driverVerificationStatus'].errors}"
+                        placeholder="Select">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option value=true>Yes</ng-option>
+                        <ng-option value=false>No</ng-option>
+                     </ng-select> -->
+                     <div *ngIf="submitted && f['driverVerificationStatus'].errors">
+                        <small class="text-danger" *ngIf="f['driverVerificationStatus'].errors?.['required']">Please
+                           enter
+                           verification status of driver
+                           like</small>
+                        <small class="text-danger" *ngIf="f['driverVerificationStatus'].errors?.serverError">{{
+                           f['driverVerificationStatus'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Rejoining Date
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="driverRejoiningDate"
+                        [ngClass]="{'is-invalid':submitted && f['driverRejoiningDate'].errors}" datePicker
+                        [value]="f['driverRejoiningDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && f['driverRejoiningDate'].errors">
+                        <small class="text-danger" *ngIf="f['driverRejoiningDate'].errors?.['required']">Please enter
+                           driver rejoining date </small>
+                        <small class="text-danger" *ngIf="f['driverRejoiningDate'].errors?.serverError">{{
+                           f['driverRejoiningDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 ">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Remarks 
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <textarea name="
+                     " id="" class="form-control" formControlName="remarks"
+                        [ngClass]="{'is-invalid':submitted && f['remarks'].errors}"></textarea>
+                     <div *ngIf="submitted && f['remarks'].errors">
+                        
+                        <small class="text-danger" *ngIf="f['remarks'].errors?.serverError">{{
+                           f['remarks'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="card-title text-center mt-2" style="background-color:#52456314">Training Details (TD)
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Training Status
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" formControlName="driverTrainingStatus">
+
+                        <small class="text-danger" *ngIf="f['driverTrainingStatus'].errors?.serverError">{{
+                           f['driverTrainingStatus'].errors?.serverError}}</small>
+                     </div>
+
+
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Training Date
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="driverTrainingDate"
+                        [ngClass]="{'is-invalid':submitted && f['driverTrainingDate'].errors}" datePicker
+                        [value]="f['driverTrainingDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && f['driverTrainingDate'].errors">
+                        <small class="text-danger" *ngIf="f['driverTrainingDate'].errors?.serverError">{{
+                           f['driverTrainingDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Training Grade
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select class="pb-2 " placeholder="Qualification Select" formControlName="driverTrainingGradeId"
+                        [ngClass]="{'is-invalid':submitted && f['driverTrainingGradeId'].errors}" [searchable]="true"
+                        [clearable]="true">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.generalId"
+                           *ngFor="let item of trainig_grade_list ">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['driverTrainingGradeId'].errors">
+                        
+                        <small class="text-danger" *ngIf="f['driverTrainingGradeId'].errors?.serverError">{{
+                           f['driverTrainingGradeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Varuna Next App(Installed)
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" formControlName="isVarunaNextAppInstalled"
+                           checked>
+
+                        <small class="text-danger" *ngIf="f['isVarunaNextAppInstalled'].errors?.serverError">{{
+                           f['isVarunaNextAppInstalled'].errors?.serverError}}</small>
+                     </div>
+
+
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver Registration
+                     File</label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input *ngIf="this.selectedFileName==undefined" class="form-control custom-file-upload" type="file"
+                        accept=".png, .jpg, .jpeg" (change)="onFileChange($event)">
+                     <div *ngIf="this.selectedFileName" class="card p-1 text-bg-primary text-center w-auto">
+                        <span>{{this.selectedFileName}}</span>
+                        <span class="badge badge-secondary removeFile" (click)="this.fileReset()">X</span>
+                     </div>
+                     <div *ngIf="submitted && f['driverRegistrationFile'].errors">
+                        <small class="text-danger" *ngIf="f['driverRegistrationFile'].errors?.['required']">Please
+                           driver registeration file
+                        </small>
+                        <small class="text-danger" *ngIf="f['driverRegistrationFile'].errors?.serverError">{{
+                           f['driverRegistrationFile'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Registered
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+
+                     <div class="form-check listcls"><input type="checkbox" id="gridCheck2"
+                           class="form-check-input m-1 checklistcls" formControlName="isRegistered"> </div>
+
+
+                     <div *ngIf="submitted && f['isRegistered'].errors">
+                        <small class="text-danger" *ngIf="f['isRegistered'].errors?.['required']">Please
+                           enter
+                           license verified</small>
+                        <small class="text-danger" *ngIf="f['isRegistered'].errors?.serverError">{{
+                           f['isRegistered'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <span class="header-nav p-1 text-danger"
+               *ngIf="this.driverDetailsById?.isRegistered !=true"><b>Note</b>:Driver Registration file & is registered
+               is mandatory to final
+               submission</span>
+            <!-- /driver master part 2... -->
+            <!-- -->
+            <div class="row" *ngIf="this.driverDetailsById?.isRegistered==true">
+               <div class="card-title text-center" style="background-color:#52456314">Driver Master Part II
+               </div>
+               <div class="card-title text-center" style="background-color:#52456314">Driver Others Details (DOD)
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                        Driver Buddy Name
+                        <span class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" maxlength="30"
+                           [ngClass]="{'is-invalid':submitted && f['buddyName'].errors}" formControlName="buddyName">
+                        <div *ngIf="submitted && f['buddyName'].errors">
+                           <small class="text-danger" *ngIf="f['buddyName'].errors?.['pattern']">Invalid
+                              data</small>
+                           <small class="text-danger" *ngIf="f['buddyName'].errors?.serverError">{{
+                              f['buddyName'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                        Driver Buddy ContactNo
+                        <span class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="buddyContactNo"
+                           [ngClass]="{'is-invalid':submitted && f['buddyContactNo'].errors}">
+                        <div *ngIf="submitted && f['buddyContactNo'].errors">
+                           <small class="text-danger" *ngIf="f['buddyContactNo'].errors?.['pattern']">Invalid
+                              Data</small>
+                           <small class="text-danger" *ngIf="f['buddyContactNo'].errors?.serverError">{{
+                              f['buddyContactNo'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                        Driver Buddy Code
+                        <span class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" maxlength="8" formControlName="buddyCode"
+                           [ngClass]="{'is-invalid':submitted && f['buddyCode'].errors}"
+                           oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                        <div *ngIf="submitted && f['buddyCode'].errors">
+                           <small class="text-danger" *ngIf="f['buddyCode'].errors?.['pattern']">Invalid
+                              data</small>
+                           <small class="text-danger" *ngIf="f['buddyCode'].errors?.serverError">{{
+                              f['buddyCode'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3"></div>
+               <div class="card-title text-center mt-3" style="background-color:#52456314">Driver Document
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Driver Document Type
+                        <span class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="document Select" (change)="document_updation($event)"
+                           formControlName="docTypeId" [searchable]="true" [clearable]="true"
+                           [ngClass]="{'is-invalid':submitted && f['docTypeId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.generalId"
+                              *ngFor="let item of driver_master_document_type_list ">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['docTypeId'].errors">
+                           <small class="text-danger" *ngIf="f['docTypeId'].errors?.['required']">Please
+                              select driver document type</small>
+                           <small class="text-danger" *ngIf="f['docTypeId'].errors?.serverError">{{
+                              f['docTypeId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">{{file_view_section}}
+                        File</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+
+                        <input class="custom-file-upload" type="file" formControlName="documentPath"
+                           accept=".png, .jpg, .jpeg" (change)="onFileChangeForDocument($event)">
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 mt-4">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="addDocumentDetails()">
+                     + Add Document
+                  </button>
+               </div>
+
+               <div class="col-lg-1"></div>
+               <!-- <div class="col-lg-3" *ngFor="let item of documentsList ; index as i">
+                  <div class="form-group ">
+                     <label for="inputText"
+                        class="col-sm-12 col-lg-12 col-form-label">{{item.driverDocumentType}}</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <div *ngIf="this.selectedDriversDocuments" class="card p-1 text-bg-primary text-center w-auto">
+                           <span>{{item.documentPath}}</span>
+                           <span class="badge badge-secondary removeFile" (click)="driverDocumentDelete(i,item)">X</span>
+                        </div>
+                     </div>
+                  </div>
+               </div> -->
+               <div class="col-lg-8">
+                  <div class="table-responsive">
+                     <table class="table table-report ">
+                        <thead class="bg-secondary text-white">
+                           <tr>
+                              <th>Sr. No.</th>
+                              <th>Dcoument</th>
+                              <th>File View</th>
+                              <th>Action</th>
+
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr *ngFor="let data of documentsList ;index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{data?.driverDocumentType}}</td>
+                              <td>
+                                 <div class="viewfile">
+
+                                    <!-- <div class="imgres"
+                                       style="background: url(https://assets1.cleartax-cdn.com/finfo/wg-utils/retool/0b6b2e22-77af-4bc5-8517-738c7b010f61.PNG);">
+                                    </div> -->
+                                    {{data?.documentPath}}
+                                 </div>
+
+                              </td>
+                              <td>
+                                 <a ngbTooltip="Edit " placement="bottom" class="edit"><i class="bi bi-pen-fill pr"
+                                       (click)="redirectionToEdit(data,i)"></i></a>
+                              </td>
+
+
+                           </tr>
+
+                        </tbody>
+                     </table>
+
+                  </div>
+               </div>
+            </div>
+            <!-- /close driver master part 2... -->
+            <div class="row pb-2">
+               <div class="col-lg-12">
+                  <div class="float-end">
+                     <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        [hidden]="this.driverDetailsById.isRegistered==true"
+                        [disabled]="driverMasterForm.controls['isRegistered'].value && driverMasterForm.controls['driverRegistrationFile'].value !=''">
+                        {{this.driverDetailsById?.isRegistered==true?'Submit':'Save as Draft'}}
+                     </button>
+                     <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding m-2"
+                        [disabled]="!driverMasterForm.controls['isRegistered'].value || driverMasterForm.controls['driverRegistrationFile'].value ==''">
+                        Submit
+                     </button>
+                     <button type="button" class="btn btn-dark rounded-pill btn-sm btn-padding m-2"
+                        [hidden]="this.driverDetailsById != ''" (click)="resetForm()">Clear</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </ng-container>
+   <ng-container *ngIf="viewPagecom=='view'">
+      <div class="display">
+         <h5 class="card-title">Driver Master</h5>
+         <span class="title">
+            <a (click)="download_pdf_print()" href="javascript:voide(0);"> <i class="bi bi-printer booticon"
+                  ngbTooltip="Print" placement="bottom"></i> </a>
+         </span>
+      </div>
+      <div class="col-lg-12" id="viewData_information">
+         <div class="row p-1 bgborder">
+            <div class="card-title text-center bg-dark-light">Basic Information
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Manual Driver Code:
+                  </strong><span>{{driverDetailsById?.manualDriverCode}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver
+                     Name:</strong><span>{{driverDetailsById?.driverName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Date of Birth:</strong><span> {{driverDetailsById?.driverDob |
+                     date:'dd/MM/yyyy'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Qualification:</strong><span>
+                     {{driverDetailsById?.driverQualification }}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Marital Status :</strong><span>
+                     {{driverDetailsById?.driverMaritalStatus}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Religion
+                     :</strong><span>{{driverDetailsById?.driverReligion}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Ethnicity </strong><span>
+                     {{driverDetailsById?.driverEthnicity}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Blood Group </strong><span>
+                     {{driverDetailsById?.driverBloodGroup}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Contact Number:</strong><span>
+                     {{driverDetailsById?.driverMobileNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Whatsapp Number:</strong><span>
+                     {{driverDetailsById?.driverWhatsappNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Location:</strong><span>
+                     {{driverDetailsById?.driverLocation}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver Category:</strong><span>
+                     {{driverDetailsById?.driverCategory}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Is Active:</strong><span>
+                     {{driverDetailsById?.isDriverActive?'Yes':'No'}}</span></label>
+            </div>
+
+
+         </div>
+         <div class="row p-1 bgborder">
+            <div class="card-title bg-dark-light  text-center">Driver Family Details
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver's Father
+                     Name:</strong><span>{{driverDetailsById?.driverFatherName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver's Mother
+                     Name:</strong><span>{{driverDetailsById?.driverMotherName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Guardian Name:</strong><span>
+                     {{driverDetailsById?.driverGuardianName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Guardian Phone
+                     Number:</strong><span>{{driverDetailsById?.driverGuardianContactNo}}</span></label>
+            </div>
+
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Nominess Name:</strong><span>
+                     {{driverDetailsById?.driverNomineeName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Family Contact No:</strong><span>
+                     {{driverDetailsById?.driverFamilyContactNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Neighbour Contact No:</strong><span>
+                     {{driverDetailsById?.driverNeighbourContactNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver Status:</strong><span>
+                     {{driverDetailsById?.driverStatus}}</span></label>
+            </div>
+
+
+         </div>
+         <div class="row p-1 bgborder">
+            <div class="card-title bg-dark-light  text-center">Permanent Address
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Permanent
+                     Address:</strong><span>{{driverDetailsById?.driverPerAddress}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>City :</strong><span>
+                     {{driverDetailsById?.driverPerCityName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Village :</strong><span>
+                     {{driverDetailsById?.driverPervillageName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Post :</strong><span>
+                     {{driverDetailsById?.driverPerpostName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Thana :</strong><span>
+                     {{driverDetailsById?.driverPerthanaName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Tehsil :</strong><span>
+                     {{driverDetailsById?.driverPerthesilName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>District
+                     :</strong><span>{{driverDetailsById?.driverPerdistrict}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Pin Code
+                     :</strong><span>{{driverDetailsById?.driverPerpin}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>State :</strong><span>{{driverDetailsById?.driverPerState}}</span></label>
+            </div>
+
+         </div>
+         <div class="row p-1 bgborder">
+            <div class="card-title bg-dark-light  text-center">Current Address
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Current Address:</strong><span>
+                     {{driverDetailsById?.driverCurAddress}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong> City :</strong><span>
+                     {{driverDetailsById?.driverCurCityName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong> Village :</strong><span>
+                     {{driverDetailsById?.driverCurVillageName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong> Post :</strong><span>
+                     {{driverDetailsById?.driverCurPostName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Thana
+                     :</strong><span>{{driverDetailsById?.driverCurThanaName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Tehsil :</strong><span>
+                     {{driverDetailsById?.driverCurThesilName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label
+                  for="inputText"><strong>District:</strong><span>{{driverDetailsById?.driverCurDistrict}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Pin Code:</strong><span>{{driverDetailsById?.driverCurPin}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>State:</strong><span>{{driverDetailsById?.driverPerState}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Address Verified
+                     :</strong><span>{{driverDetailsById?.isAddressVerificationStatus?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Address Verified By
+                     :</strong><span>{{driverDetailsById?.addressVerifiedBy}}</span></label>
+            </div>
+         </div>
+         <div class="row p-1 bgborder">
+            <div class="card-title bg-dark-light text-center">Driver Document Details (DDD)
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong> License No:</strong><span>
+                     {{driverDetailsById?.driverLicenseNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License No Validity Date:</strong><span>
+                     {{driverDetailsById?.licensenoValidityDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License No Initial Issue
+                     Date:</strong><span>{{driverDetailsById?.licensenoInitialIssueDate | date}}</span></label>
+            </div>
+
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License No Current Issue Date:</strong><span>
+                     {{driverDetailsById?.licensenoCurrentIssueDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License No Verified:</strong><span>
+                     {{driverDetailsById?.islicensenoVerified?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License No Issue By
+                     RTO:</strong><span>{{driverDetailsById?.licensenoIssueByRto}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>License Verified Date
+                     :</strong><span>{{driverDetailsById?.licensenoVerificationDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>HMV Issue Date:</strong> <span>{{driverDetailsById?.hmvIssueDate |
+                     date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>HMV Expiry Date:</strong><span> {{driverDetailsById?.hmvExpiryDate |
+                     date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver's Aadhar
+                     No:</strong><span>{{driverDetailsById?.driverAadharNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Verification Status of Aadhar:</strong>
+                  <span>{{driverDetailsById?.isVerifiedAadhar?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Verification Date of Aadhar :</strong>
+                  <span>{{driverDetailsById?.aadharVerificationDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Pan No :</strong>
+                  <span>{{driverDetailsById?.driverPanNo}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Payment Mode :</strong>
+                  <span>{{driverDetailsById?.driverPaymentMode}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>license No Verification Date:</strong>
+                  <span>{{driverDetailsById?.licensenoVerificationDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Guarantor Name:</strong>
+                  <span>{{driverDetailsById?.driverGuarantorName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Verification Status of Driver Like:</strong>
+                  <span>{{driverDetailsById?.driverVerificationStatus?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Rejoining Date:</strong>
+                  <span>{{driverDetailsById?.driverRejoiningDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Remarks:</strong> <span>
+                     {{driverDetailsById?.remarks}}</span></label>
+            </div>
+
+         </div>
+         <div class="row p-1 bgborder">
+            <div class="card-title bg-dark-light text-center">Training Details (TD)
+            </div>
+
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Training Status:</strong>
+                  <span>{{driverDetailsById?.driverTrainingStatus?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Training Date:</strong>
+                  <span>{{driverDetailsById?.driverTrainingDate | date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Training Grade:</strong>
+                  <span>{{driverDetailsById?.driverTrainingGrade}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Varuna Next App(Installed):</strong>
+                  <span>{{driverDetailsById?.isVarunaNextAppInstalled?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Driver Registration File:</strong>
+                  <span>{{driverDetailsById?.driverPhotoFile}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Is Registered:</strong>
+                  <span>{{driverDetailsById?.isRegistered?'Yes':'No'}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong> Created Date:</strong> <span>{{driverDetailsById?.createdOn |
+                     date}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Active: </strong> <span>{{driverDetailsById?.isActive?'Yes':'No'}}</span>
+               </label>
+            </div>
+         </div>
+      </div>
+   </ng-container>
+</div>

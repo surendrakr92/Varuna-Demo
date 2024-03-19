@@ -1,0 +1,568 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+            <a routerLink="/master/branch-master"><i class="bi bi-arrow-return-left booticon"
+                    ngbTooltip="Back to Branch Master " placement="right"></i> </a>
+        </span>
+        <span class=" title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+
+    <h5 class="card-title">{{this.branchDetailsById?'Update':'Create'}} Branch Master
+    </h5>
+    <form [formGroup]="formBranchMaster" class="novalidate">
+        <div class="row ">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Branch Name <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="branchName"
+                            [ngClass]="{'is-invalid':submitted && f['branchName'].errors}">
+
+                        <div *ngIf="submitted && f['branchName'].errors">
+                            <small class="text-danger" *ngIf="f['branchName'].errors?.['required']">please enter branch
+                                name
+                            </small>
+                            <small class="text-danger" *ngIf="f['branchName'].errors?.serverError">{{
+                                f['branchName'].errors.serverError}}</small>
+                            <small class="text-danger" *ngIf="f['branchName'].errors?.['pattern']">Invalid branch name
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Branch Code <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="branchCode"
+                            [ngClass]="{'is-invalid':submitted && f['branchCode'].errors}" maxlength="5" appUpperCase
+                            [readonly]="this.branchDetailsById.branchCode">
+                        <div *ngIf="submitted && f['branchCode'].errors">
+                            <small class="text-danger" *ngIf="f['branchCode'].errors?.['required']">please enter branch
+                                code
+                            </small>
+                            <small class="text-danger" *ngIf="f['branchCode'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                            <small class="text-danger" *ngIf="f['branchCode'].errors?.['pattern']">Invalid branch code
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Country
+                        Name <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Country Select" formControlName="countryId"
+                            (change)="dropdownBindState($event,1)" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['countryId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.countryId"
+                                *ngFor="let item of countryList">{{item.countryName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['countryId'].errors">
+                            <small class="text-danger" *ngIf="f['countryId'].errors?.['required']">please select country
+                                
+                            </small>
+                            <small class="text-danger" *ngIf="f['countryId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State
+                        Name <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Country Select" formControlName="stateId"
+                            (change)="dropdownBindState($event,2)" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['stateId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.stateId"
+                                *ngFor="let item of stateList">{{item.stateName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['stateId'].errors">
+                            <small class="text-danger" *ngIf="f['stateId'].errors?.['required']">please select state
+                                
+                            </small>
+                            <small class="text-danger" *ngIf="f['stateId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="City Select" formControlName="cityId" [searchable]="true"
+                            [clearable]="true" [ngClass]="{'is-invalid':submitted && f['cityId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.cityId"
+                                *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['cityId'].errors">
+                            <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">please select city 
+                                
+                            </small>
+                            <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                            <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Zone Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Zone Select" formControlName="zoneId" [searchable]="true"
+                            [clearable]="true" [ngClass]="{'is-invalid':submitted && f['zoneId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.zoneId"
+                                *ngFor="let item of zoneList">{{item.zoneName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['zoneId'].errors">
+                            <small class="text-danger" *ngIf="f['zoneId'].errors?.['required']">please select zone name
+                                
+                            </small>
+                            <small class="text-danger" *ngIf="f['zoneId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Branch Level
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Branch Level Name Select" formControlName="branchLevelId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['branchLevelId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.branchLevelId"
+                                *ngFor="let item of branchLevelList">{{item.branchLevelName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['branchLevelId'].errors">
+                            <small class="text-danger" *ngIf="f['branchLevelId'].errors?.['required']">please select
+                                branch level
+                            </small>
+                            <small class="text-danger" *ngIf="f['branchLevelId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Division Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Branch Level Name Select" formControlName="divisionId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['divisionId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.divisionId" [disabled]="!item?.isActive"
+                                *ngFor="let item of divisionLevelList">{{item.divisionName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['divisionId'].errors">
+                            <small class="text-danger" *ngIf="f['divisionId'].errors?.['required']">please select
+                                division name
+                            </small>
+                            <small class="text-danger" *ngIf="f['divisionId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Report Branch Level Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Branch Level Name Select"
+                            formControlName="reportbranchLevelId" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['reportbranchLevelId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.branchLevelId"
+                                *ngFor="let item of branchLevelList">{{item.branchLevelName}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['reportbranchLevelId'].errors">
+                            <small class="text-danger" *ngIf="f['reportbranchLevelId'].errors?.['required']">please
+                                select branch level
+                            </small>
+                            <small class="text-danger" *ngIf="f['reportbranchLevelId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Report To branch Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Branch Level Name Select"
+                            formControlName="reportTobranchId" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['reportTobranchId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.branchId"
+                                *ngFor="let item of branchMasterList">{{item.branchCode | uppercase}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['reportTobranchId'].errors">
+                            <small class="text-danger" *ngIf="f['reportTobranchId'].errors?.['required']">please select
+                                branch level
+                            </small>
+                            <small class="text-danger" *ngIf="f['reportTobranchId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Account Branch Name
+                        <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Branch Level Name Select"
+                            formControlName="accountbranchId" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['accountbranchId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [disabled]="!item.isActive" [value]="item.branchId"
+                                *ngFor="let item of branchMasterList">{{item.branchCode | uppercase}}</ng-option>
+
+                        </ng-select>
+                        <div *ngIf="submitted && f['accountbranchId'].errors">
+                            <small class="text-danger" *ngIf="f['accountbranchId'].errors?.['required']">please select
+                                branch level
+                            </small>
+                            <small class="text-danger" *ngIf="f['accountbranchId'].errors?.serverError">{{
+                                f['pinCode'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
+
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Mobile No <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="mobileNo"
+                            [ngClass]="{'is-invalid':submitted && f['mobileNo'].errors}">
+
+                        <div *ngIf="submitted && f['mobileNo'].errors">
+                            <small class="text-danger" *ngIf="f['mobileNo'].errors?.['required']">please enter mobile
+                                no.
+                            </small>
+                            <small class="text-danger" *ngIf="f['mobileNo'].errors?.['pattern']">please enter Valid
+                                mobile no.</small>
+                            <small class="text-danger" *ngIf="f['mobileNo'].errors?.serverError">{{
+                                f['mobileNo'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Email Id <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="email" class="form-control" formControlName="emailId"
+                            [ngClass]="{'is-invalid':submitted && f['emailId'].errors}">
+
+                        <div *ngIf="submitted && f['emailId'].errors">
+                            <small class="text-danger" *ngIf="f['emailId'].errors?.['required']">please enter email
+                            </small>
+                            <small class="text-danger" *ngIf="f['emailId'].errors?.['email']">please enter valid email
+                            </small>
+                            <small class="text-danger" *ngIf="f['emailId'].errors?.serverError">{{
+                                f['emailId'].errors.serverError}}</small>
+                            <small class="text-danger" *ngIf="f['emailId'].errors?.['pattern']">Invalid email id</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-4" style="padding-right: 0px; margin-right: 0px;">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-4 col-lg-12 col-form-label">
+                                STD Code
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="text" class="form-control" formControlName="stdCode"
+                                    [ngClass]="{'is-invalid':submitted && f['stdCode'].errors}" maxlength="4">
+
+                                <div *ngIf="submitted && f['stdCode'].errors">
+                                    <small class="text-danger" *ngIf="f['stdCode'].errors?.['required']">std code
+                                    </small>
+                                    <small class="text-danger" *ngIf="f['stdCode'].errors?.['pattern']">Invalid std code
+                                    </small>
+                                </div>
+                                <small class="text-danger" *ngIf="f['stdCode'].errors?.serverError">{{
+                                    f['stdCode'].errors.serverError}}</small>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-8">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Telephone No.
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="text" class="form-control" formControlName="telno"
+                                    [ngClass]="{'is-invalid':submitted && f['telno'].errors}" maxlength="7">
+
+                                <div *ngIf="submitted && f['telno'].errors">
+                                    <small class="text-danger" *ngIf="f['telno'].errors?.['required']">please enter
+                                        telephone no
+                                    </small>
+                                    <small class="text-danger" *ngIf="f['telno'].errors?.['pattern']">Invalid telephone
+                                        no.</small>
+                                    <small class="text-danger" *ngIf="f['telno'].errors?.serverError">{{
+                                        f['telno'].errors.serverError}}</small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Address 1 <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <textarea type="text" class="form-control" formControlName="addressLine1"
+                            [ngClass]="{'is-invalid':submitted && f['addressLine1'].errors}" maxlength="250"
+                            style="height: 30px"></textarea>
+
+                        <div *ngIf="submitted && f['addressLine1'].errors">
+                            <small class="text-danger" *ngIf="f['addressLine1'].errors?.['required']">please enter
+                                address
+                            </small>
+                            <small class="text-danger" *ngIf="f['addressLine1'].errors?.serverError">{{
+                                f['addressLine1'].errors.serverError}}</small>
+                            <small class="text-danger" *ngIf="f['addressLine1'].errors?.['pattern']">address can not be
+                                blank</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Address 2
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <textarea type="text" class="form-control" formControlName="addressLine2"
+                            [ngClass]="{'is-invalid':submitted && f['addressLine2'].errors}"
+                            style="height: 30px"></textarea>
+
+                        <div *ngIf="submitted && f['addressLine2'].errors">
+                            <small class="text-danger" *ngIf="f['addressLine2'].errors?.['required']">Please enter
+                                address
+                            </small>
+                            <small class="text-danger" *ngIf="f['addressLine2'].errors?.serverError">{{
+                                f['addressLine2'].errors.serverError}}</small>
+                            <!-- <small class="text-danger" *ngIf="f['addressLine2'].errors?.['pattern']">Country Name can not be
+                         blank</small> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Branch Start Date<span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+
+                        <input type="date" class="form-control" formControlName="branchStartdt"
+                            [ngClass]="{'is-invalid':submitted && f['branchStartdt'].errors}">
+
+                        <div *ngIf="submitted && f['branchStartdt'].errors">
+                            <small class="text-danger" *ngIf="f['branchStartdt'].errors?.['required']">please select end
+                                date
+                            </small>
+                            <small class="text-danger" *ngIf="f['branchStartdt'].errors?.serverError">{{
+                                f['branchStartdt'].errors.serverError}}</small>
+                            <!-- <small class="text-danger" *ngIf="f['branchStartdt'].errors?.['pattern']">Country Name can not be
+                         blank</small> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Branch End Date
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" formControlName="branchEnddt"
+                            [ngClass]="{'is-invalid':submitted && f['branchEnddt'].errors}" min="{{testDate}}">
+
+                        <div *ngIf="submitted && f['branchEnddt'].errors">
+                            <small class="text-danger" *ngIf="f['branchEnddt'].errors?.['required']">please select end
+                                date
+                            </small>
+                            <small class="text-danger" *ngIf="f['branchEnddt'].errors?.serverError">{{
+                                f['branchEnddt'].errors.serverError}}</small>
+                            <!-- <small class="text-danger" *ngIf="f['branchEnddt'].errors?.['pattern']">Country Name can not be
+                         blank</small> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Air Service
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="airService">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Rail Service
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="railService">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Surface Service
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="surfaceService">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Booking Branch
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="opBkg">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Transhipment
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="opTranship">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Out Source Branch
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="isOutSourceBranch">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Fleet Hub
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="isFleetHub">
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Is Active
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" (change)="branchEndDate($event)"
+                                formControlName="isActive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="float-end">
+                    <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="OnSubmit()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

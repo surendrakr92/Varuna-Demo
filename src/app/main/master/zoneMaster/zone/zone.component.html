@@ -1,0 +1,59 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+          <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master " placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+      </span>
+   </div>
+
+    <div class="display">
+    <h5 class="card-title">Zone Master List
+    </h5>
+    <div class="pb-2">
+      <button type="button" class="btn btn-success m-1" ngbTooltip="Create Zone " placement="bottom" routerLink="/master/zone-master/new-zone-master"><i
+         class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+            ngbTooltip="Download List" placement="bottom" type="button" >
+            <i class="bi bi-download"></i>
+         </button>
+    </div>
+    </div>
+    <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+      #MyTable id="MyTable">
+      <thead class="bg-secondary text-white">
+          <tr>
+            <th>Sr. No.</th>
+             <th>Short Code</th>
+             <th>Zone Name</th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of zoneAllList; let i=index;">
+            <td>{{i+1}}</td>
+             <td>{{Item.shortCode}}</td>
+             <td>{{Item.zoneName}}</td>
+             <td>  <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+               {{Item.isActive?'Active':'Inactive'}}</span>
+         </td>
+               <td class="display2">
+                <a routerLink="/master/zone-master/view-zone-master/{{Item.zoneId}}" ngbTooltip="View" placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a>
+             <a (click)="redirectionEdit(Item.zoneId)" ngbTooltip="Edit" placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a> 
+               <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                  <div class="form-check form-switch ">
+                <input type="checkbox" class="form-check-input" 
+                     *ngIf="Item.isActive==true"
+                        (click)="activeInactive(Item.zoneId)" checked >
+                  </div>
+               </a>
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+ </div>

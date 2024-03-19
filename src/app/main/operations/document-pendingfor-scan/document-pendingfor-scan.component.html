@@ -1,0 +1,163 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Document Pending for Scan</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Document Type <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Select Document" formControlName="docTypeId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['docTypeId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.id" *ngFor="let item of documentList ">{{item.type}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['docTypeId'].errors">
+                            <small class="text-danger" *ngIf="f['docTypeId'].errors?.['required']">Please select document
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['docTypeId'].errors?.serverError">{{
+                                f['docTypeId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select RO <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Select Pay Basis" formControlName="docTypeId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['docTypeId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.branchId" *ngFor="let item of branchList ">{{item.branchName}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['docTypeId'].errors">
+                            <small class="text-danger" *ngIf="f['docTypeId'].errors?.['required']">Please select Pay Basis
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['docTypeId'].errors?.serverError">{{
+                                f['docTypeId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3" style="padding-right: 1px;">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Location</label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="fromDate"
+                         [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}" >
+                          <div *ngIf="submitted && f['fromDate'].errors">
+                         <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please enter Enter Document No.</small>
+                         <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                            f['fromDate'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Date <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Select Document" formControlName="docType"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['docType'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.id" *ngFor="let item of selectDateList ">{{item.type}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['docType'].errors">
+                            <small class="text-danger" *ngIf="f['docType'].errors?.['required']">Please select document
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['docType'].errors?.serverError">{{
+                                f['docType'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+<div class="row">
+    <div class="col-lg-6" style="padding-right: 1px;">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From Date</label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+              <input type="date" class="form-control" formControlName="fromDate"
+                 [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}" >
+                  <div *ngIf="submitted && f['fromDate'].errors">
+                 <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please enter Enter Document No.</small>
+                 <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                    f['fromDate'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div>
+     <div class="col-lg-6" style="padding-left: 1px;">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To Date</label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+              <input type="date" class="form-control" formControlName="toDate"
+                 [ngClass]="{'is-invalid':submitted && f['toDate'].errors}" >
+                  <div *ngIf="submitted && f['toDate'].errors">
+                 <small class="text-danger" *ngIf="f['toDate'].errors?.['required']">Please enter Enter Document No.</small>
+                 <small class="text-danger" *ngIf="f['toDate'].errors?.serverError">{{
+                    f['toDate'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div>
+
+</div>
+
+                </div>
+
+
+
+             <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Document No.</label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="documentNo"
+                         [ngClass]="{'is-invalid':submitted && f['documentNo'].errors}" >
+                          <div *ngIf="submitted && f['documentNo'].errors">
+                         <small class="text-danger" *ngIf="f['documentNo'].errors?.['required']">Please enter Enter Document No.</small>
+                         <small class="text-danger" *ngIf="f['documentNo'].errors?.serverError">{{
+                            f['documentNo'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+
+        </div>
+        <div class="row">
+            <div class="text-center mt-2 mb-2">
+                <button type="button" (click)="onSubmit()" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+            </div>
+        </div>
+
+    </form>
+
+
+
+
+
+
+
+</div>

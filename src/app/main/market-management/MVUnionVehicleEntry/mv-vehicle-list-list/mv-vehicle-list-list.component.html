@@ -1,0 +1,109 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/market"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title" style="padding: 4px 0 3px 0;">
+      MV Vehicle
+   </h5>
+   <form [formGroup]="formMaster">
+      <div class="row mb-2 pb-2">
+         <div class="col-lg-4 ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Select Branch<span
+                     class="text-danger">*</span></span></label>
+            <div class="col-sm-12 col-lg-12">
+               <ng-select placeholder="Branch select" formControlName="locationId" [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['locationId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.branchId" *ngFor="let item of branchList">{{item.branchName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['locationId'].errors">
+                  <small class="text-danger" *ngIf="f['locationId'].errors?.['required']">please select branch 
+                  </small>
+                  <small class="text-danger" *ngIf="f['locationId'].errors?.serverError">{{
+                     f['locationId'].errors.serverError}}</small>
+
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4 ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Vehicle No.<span
+                     class="text-danger">*</span></span></label>
+            <div class="col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="vehicleNo"
+               maxlength="20">
+            </div>
+            <div *ngIf="submitted && f['vehicleNo'].errors">
+               <small class="text-danger" *ngIf="f['vehicleNo'].errors?.['required']">please enter vehicle no.
+               </small>
+               <small class="text-danger" *ngIf="f['vehicleNo'].errors?.['pattern']">invalid vehicle number
+               </small>
+               <small class="text-danger" *ngIf="f['vehicleNo'].errors?.serverError">{{
+                  f['vehicleNo'].errors.serverError}}</small>
+
+            </div>
+         </div>
+         <div class="col-lg-1 ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Status<span
+                     class="text-danger">*</span></span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <div class="form-check form-switch p-2">
+                  <input type="checkbox" class="form-check-input" formControlName="isActive">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 mt-4">
+            <div class="float-start">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="onSubmit()">{{this.mvVehicleDetailById==''?'Create':'Update'}}</button>
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding m-1"
+               (click)="this.mvVehicleDetailById==''?this.formMaster.reset():this.formMaster.reset();this.mvVehicleDetailById=''">Cancel</button>
+            </div>
+         </div>
+      </div>
+   </form>
+
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Vehicle No</th>
+               <th>Location</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of MvVehicleList; let i=index;">
+               <td>{{1+i}}</td>
+               <td>{{item.vehicleNo}}</td>
+               <td> {{item.location}}</td>
+               <td> <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2 checkbox">
+                  <a ngbTooltip="Edit" placement="bottom" class="edit" (click)="redirectionEdit(item.unionVehId)"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                        <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                           <div class="form-check form-switch ">
+                              <input type="checkbox" class="form-check-input" 
+                              *ngIf="item.isActive==true"
+                                 (click)="activeInactive(item.unionVehId)" checked title="Inactive">
+                           </div>
+                        </a>
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

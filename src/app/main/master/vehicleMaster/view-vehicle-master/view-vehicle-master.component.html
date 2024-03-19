@@ -1,0 +1,223 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+          <a routerLink="/master/vehicle-master-list"><i class="bi bi-arrow-return-left booticon"
+                ngbTooltip="Back to Vehicle master " placement="right"></i> </a>
+       </span>
+       <span class=" title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+          </a>
+       </span>
+    </div>
+
+
+       <div class="display">
+          <h5 class="card-title">Vehicle Master</h5>
+          <span class="title">
+             <a (click)="download_pdf_print()" href="javascript:voide(0);"> <i class="bi bi-printer booticon"
+                   ngbTooltip="Print" placement="bottom"></i> </a>
+          </span>
+       </div>
+       <div class="row" >
+        <div class="col-lg-12" id="viewData_information">
+        
+           <div class="row p-1 bgborder">
+<div class="card-title bgcolortitle text-center">VEHICLE DETAILS</div>
+
+          <div class="col-lg-4">
+           <label for="inputText" ><strong>Vehicle Type:</strong><span>{{vehicleDetailById?.vehicleType}}</span></label>
+          </div>
+          <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle No:</strong><span>{{vehicleDetailById?.vehicleNo}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Controlling Branch:</strong><span>{{vehicleDetailById?.vehicleBranch}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Purchase Date:</strong><span>{{vehicleDetailById?.vehiclePurchaseDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Purchase Amount:</strong><span>{{vehicleDetailById?.vehiclePurchaseAmount }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>is GPS Devise Enabled:</strong><span>{{vehicleDetailById?.isGpsDeviseEnabled?'Yes':'No'}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>FTL Type:</strong><span>{{vehicleDetailById?.vehicleFtlTypeId}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Load Insurance:</strong><span>{{vehicleDetailById?.loadInsurance?'Yes':'No' }}</span></label>
+           </div>
+
+           <div class="card-title bgcolortitle text-center">VEHICLE INSURANCE DETAILS</div>
+
+
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Insurance Type:</strong><span>{{vehicleDetailById?.insurancetype}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Insurance Party Name:</strong><span>{{vehicleDetailById?.insurancePartyName}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Claim Status:</strong><span>{{vehicleDetailById?.claimStatus?'Yes':'No'}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong> Last Claim Date:</strong><span>{{vehicleDetailById?.lastClaimDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Insurance From Date:</strong><span>{{vehicleDetailById?.insuranceFromDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Insurance To Date:</strong><span>{{vehicleDetailById?.insuranceToDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Policy Attachment:</strong><span>{{vehicleDetailById?.policyAttachmentFileName}}</span></label>
+           </div> 
+
+           <div class="card-title bgcolortitle text-center">OTHER INFORMATION</div>
+
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Registration No.:</strong><span>{{vehicleDetailById?.vehicleRegNo}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Veicle Registration Date:</strong><span>{{vehicleDetailById?.veicleRegDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Chesis No:</strong><span>{{vehicleDetailById?.vehicleChesisNo}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Engine No :</strong><span>{{vehicleDetailById?.vehicleEngineNo}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Fitness Validity Date:</strong><span>{{vehicleDetailById?.vehicleFitnessValidityDate | date}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Unloading Weight:</strong><span>{{vehicleDetailById?.vehicleUnloadingWeight }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Status:</strong><span>{{vehicleDetailById?.vehicleStatusId }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Attached Status:</strong><span>{{vehicleDetailById?.thcAttachedStatus?'Yes':'No' }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>is GPS Devise Enabled:</strong><span>{{vehicleDetailById?.isGpsDeviseEnabled?'Yes':'No' }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Permit Validity Date:</strong><span>{{vehicleDetailById?.vehiclePermitValidityDate }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>No Of Tyres:</strong><span>{{vehicleDetailById?.noOfTyres }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>is Vehicle Status Enabled:</strong><span>{{vehicleDetailById?.isVehicleStatusEnabled?'Yes':'No' }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Old Vehicle No:</strong><span>{{vehicleDetailById?.oldVehicleNo }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Container:</strong><span>{{vehicleDetailById?.vehicleContainerId }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Sold Date:</strong><span>{{vehicleDetailById?.vehicleSoldDate | date }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Sale Amount:</strong><span>{{vehicleDetailById?.vehicleSaleAmount }}</span></label>
+           </div>
+
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Manufacturing Year:</strong><span>{{vehicleDetailById?.vehicleManufacturingYear }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Model No:</strong><span>{{vehicleDetailById?.vehicleModelNo }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Load Capacity:</strong><span>{{vehicleDetailById?.vehicleLoadCapacityId }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Permit Validity Date Five Years:</strong><span>{{vehicleDetailById?.vehiclePermitValidityDateFIveYears }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Tax Validity Date:</strong><span>{{vehicleDetailById?.vehicleTaxValidityDate }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Total Run Km:</strong><span>{{vehicleDetailById?.vehicleTotalRunKm }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>GPS Service Provider:</strong><span>{{vehicleDetailById?.gpsServiceProviderId }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Trailer Registration Number:</strong><span>{{vehicleDetailById?.vehicletTrailerRegistrationNumber }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Floor Type:</strong><span>{{vehicleDetailById?.vehicleFloorTypeId }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Accident Date:</strong><span>{{vehicleDetailById?.accidentDate }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Accident Remarks:</strong><span>{{vehicleDetailById?.accidentRemarks }}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>is Vehicle Active:</strong><span>{{vehicleDetailById?.isVehicleActive?'Yes':'No' }}</span></label>
+           </div>
+
+           <div class="card-title bgcolortitle text-center">INNER DIMENSION IN FT</div>
+
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Length:</strong><span>{{vehicleDetailById?.vehicleLength}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Width:</strong><span>{{vehicleDetailById?.vehicleWeidth}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Height:</strong><span>{{vehicleDetailById?.vehicleHeight}}</span></label>
+           </div>
+           <div class="card-title bgcolortitle text-center">FUEL TANK CAPACITY(No. of Tank Available)</div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>No of Tank:</strong><span>{{vehicleDetailById?.noOfTank}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle First Tank Capacity:</strong><span>{{vehicleDetailById?.vehicleFirstTankCapacity}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Second Tank Capacity:</strong><span>{{vehicleDetailById?.vehicleSecondTankCapacity}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle And blue Tank Capacity:</strong><span>{{vehicleDetailById?.vehicleAdblueTankCapacity}}</span></label>
+           </div>
+
+           <div class="card-title bgcolortitle text-center">VEHICLE PHOTO(front & Back)</div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Vehicle Front Photo File Name:</strong><span>{{vehicleDetailById?.vehicleFrontPhotoFileName}}</span></label>
+           </div>
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>VEHICLE BANK PHOTO FILE NAME:</strong><span>{{vehicleDetailById?.vehicleBackPhotoFileName}}</span></label>
+           </div>
+
+        
+           <div class="col-lg-4">
+            <label for="inputText" ><strong>Credit Period (Days):</strong><span>{{vehicleDetailById?.vehicleBackPhotoFileName}}</span></label>
+           </div>
+       
+        
+
+        
+          <div class="col-lg-4">
+             
+                <label for="inputText" ><strong> Created Date:</strong><span> {{vehicleDetailById?.createdOn | date}}</span></label>
+          
+          </div>
+        
+    
+          </div>
+        
+        
+        
+        </div>
+        
+        
+        </div>
+        
+  
+ </div>

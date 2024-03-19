@@ -1,0 +1,557 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Labour Master</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row">
+      <!-- <div class="card-title bgcolortitle text-center"> Labour Master</div> -->
+      <form [formGroup]="formMaster">
+         <div class="row  mt-2 d-flex justify-content-center">
+            <div class="col-lg-10">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="row ">
+                        <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"><span class="float-end">Customer
+                              Name and Code<span class="text-danger">*</span></span></label>
+                        <div class=" col-sm-7 col-lg-7" style="padding-left: 0px;">
+                           <ng-select class="pb-2  " placeholder="Customer Name and Code" formControlName="custId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.custId" *ngFor="let item of customerMasterList"
+                                 [disabled]='!item.isActive'>{{item.custName}} {{item.custCode}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custId'].errors">
+                              <small class="text-danger" *ngIf="f['custId'].errors?.['required']">please
+                                 Select cusotmer
+                              </small>
+                              <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                                 f['custId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="row ">
+                        <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"><span class="float-end">Lane
+                              Type</span></label>
+                        <div class=" col-sm-8 col-lg-8" style="padding-left: 0px;">
+                           <ng-select class="pb-2  " placeholder="Lane Type Select" formControlName="activeType"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['activeType'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.id" *ngFor="let item of lanType"> {{item.type}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['activeType'].errors">
+                              <small class="text-danger" *ngIf="f['activeType'].errors?.['required']">please select
+                                 lane type
+                              </small>
+                              <small class="text-danger" *ngIf="f['activeType'].errors?.serverError">{{
+                                 f['activeType'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-2">
+                     <div class="row ">
+                        <!-- <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"></label> -->
+                        <div class=" col-sm-12 col-lg-12" style="padding-left: 0px;">
+                           <button (click)="showExistingTables()" type="button"
+                              class="btn btn-primary rounded-pill btn-padding2  btn-sm">Show Existing Lane </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <div class="display3">
+         <button type="button" (click)="downLoadSampleFile()" class="btn bg-success text-white m-1 p-1"><i
+               class="bi bi-download"></i> Sample
+            File</button>
+         <button type="button" class="btn btn-dark m-1 p-1" (click)="modelOpen2(modelmsg2)"><i class="bi bi-upload"></i>
+            Upload File</button>
+      </div>
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Lane ID</th>
+               <th>From City</th>
+               <th>To City</th>
+               <th>Vehicle Type</th>
+               <th>Load Type</th>
+               <th>Rate Type Load</th>
+               <th>Type</th>
+               <th>Update Rate</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let item of labourDetailsByCustId ; index as i">
+               <td>
+                  <ng-select class="pb-2 " placeholder="Type Select" [searchable]="true" [clearable]="true"
+                     [ngModel]="item?.laneId">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.laneId" *ngFor="let item of laneList">
+                        {{item.fromlocName}}:{{item.tolocName}},{{item.ratetypeload}},{{item.loadability}}</ng-option>
+                  </ng-select>
+               </td>
+               <td>{{item?.fromlocName??'NA'}}</td>
+               <td>{{item?.tolocName??'NA'}}</td>
+               <td>{{item?.ftltypecode??'NA'}}</td>
+               <td>{{item?.loadability??'NA'}}</td>
+               <td>{{item?.ratetypeload??'NA'}}</td>
+               <td>
+                  <ng-select class="pb-2 " placeholder="type Select" [searchable]="true" [clearable]="true"
+                  [(ngModel)]="item.typeGeneralId"
+                     (change)="this.labourDetailsByCustId['typeGeneralId']=$event">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of TypeList"
+                        [disabled]="!item?.isActive">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+               </td>
+               <td>
+                  <div class="display2">
+                     <!-- <a routerLink="/master/labour-master/labour-master-list" ngbTooltip="View " placement="bottom"
+                        class="view"><i class="bi bi-eye-fill pr"></i></a> -->
+                     <a ngbTooltip="Add" placement="bottom" class="add" (click)="modelOpen3(modelmsg3,item)"><i
+                           class="bi bi-plus-circle-fill pr"></i></a>
+                  </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- popup confirm-->
+      <ng-template #modelmsg3 let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Loading Unloading Customer Contract</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <div class="row">
+               <div>
+                  <button type="button" class="btn btn-success btn-sm float-end"
+                     (click)="modelOpen4(modelmsg4,'create',null)" ngbTooltip="Create"><i class="bi bi-plus-lg"></i>
+                     Create</button>
+               </div>
+            </div>
+            <div class="row p-1">
+               <table class="table  table-bordered">
+                  <thead class="bg-secondary text-white">
+                     <tr>
+                        <th>Serial No</th>
+                        <th>Term </th>
+                        <th>Paybasis </th>
+                        <th>Proposed Labour Charges </th>
+                        <th>Dalla Charges </th>
+                        <th>Dalla Pay Basis</th>
+                        <th> From Date </th>
+                        <th>To Date </th>
+                        <th>Edit</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of popLabourListD?.labourChargeDet ; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{ item?.termId === 294 ? 'Inclusive' : item?.termId === 516 ? 'Exclusive' : 'Both' }}</td>
+                        <td>{{(calculateId(item?.payBasisId))}}</td>
+                        <!-- <span *ngIf="item?.payBasisId">
+                           <span *ngSwitchCase="622">Per Vehicle</span>
+                           <span *ngSwitchCase="623">Per KG</span>
+                           <span *ngSwitchCase="624">Per MT</span>
+                           <span *ngSwitchCase="625">PER Carton</span>
+                           <span *ngSwitchCase="626">PER box</span>
+                           <span *ngSwitchCase="627">PER Tyre</span>
+                           <span *ngSwitchDefault>PER Pallet</span>
+                         </span> -->
+                        <td>{{item?.proposedLabourCharges}}</td>
+                        <td>{{item?.dallaCharges}}</td>
+                        <td>{{(calculateId(item?.dallaPayBasisId))}}</td>
+                        <!-- {{item?.dallaPayBasis}} -->
+                        <td>{{item.fromDate | date :'dd/MM/yyyy'}}</td>
+                        <td>{{item.toDate| date :'dd/MM/yyyy'}}</td>
+                        <td> <a ngbTooltip="Edit" placement="bottom" class="edit"
+                              (click)="modelOpen4(modelmsg4,item,i)"><i class="bi bi-pen-fill pr"></i></a></td>
+                     </tr>
+                     <!-- popup confirm-->
+                     <ng-template #modelmsg4 let-modal>
+                        <div class="modal-header qut-hd">
+                           <h6 class="modal-title" id="exampleModalCenterTitle">New Loading Unloading Customer
+                              Contract
+                           </h6>
+                           <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                              aria-label="Close" id="dismissButton">
+                              <span aria-hidden="true">&times;</span>
+                           </button>
+                        </div>
+                        <div class="modal-body" tabindex="0" ngbAutofocus>
+                           <form [formGroup]="formMaster4">
+                              <div class="row ">
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">System
+                                          Generated ID</label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <input type="tex" class="form-control" value="{{this.checkJsonCOnd??'System Generated'}}"
+                                             style="color: red;" readonly>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Term<span
+                                             class="text-danger">*</span></label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <ng-select class="pb-2  " placeholder="Term Select" formControlName="termId"
+                                             [searchable]="true" [clearable]="true"
+                                             [ngClass]="{'is-invalid':submittedNew && fsnew['termId'].errors}">
+                                             <ng-option value="" selected>Select</ng-option>
+                                             <ng-option [value]="item.generalId"
+                                                *ngFor="let item of typeList">{{item.codeDesc}}</ng-option>
+                                          </ng-select>
+                                          <div *ngIf="submittedNew && fsnew['termId'].errors">
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['termId'].errors?.['required']">select term
+                                             </small>
+                                             <small class="text-danger" *ngIf="fsnew['termId'].errors?.serverError">{{
+                                                fsnew['termId'].errors.serverError}}</small>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pay
+                                          Basis</label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <ng-select class="pb-2  " placeholder="Paybasis Select"
+                                             formControlName="payBasisId" [searchable]="true" [clearable]="true"
+                                             [ngClass]="{'is-invalid':submittedNew && fsnew['payBasisId'].errors}">
+                                             <ng-option value="" selected>Select</ng-option>
+                                             <ng-option [value]="item.generalId" *ngFor="let item of labourPayBasis"
+                                                [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                                          </ng-select>
+                                          <div *ngIf="submittedNew && fsnew['payBasisId'].errors">
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['payBasisId'].errors?.['required']">select pay basis
+                                             </small>
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['payBasisId'].errors?.serverError">{{
+                                                fsnew['payBasisId'].errors.serverError}}</small>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Proposed
+                                          Labour Charges</label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <input type="number" class="form-control" min="0"
+                                             formControlName="proposedLabourCharges"
+                                             [ngClass]="{'is-invalid':submittedNew && fsnew['proposedLabourCharges'].errors}">
+                                          <div *ngIf="submittedNew && fsnew['proposedLabourCharges'].errors">
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['proposedLabourCharges'].errors?.['required']">please
+                                                proposed
+                                                labour charges</small>
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['proposedLabourCharges'].errors?.serverError">{{
+                                                fsnew['proposedLabourCharges'].errors.serverError}}</small>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Actual
+                                          Labour Charges</label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <input type="number" class="form-control" min="0"
+                                             formControlName="actualLabourCharges"
+                                             [ngClass]="{'is-invalid':submittedNew && fsnew['actualLabourCharges'].errors}">
+                                          <div *ngIf="submittedNew && fsnew['actualLabourCharges'].errors">
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['actualLabourCharges'].errors?.['required']">please actual
+                                                labour charges</small>
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['actualLabourCharges'].errors?.serverError">{{
+                                                fsnew['actualLabourCharges'].errors.serverError}}</small>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="row">
+                                       <div class="col-lg-5">
+                                          <div class="form-group">
+                                             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Dalla
+                                                Charges<span class="text-danger">*</span></label>
+                                             <div class=" col-sm-12 col-lg-12 has-validation">
+                                                <input type="number" min="0" class="form-control"
+                                                   formControlName="dallaCharges"
+                                                   [ngClass]="{'is-invalid':submittedNew && fsnew['dallaCharges'].errors}">
+                                                <div *ngIf="submittedNew && fsnew['dallaCharges'].errors">
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['dallaCharges'].errors?.['required']">dalla
+                                                      charges</small>
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['dallaCharges'].errors?.serverError">{{
+                                                      fsnew['dallaCharges'].errors.serverError}}</small>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-lg-7">
+                                          <div class="form-group">
+                                             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Dalla
+                                                Pay Basis<span class="text-danger">*</span></label>
+                                             <div class=" col-sm-12 col-lg-12 has-validation">
+                                                <ng-select class="pb-2  " placeholder="Paybasis Select"
+                                                   formControlName="dallaPayBasisId" [searchable]="true"
+                                                   [clearable]="true"
+                                                   [ngClass]="{'is-invalid':submittedNew && fsnew['dallaPayBasisId'].errors}">
+                                                   <ng-option value="" selected>Select</ng-option>
+                                                   <ng-option [value]="item.generalId"
+                                                      *ngFor="let item of labourPayBasis"
+                                                      [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                                                </ng-select>
+                                                <div *ngIf="submittedNew && fsnew['dallaPayBasisId'].errors">
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['dallaPayBasisId'].errors?.['required']">select
+                                                      dalla pay basis</small>
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['dallaPayBasisId'].errors?.serverError">{{
+                                                      fsnew['dallaPayBasisId'].errors.serverError}}</small>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="row">
+                                       <div class="col-lg-6">
+                                          <div class="form-group">
+                                             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From
+                                                Date<span class="text-danger">*</span></label>
+                                             <div class=" col-sm-12 col-lg-12 has-validation">
+                                                <input type="date" class="form-control" formControlName="fromDate"
+                                                   [ngClass]="{'is-invalid':submittedNew && fsnew['fromDate'].errors}"
+                                                   [value]="fsnew['fromDate'].value | date:'yyyy-MM-dd'">
+                                                <div *ngIf="submittedNew && fsnew['fromDate'].errors">
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['fromDate'].errors?.['required']">select from
+                                                      date</small>
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['fromDate'].errors?.serverError">{{
+                                                      fsnew['fromDate'].errors.serverError}}</small>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                       <div class="col-lg-6">
+                                          <div class="form-group">
+                                             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To
+                                                Date<span class="text-danger">*</span></label>
+                                             <div class=" col-sm-12 col-lg-12 has-validation">
+                                                <input type="date" class="form-control" formControlName="toDate"
+                                                   [value]="fsnew['toDate'].value | date:'yyyy-MM-dd'"
+                                                   [ngClass]="{'is-invalid':submittedNew && fsnew['toDate'].errors}">
+                                                <div *ngIf="submittedNew && fsnew['toDate'].errors">
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['toDate'].errors?.['required']">select to
+                                                      date</small>
+                                                   <small class="text-danger"
+                                                      *ngIf="fsnew['toDate'].errors?.serverError">{{
+                                                      fsnew['toDate'].errors.serverError}}</small>
+                                                </div>
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4">
+                                    <div class="form-group">
+                                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Remark</label>
+                                       <div class=" col-sm-12 col-lg-12 has-validation">
+                                          <textarea type="text" class="form-control" formControlName="remarks"
+                                             [ngClass]="{'is-invalid':submittedNew && fsnew['remarks'].errors}"></textarea>
+                                          <div *ngIf="submittedNew && fsnew['remarks'].errors">
+                                             <small class="text-danger"
+                                                *ngIf="fsnew['remarks'].errors?.['required']">please write
+                                                remarks</small>
+                                             <small class="text-danger" *ngIf="fsnew['remarks'].errors?.serverError">{{
+                                                fsnew['remarks'].errors.serverError}}</small>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                                 <div class="col-lg-4 mt-4">
+                                    <a href="javascript:void(0)" (click)="toggle()"> <button type="button"
+                                          class="btn btn-warning rounded-pill btn-sm btn-padding">Add
+                                          Address</button></a>
+                                 </div>
+                              </div>
+                           </form>
+                           <div class="borderClass" *ngIf="Show">
+                              <div class="display mb-2">
+                                 <!-- <span class="dis">
+                                    <span class="disflex">Enter Address No. <input type="number"
+                                          class="form-control"></span>
+                                    </span> -->
+                                 <span class="dis">
+                                    <button type="button" class="btn btn-warning btn-sm" (click)="addAddrress()"><i
+                                          class="bi bi-plus-lg"></i> Add</button>
+                                 </span>
+                              </div>
+                              <table class="table table-borderless">
+                                 <thead>
+                                    <tr>
+                                       <th>Select Address</th>
+                                       <th>Rate</th>
+                                       <th>Paybasis</th>
+                                       <th></th>
+                                    </tr>
+                                 </thead>
+                                 <tbody>
+                                    <tr *ngFor="let item of labourChargesAddress ; index as i">
+                                       <td>
+                                          <ng-select class="pb-2  " placeholder="Address Select" [searchable]="true"
+                                             style="width: 400px;" [clearable]="true" [(ngModel)]="item.addressId"
+                                             (change)="changeAddressDt(i,$event,'addressId')">
+                                             <ng-option value="" selected>Select</ng-option>
+                                             <ng-option [value]="item.addressId" *ngFor="let item of addressMasterList"
+                                                [disabled]='!item.isActive'><span
+                                                   [title]="item.addressLine1">{{item.addressLine1}}</span></ng-option>
+                                          </ng-select>
+                                       </td>
+                                       <td> <input type="number" class="form-control" [value]="item.actuallabourCharges"
+                                             style="width: 80px;" #actuallabourChargesS
+                                             (change)="changeAddressDt(i,actuallabourChargesS.value,'actuallabourCharges')">
+                                       </td>
+                                       <td>
+                                          <ng-select class="pb-2  " placeholder="Paybasis Select" [searchable]="true"
+                                             style="width: 180px;" [(ngModel)]="item.paybasisId" [clearable]="true"
+                                             (change)="changeAddressDt(i,$event,'paybasisId')">
+                                             <ng-option value="" selected>Select</ng-option>
+                                             <ng-option [value]="item.generalId" *ngFor="let item of labourPayBasis"
+                                                [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                                          </ng-select>
+                                       </td>
+                                       <td><a style="cursor: pointer;" *ngIf="this.labourChargesAddress.length>1"
+                                             (click)="this.labourChargesAddress.splice(i,1)"><i
+                                                class="bi bi-x-circle"></i></a></td>
+                                    </tr>
+                                 </tbody>
+                              </table>
+                           </div>
+                           <!-- (click)="Onsubmit()"  -->
+                           <!-- (click)="modal.dismiss('Cross click')" -->
+                           <div class="float-end mt-3">
+                              <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                                 (click)="Onsubmit()">Submit</button>
+                           </div>
+                           <br>
+                        </div>
+                     </ng-template>
+                     <!-- close popup confirm-->
+                  </tbody>
+               </table>
+            </div>
+            <div class="row">
+               <div class="col-lg-12 ">
+                  <!-- *ngIf="this.formMaster4.valueChanges()" -->
+                  <div class="float-end">
+                     <button type="button" *ngIf="this.submisionJson"
+                        class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="gotonext()">Submit</button>
+                     <button type="button" class="btn btn-danger rounded-pill btn-sm btn-padding"
+                        (click)="modal.dismiss('Cross click')">Cancel</button>
+                  </div>
+               </div>
+            </div>
+            <br>
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+      <!-- popup confirm-->
+      <ng-template #modelmsg2 let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Upload file</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <div class="row">
+               <div class="col-lg-6">
+                  <input type="file" class="form-control" (change)="upload_files($event)" accept="text/csv">
+               </div>
+               <div class="col=col-lg-12 display3">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="revalidateJsonToCsv()">{{this.xlsJsonUploadData.length==0?'...':'Re Validate'}}</button>
+                  <!-- <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     >Upload File</button> -->
+               </div>
+            </div>
+            <div class="table-responsive">
+               <table class="table table-bordered mt-2 ">
+                  <thead class="bg-secondary text-white">
+                     <tr>
+                        <th>Lane ID</th>
+                        <th>From City</th>
+                        <th>To City</th>
+                        <th>Type</th>
+                        <th>Term</th>
+                        <th>Paybasis</th>
+                        <th>Proposed Labour Charges</th>
+                        <th>Rate</th>
+                        <th> From Date</th>
+                        <th>To Date</th>
+                        <th>Actual Labour Charge</th>
+                        <th>Error Messages</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let xlsD of xlsJsonUploadData ; index as i">
+                        <td>-</td>
+                        <td>{{xlsD?.fromlocName}}</td>
+                        <td>{{xlsD?.tolocName}}</td>
+                        <td>{{xlsD?.type}}</td>
+                        <td>{{xlsD?.term}}</td>
+                        <td>{{xlsD?.payBasis}}</td>
+                        <td>{{xlsD?.proposedLabourCharges}}</td>
+                        <td>{{xlsD?.dallaCharges}}</td>
+                        <td>{{xlsD?.fromDate | date:'dd/MM/yyyy'}}</td>
+                        <td>{{xlsD?.toDate| date:'dd/MM/yyyy'}}</td>
+                        <td>{{xlsD?.actualLabourCharges}}</td>
+                        <td class="text-danger">{{xlsD?.errorMessage}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+            <div class="float-end ">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="submissionCsvData()">Submit</button>
+            </div>
+            <br>
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+   </div>
+</div>

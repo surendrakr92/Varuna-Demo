@@ -1,0 +1,71 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Docket Unfinalized</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row mt-2 d-flex justify-content-center ">
+            <div class="col-lg-10 mt-5">
+                <div class="row">
+                    <label for="inputText" class="col-sm-2 col-lg-2 col-form-label"> <span class="float-end">LR No.
+                            <span class="text-danger">*</span></span> </label>
+                    <div class=" col-lg-3 ">
+                        <input type="number" min="0" class="form-control" formControlName="docketNo"
+                            [ngClass]="{'is-invalid':submitted && f['docketNo'].errors}">
+                        <div *ngIf="submitted && f['docketNo'].errors">
+                            <small class="text-danger" *ngIf="f['docketNo'].errors?.['required']">please enter
+                                LR No.
+                            </small>
+                            <small class="text-danger" *ngIf="f['docketNo'].errors?.serverError">{{
+                                f['docketNo'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                    <label for="inputText" class="col-sm-2 col-lg-2 col-form-label " style="width: 10%;"> <span>Remark
+                            <span class="text-danger">*</span></span> </label>
+                    <div class=" col-lg-3 ">
+                        <textarea type="text" class="form-control" formControlName="remarks"
+                            [ngClass]="{'is-invalid':submitted && f['remarks'].errors}"></textarea>
+                        <div *ngIf="submitted && f['remarks'].errors">
+                            <small class="text-danger" *ngIf="f['remarks'].errors?.['required']">please enter
+                                remarks
+                            </small>
+                            <small class="text-danger" *ngIf="f['remarks'].errors?.serverError">{{
+                                f['remarks'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                    <div class=" col-lg-2 ">
+                        <button type="button" class="btn btn-primary rounded-pill btn-padding btn-sm"
+                            (click)="onSubmit(modelmsg)"> Submit</button>
+                    </div>
+                    <!-- popup confirm-->
+                    <ng-template #modelmsg let-modal>
+                        <div class="modal-header qut-hd bg-success">
+                            <h6 class="modal-title" id="exampleModalCenterTitle">Confirmation Message</h6>
+                            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                                aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <button type="button" rippleefect="" class="btn btn-icon"
+                                (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                                    class="fa fa-times"></i></button>
+                        </div>
+                        <div class="modal-body" tabindex="0" ngbAutofocus>
+                            <p class="text-success">Unifinalized Docket Updated Successfully</p>
+                            <p># 214214234</p>
+                            <br>
+                        </div>
+                    </ng-template>
+                    <!-- close popup confirm-->
+                </div>
+            </div>
+        </div>
+    </form>
+</div>

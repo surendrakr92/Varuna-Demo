@@ -1,0 +1,245 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+            <a routerLink="/indent/stock-update"><i class="bi bi-arrow-return-left booticon"
+                    ngbTooltip="Back to Stock Update " placement="bottom"></i> </a>
+        </span>
+        <span class=" title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <div class="display">
+        <h5 class="card-title">Stock Update List
+        </h5>
+        <!-- <div class=" pb-2">
+           <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Customer Master" placement="bottom"
+              routerLink="/indent/pickup-request"><i class="bi bi-plus-lg "></i> Create </button>
+        </div> -->
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="table-responsive">
+            <table class="table table-report destorydatatable" id="data-table-config" 
+                #MyTable id="MyTable">
+                <thead>
+                    <tr class="bg-secondary text-white">
+                   
+                        <th>Manifest No</th>
+                        <th>LR Booking destination</th>
+                        <th>LR Booking Date</th>
+                        <th>Committed Delivery Date</th>
+                        <th>Package</th>
+                       
+                        <th>Arrived weight</th>
+                        <th>Arrived Package</th>
+                        <th>Weight</th>
+                        <th>Tentative Claim Amount</th>
+                        <th>Remark</th>
+                        <th>Arrival Condition
+                            <ng-select class="ngselectClass" placeholder="Country Select"
+                                formControlName="arrivalCondition" appendTo="body" [searchable]="true"
+                                [clearable]="true" [ngClass]="{'is-invalid':submitted && f['arrivalCondition'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                                    *ngFor="let item of arrivalConditionList "><span
+                                        [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                            </ng-select>
+
+                        </th>
+                        <th>Warehouse ID</th>
+                        <th>Delivery Process</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    
+                        <td><input type="text" formControlName="tcNo" class="form-control inputClass"
+                            [ngClass]="{'is-invalid':submitted && f['tcNo'].errors}">
+                        
+                            <div *ngIf="submitted && f['tcNo'].errors">
+                                <small class="text-danger" *ngIf="f['tcNo'].errors?.['required']">Please enter manifest no
+                                </small>
+                                <small class="text-danger" *ngIf="f['tcNo'].errors?.serverError">{{
+                                    f['tcNo'].errors.serverError}}</small>
+                            </div>
+                        </td>
+                        <td><input type="text" formControlName="BranchId" class="form-control inputClass"></td>
+                        <td><input type="text" formControlName="docketDate" class="form-control inputClass"></td>
+                        <td><input type="text" formControlName="committedDlyDate" class="form-control inputClass"></td>
+                        <td><input type="text" formControlName="pkgsNo" class="form-control inputClass"></td>
+                        <td><input type="text" formControlName="Actualwt" class="form-control inputClass"
+                                [ngClass]="{'is-invalid':submitted && f['Actualwt'].errors}">
+                            <div *ngIf="submitted && f['Actualwt'].errors">
+                                <small class="text-danger" *ngIf="f['Actualwt'].errors?.['required']">Please enter
+                                    Actual Weight
+                                </small>
+                                <small class="text-danger" *ngIf="f['Actualwt'].errors?.serverError">{{
+                                    f['Actualwt'].errors.serverError}}</small>
+                            </div>
+                        </td>
+                      
+
+
+                        <td><input type="text" formControlName="pkgsNo" class="form-control inputClass"
+                            [ngClass]="{'is-invalid':submitted && f['pkgsNo'].errors}">
+
+                        <div *ngIf="submitted && f['pkgsNo'].errors">
+                            <small class="text-danger" *ngIf="f['pkgsNo'].errors?.['required']">Please enter package
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['pkgsNo'].errors?.serverError">{{
+                                f['pkgsNo'].errors.serverError}}</small>
+                        </div>
+
+
+                       </td>
+                        <td><input type="text" formControlName="Actualwt" class="form-control inputClass"></td>
+                        <td><input type="text" formControlName="tentativeClaimAmt" class="form-control inputClass" 
+                            [ngClass]="{'is-invalid':submitted && f['tentativeClaimAmt'].errors}">
+                        
+                            <div *ngIf="submitted && f['tentativeClaimAmt'].errors">
+                                <small class="text-danger" *ngIf="f['tentativeClaimAmt'].errors?.['required']">Please enter
+                                    tentativeClaimAmt
+                                </small>
+                                <small class="text-danger" *ngIf="f['tentativeClaimAmt'].errors?.serverError">{{
+                                    f['tentativeClaimAmt'].errors.serverError}}</small>
+                            </div>
+                        
+                        
+                        </td>
+                        <td><input type="text" formControlName="remark" class="form-control inputClass"></td>
+                        <td>
+                            <ng-select class="ngselectClass" placeholder="Country Select"
+                                formControlName="arrivalCondition" appendTo="body" [searchable]="true"
+                                [clearable]="true" [ngClass]="{'is-invalid':submitted && f['arrivalCondition'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                                    *ngFor="let item of arrivalConditionList "><span
+                                        [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['arrivalCondition'].errors">
+                                <small class="text-danger" *ngIf="f['arrivalCondition'].errors?.['required']">Please select
+                                    arrivalCondition
+                                </small>
+                                <small class="text-danger" *ngIf="f['arrivalCondition'].errors?.serverError">{{
+                                    f['arrivalCondition'].errors.serverError}}</small>
+                            </div>
+                        </td>
+                        <td>
+                            <ng-select class="ngselectClass" placeholder="Select Warehouse "
+                                formControlName="arrivalCondition" appendTo="body" [searchable]="true"
+                                [clearable]="true" [ngClass]="{'is-invalid':submitted && f['arrivalCondition'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option  [value]="item.id"
+                                    *ngFor="let item of WarehouseList">{{item.type}}</ng-option>
+                            </ng-select>
+                        
+                        </td>
+                        <td>
+
+                            <ng-select class="ngselectClass" placeholder="Select Delivery Process" formControlName="delyProcess"
+                                appendTo="body" [searchable]="true" [clearable]="true" (change)="filterOne($event)"
+                                [ngClass]="{'is-invalid':submitted && f['delyProcess'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                                    *ngFor="let item of delyProcesslist">
+                                    <span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['delyProcess'].errors">
+                                <small class="text-danger" *ngIf="f['delyProcess'].errors?.['required']">Please select
+                                    delyProcess
+                                </small>
+                                <small class="text-danger" *ngIf="f['delyProcess'].errors?.serverError">{{
+                                    f['delyProcess'].errors.serverError}}</small>
+                            </div>
+                       
+                       
+                        </td>
+
+
+                    </tr>
+                <tr>
+                        <td colspan="16" class="border-top">
+  <div class="tablebgbotttom" *ngIf="this.formMaster.controls['delyProcess'].value==1786"> 
+    <div class="row" style="width: 45%;">                      
+<div class="col-lg-4">
+          <div class="row">
+           <label for="inputText" class=" col-sm-5 col-lg-5 col-form-label" style="padding-right: 2px; margin-left: 0px;">Delivery Date & Time:</label>
+           <div class=" col-sm-7 col-lg-7" style="padding-left: 1px; margin-left: 0px;">
+              <input type="datetime-local" class="form-control" formControlName="deliveryDate">
+              <div *ngIf="submitted && f['deliveryDate'].errors">
+                <small class="text-danger" *ngIf="f['deliveryDate'].errors?.['required']">Please select
+                    deliveryDate
+                </small>
+                <small class="text-danger" *ngIf="f['deliveryDate'].errors?.serverError">{{
+                    f['deliveryDate'].errors.serverError}}</small>
+            </div>
+   
+            </div>
+
+</div>
+</div>
+<div class="col-lg-4">
+    <div class="row" >
+     <label for="inputText" class=" col-sm-2 col-lg-2 col-form-label">Reason:</label>
+     <div class=" col-sm-10 col-lg-10">
+        <ng-select  placeholder="Select Reason"
+        formControlName="delayReasonId" appendTo="body" [searchable]="true" [clearable]="true"
+        [ngClass]="{'is-invalid':submitted && f['delayReasonId'].errors}">
+        <ng-option value="" selected>Select</ng-option>
+        <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+            *ngFor="let item of delayReasonIdList "><span
+                [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+    </ng-select>
+    <div *ngIf="submitted && f['delayReasonId'].errors">
+        <small class="text-danger" *ngIf="f['delayReasonId'].errors?.['required']">Please select
+            delayReasonId
+        </small>
+        <small class="text-danger" *ngIf="f['delayReasonId'].errors?.serverError">{{
+            f['delayReasonId'].errors.serverError}}</small>
+    </div>
+</div>
+
+</div>
+</div>
+<div class="col-lg-4">
+    <div class="row">
+     <label for="inputText" class=" col-sm-4 col-lg-4 col-form-label">Responsible Person:</label>
+     <div class=" col-sm-8 col-lg-8">
+        <ng-select class="inputClass" placeholder="Country Select" formControlName="delayPerson"
+        appendTo="body" [searchable]="true" [clearable]="true"
+        [ngClass]="{'is-invalid':submitted && f['delayPerson'].errors}">
+        <ng-option value="" selected>Select</ng-option>
+        <ng-option [disabled]='!item.isActive' [value]="item.userId"
+            *ngFor="let item of usermasterlist "><span
+                [title]="item.name">{{item.name}}</span></ng-option>
+    </ng-select>
+        <div *ngIf="submitted && f['delayPerson'].errors">
+            <small class="text-danger" *ngIf="f['delayPerson'].errors?.['required']">Please select
+                delayPerson
+            </small>
+            <small class="text-danger" *ngIf="f['delayPerson'].errors?.serverError">{{
+                f['delayPerson'].errors.serverError}}</small>
+        </div>
+</div>
+
+</div>
+</div>
+</div> 
+</div>                         </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="row">
+            <div class="text-center mt-4 mb-2">
+                <button type="button" (click)="goTOStockUpdate()"
+                    class="btn btn-primary rounded-pill btn-sm btn-padding">Go to Stock Update</button>
+            </div>
+
+        </div>
+    </form>
+</div>

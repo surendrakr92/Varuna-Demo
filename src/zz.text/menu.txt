@@ -1,0 +1,52 @@
+<ng-template [ngIf]="item.subMenuNewEntities">
+  <ul class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+    <li *ngFor="let subItem of item.subMenuNewEntities">
+      <a [routerLink]="[subItem.actionURL]" [routerLinkActive]="['active']">
+        <i class="{{subItem.icon}}"></i><span>{{subItem.actionName}}</span>
+      </a>
+      <ng-template [ngIf]="subItem.subMenuNewEntities">
+        <app-recursive-menu [menuItems]="subItem.subMenuNewEntities"></app-recursive-menu>
+      </ng-template>
+    </li>
+  </ul>
+</ng-template>
+<li *ngFor="let item of menuItems" routerLinkActive="active">
+  <a [routerLink]="[item.webPagePath]" [routerLinkActive]="['active']"
+     (click)="setupActionHandler(item)">
+    <i class="{{item.icon}}"></i><span>{{item.menuCaption}}</span>
+  </a>
+  <ng-template [ngIf]="item.subMenuNewEntities">
+    <ul class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+      <li *ngFor="let subItem of item.subMenuNewEntities">
+        <a [routerLink]="[subItem.actionURL]" [routerLinkActive]="['active']">
+          <i class="{{subItem.icon}}"></i><span>{{subItem.actionName}}</span>
+        </a>
+      </li>
+    </ul>
+  </ng-template>
+</li>
+<ul class="sidebar-nav" id="sidebar-nav">
+  <li class="nav-item" [ngClass]="{'show': $menu === 'Master'}">
+    <a class="nav-link" data-bs-target="#components-nav" data-bs-toggle="collapse">
+      <i class="bi bi-people"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
+    </a>
+    <div id="components-nav" class="nav-content collapse" data-bs-parent="#sidebar-nav">
+      <ul>
+        <li *ngFor="let item of menuItems" routerLinkActive="active">
+          <a [routerLink]="[item.webPagePath]" [routerLinkActive]="['active']" (click)="setupActionHandler(item)">
+            <i class="{{item.icon}}"></i> <span>{{item.menuCaption}}</span>
+          </a>
+        </li>
+      </ul>
+    </div>
+  </li>
+</ul>
+
+previous///
+ <li *ngFor="let item of menuItems"routerLinkActive="active">
+               <a [routerLink]="[item.webPagePath]" [routerLinkActive]="['active']"
+               (click)="setupActionHandler(item)">
+                  <i class="{{item.icon}}"></i><span>{{item.menuCaption}}
+                  </span>
+               </a>
+            </li>

@@ -1,0 +1,75 @@
+<div class="main-contianer">
+    <span class="float-left title">
+       <a routerLink="/master/main-and-sub-event-master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+    </span>
+    <span class="float-end title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+    </span>
+    <h5 class="card-title">New Event Mapping Master
+    </h5>
+  <form [formGroup]="formMaster">
+       <div class="row">
+
+        <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Event<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="eventDesc"
+                     [ngClass]="{'is-invalid':submitted && f['eventDesc'].errors}" >
+
+                  <div *ngIf="submitted && f['eventDesc'].errors">
+                     <small class="text-danger" *ngIf="f['eventDesc'].errors?.['required']">please enter event descriptions</small>
+                    
+                     <small class="text-danger" *ngIf="f['eventDesc'].errors?.serverError">{{
+                        f['eventDesc'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+      
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Sequence for Next Event<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+           <input  type="text"  class="form-control" formControlName="next_Events"  [ngClass]="{'is-invalid':submitted && f['next_Events'].errors}">
+
+                  <div *ngIf="submitted && f['next_Events'].errors">
+                     <small class="text-danger" *ngIf="f['next_Events'].errors?.['required']">select event type</small>
+                  <small class="text-danger" *ngIf="f['next_Events'].errors?.serverError">{{
+                        f['next_Events'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+        
+     
+         
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">	Status
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <div class="form-check form-switch p-2">
+                      <input type="checkbox" class="form-check-input" formControlName="isActive">
+                      <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                         f['isActive'].errors?.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="row pb-2">
+             <div class="col-lg-12">
+                <div class="float-end">
+    
+                   <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                      (click)="submit()">Submit</button>
+                </div>
+             </div>
+    
+          </div>
+       </div>
+      
+    </form>
+ 
+ </div>

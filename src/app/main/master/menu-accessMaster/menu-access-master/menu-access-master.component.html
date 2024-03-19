@@ -1,0 +1,89 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+      </span>
+      <span class="float-end title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon "></i> </a>
+      </span>
+   </div>
+   <form [formGroup]="formMaster">
+      <div class="display3">
+         <h5 class="card-title flex-fill">Menu Access
+         </h5>
+         <div class="m-1">
+            <ng-select class="pb-2 " placeholder="Select Role" formControlName="roleId" style="width: 150px; "
+               [searchable]="true" [clearable]="true" [ngClass]="{'is-invalid':submitted && fs['roleId'].errors}"
+               (change)="bindMenu($event)">|
+               <ng-option value="" Selected>Select</ng-option>
+               <ng-option [value]="item" *ngFor="let item of RoleMenuList ">{{item.roleName}}</ng-option>
+            </ng-select>
+            <div *ngIf="submitted && fs['roleId'].errors">
+               <small class="text-danger" *ngIf="fs['roleId'].errors?.['required']">Please enter user
+                  Type</small>
+               <small class="text-danger" *ngIf="fs['roleId'].errors?.serverError">{{
+                  fs['roleId'].errors.serverError}}</small>
+            </div>
+         </div>
+         <button class="btn btn-primary text-white m-1 btn-sm" (click)="onSaveChanges()" placement="bottom">
+           Save Changes
+         </button>
+         <button class="btn btn-outline-dark btn-sm" (click)="onReset()" placement="bottom">
+            Cancel
+         </button>
+      </div>
+   </form>
+   <div class="row" *ngFor="let data of roleMenuDetailById; index as j">
+      <div class="col-lg-6 bg-primary-light pt-2">
+         <h5>{{data?.webPageName}}</h5>
+      </div>
+      <div class="col-lg-6 bg-primary-light pt-2">
+         <h5>Access</h5>
+      </div>
+      <div class="accordion" id="accordionExample" *ngIf="selectroleDetails">
+         <div class="accordion-item" *ngFor="let item of data.childMenus; index as i">
+            <h2 class="accordion-header" id="heading{{i}}">
+               <button class="accordion-button collapsed sidemenu" type="button" data-bs-toggle="collapse"
+                  (click)="menuHandler(item, i)" [attr.data-bs-target]="'#collapse' + i + 'menu' + j"
+                  aria-expanded="false" [attr.aria-controls]="'collapse' + i" data-bs-parent="#accordionExample">
+                  <!-- Your button content here -->
+               </button>
+               <div class="row display" style="width: 100%; position: relative;">
+                  <div class="col-lg-6 moduMasterCss">
+                     <h5>{{item.menuCaption}} </h5>
+                  </div>
+                  <div class="col-lg-6 display4">
+
+                     <div class="form-check form-switch">
+                        <input type="checkbox" [ngModel]="this.allChecker(item.subMenuNewEntities)" #allCheck
+                           (change)="allAllowedHandler(item,allCheck.checked,i,j)">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">All</label>
+                     </div>
+                     <div class="form-check form-switch">
+                        <input type="checkbox" disabled [ngModel]="this.someCheker(item.subMenuNewEntities)">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">Some</label>
+                     </div>
+                     <div class="form-check form-switch">
+                        <input type="checkbox" [ngModel]="this.nonechecker(item.subMenuNewEntities)" #nonChecK
+                           (change)="NoneAllowedHandler(item,nonChecK.checked,i,j)">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">None</label>
+                     </div>
+                  </div>
+               </div>
+            </h2>
+            <div id="collapse{{i}}menu{{j}}" class="accordion-collapse collapse" [attr.aria-labelledby]="'heading' + i"
+               data-bs-parent="#accordionExample">
+               <div class="row accordion-body">
+                  <div class="col-lg-3" *ngFor="let data of item.subMenuNewEntities; index as j">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" [(ngModel)]="data.isActionRight" #singleCheck
+                           (change)="singleSetBoo(data, singleCheck.checked, i, j)">
+                        <label class="form-check-label" for="flexSwitchCheckChecked">{{data.actionName}}</label>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>

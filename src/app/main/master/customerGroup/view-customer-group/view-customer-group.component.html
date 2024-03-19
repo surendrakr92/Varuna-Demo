@@ -1,0 +1,65 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/customer-group">
+            <i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Country Group" placement="right"></i>
+         </a>
+      </span>
+      <span class="float-end title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Customer Group Master</h5>
+      <span class="title">
+         <a (click)="download_pdf_print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="row" id="viewData_information">
+
+      <div class="col-lg-12">
+
+         <div class="row p-1 bgborder">
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Group Code:</strong><span>
+                     {{customerGroupDetailsById?.groupCode}}</span></label>
+
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Group
+                     Name:</strong><span>{{customerGroupDetailsById?.groupName}}</span></label>
+
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Is this main group:</strong><span> {{customerGroupDetailsById?.isMainGroup
+                     ?'Yes':'No'}}</span></label>
+
+
+            </div>
+
+            <div class="col-lg-4">
+               <label for="inputText"><strong> Created Date:</strong><span> {{customerGroupDetailsById?.createdOn | date
+                     }}</span></label>
+
+            </div>
+
+            <div class="col-lg-4">
+               <div class="row ">
+                  <label for="inputText"><strong>Status: </strong><span>
+                        {{customerGroupDetailsById?.isActive?'Active':'InActive'}}</span></label>
+
+               </div>
+            </div>
+
+
+
+         </div>
+
+
+      </div>
+
+
+   </div>

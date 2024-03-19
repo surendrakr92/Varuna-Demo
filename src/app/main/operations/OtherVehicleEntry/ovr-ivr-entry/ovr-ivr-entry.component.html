@@ -1,0 +1,297 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/Operations"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Operations "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">OVR/IVR ENTRY 
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create OVR/IVR ENTRY" placement="bottom"
+            routerLink="/Operations/ovr-ivr-entry/create-ovr-ivr-entry"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" (click)="modelOpen(modelmsg)" ngbTooltip="Download List"
+            placement="bottom" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"  #MyTable  
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>From Location</th>
+               <th>To Location </th>
+                <th>To Location 1st point</th>
+                <th>To Location Last Point</th>
+                <th>FTL Type</th>
+                <th>Loadability</th>
+               <th>No. of Vehicle</th>
+               <th>Transporter Name</th>
+                <!-- <th>Status</th> -->
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of vehicleList;index as i;">
+               <td>{{i+1}}</td>
+            
+               
+             <td>{{item.fromLocation}}</td>
+               <td>{{item.toLocation}}</td>
+               <td>{{item.firstLocation}}</td>
+               <td>{{item.toLocation}}</td>
+               <td>{{item.ftlType}}</td>
+               <td>{{item.loadability}}</td>
+               <td>{{item.vehicleNo}}</td>
+               <td>{{item.transported}}</td> 
+              <!-- <td> <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{item.isActive?'Active':'Inactive'}}</span>
+               </td> -->
+               <td class="display2">
+                  <!-- <a routerLink="/master/address-master/view-address-master/{{item.addressId}}" ngbTooltip="View "
+                     placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a> -->
+                  <a  ngbTooltip="Edit " placement="bottom" class="edit"
+                  (click)="redirectionEdit(item)"><i
+                        class="bi bi-pen-fill pr"></i></a>
+
+                  <!-- <a ngbTooltip="Active/Inactive " placement="bottom" class="delete">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                           (click)="activeInactive(item.addressId)" checked>
+                     </div>
+                  </a> -->
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+
+
+<!-- popup confirm-->
+<ng-template #modelmsg let-modal>
+   <div class="modal-header qut-hd">
+      <h6 class="modal-title" id="exampleModalCenterTitle">Report By Filtering</h6>
+      <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+         aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+         aria-hidden="true" class="fa fa-times"></i></button>
+   </div>
+   <div class="modal-body" tabindex="0" ngbAutofocus>
+      <form [formGroup]="formMaster">
+         <div class="row">
+      <div class="col-lg-4">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Type </label>
+            <div class=" col-sm-12 col-lg-12 has-validation">
+               <ng-select placeholder="Select Document" formControlName="typeId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['typeId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.generalId" *ngFor="let item of TypeList ">{{item.codeDesc}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['typeId'].errors">
+                  <small class="text-danger" *ngIf="f['typeId'].errors?.['required']">Please select
+                     document
+                  </small>
+                  <small class="text-danger" *ngIf="f['typeId'].errors?.serverError">{{
+                     f['typeId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-4">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Zone</label>
+            <div class=" col-sm-12 col-lg-12 has-validation">
+               <ng-select placeholder="Select Customer Type" formControlName="zoneId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['zoneList'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.zoneId"
+                     *ngFor="let item of zoneList ">{{item.zoneName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['zoneList'].errors">
+                  <small class="text-danger" *ngIf="f['zoneList'].errors?.['required']">please select zone
+                   
+                  </small>
+                  <small class="text-danger" *ngIf="f['zoneList'].errors?.serverError">{{
+                     f['zoneList'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-4">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Group</label>
+            <div class=" col-sm-12 col-lg-12 has-validation">
+               <ng-select placeholder="Select Customer Type" formControlName="customerGroupId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['customerGroupId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.generalId"
+                     *ngFor="let item of customerTypeList ">{{item.codeDesc}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['customerGroupId'].errors">
+                  <small class="text-danger" *ngIf="f['customerGroupId'].errors?.['required']">Please select customer
+                     type
+                  </small>
+                  <small class="text-danger" *ngIf="f['customerTypeId'].errors?.serverError">{{
+                     f['customerGroupId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-4">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Name </label>
+            <div class=" col-sm-12 col-lg-12 has-validation">
+               <ng-select placeholder="select customer name" formControlName="customerId" [searchable]="true"
+                  [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['customerId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.custId" *ngFor="let item of customerList ">{{item.custGroupName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['customerId'].errors">
+                  <small class="text-danger" *ngIf="f['customerId'].errors?.['required']">Please select customer name
+                  </small>
+                  <small class="text-danger" *ngIf="f['customerId'].errors?.serverError">{{
+                     f['customerId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+<div class="col-lg-4">
+   <div class="row">
+   <div class="col-lg-6" style="padding-right: 1px;">
+      <div class="form-group ">
+         <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From Date</label>
+         <div class=" col-sm-12 col-lg-12 has-validation">
+            <input type="date" class="form-control" [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}"> 
+
+            <div *ngIf="submitted && f['fromDate'].errors">
+               <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please select customer name
+               </small>
+               <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                  f['fromDate'].errors.serverError}}</small>
+            </div>
+         </div>
+         
+      </div>
+   </div>
+   <div class="col-lg-6" style="padding-left: 1px;">
+      <div class="form-group ">
+         <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To Date </label>
+         <div class=" col-sm-12 col-lg-12 has-validation">
+            <input type="date" class="form-control" [ngClass]="{'is-invalid':submitted && f['toDate'].errors}"> 
+
+            <div *ngIf="submitted && f['toDate'].errors">
+               <small class="text-danger" *ngIf="f['toDate'].errors?.['required']">Please select customer name
+               </small>
+               <small class="text-danger" *ngIf="f['toDate'].errors?.serverError">{{
+                  f['toDate'].errors.serverError}}</small>
+            </div>
+         </div>
+         
+      </div>
+   </div>
+</div>
+</div>
+<div class="col-lg-4">
+   <div class="form-group ">
+      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Branch </label>
+      <div class=" col-sm-12 col-lg-12 has-validation">
+       <ng-select placeholder="select customer name" formControlName="branchId" [searchable]="true"
+            [clearable]="true"
+            [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item.branchId" *ngFor="let item of branchUser ">{{item.branchName}}</ng-option>
+         </ng-select>
+      </div>
+   </div>
+</div>
+      </div>
+
+      <div class="row">
+         <div class="text-center pt-3 pb-2">
+            <button type="submit" (click)="OnFilter()"
+               class="btn btn-primary rounded-pill btn-sm btn-padding ">Filter</button>
+         </div>
+      </div>
+   </form> 
+
+      <br>
+      <div class="table-responsive">
+      <table class="table table-report table-hover dataTable no-footer">
+<thead class="bg-secondary text-white">
+   <tr>
+<th>S. No.</th>
+<th>Customer</th>
+<th>Customer Address</th>
+<th>Transporter Name</th>
+<th>From Loc</th>
+<th>From Cluster</th>
+<th>From Sub-cluster</th>
+<th>To loc1</th>
+<th>To loc1 Cluster</th>
+<th>To loc1 Sub-Cluster</th>
+<th>To Loc2</th>
+<th>To loc2 Cluster</th>
+<th>To loc2 Sub-Cluster</th>
+<th>FTL Type</th>
+<th>Load-ability</th>
+<th>No. Of Vehicles</th>
+<th>Loading Date</th>
+<th>Updated By</th>
+<th>Updates On</th>
+
+   </tr>
+</thead>
+<tbody>
+   <tr class="zoom-in" *ngFor="let Item of branchUser; index as i;">
+      <td>{{i+1}}</td>
+    
+      <td>{{Item.customer}}</td>
+      <td>{{Item.customerAddress}}</td>
+    <td>{{Item.custName}}</td>
+    
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td></td> 
+
+   </tr>
+</tbody>
+      </table>
+   </div>
+   </div>
+</ng-template>
+<!-- close popup confirm-->
+
+
+
+</div>

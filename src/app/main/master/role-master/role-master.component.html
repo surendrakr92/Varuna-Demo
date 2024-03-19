@@ -1,0 +1,107 @@
+<!-- <button type="button"
+(click)="openModal(modalmsg)">CLick Here</button>
+
+<ng-template #modalmsg let-modal>
+    <div class="modal-header qut-hd">
+        <h6 class="modal-title" id="exampleModalCenterTitle">Conformation </h6>
+        <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        <button type="button" rippleeffect="" class="btn btn-icon"
+            (click)="modal.dismiss('Cross click')"><i aria-hidden="true" class="fa fa-times"></i></button>
+    </div>
+
+    <div class="modal-body" tabindex="0" ngbAutofocus>
+
+        <h6 class="text-center">
+            
+            <span>Your response for the request no <b>123456</b></span>
+            <br>
+            <span> success</span>
+
+        </h6>
+      
+            <div class="modal-footer">  
+     
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                (click)="confirmModal()">Cancel</button>
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                (click)="NO()">Ok</button>
+       
+        </div>
+    
+
+    </div>
+
+</ng-template>
+ -->
+
+ <div class="main-contianer">
+
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" placement="bottom" ngbTooltip="Back to master "
+             ></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+    <div class="display">
+       <h5 class="card-title">Role Master List
+       </h5>
+       <div class="pb-2">
+                   <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Role Master" placement="bottom" routerLink="/master/role-master/create-role-master"><i
+             class="bi bi-plus-lg "></i> Create </button>
+             <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+            ngbTooltip="Download List" placement="bottom" type="button" >
+            <i class="bi bi-download"></i>
+         </button>
+       </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       id="MyTable" #MyTable>
+       <thead class="bg-secondary text-white">
+             <tr>
+                <th>Sr. No.</th>
+                <th>Role Name</th>
+                <th>Role Description</th>
+                <th>Allow Name Edit</th>
+                <th>is Active</th>
+                <th>Action</th>
+             </tr>
+          </thead>
+          <tbody >
+             <tr class="zoom-in" *ngFor="let Item of rolemasterList; let i=index" >
+                <td>{{i+1}}</td>
+                <td>{{Item.roleName}}</td>
+                <td>{{Item.description}}</td>
+                <td>
+                  <span class="{{Item.allowNameEdit ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                     {{Item.allowNameEdit?'Active':'Inactive'}}</span>
+                </td>
+                <td>  <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                   {{Item.isActive?'Active':'Inactive'}}</span>
+             </td>
+                <td class="display2">
+                   <a routerLink="/master/role-master/view-role-master/{{Item.roleId}}"  ngbTooltip="View" placement="bottom" class="view"><i
+                         class="bi bi-eye-fill pr"></i></a>
+                   <a routerLink="/master/role-master/update-role-master/{{Item.roleId}}" ngbTooltip="Edit" placement="bottom"  class="edit"><i
+                         class="bi bi-pen-fill pr"></i></a>
+                  <a ngbTooltip="Active/Inactive" placement="bottom"  class="delete">
+                      <div class="form-check form-switch ">
+                         <input type="checkbox" class="form-check-input" 
+                         *ngIf="Item.isActive==true"
+                            (click)="activeInactive(Item.roleId)" checked >
+                      </div>
+                   </a>
+                </td>
+             </tr>
+ 
+          </tbody>
+       </table>
+    </div>
+ </div>

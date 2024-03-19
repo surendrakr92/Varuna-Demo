@@ -1,0 +1,193 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Labour Master Approved</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row">
+      <!-- <div class="card-title bgcolortitle text-center"> Labour Master</div> -->
+      <form [formGroup]="formMaster">
+         <div class="row  mt-2 d-flex justify-content-center">
+            <div class="col-lg-10">
+               <div class="row">
+                  <div class="col-lg-6">
+                     <div class="row ">
+                        <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"><span class="float-end">Customer
+                              Name and Code<span class="text-danger">*</span></span></label>
+                        <div class=" col-sm-7 col-lg-7" style="padding-left: 0px;">
+                           <ng-select class="pb-2  " placeholder="Customer Name and Code" formControlName="custId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.custId" *ngFor="let item of customerMasterList"
+                                 [disabled]='!item.isActive'>{{item.custName}} {{item.custCode}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custId'].errors">
+                              <small class="text-danger" *ngIf="f['custId'].errors?.['required']">please
+                                 Select cusotmer
+                              </small>
+                              <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                                 f['custId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="row ">
+                        <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"><span class="float-end">Lane
+                              Type</span></label>
+                        <div class=" col-sm-8 col-lg-8" style="padding-left: 0px;">
+                           <ng-select class="pb-2  " placeholder="Lane Type Select" formControlName="activeType"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['activeType'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.id" *ngFor="let item of lanType"> {{item.type}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['activeType'].errors">
+                              <small class="text-danger" *ngIf="f['activeType'].errors?.['required']">please select
+                                 lane type
+                              </small>
+                              <small class="text-danger" *ngIf="f['activeType'].errors?.serverError">{{
+                                 f['activeType'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-2">
+                     <div class="row ">
+                        <!-- <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"></label> -->
+                        <div class=" col-sm-12 col-lg-12" style="padding-left: 0px;">
+                           <button (click)="showExistingTables()" type="button"
+                              class="btn btn-primary rounded-pill btn-padding2  btn-sm">Show Existing Lane </button>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <div class="table-responsive">
+         <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>
+                     <div class="form-check checkbox" style="margin-top: -16px;">
+                        <input type="checkbox" id="gridCheck4" style="width: 15px; height: 15px;" #cehccc
+                           (change)="checkAllrelvent(cehccc.checked)" class="form-check-input">
+                     </div>
+                  </th>
+                  <th>Lane ID</th>
+                  <th>From City</th>
+                  <th>To City</th>
+                  <th>Vehicle Type</th>
+                  <th>Load Type</th>
+                  <th>Rate Type Load</th>
+                  <th>Type</th>
+                  <th>Update Rate</th>
+                  <th>Approved Status</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr *ngFor="let item of labourDetailsByCustId ; index as i">
+                  <td>
+                     <div class="form-check checkbox">
+                        <input type="checkbox" id="gridCheck4" style="width: 15px; height: 15px;" #checSing
+                           [(ngModel)]="item.checked" class="form-check-input"
+                           (change)="singleCheckRel(checSing.checked,i,item)">
+                     </div>
+                  </td>
+                  <td style="width: 250px;">
+                     {{item.laneId}}
+                  </td>
+                  <td>{{item?.fromlocName??'NA'}}</td>
+                  <td>{{item?.tolocName??'NA'}}</td>
+                  <td>{{item?.ftltypecode??'NA'}}</td>
+                  <td>{{item?.loadability??'NA'}}</td>
+                  <td>{{item?.ratetypeload??'NA'}}</td>
+                  <td>
+                     Loading
+                  </td>
+                  <td>
+
+                     <a (click)="modelOpen(modelmsg,item)" ngbTooltip="View " placement="bottom" class="view"><i
+                           class="bi bi-eye-fill pr"></i></a>
+                      </td>
+                  <td>
+                     <div class="col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Approved Status Select" appendTo="body"
+                           [searchable]="true" style="width: 144px" [clearable]="true" [ngModel]="1" 
+                           (change)=issueSUbmission($event,i)
+                           [ngClass]="{'is-invalid':submitted && f['approvedStatus'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.id" *ngFor="let item of approvedStatus ">{{item.type}}</ng-option>
+
+                        </ng-select>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+
+         <div class="row mt-1 mb-1">
+            <div class="text-center"*ngIf="this.setupJson.length>0">
+               <button type="button" class="btn btn-primary rounded-pill btn-padding "
+               (click)="jsonSubmission()">Submit </button>
+            </div>
+
+         </div>
+      </div>
+   </div>
+      <!-- popup confirm-->
+      <ng-template #modelmsg let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Labour Master List</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon"
+               (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                  class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <div class="row p-1">
+               <table class="table table-bordered table-hover">
+                  <thead class="bg-secondary text-white">
+                     <tr>
+                        <th>Serial No</th>
+                        <th>Term</th>
+                        <th>Paybasis</th>
+                        <th>Proposed Labour Charges</th>
+                        <th>Dalla Charges</th>
+                        <th>Dalla Pay Basis</th>
+                        <th>From Date</th>
+                        <th>To Date</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of popLabourListD?.labourChargeDet ; index as i">
+                        <td>{{i+1}}</td>
+                        <td>{{item.term}}</td>
+                        <td>{{item.payBasis}}</td>
+                        <td>{{item.proposedLabourCharges}}</td>
+                        <td>{{item.dallaCharges}}</td>
+                        <td>{{item.dallaPayBasis}}</td>
+
+                        <td>{{item?.fromDate | date:'dd/MM/yyyy'}}</td>
+                        <td>{{item?.toDate | date:'dd/MM/yyyy'}}</td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+
+
+         </div>
+      </ng-template>
+</div>

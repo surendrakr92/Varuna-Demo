@@ -1,0 +1,72 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">SOP List
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create Upload SOP" placement="bottom"
+            routerLink="/master/manage-sop/upload-sop/"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" (click)="downloadExcel(MyTable)" ngbTooltip="Download List"
+            placement="bottom" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Project </th>
+               <th>File Name</th>
+               <th>Module Name</th>
+               <th>Description</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of manageList; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{item.customer}}</td>
+               <td>{{item.sopFileName}}</td>
+               <td>{{item.moduleName}}</td>
+               <td>{{item.sopDescription}}</td>
+               <td><span class="{{item.isActive ?'Successbg':' warningbg'}}">
+                  {{item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2">
+                  <a ngbTooltip="view" routerLink="/master/manage-sop/view-manage/{{item.sopFileId}}" placement="bottom" class="view"
+                  ><i
+                        class="bi bi-eye-fill pr"></i></a> 
+                  <a ngbTooltip="Edit " placement="bottom" class="edit"><i class="bi bi-pen-fill pr"
+                        (click)="redirectEdit(item.sopFileId)"></i></a>
+                  <a ngbTooltip="Active/Inactive " placement="bottom" class="delete" 
+                     (click)="activeInactive(item.sopFileId)">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input"  *ngIf="item.isActive==true" checked>
+                     </div>
+                  </a>
+
+
+
+
+
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

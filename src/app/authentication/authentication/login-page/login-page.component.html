@@ -1,0 +1,67 @@
+
+
+<div class="card mb-3">
+   <div class="card-body" style="min-height: 30vh;">
+      <div class="pt-4 pb-2">
+         <h5 class="card-title text-center pb-0 fs-4">Login to Your Account</h5>
+         <p class="text-center small">Enter your username & password to login</p>
+      </div>
+      <form class="row g-3" [formGroup]="formvalidate" (ngSubmit)="onsubmit()">
+         <div class="col-12"  style="position: relative;">
+            <label for="yourUsername" class="form-label">Username</label>
+            <div class="input-group has-validation">
+               <!-- <span class="input-group-text" id="inputGroupPrepend">@</span> -->
+               <input type="text" formControlName="username" class="form-control pr2"
+                  [ngClass]="{'is-invalid':submitted && f['username'].errors}">
+                  
+            </div>
+            <div *ngIf="f['username'].touched || submitted && f['username'].errors?.['required']">
+               <small class="text-danger" *ngIf="f['username'].errors?.['required']">Please enter your
+                  username</small>
+               <small class="text-danger" *ngIf="f['username'].errors?.['pattern']">Please enter valid user name</small>
+               <small class="text-danger" *ngIf="f['username'].errors?.serverError">{{
+                  f['username'].errors?.serverError}}</small>
+            </div>
+            <span class="userbutton">
+               <i class="bi bi-person-fill" ></i>
+              </span>
+         </div>
+         <div class="col-12" style="position: relative;">
+            <label for="yourPassword" class="form-label">Password</label>
+            <input [type]="password" formControlName="password" class="form-control pr2"
+            style="text-transform: none;"
+               [ngClass]="{'is-invalid':submitted && f['password'].errors}" >
+ <div *ngIf="f['password'].touched || submitted && f['password'].errors?.['required']">
+               <small class="text-danger" *ngIf="f['password'].errors?.['required']">Please enter your
+                  Password</small>
+               <small class="text-danger" *ngIf="f['password'].errors?.['pattern']">Please enter valid Password</small>
+               <small class="text-danger" *ngIf="f['password'].errors?.serverError">{{
+                  f['password'].errors?.serverError}}</small>
+
+            </div>
+            <span (click)="onClick()" class="eyebutton">
+               <i class="bi bi-eye-fill" aria-hidden="true" *ngIf="!show"></i>
+               <i class="bi bi-eye-slash-fill" aria-hidden="true" *ngIf="show"></i>
+            </span>
+         </div>
+         <div class="col-12">
+            <div class="form-check">
+               <input class="form-check-input" type="checkbox" name="remember" value="true" id="rememberMe">
+               <label class="form-check-label" for="rememberMe">&nbsp; Remember me</label>
+               <label class="form-check-label pull-right" for="rememberMe" style="float:right;"><a
+                     routerLink="/auth/forgotpassword"> Forgot Password?</a></label>
+            </div>
+         </div>
+         <div class="col-12">
+            <button class="btn btn-primary w-100" type="submit">Login</button>
+         </div>
+         <div class="col-12">
+            <p class="small mb-0" style="display: flex;justify-content: space-around;"><a data-bs-toggle="modal"
+                  data-bs-target="#TermsModal" type="button">Cookie Policy</a> <a data-bs-toggle="modal"
+                  data-bs-target="#TermsModal" type="button">Terms of Use</a> <a data-bs-toggle="modal"
+                  data-bs-target="#TermsModal" type="button">Privacy Policy</a></p>
+         </div>
+      </form>
+   </div>
+   <!-- <section class="yelloLine"></section> -->
+</div>

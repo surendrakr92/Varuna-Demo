@@ -1,0 +1,25 @@
+.jumbotron {
+    padding: 4rem 2rem;
+    background: #fff3cd;
+    margin: 0px 105px;
+}
+.listcls .form-check-input {
+    width: 0.8rem;
+    height: 0.8rem;
+    cursor: pointer;
+}
+.pointer{
+    cursor: pointer;
+    font-size: 15px;
+}
+.removeFile{
+    position: absolute;
+    // left: 117px;
+    right: 0;
+    top: -11px;
+    cursor: pointer;
+    color: #fff;
+    font-size: revert;
+    background: #000000a3;
+    
+  }

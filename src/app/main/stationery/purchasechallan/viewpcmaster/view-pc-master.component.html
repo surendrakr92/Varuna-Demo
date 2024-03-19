@@ -1,0 +1,50 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/stationery/purchase-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Purchase Master List" placement="right"></i> </a>
+       </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="display">
+       <h5 class="card-title">Purchase Challan Master</h5>
+       <span class="title">
+         <a  (click)="download_pdf_print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i> </a>
+           </span>
+    </div>
+    <div class="row " >
+       <div class="col-lg-12">
+          <div class="row p-1 bgborder" id="viewData_information">
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Vendor:</strong><span>{{challanDetailsById.vendorId}} </span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Challan No:</strong><span>{{challanDetailsById.challanNo}} </span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Date of Receipt:</strong><span>{{challanDetailsById.challanDate}} </span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Location:</strong><span>{{challanDetailsById.locationId}} </span></label>
+            </div>
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Item:</strong><span>{{challanDetailsById.itemName}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>	Quantity:</strong><span>{{challanDetailsById.qty}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Sr no from:</strong><span>{{challanDetailsById.serialStart}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Sr no to:</strong><span>{{challanDetailsById?.serialEnd}}</span></label>
+             </div>
+        
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Active:</strong><span> {{challanDetailsById.isActive?'Active':'In-Active'}}</span></label>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>

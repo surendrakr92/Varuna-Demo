@@ -1,0 +1,226 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/stationery/branchemp-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Stationery Issue Master List" placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">Create Stationery Issue</h5>
+   <!-- <div class="row">
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+               Branch - {{branchname}}({{branchid}})</label>
+         </div>
+      </div>
+   </div> -->
+</div>
+<form action="" [formGroup]="formIssueMaster">
+   <div class="row">
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Issue Date
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="issueDate">
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Issue to Branch
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select branch" formControlName="issuedToBranch" [searchable]="true"
+                  (change)='onIssueBranchSelected($event)' [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['issuedToBranch'].errors}">
+                  <ng-option value="0" selected>Select</ng-option>
+                  <ng-option [value]="item.branchId" *ngFor="let item of branchCodeList"
+                     [disabled]='!item.isActive'>{{item.branchCode+":"+item.branchName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['issuedToBranch'].errors">
+                  <small class="text-danger" *ngIf="f['issuedToBranch'].errors?.['required']">Please select branch
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Issue to Employee
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Employee" formControlName="issuedToEmployee"
+                  (change)='onIssueEmpSelected($event)' [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['issuedToEmployee'].errors}">
+                  <ng-option value="0" selected>Select</ng-option>
+                  <ng-option [value]="item.userId" *ngFor="let item of userList"
+                     [disabled]='!item.isActive'>{{item.userCode+":"+item.name}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['issuedToEmployee'].errors">
+                  <small class="text-danger" *ngIf="f['issuedToEmployee'].errors?.['required']">Please select Employee
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <h5 class="card-title">List of Item </h5>
+      <form [formGroup]="formItemMaster">
+         <div class="row">
+            <div class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Item
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="hidden" formControlName="itemCode" />
+                     <input type="hidden" formControlName="itemName" />
+                     <input type="hidden" formControlName="qtyChange" />
+                     <input type="hidden" formControlName="getSerialStart" />
+                     <input type="hidden" formControlName="getSerialEnd" />
+                     <input type="hidden" formControlName="receiptDetailsIdList" />
+                     <ng-select class="pb-2 " placeholder="Select Item " (change)='onItemSelected($event)'
+                        formControlName="itemId" [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submittedItem && f2['itemId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.itemId" *ngFor="let item of itemList"
+                           [disabled]='!item.isActive'>{{item.itemCode+":"+item.itemName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submittedItem && f2['itemId'].errors">
+                        <small class="text-danger" *ngIf="f2['itemId'].errors?.['required']">Please select item code
+                        </small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Unit Type
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <select id="unitTypeId" name="unitTypeId" formControlName="unitTypeId" class="form-select"
+                        placeholder="Unit Type">
+                        <option value="-1" disabled>Select Unit Type</option>
+                        <option *ngFor="let item of unitTypeList" [value]="item.generalId">
+                           {{ item.codeDesc }}
+                        </option>
+                     </select>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Quantity
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="qty" (change)='onqtyChange($event)'
+                        [ngClass]="{'is-invalid':submittedItem && f2['qty'].errors}" maxlength="3"
+                        (selected)="onqtyChange($event)"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submittedItem && f2['qty'].errors">
+                        <small class="text-danger" *ngIf="f2['qty'].errors?.['required']">Please enter qty</small>
+                        <small class="text-danger" *ngIf="f2['qty'].errors?.serverError">{{
+                           f2['qty'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2" *ngIf="showMyContainerFrom">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Sr No from
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="serialStart"
+                        (change)='onSRStartSelected($event)' maxlength="10"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submitted && f2['serialStart'].errors">
+                        <small class="text-danger" *ngIf="f2['serialStart'].errors?.['required']">Please enter Sr no
+                           from
+                        </small>
+                        <!-- <small class="text-danger" *ngIf="f2['serialStart'].errors?.['pattern']">Invalid qty </small> -->
+                        <small class="text-danger" *ngIf="f2['serialStart'].errors?.serverError">{{f2['serialStart'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2" *ngIf="showMyContainerTo">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Sr No To
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="serialEnd" maxlength="10"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submitted && f2['serialEnd'].errors">
+                        <small class="text-danger" *ngIf="f2['serialEnd'].errors?.['required']">Please enter Sr no to </small>
+                        <!-- <small class="text-danger" *ngIf="f2['serialEnd'].errors?.  ['pattern']">Invalid Sr no to </small> -->
+                        <small class="text-danger" *ngIf="f2['serialEnd'].errors?.serverError">{{f2['serialEnd'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="float-end pt-4">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="onLocalAdd()">{{btnAdd}}</button>
+               </div>
+            </div>
+         </div>
+      </form>
+   </div>
+   <div class="row">
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">Item Details</h6>
+         <button type="button" class="clos-btn bg-light-blue">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon"><i aria-hidden="true"
+               class="fa fa-times"></i></button>
+      </div>
+      <div class="table-responsive">
+         <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>Sr. No. </th>
+                  <th>Item</th>
+                  <th>Quantity </th>
+                  <th>Sr no from </th>
+                  <th>Sr no to</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let item of empList; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.itemCode + ":"+item.itemName}}</td>
+                  <td>{{item.qty}}</td>
+                  <td>{{item.serialStart}}</td>
+                  <td>{{item.serialEnd}}</td>
+                  <td class="display2">
+                     <a (click)="redirectionEdit(item,i)" class="edit" ngbTooltip="Edit" placement="bottom"><i
+                           class="bi bi-pen-fill pr"></i></a>
+                     <a placement="bottom" class="delete" (click)="removeDetails(i)">
+                        <div class="form-check form-switch ">
+                           <i class="bi bi-trash3-fill"></i>
+                        </div>
+                     </a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="float-end">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="beSubmit()"
+               [disabled]="btnDisabled">Submit</button>
+         </div>
+      </div>
+   </div>
+</form>

@@ -1,0 +1,273 @@
+      <div class="main-contianer">
+         <div class="display">
+            <span class="title">
+               <a routerLink="/ticket/ticket-entry"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Item Master List" placement="right"></i> </a>
+           </span>
+            <span class="title">
+               <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+            </span>
+         </div>
+     
+         <h5 class="card-title">Ticket Entry</h5>
+        
+        
+     <form action="" [formGroup]="formTicketaster">
+        <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Department
+                <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="itemCode"
+                     [ngClass]="{'is-invalid':submitted && f['itemCode'].errors}" maxlength="5">
+                  <div *ngIf="submitted && f['itemCode'].errors">
+                     <small class="text-danger" *ngIf="f['itemCode'].errors?.['required']">Please enter manual item
+                     code</small>
+                     <small class="text-danger" *ngIf="f['itemCode'].errors?.['pattern']">Invalid manual item code</small>
+                     <small class="text-danger" *ngIf="f['itemCode'].errors?.serverError">{{
+                        f['itemCode'].errors.serverError}}</small>
+                
+                  </div>
+               </div>
+            </div>
+            </div>  
+
+
+       
+           <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Complaint Date
+                  <span class="text-danger">*</span> </label>
+               <div class=" col-sm-12 col-lg-12">
+               
+                     <input type="text" class="form-control"  formControlName="numberOfSheet"
+                     [ngClass]="{'is-invalid':submitted && f['numberOfSheet'].errors}">
+                  <div *ngIf="submitted && f['numberOfSheet'].errors">
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['required']">Please enter No of sheet
+                     Name</small>
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['pattern']">Invalid No of sheet Number</small>
+                        <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.serverError">{{
+                           f['numberOfSheet'].errors.serverError}}</small>
+                  </div>
+      
+      
+            
+               </div>
+            </div>
+         </div>
+ 
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Complaint Target Date
+                  <span class="text-danger">*</span> </label>
+               <div class=" col-sm-12 col-lg-12">
+               
+                     <input type="text" class="form-control"  formControlName="numberOfSheet"
+                     [ngClass]="{'is-invalid':submitted && f['numberOfSheet'].errors}">
+                  <div *ngIf="submitted && f['numberOfSheet'].errors">
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['required']">Please enter No of sheet
+                     Name</small>
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['pattern']">Invalid No of sheet Number</small>
+                        <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.serverError">{{
+                           f['numberOfSheet'].errors.serverError}}</small>
+                  </div>
+      
+      
+            
+               </div>
+            </div>
+         </div>    
+     
+
+ 
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Priority
+             <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code"
+               formControlName="categoryId"
+               [searchable]="true" [clearable]="true"
+               [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.generalId"*ngFor="let item of itemCodeList"
+               [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               
+               </ng-select>
+               <div *ngIf="submitted && f['categoryId'].errors">
+                  <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select priority
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Fleet Hub
+             <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code"
+               formControlName="categoryId"
+               [searchable]="true" [clearable]="true"
+               [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.generalId"*ngFor="let item of itemCodeList"
+               [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               
+               </ng-select>
+               <div *ngIf="submitted && f['categoryId'].errors">
+                  <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select fleet hub
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Complained By
+             <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code"
+               formControlName="categoryId"
+               [searchable]="true" [clearable]="true"
+               [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.generalId"*ngFor="let item of itemCodeList"
+               [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               
+               </ng-select>
+               <div *ngIf="submitted && f['categoryId'].errors">
+                  <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select item code
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Complained Mobile No
+               <span class="text-danger">*</span> </label>
+            <div class=" col-sm-12 col-lg-12">
+            
+                  <input type="text" class="form-control"  formControlName="numberOfSheet"
+                  [ngClass]="{'is-invalid':submitted && f['numberOfSheet'].errors}">
+               <div *ngIf="submitted && f['numberOfSheet'].errors">
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['required']">Please enter No of sheet
+                  Name</small>
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['pattern']">Invalid No of sheet Number</small>
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.serverError">{{
+                        f['numberOfSheet'].errors.serverError}}</small>
+               </div>
+   
+   
+         
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Complained To(User)
+             <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code"
+               formControlName="categoryId"
+               [searchable]="true" [clearable]="true"
+               [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.generalId"*ngFor="let item of itemCodeList"
+               [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               
+               </ng-select>
+               <div *ngIf="submitted && f['categoryId'].errors">
+                  <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select item code
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+      
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Complained CC(Mails)
+             <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code"
+               formControlName="categoryId"
+               [searchable]="true" [clearable]="true"
+               [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.generalId"*ngFor="let item of itemCodeList"
+               [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               
+               </ng-select>
+               <div *ngIf="submitted && f['categoryId'].errors">
+                  <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select item code
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Description
+               <span class="text-danger">*</span> </label>
+            <div class=" col-sm-12 col-lg-12">
+            
+                  <input type="text" class="form-control"  formControlName="numberOfSheet"
+                  [ngClass]="{'is-invalid':submitted && f['numberOfSheet'].errors}">
+               <div *ngIf="submitted && f['numberOfSheet'].errors">
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['required']">Please enter No of sheet
+                  Name</small>
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['pattern']">Invalid No of sheet Number</small>
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.serverError">{{
+                        f['numberOfSheet'].errors.serverError}}</small>
+               </div>
+   
+   
+         
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">New Document Upload
+               <span class="text-danger">*</span> </label>
+            <div class=" col-sm-12 col-lg-12">
+            
+                  <input type="text" class="form-control"  formControlName="numberOfSheet"
+                  [ngClass]="{'is-invalid':submitted && f['numberOfSheet'].errors}">
+               <div *ngIf="submitted && f['numberOfSheet'].errors">
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['required']">Please enter No of sheet
+                  Name</small>
+                  <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.['pattern']">Invalid No of sheet Number</small>
+                     <small class="text-danger" *ngIf="f['numberOfSheet'].errors?.serverError">{{
+                        f['numberOfSheet'].errors.serverError}}</small>
+               </div>
+   
+   
+         
+            </div>
+         </div>
+      </div>
+      
+     </div>
+     <div class="row">
+        <div class="col-lg-12">
+           <div class="float-end">
+              <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                 (click)="ItemSubmit()">Submit</button>
+           </div>
+        </div>
+     </div>
+     
+    
+     
+  
+
+</form>
+</div>

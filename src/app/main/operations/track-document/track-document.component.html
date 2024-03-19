@@ -1,0 +1,115 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Track Document</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+
+    <form [formGroup]="formMaster">
+        <div class="row mt-3 d-flex justify-content-center  mb-2">
+
+            <div class="col-lg-10">
+                <div class="row">
+                    <div class="col-lg-5 ">
+                        <div class="row">
+                            <label for="inputText" class="col-sm-5 col-lg-5 col-form-label ">Select Document Type <span
+                                    class="text-danger">*</span></label>
+                            <div class=" col-sm-7 col-lg-7 ">
+                                <ng-select class="pb-2 " placeholder="Select Document" formControlName="docTypeId"
+                                    [searchable]="true" [clearable]="true"
+                                    [ngClass]="{'is-invalid':submitted && f['docTypeId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.id" *ngFor="let item of documentList ">{{item.type}}</ng-option>
+                                </ng-select>
+        
+                                <div *ngIf="submitted && f['docTypeId'].errors">
+                                    <small class="text-danger" *ngIf="f['docTypeId'].errors?.['required']">Please select document
+                                    </small>
+        
+                                    <small class="text-danger" *ngIf="f['docTypeId'].errors?.serverError">{{
+                                        f['docTypeId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-5">
+                        <div class="row">
+                            <label for="inputText" class="col-sm-4 col-lg-4 col-form-label">Enter Document No. <span
+                                    class="text-danger">*</span></label>
+                            <div class=" col-sm-7 col-lg-7 ">
+                                <input type="text" class="form-control" formControlName="fromDate"
+                                [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}" >
+        
+                                <div *ngIf="submitted && f['docTypeId'].errors">
+                                    <small class="text-danger" *ngIf="f['docTypeId'].errors?.['required']">Please select document
+                                    </small>
+        
+                                    <small class="text-danger" *ngIf="f['docTypeId'].errors?.serverError">{{
+                                        f['docTypeId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    
+        
+                    <div class=" col-lg-2">
+                        <button type="button" (click)="searchFilter()"
+                            class="btn btn-warning rounded-pill btn-padding2 btn-sm"> Track <i class="bi bi-chevron-double-right"></i></button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <th>S.No</th>
+                <th>Document Type</th>
+                <th>Enter Document No.</th>
+                <th>From – To</th>
+                <th>Total Document</th>
+                <th>(DFM/PFM/FM)Status</th>
+                <th>Print</th>
+              
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>1331</td>
+                    <td>12/1/2024</td>
+                    <td>city</td>
+                    <td>23</td>
+                    <td>okey</td>
+                    <td><span class="title"><a href="javascript:void(0)"><i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i></a></span></td>
+                  
+                </tr>
+            </tbody>
+    
+        </table>
+    
+    </div>
+    
+
+
+
+
+
+
+</div>

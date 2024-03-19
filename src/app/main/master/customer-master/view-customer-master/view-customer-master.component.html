@@ -1,0 +1,197 @@
+<div class="main-contianer" id="customer_information">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/customer-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Customer Master " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display" >
+      <h5 class="card-title">Customer Master </h5>
+      <span class="title">
+         <a (click)="download_pdf_print()" href="javascript:voide(0);"> <i class="bi bi-printer booticon"
+               ngbTooltip="Print" placement="bottom"></i> </a>
+      </span>
+   </div>
+   <div class="col-lg-12" id="viewData_information">
+      <div class="row p-1 bgborder">
+         <div class="card-title text-center bg-dark-light" >General Information
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Customer Group Code & Name:
+               </strong><span>{{customerDetailsById?.custCode}}-{{customerDetailsById?.custGroupName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Customer
+                  Name:</strong><span>{{customerDetailsById?.custName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Decision Maker
+                  Name:</strong><span>{{customerDetailsById?.decisionMakerEmpName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Industry Type Name:</strong><span>
+                  {{customerDetailsById?.industryTypeName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Customer Mobile No:</strong><span>
+                  {{customerDetailsById?.mobileNo}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Customer Pan No:</strong><span>
+                  {{customerDetailsById?.panNo}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Type of Ownership:</strong><span>
+                  {{customerDetailsById?.typeOfOwnerShipName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Customer Category
+                  :</strong><span>{{customerDetailsById?.custCategoryName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Customer Type
+                  :</strong><span>{{customerDetailsById?.custTypeName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Exempt Certificate Uploader</strong><span>
+                  {{customerDetailsById?.custTypeFilePath}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>CNGR/CNGE Contract Updation Mode.</strong><span>
+                  {{customerDetailsById?.isCustContractModeOnline?'Online':'Offline'}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Customer Stage
+                  :</strong><span>{{customerDetailsById?.custStageName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Pay Basis Allowed
+                  :</strong><span>{{this?.payData}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Address</strong><span>
+                  {{customerDetailsById?.address}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Pin Code</strong><span>
+                  {{customerDetailsById?.pinCode}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>City Name</strong><span>
+                  {{customerDetailsById?.cityName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Bill Submission Type
+                  :</strong><span>{{customerDetailsById?.billSubmissionType}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong> Branch Detaiils
+                  :</strong><span>{{this?.branchData}}</span></label>
+         </div>
+        
+        
+      </div>
+      <div class="row p-1 bgborder">
+         <div class="card-title text-center bg-dark-light" >Account Details
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Bank Name
+                  :</strong><span>{{customerDetailsById?.bankName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Acount Number
+                  :</strong><span>{{customerDetailsById?.acountNumber}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Tin Number:</strong><span>
+                  {{customerDetailsById?.tinNumber}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Bill Submission Type:</strong><span>
+                  {{customerDetailsById?.billSubmissionType}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>POD Required For Bill:</strong><span>
+                  {{customerDetailsById?.isPodRequired?'Yes':'No'}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Service Opted Name:</strong><span>
+                  {{customerDetailsById?.serviceOptedName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Customer Type
+                  :</strong><span>{{customerDetailsById?.custTypeName}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>Is Active
+                  :</strong><span>{{customerDetailsById?.isActive ?'Yes':'No'}}</span></label>
+         </div>
+         <div class="col-lg-4">
+            <label for="inputText"><strong>In Active Reason
+                  :</strong><span>{{customerDetailsById?.inActiveReason}}</span></label>
+         </div>
+      </div>
+      <div class="row p-1 bgborder">
+         <div class="card-title text-center bg-dark-light">KAM Details
+         </div>
+         <table class="table table-hover">
+            <thead class="bg-secondary text-white">
+               <th>KAM Type</th>
+               <th>KAM Employee Name</th>
+               <th>Is Active</th>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let data of customerDetailsById?.customerKAM">
+                  <td>{{data?.kamType}}</td>
+                  <td>{{data?.kamEmpName}}</td>
+                  <td><span [ngClass]="data?.isActive ? 'text-success' : 'text-danger'">{{data?.isActive ? 'Active' : 'InActive'}}</span></td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="row p-1 bgborder">
+         <div class="card-title text-center bg-dark-light" >Customer Address Mapping
+         </div>
+         <table class="table table-report table-hover">
+            <thead class="bg-secondary text-white">
+               <th>Address</th>
+               <th>IsGst Applicable</th>
+               <th>Gst Number</th>
+               <th>Is Tan Applicable</th>
+               <th>Tan Number</th>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let data of customerDetailsById?.customerAdd">
+                  <td>{{data?.address}}</td>
+                  <td>{{data?.isGstApplicable?'Yes':'No'}}</td>
+                  <td>{{data?.gstNumber}}</td>
+                  <td>{{data?.isTanApplicable?'Yes':'No'}}</td>
+                  <td>{{data?.tanNumber}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="row p-1 bgborder">
+         <div class="card-title text-center bg-dark-light" >CNGR/CNGE Master
+         </div>
+         <table class="table table-report table-hover">
+            <thead class="bg-secondary text-white">
+               <th>Sr No.</th>
+               <th>Consignor/Consignee Name</th>
+               <th>Service</th>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let data of customerDetailsById?.customerCngrCnge ; index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{data?.consiConseName}}</td>
+                  <td>{{data?.serviceType}}</td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+</div>

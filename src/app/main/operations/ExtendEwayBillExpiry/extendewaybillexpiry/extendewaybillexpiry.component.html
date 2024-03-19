@@ -1,0 +1,152 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+       <span class="title">
+       <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Extend E-way Bill Expiry</span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <form [formGroup]="formMaster">
+       <div class="row mt-3 d-flex justify-content-center  mb-2">
+          <div class="col-lg-6">
+             <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end"> LR No.
+                <span class="text-danger">*</span></span> </label>
+                <div class=" col-lg-5 ">
+                   <ng-select class="pb-2 " placeholder="Select  LR No" [searchable]="true" [clearable]="true"
+                   (change)="docketFil($event)"
+                   formControlName="docket" [ngClass]="{'is-invalid':submitt && fs['docket'].errors}">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item" *ngFor="let item of ewaybill">{{item.docketNo
+                   }}</ng-option>
+                   </ng-select> 
+                   <div *ngIf="submitt && fs['docket'].errors">
+                      <small class="text-danger" *ngIf="fs['docket'].errors?.['required']">please select
+                      LR No.
+                      </small>
+                      <small class="text-danger" *ngIf="fs['docket'].errors?.serverError">{{
+                      fs['docket'].errors.serverError}}</small>
+                   </div>
+                </div>
+                <div class=" col-lg-3 ">
+                   <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm" (click)="OnSubmit()"
+                      >Next <i class="bi bi-chevron-double-right"></i>
+                   </button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </form>
+    <form [formGroup]="formMaster2">
+       <div class="row">
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">LR No.</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <input type="text" class="form-control" formControlName="docketId" value="{{ewaybillList.docketId}}" readonly
+                      >
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control"  value="{{ewaybillList.custId}}" readonly
+                     >
+               </div>
+            </div>
+         </div>
+          
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vehicle No.</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <input type="text" class="form-control" value="{{ewaybillList.vehicleNo}}" readonly
+                      >
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">E-way Bill No.</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <input type="text" class="form-control" formControlName="ewaybillNo" value="{{ewaybillList.ewaybillNo}}" 
+                      [ngClass]="{'is-invalid':submitted && f['ewaybillNo'].errors}" readonly>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Expiry Date</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <input type="text" class="form-control" value="{{ewaybillList.extExpDate |date}}" readonly
+                      >
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">New Date</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <input type="date" class="form-control" formControlName="extExpDate"  [min]="this.minDatePast"
+                   [ngClass]="{'is-invalid':submitted && f['extExpDate'].errors}" >
+                   <div *ngIf="submitted && f['extExpDate'].errors">
+                      <small class="text-danger" *ngIf="f['extExpDate'].errors?.['required']">Please select date</small>
+                      <small class="text-danger" *ngIf="f['extExpDate'].errors?.serverError">{{
+                      f['extExpDate'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Remarks</label>
+                <div class=" col-sm-12 col-lg-12 has-validation">
+                   <textarea type="text" class="form-control" formControlName="remarks"
+                      [ngClass]="{'is-invalid':submitted && f['remarks'].errors}" ></textarea>
+                   <div *ngIf="submitted && f['remarks'].errors">
+                      <small class="text-danger" *ngIf="f['remarks'].errors?.['required']">Please enter remarks</small>
+                      <small class="text-danger" *ngIf="f['remarks'].errors?.serverError">{{
+                      f['remarks'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class=" col-sm-12 col-lg-12 mt-1 pt-4" *ngIf="this.formMaster.controls['docket'].value">
+                <button (click)="ShowList()"  
+                   type="button" class="btn btn-info rounded-pill btn-sm btn-padding2">Show List</button>
+             </div>
+          </div>
+          <div class="row mt-3 mb-3">
+             <div  class="text-center"><button (click)="FromSubmit()"  type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button></div>
+          </div>
+       </div>
+    </form>
+    <table class="table table-report table-hover dataTable no-footer" *ngIf="this.formMaster.controls['docket'].value">
+       <thead class="bg-secondary text-white">
+          <tr>
+             <th>Docket No</th>
+             <th>E-way Bill No.</th>
+             <th>Expiry Date</th>
+             <th>New Date</th>
+             <th>Remarks</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let item of EwaybillexpiryList;index as i;">
+             <td>{{item.docketNo}}</td>
+             <td>{{item.ewaybillNo}}</td>
+             <td>{{item.extExpDate |date:'dd/MM/YYYY'}}</td>
+             <td>{{item.prevExpDate |date:'dd/MM/YYYY'}}</td>
+             <td>{{item.remarks}}</td>
+          </tr>
+       </tbody>
+    </table>
+ </div>

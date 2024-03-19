@@ -1,0 +1,123 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">EWAY Bill Correction</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+<form [formGroup]="formMaster">
+    <div class="row">
+        <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Operation
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                     <ng-select class="pb-2 " placeholder="Operation Select" formControlName="Operation"
+                     [searchable]="true" [clearable]="true" (change)="selectFiler($event)"
+                     [ngClass]="{'is-invalid':submitted && f['Operation'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item" *ngFor="let item of oprationList"
+                    >{{item.codeDesc}}</ng-option>
+                     </ng-select>
+
+
+
+                  <div *ngIf="submitted && f['Operation'].errors">
+                     <small class="text-danger" *ngIf="f['Operation'].errors?.['required']">please select Operation</small>
+                     <small class="text-danger" *ngIf="f['Operation'].errors?.serverError">{{
+                        f['Operation'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Eway Bill No
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text"  class="form-control" formControlName="addressId"
+                     [ngClass]="{'is-invalid':submitted && f['addressId'].errors}"
+                     >
+                  <div *ngIf="submitted && f['addressId'].errors">
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.['required']">please enter
+                        Address Id</small>
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.serverError">{{
+                        f['addressId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Docket No:
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text"  class="form-control" formControlName="addressId"
+                     [ngClass]="{'is-invalid':submitted && f['addressId'].errors}"
+                     >
+                  <div *ngIf="submitted && f['addressId'].errors">
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.['required']">please enter
+                        Address Id</small>
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.serverError">{{
+                        f['addressId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.ShowControl">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Consignor Address Id
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text"  class="form-control" formControlName="addressId"
+                     [ngClass]="{'is-invalid':submitted && f['addressId'].errors}"
+                     >
+                  <div *ngIf="submitted && f['addressId'].errors">
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.['required']">please enter
+                        Address Id</small>
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.serverError">{{
+                        f['addressId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.ShowControl">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Consignee Address Id
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text"  class="form-control" formControlName="addressId"
+                     [ngClass]="{'is-invalid':submitted && f['addressId'].errors}"
+                     >
+                  <div *ngIf="submitted && f['addressId'].errors">
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.['required']">please enter
+                        Address Id</small>
+                     <small class="text-danger" *ngIf="f['addressId'].errors?.serverError">{{
+                        f['addressId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         </div>
+
+         <div class="row mt-5 mb-3">
+            <div class="text-center">
+                <button type="button" 
+                class="btn btn-primary rounded-pill btn-padding  " (click)="onSubmit()"> Submit </button>
+            </div>
+        
+        </div>
+        </form>
+
+    </div>

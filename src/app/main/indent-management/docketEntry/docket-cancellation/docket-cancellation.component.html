@@ -1,0 +1,238 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Docket Cancellation </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row mt-2 d-flex justify-content-center mt-3">
+      <div class="col-lg-4 display bordercss">
+         <div class="form-check">
+            <input class="form-check-input" [value]="1" [(ngModel)]="show" type="radio" name="sh" id="gridRadios1"
+               [checked]="isChecked" value="option1" style="width: 15px; height: 15px;margin-right: 3px;">
+            <label class="form-check-label" for="gridRadios1">
+               Feeded Docket
+            </label>
+         </div>
+         <div class="form-check">
+            <input class="form-check-input" [value]="0" [(ngModel)]="show" type="radio" name="sh" id="gridRadios2"
+               [checked]="!isChecked" value="option2" style="width: 15px; height: 15px; margin-right: 3px;">
+            <label class="form-check-label" for="gridRadios2">
+               Non Feeded Docket
+            </label>
+         </div>
+      </div>
+   </div>
+   <form [formGroup]="formMaster" *ngIf="show == 1">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR No.
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="dockNo"
+                     [ngClass]="{'is-invalid':submitt && fs['dockNo'].errors}">
+                  <div *ngIf="submitt && fs['dockNo'].errors">
+                     <small class="text-danger" *ngIf="fs['dockNo'].errors?.['required']">Please enter LR No.
+                     </small>
+                     <small class="text-danger" *ngIf="fs['dockNo'].errors?.serverError">{{
+                        fs['dockNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Cancellation Reason <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <textarea type="text" class="form-control" formControlName="cancellationReason"
+                     [ngClass]="{'is-invalid':submitt && fs['cancellationReason'].errors}">
+                </textarea>
+               </div>
+               <div *ngIf="submitt && fs['cancellationReason'].errors">
+                  <small class="text-danger" *ngIf="fs['cancellationReason'].errors?.['required']">Please LR
+                     Cancellation Reason
+                  </small>
+                  <small class="text-danger" *ngIf="fs['cancellationReason'].errors?.serverError">{{
+                     fs['cancellationReason'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row mt-4">
+         <div class="text-center">
+            <button class="btn btn-primary rounded-pill btn-sm btn-padding " (click)="OnSubmit()">Submit</button>
+         </div>
+      </div>
+   </form>
+   <form [formGroup]="formNONMaster" *ngIf="show == 0">
+      <div class="row pb-3 border-bottom">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR No. <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="dockNo"
+                     [ngClass]="{'is-invalid':submitted && f['dockNo'].errors}">
+                  <div *ngIf="submitted && f['dockNo'].errors">
+                     <small class="text-danger" *ngIf="f['dockNo'].errors?.['required']">Please enter LR No.
+                     </small>
+                     <small class="text-danger" *ngIf="f['dockNo'].errors?.['pattern']">Invalid LR No.</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Date <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="date" class="form-control" formControlName="cancelledOn"
+                     [ngClass]="{'is-invalid':submitted && f['cancelledOn'].errors}">
+                  <div *ngIf="submitted && f['cancelledOn'].errors">
+                     <small class="text-danger" *ngIf="f['cancelledOn'].errors?.['required']">Please select LR
+                        date
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-5">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Cancellation Reason
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="Border Route Select" formControlName="cancelReasonId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitt && f['cancelReasonId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of LRCancellationReason"
+                        title="{{item.codeDesc}}">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['cancelReasonId'].errors">
+                     <small class="text-danger" *ngIf="f['cancelReasonId'].errors?.['required']">select LR
+                        Cancelation Reason
+                        route
+                     </small>
+                     <small class="text-danger" *ngIf="f['cancelReasonId'].errors?.serverError">{{
+                        f['cancelReasonId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Consignor Copy available <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName="isCngrCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked="">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Consignee Copy available <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName="isCngeCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked="">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Driver Copy available <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName=" isDriverCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  LR Account Copy available <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName="isAccountCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked="">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Extra Copy (If any) <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName="isExtraCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked="">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Copy of FIR if any of
+                  Consignor/consignee copy
+                  lost. <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch">
+                     <input class="form-check-input" formControlName="isFirCopyRecd" type="checkbox"
+                        id="flexSwitchCheckChecked" checked="">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Reference Document
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="file" class="form-control" formControlName="referenceDocumnet"
+                     [ngClass]="{'is-invalid':submitted && f['referenceDocumnet'].errors}">
+                  <div *ngIf="submitted && f['referenceDocumnet'].errors">
+                     <small class="text-danger" *ngIf="f['referenceDocumnet'].errors?.['required']">Please upload
+                        Reference Document
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row mt-3">
+         <div class="text-center">
+            <button class="btn btn-primary rounded-pill btn-sm btn-padding " (click)="Submit()">Submit</button>
+         </div>
+      </div>
+   </form>
+</div>

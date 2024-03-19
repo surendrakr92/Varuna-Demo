@@ -1,0 +1,88 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/market/mv-non-placed-vehicle"><i class="bi bi-arrow-return-left booticon"
+               (click)="backToList()" ngbTooltip="Back to Master " placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Vehicle Type</b>: Vendor</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Vendor Phone No.</b>: 32421 </button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Vehicle Type</b>: Vehicle Type</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>From City</b>: patna</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>To City</b>: gurgaon</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b> Date Placement</b>: 12/10/2023</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b> Rate</b>: 200.00</button>
+   <table class="table table-report table-hover mt-2 " datatable [dtOptions]="dtOptions" #MyTable id="MyTable">
+      <thead class="bg-secondary text-white">
+         <tr>
+            <th> Vendor</th>
+            <th> Vendor Phone No.</th>
+            <th> Vehicle No.</th>
+            <th>Cancelled</th>
+            <th>Reason for cancellation
+            </th>
+            <th> <span *ngIf="!this.cancelBoo">New Date</span></th>
+            <th>Remarks</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr style="border-bottom: 1px solid #e9e9e9;" *ngFor="let item of formArrayList">
+            <td>{{item?.vendorName}} </td>
+            <td> {{item?.vendorMobileNo}} </td>
+            <td> {{item?.vehicleNo}} </td>
+            <td>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select placeholder="Cancelled Select " [searchable]="true" [clearable]="true"
+                  [(ngModel)]="item.cancelled"
+                     style="width: 120px;" (change)="changeCancelId($event,'cancelled')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.id" *ngFor="let item of CancelledList">{{item.type}}</ng-option>
+                  </ng-select>
+               </div>
+            </td>
+            <td>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select placeholder="Reason for cancellation " [searchable]="true" [clearable]="true"
+                  [(ngModel)]="item.cancelledReasonId"
+                     (change)="changeCancelId($event,'cancelledReason')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of mvVehicleCancellationRes">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+               </div>
+            </td>
+            <td>
+               <div class=" col-sm-12 col-lg-12 " *ngIf="!this.cancelBoo">
+                  <input type="date" class="form-control" style="width: 120px;" #datadate
+                  min="{{minDatePast}}" value="{{tommarrow}}"
+                     (change)="changeCancelId(datadate.value,'cancelledOn')">
+               </div>
+            </td>
+            <td>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <textarea class="form-control" style="width: 150px;" #cancelledRemarksS
+                     (change)="changeCancelId(cancelledRemarksS.value,'cancelledRemarks')"
+                     [value]="item?.entryRemarks"></textarea>
+               </div>
+            </td>
+         </tr>
+      </tbody>
+   </table>
+   <div class="row mt-4 mb-4">
+      <div class="text-center">
+         <button type="button" class="btn btn-primary  rounded-pill btn-sm btn-padding  btn-sm" style="width: 100px;"
+            (click)="OnSubmit()">Submit</button>
+      </div>
+   </div>
+</div>

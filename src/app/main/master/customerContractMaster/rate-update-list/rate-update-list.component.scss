@@ -1,0 +1,62 @@
+// ng-select {
+//   width: 130px;
+// }
+.table-responsive{
+scroll-behavior: smooth;
+z-index: 999 !important;
+
+padding-top: 20px;
+
+}
+table{
+z-index: 999 !important;
+}
+
+.table-responsive table tr td input{
+min-width: 150px;
+}
+.ngclass  ng-select{
+height: 20px !important;
+}
+.table thead th {
+border: 0;
+font-size: 8px !important;
+}
+.ngclass .ng-select .ng-clear-wrapper .ng-clear {
+display: inline-block;
+font-size: 11px;
+line-height: 1;
+pointer-events: none;
+}
+// .forntClass{
+//   font-size: 8px;
+// }
+
+.newchangecss .col-lg-12{
+height: 42px;
+}
+input[type="date"]{
+width: 110px !important;
+}
+
+
+//
+
+
+.exterior {
+    margin: auto;
+    width: auto;
+    }
+    .interior {
+    position: relative;
+    overflow: auto;
+    white-space: nowrap;
+    }
+    .left {
+    position: sticky;
+    z-index: 200;
+    }
+    .col1 {
+
+    left: 0px;
+    }

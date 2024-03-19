@@ -1,0 +1,113 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/indent/POD-PFM-Target-days"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to POD & PFM TARGET DAYS" placement="right"></i> </a>
+      </span>
+      <span class="titlemed">POD & PFM TARGET DAYS</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <form [formGroup]="formMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Zone
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select placeholder="Zone Select" formControlName="zoneId" appendTo="body" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['zoneId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.zoneId" *ngFor="let item of zoneList ">{{item.zoneName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['zoneId'].errors">
+                     <small class="text-danger" *ngIf="f['zoneId'].errors?.['required']">please select Zone
+                     </small>
+                     <small class="text-danger" *ngIf="f['zoneId'].errors?.serverError">{{
+                        f['zoneId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Branch
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select placeholder="Branch Select" formControlName="branchId" appendTo="body" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.branchId"
+                        *ngFor="let item of branchMasterList ">{{item.branchName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['branchId'].errors">
+                     <small class="text-danger" *ngIf="f['branchId'].errors?.['required']">please select branch
+                     </small>
+                     <small class="text-danger" *ngIf="f['branchId'].errors?.serverError">{{
+                        f['branchId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  POD Scan Days
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="number" min="0" class="form-control" formControlName="podScanDays"
+                     [ngClass]="{'is-invalid':submitted && f['podScanDays'].errors}">
+               </div>
+               <div *ngIf="submitted && f['podScanDays'].errors">
+                  <small class="text-danger" *ngIf="f['podScanDays'].errors?.['required']">please enter POD scan
+                     days
+                  </small>
+                  <small class="text-danger" *ngIf="f['podScanDays'].errors?.serverError">{{
+                     f['podScanDays'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  PFM Scan Days
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="number" min="0" class="form-control" formControlName="pfmScanDays"
+                     [ngClass]="{'is-invalid':submitted && f['pfmScanDays'].errors}">
+               </div>
+               <div *ngIf="submitted && f['pfmScanDays'].errors">
+                  <small class="text-danger" *ngIf="f['pfmScanDays'].errors?.['required']">please enter PFM scan
+                     days
+                  </small>
+                  <small class="text-danger" *ngIf="f['pfmScanDays'].errors?.serverError">{{
+                     f['pfmScanDays'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Status
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row mt-5">
+         <div class="text-center">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding  "
+               (click)="Submit()">Submit</button>
+         </div>
+      </div>
+   </form>
+
+</div>

@@ -1,0 +1,38 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/fleet/sub-category-master/"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to City Master" placement="right"></i> </a>
+       </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="display">
+       <h5 class="card-title">Sub Category Master View</h5>
+       <span class="title">
+          <a (click)="download_pdf_print()" href="javascript:voide(0);"> <i class="bi bi-printer booticon"
+                ngbTooltip="Print" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="row" id="viewData_information" >
+       <div class="col-lg-12">
+          <div class="row p-1 bgborder" >
+          
+             <div class="col-lg-4 ">
+                <label for="inputText" ><strong>Category Name:</strong>  <span>{{subcateDetailById?.catName}}</span></label>
+             </div> 
+             <div class="col-lg-4 ">
+                <label for="inputText" ><strong>Sub Category Name:</strong>  <span>{{subcateDetailById?.subCatName}}</span></label>
+             </div> 
+             <div class="col-lg-4 ">
+                <label for="inputText" ><strong>Is Active:</strong>  <span>{{subcateDetailById?.isActive?'Yes':'No'}}</span></label>
+             </div> 
+             <div class="col-lg-4 ">
+                <label for="inputText" ><strong>Sub Category Description:</strong>  <span>{{subcateDetailById?.subCatDescription}}</span></label>
+             </div> 
+             <div class="col-lg-4 ">
+                <label for="inputText" ><strong>Created On:</strong>  <span>{{subcateDetailById?.createdOn | date}}</span></label>
+             </div> 
+          </div>
+       </div>
+    </div>

@@ -1,0 +1,165 @@
+
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Empty Movement Requistion</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row border-bottom pb-2">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Requested By<span
+                    class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="requestedBy" 
+                         [ngClass]="{'is-invalid':submitted && f['requestedBy'].errors}" readonly  >
+                          <div *ngIf="submitted && f['requestedBy'].errors">
+                         <small class="text-danger" *ngIf="f['requestedBy'].errors?.['required']">Please enter requested by</small>
+                         <small class="text-danger" *ngIf="f['requestedBy'].errors?.serverError">{{
+                            f['requestedBy'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div> 
+             <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Requested Date<span
+                    class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="date" class="form-control" formControlName="requestedDate"
+                         [ngClass]="{'is-invalid':submitted && f['requestedDate'].errors}" readonly  >
+                          <!-- <div *ngIf="submitted && f['requestedDate'].errors">
+                         <small class="text-danger" *ngIf="f['requestedDate'].errors?.['required']">Please requested date</small>
+                         <small class="text-danger" *ngIf="f['requestedDate'].errors?.serverError">{{
+                            f['requestedDate'].errors.serverError}}</small>
+                      </div> -->
+                   </div>
+                </div>
+             </div>
+        </div>
+<div class="row">
+    <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From City<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+            <ng-select class="pb-2 " placeholder="Select City" formControlName="fromCityId"
+            [searchable]="true" [clearable]="true"
+            [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item.cityId" [disabled]='!item.isActive' *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+        </ng-select>
+                  <div *ngIf="submitted && f['fromCityId'].errors">
+                 <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">Please select from city</small>
+                 <small class="text-danger" *ngIf="f['fromCityId'].errors?.serverError">{{f['fromCityId'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div>  
+     <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To City<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+            <ng-select class="pb-2 " placeholder="Select City" formControlName="toCityId"
+            [searchable]="true" [clearable]="true"
+            [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item.cityId" [disabled]='!item.isActive' *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+        </ng-select>
+                  <div *ngIf="submitted && f['toCityId'].errors">
+                 <small class="text-danger" *ngIf="f['toCityId'].errors?.['required']">Please select to city</small>
+                 <small class="text-danger" *ngIf="f['toCityId'].errors?.serverError">{{
+                    f['toCityId'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div> 
+     <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Movement Type<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+            <ng-select class="pb-2 " placeholder="Select Document" formControlName="movTypeId"
+            [searchable]="true" [clearable]="true"
+            [ngClass]="{'is-invalid':submitted && f['movTypeId'].errors}">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item.generalId" *ngFor="let item of MovementTypeList ">{{item.codeDesc}}</ng-option>
+        </ng-select>
+                  <div *ngIf="submitted && f['movTypeId'].errors">
+                 <small class="text-danger" *ngIf="f['movTypeId'].errors?.['required']">Please select movement type</small>
+                 <small class="text-danger" *ngIf="f['movTypeId'].errors?.serverError">{{
+                    f['movTypeId'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div> 
+     <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vehicle No.<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+            <ng-select class="pb-2 " placeholder="Select Document" formControlName="vehicleId"  
+            [searchable]="true" [clearable]="true"
+            [ngClass]="{'is-invalid':submitted && f['vehicleId'].errors}">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item.vehicleDetailId" *ngFor="let item of vehicleList ">{{item.vehicleNo}}</ng-option>
+        </ng-select>
+                  <div *ngIf="submitted && f['vehicleId'].errors">
+                 <small class="text-danger" *ngIf="f['vehicleId'].errors?.['required']">Please select vehicle no</small>
+                 <small class="text-danger" *ngIf="f['vehicleId'].errors?.serverError">{{
+                    f['vehicleId'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div> 
+     <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Valid From<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+              <input type="date" class="form-control" formControlName="validFrom"  min="{{minDatePast}}"
+                 [ngClass]="{'is-invalid':submitted && f['validFrom'].errors}"  >
+                  <div *ngIf="submitted && f['validFrom'].errors">
+                 <small class="text-danger" *ngIf="f['validFrom'].errors?.['required']">Please select valid date</small>
+                 <small class="text-danger" *ngIf="f['validFrom'].errors?.serverError">{{
+                    f['validFrom'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div> 
+     <div class="col-lg-3">
+        <div class="form-group ">
+           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Valid To<span
+            class="text-danger">*</span></label>
+           <div class=" col-sm-12 col-lg-12 has-validation">
+              <input type="date" class="form-control" formControlName="validTo" 
+                 [ngClass]="{'is-invalid':submitted && f['validTo'].errors}" min="{{this.formMaster.controls['validFrom'].value}}" >
+                  <div *ngIf="submitted && f['validTo'].errors">
+                 <small class="text-danger" *ngIf="f['validTo'].errors?.['required']">Please select valid to</small>
+                 <small class="text-danger" *ngIf="f['validTo'].errors?.serverError">{{
+                    f['validTo'].errors.serverError}}</small>
+              </div>
+           </div>
+        </div>
+     </div> 
+  
+  
+</div>
+<div class="row">
+    <div class="text-center mt-4 mb-2">
+        <button type="button" (click)="SubmitFrom()" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+    </div>
+</div>
+
+</form>
+
+    </div>

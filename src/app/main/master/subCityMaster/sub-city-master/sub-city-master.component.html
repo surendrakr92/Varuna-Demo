@@ -1,0 +1,89 @@
+<div class="main-contianer">
+
+    <div class="display">
+       <span class="title">
+           <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="bottom"></i> </a>
+       </span>
+       <span class=" title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+ 
+    <div class="display">
+    <h5 class="card-title">Sub City Name List
+    </h5>
+    <div class="pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/master/sub-city-master/new-sub-city-master" ngbTooltip="Create New SUb City List" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white" ngbTooltip="Download List" placement="bottom" (click)="downloadExcel(MyTable)" title="Download File" type="button"><i class="bi bi-download" ></i>
+          </button>
+     </div>
+    </div>
+    <div class="table-responsive">
+      <label for="">Page Size:</label>
+      <select class="  form-select mx-4 rounded selectclass w-auto" (change)="pagePerData($event)">
+         <option value="5">5</option>
+         <option value="10">10</option>
+         <option value="20">20</option>
+         <option value="50">50</option>
+         <option value="100">100</option>
+         <!-- <option value="100">All</option> -->
+      </select>
+      <div style="margin: 12px;" class="float-end">
+         <input type="text" name="" id="dataaa" #dataaa
+         placeholder="enter subcityname for search"(keyup)="searchData(dataaa.value)">
+         <!-- <button 
+         style="margin: 1px;" (click)="searchData(dataaa.value)">
+            search
+         </button> -->
+         <button style="margin: 1px;" (click)="resetData()">
+            reset
+         </button>
+      </div>
+       <table class="table table-report table-hover "
+        #MyTable id="MyTable">
+       <thead class="bg-secondary text-white">
+          <tr>
+             <th>Sr. No.</th>
+             <th>Sub City Name</th>
+             <th>Fleet City</th>
+             <th>ODA</th>
+             <th>OLA</th>
+             <th>City Name</th>
+             <th>State Name</th>
+             <th>Pin Code</th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of subCityMasterList | paginate: {id: 'paginationId', itemsPerPage: itemsPerPage, currentPage: p, totalItems:totalItems };; let i=index">
+             <td>{{i+1}}</td>
+             <td>{{Item.subCityName}}</td>
+             <td>{{Item.fleetCity}}</td>
+             <td>{{Item.oda}}</td>
+             <td>{{Item.ola}}</td>
+             <td>{{Item.cityName}}</td>
+             <td>{{Item.stateName}}</td>
+             <td>{{Item.pinCode}}</td>
+             <td><span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+               {{Item.isActive?'Active':'Inactive'}}</span></td>
+             <td class="display2">
+                <a routerLink="/master/sub-city-master/view-sub-city-master/{{Item.subCityId}}" ngbTooltip="View" placement="bottom"class="view"><i class="bi bi-eye-fill pr"></i></a>
+                <a (click)="redirectionEdit(Item.subCityId)"  ngbTooltip="Edit" placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                <a  class="delete" ngbTooltip="Active/Inactive" placement="bottom" (click)="activeInactive(Item.subCityId)" >
+                    <div class="form-check form-switch ">
+                       <input type="checkbox" class="form-check-input" 
+                       *ngIf="Item.isActive==true"
+                           checked >
+                    </div>
+                 </a>
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+    <pagination-controls (pageChange)="pagination($event)" id="paginationId"*ngIf="this.searchD==''"
+    (pageBoundsCorrection)="correctPage($event)"></pagination-controls>
+ </div>
+ </div>

@@ -1,0 +1,67 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Module Master List
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1"  routerLink="/master/module-master/create-module-master" placement="bottom"
+            ngbTooltip="Create New Module Master"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+            ngbTooltip="Download List" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Module Name</th>
+               <th>Module Image</th>
+               <th>Module Remarks</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of modulemasterList; let i=index;">
+               <td>{{i+1}}</td>
+               <td>{{item.moduleName}} </td>
+               <td>{{item.moduleImage}}</td>
+               <td>{{item.remarks}}</td>
+               <td>
+                  <span class="{{item.isActive ?'text-success':' text-danger'}}">
+                     <i class="bi bi-check2-square pr"></i>
+                     {{item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2 ">
+                  <a placement="bottom" routerLink="/master/module-master/view-module-master/{{item.moduleId}}" ngbTooltip="View"
+                     class="view"><i class="bi bi-eye-fill pr"></i></a>
+                  <a placement="bottom" routerLink="/master/module-master/update-module-master/{{item.moduleId}}" ngbTooltip="Edit"
+                     class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                  <a placement="bottom" ngbTooltip="Active/Inactive" class="delete">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                           (click)="activeInactive(item.moduleId)" checked>
+                     </div>
+                  </a>
+        </td>
+            </tr>
+
+         </tbody>
+      </table>
+
+   </div>
+
+</div>

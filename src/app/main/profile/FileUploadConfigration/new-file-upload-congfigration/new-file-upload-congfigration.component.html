@@ -1,0 +1,298 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+           <a routerLink="/profile/file-uploading-configration/"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Vendor Address master "
+                 placement="right"></i> </a>
+        </span>
+        <span class=" title">
+           <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+           </a>
+        </span>
+     </div>
+
+    <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+      <h5 class="card-title">{{viewPagecom=='edit'?'Update File Upload Configration':' New File Upload Configration'}}</h5>
+      <form [formGroup]="formConfuigurationMaster" class="novalidate"
+      (ngSubmit)="OnSubmit()">
+         <div class="row ">
+        
+      
+          <div class="col-lg-3">
+             <div class="form-group mb-3">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Web Page Name
+                 <span class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12 ">
+                   <ng-select class="pb-2 form-control " placeholder="Country Select"
+                   formControlName="webPageId"
+                   [searchable]="true" [clearable]="true"
+                   [ngClass]="{'is-invalid':submitted && f['webPageId'].errors}">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item.webPageId"*ngFor="let item of webPageNameList"
+                   [disabled]='!item.isActive'>{{item.webPageName}}</ng-option>
+                   
+                   </ng-select>
+                   <div *ngIf="submitted && f['webPageId'].errors">
+                      <small class="text-danger" *ngIf="f['webPageId'].errors?.['required']">Please select role name
+                      </small>
+                      <small class="text-danger" *ngIf="f['webPageId'].errors?.serverError">{{
+                        f['webPageId'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+ 
+ 
+              <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Documnet Type Name<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control"  formControlName="documnetTypeName"
+                          [ngClass]="{'is-invalid':submitted && f['documnetTypeName'].errors}" 
+                          maxlength="20">
+     
+                       <div *ngIf="submitted && f['documnetTypeName'].errors">
+                          <small class="text-danger" *ngIf="f['documnetTypeName'].errors?.['required']">Please enter documnet type name  </small>
+                          <small class="text-danger" *ngIf="f['documnetTypeName'].errors?.['pattern']">Invalid data </small>
+                      
+                          <small class="text-danger" *ngIf="f['documnetTypeName'].errors?.serverError">{{
+                             f['documnetTypeName'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Primary Route Path<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control" formControlName="primaryRoutePath" 
+                          [ngClass]="{'is-invalid':submitted && f['primaryRoutePath'].errors}" 
+                          maxlength="20" >
+     
+                       <div *ngIf="submitted && f['primaryRoutePath'].errors">
+                          <small class="text-danger" *ngIf="f['primaryRoutePath'].errors?.['required']">Please enter primary route path </small>
+                      
+                          <small class="text-danger" *ngIf="f['primaryRoutePath'].errors?.serverError">{{
+                             f['primaryRoutePath'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Absolute Path<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control" formControlName="absolutePath" 
+                          [ngClass]="{'is-invalid':submitted && f['absolutePath'].errors}" 
+                          maxlength="20">
+     
+                       <div *ngIf="submitted && f['absolutePath'].errors">
+                          <small class="text-danger" *ngIf="f['absolutePath'].errors?.['required']">Please enter absolute path </small>
+                      
+                          <small class="text-danger" *ngIf="f['absolutePath'].errors?.serverError">{{
+                             f['absolutePath'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Primary Virtual Path<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control"  formControlName="primaryVirtualPath" 
+                          [ngClass]="{'is-invalid':submitted && f['primaryVirtualPath'].errors}" 
+                          maxlength="20">
+     
+                       <div *ngIf="submitted && f['primaryVirtualPath'].errors">
+                          <small class="text-danger" *ngIf="f['primaryVirtualPath'].errors?.['required']">Please enter primary virtual path </small>
+                      
+                          <small class="text-danger" *ngIf="f['primaryVirtualPath'].errors?.serverError">{{
+                             f['primaryVirtualPath'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+               <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Archive Virtual Path<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control"  formControlName="archiveVirtualPath" 
+                          [ngClass]="{'is-invalid':submitted && f['archiveVirtualPath'].errors}" 
+                          maxlength="20">
+     
+                       <div *ngIf="submitted && f['archiveVirtualPath'].errors">
+                          <small class="text-danger" *ngIf="f['archiveVirtualPath'].errors?.['required']">Please enter archive virtual path </small>
+                      
+                          <small class="text-danger" *ngIf="f['archiveVirtualPath'].errors?.serverError">{{
+                             f['archiveVirtualPath'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+              <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Primary Age Year <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="number" class="form-control" formControlName="primaryAgeYear" 
+                          [ngClass]="{'is-invalid':submitted && f['primaryAgeYear'].errors}" >
+     
+                       <div *ngIf="submitted && f['primaryAgeYear'].errors">
+                          <small class="text-danger" *ngIf="f['primaryAgeYear'].errors?.['required']">please enter primary age year</small>
+                         
+                           <small class="text-danger" *ngIf="f['primaryAgeYear'].errors?.['minlength']">
+                             Name must be at least 2 characters long.
+                          </small> 
+                          <small class="text-danger" *ngIf="f['primaryAgeYear'].errors?.serverError">{{
+                             f['primaryAgeYear'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div>
+            <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Archive Age Year <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="number" class="form-control" formControlName="archiveAgeYear"
+                          [ngClass]="{'is-invalid':submitted && f['archiveAgeYear'].errors}" >
+     
+                       <div *ngIf="submitted && f['archiveAgeYear'].errors">
+                          <small class="text-danger" *ngIf="f['archiveAgeYear'].errors?.['required']">Please enter archive age year </small>
+                        
+                          <small class="text-danger" *ngIf="f['archiveAgeYear'].errors?.serverError">{{
+                             f['archiveAgeYear'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div> 
+          <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Final Age Year<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="number" class="form-control" formControlName="finalAgeYear" 
+                          [ngClass]="{'is-invalid':submitted && f['finalAgeYear'].errors}" >
+     
+                       <div *ngIf="submitted && f['finalAgeYear'].errors">
+                          <small class="text-danger" *ngIf="f['finalAgeYear'].errors?.['required']">Please enter final AgeYear</small>
+                       
+                          <small class="text-danger" *ngIf="f['finalAgeYear'].errors?.serverError">{{
+                             f['finalAgeYear'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div> 
+ 
+               <div class="col-lg-3">
+                 <div class="form-group mb-2">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Is Life Time Available</label>
+ 
+ 
+                     <div class="row">
+                         <div class=" col-sm-12 col-lg-12 has-validation pr-4 mb-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isLifetimeAvailable">
+                               </div>
+                     </div>
+ 
+ 
+                 </div>
+             </div> 
+ 
+ 
+             <div class="col-lg-3">
+                 <div class="form-group mb-2">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Temporary Folder</label>
+ 
+ 
+                     <div class="row">
+                         <div class=" col-sm-12 col-lg-12 has-validation pr-4 mb-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isTemporaryFolder">
+                         </div>
+                     </div>
+ 
+ 
+                 </div>
+             </div> 
+ 
+             <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Allow File Extensions<span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                       <input type="text" class="form-control" formControlName="allowFileExtensions"
+                          [ngClass]="{'is-invalid':submitted && f['allowFileExtensions'].errors}" 
+                          maxlength="20">
+     
+                       <div *ngIf="submitted && f['allowFileExtensions'].errors">
+                          <small class="text-danger" *ngIf="f['allowFileExtensions'].errors?.['required']">Please enter allow file extensions </small>
+                      
+                          <small class="text-danger" *ngIf="f['allowFileExtensions'].errors?.serverError">{{
+                             f['allowFileExtensions'].errors.serverError}}</small>
+                       </div>
+                    </div>
+                 </div>
+              </div> 
+          <div class="col-lg-3">
+                 <div class="form-group mb-3">
+                     <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                      Active
+                     </label>
+                     <div class=" col-sm-12 col-lg-12">
+                         <div class="form-check form-switch p-2">
+                             <input type="checkbox" class="form-check-input" formControlName="isActive">
+                         </div>
+                     </div>
+                 </div>
+             </div> 
+         </div>
+         <div class="row">
+             <div class="col-lg-12">
+                 <div class="float-end">
+                     <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                         >Submit</button>
+                 </div>
+             </div>
+ 
+         </div>
+     </form>
+    </ng-container>
+    <ng-container *ngIf="viewPagecom=='view'">
+      <h5 class="card-title"> File Upload Configration</h5>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="row p-1 bgborder" >
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Menu Caption:</strong><span> {{fileuploadconDetailById?.menuCaption}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Documnet Type Name:</strong><span> {{fileuploadconDetailById?.documnetTypeName}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong> Primary Route Path:</strong><span>{{fileuploadconDetailById?.primaryRoutePath }}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Primary Virtual Path:  </strong><span> {{fileuploadconDetailById?.primaryVirtualPath}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Archive Virtual Path:  </strong><span> {{fileuploadconDetailById?.archiveVirtualPath}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Primary Age Year:  </strong><span> {{fileuploadconDetailById?.primaryAgeYear}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Archive Age Year:  </strong><span> {{fileuploadconDetailById?.archiveAgeYear}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Final Age Year:  </strong><span> {{fileuploadconDetailById?.finalAgeYear}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Allow File Extensions:  </strong><span> {{fileuploadconDetailById?.allowFileExtensions}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>is Active:  </strong><span> {{fileuploadconDetailById?.isActive}}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Created On:  </strong><span> {{fileuploadconDetailById?.createdOn | date}}</span></label>
+               </div>
+            </div>
+         </div>
+      </div>
+    </ng-container>
+
+</div>

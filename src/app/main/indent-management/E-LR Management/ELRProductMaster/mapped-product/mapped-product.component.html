@@ -1,0 +1,87 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Mapped Product </span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+<div class="row">
+    <div ><a  href="javascript:void(0)" class="link-primary titleBold float-end">Download Excel </a>
+        <div></div>
+
+</div>
+    <table class="table table-bordered">
+        <thead>
+            <tr class="text-center bg-secondary text-white">
+                <th colspan="5">Mapped Product</th>
+            
+            </tr>
+        </thead>
+    <tbody>
+        <tr>
+           <td>  
+            
+<!--             
+            <div class="col-lg-10">
+            <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">Select Customer  <span class="text-danger">*</span></span> </label>
+
+
+                <div class=" col-lg-4 ">
+
+                        <ng-select class="pb-2 " placeholder="Transition Mode Select" [searchable]="true"
+                        formControlName="docketNo" [ngClass]="{'is-invalid':submitted && f['docketNo'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.custId" *ngFor="let item of customerList"
+                           [disabled]='!item.isActive'>{{item.custName}}</ng-option>
+                     </ng-select>
+
+
+                    <div *ngIf="submitted && f['docketNo'].errors">
+                        <small class="text-danger" *ngIf="f['docketNo'].errors?.['required']">please
+                      enter digitized LR
+                        </small>
+                        <small class="text-danger" *ngIf="f['docketNo'].errors?.['pattern']">invalid
+                            digitized LR</small>
+                        <small class="text-danger" *ngIf="f['docketNo'].errors?.serverError">{{
+                            f['docketNo'].errors.serverError}}</small>
+                    </div>
+                </div>
+                <div class=" col-lg-2 ">
+                    <button type="button" 
+                        class="btn btn-warning rounded-pill btn-padding2 btn-sm"><i class="bi bi-search"></i> Search </button>
+
+                </div>
+
+            </div>
+        </div> -->
+    </td>
+           <td>ELR Product Name</td>
+           <td>Product Name(Actual)</td>
+           <td>MAP Product code</td>
+           <td>Un-Map</td>
+        </tr>
+        <tr>
+            <td></td>
+            <td></td>
+            <td ></td>
+            <td>Product Code</td>
+            <td><a  class="link-primary titleBold">Un-Map</a></td>
+         </tr>
+    </tbody>
+    </table>
+    <div class="row">
+        <div class="text-center">
+            <button type="button" 
+                class="btn btn-primary rounded-pill btn-padding btn-sm">Submit </button>
+    
+        </div>
+    </div>
+
+    </div>

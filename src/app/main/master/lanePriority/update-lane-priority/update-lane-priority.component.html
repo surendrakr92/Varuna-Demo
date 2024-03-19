@@ -1,0 +1,177 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/lane-priority-list"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Lane Priority " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom">
+            </i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Update Lane Priority</h5>
+      <span class="title">
+         <span>
+            <!-- <input class="form-control" type="file"
+               accept=".csv, application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel"
+               (change)="onFileChange($event)"> -->
+         </span>
+         <button type="button" class="btn btn-dark m-1 " (click)="modelopen(modalmsg)">Upload File</button>
+         <!-- popup confirm-->
+         <ng-template #modalmsg let-modal>
+            <div class="modal-header qut-hd">
+               <h6 class="modal-title" id="exampleModalCenterTitle">
+                  Lane File UpLoad
+               </h6>
+               <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                     aria-hidden="true" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body" tabindex="0" ngbAutofocus>
+               <div class="row ">
+                  <div class="col-lg-4">
+                     <div class="form-group mb-1">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Upload file
+                        </label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="file" class="form-control" accept=".csv" (change)="onFileChangeCsv($event)">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <!-- 
+                  <div class="row">
+                     <div class="col-lg-12 ">
+                        <div class="float-end m-1">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                           (click)="uploadCSVFile()">Upload
+                              File</button>
+                        </div>
+                        <div class="float-end m-1">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Re
+                              Validate</button>
+                        </div>
+                  
+                     </div>
+                  </div> -->
+               <div class="table-responsive">
+                  <table class="table table-bordered">
+                     <thead>
+                        <tr>
+                           <th scope="col">Sr No.</th>
+                           <th scope="col">From City </th>
+                           <th scope="col">To City </th>
+                           <th scope="col">Vehicle Type</th>
+                           <th scope="col">Loadability</th>
+                           <th scope="col">Lane Category</th>
+                           <th scope="col">Monthly Target</th>
+                           <th scope="col">Error Message</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of xlsUploadedJson; let i = index">
+                           <td>{{ i + 1 }}</td>
+                           <td>{{ item['fromCity'] }}</td>
+                           <td>{{ item['toCity'] }}</td>
+                           <td>{{ item['vehicletype'] }}</td>
+                           <td>{{ item['loadability'] }}</td>
+                           <td>{{ item['categoryGeneral'] }}</td>
+                           <td>{{ item['monthTarget'] }}</td>
+                           <td><span class="text-danger">{{item['errorMessage']}}</span></td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <br>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary  d-inline  btn-sm " (click)="saveValidDataToTable()">Save
+                  </button>
+                  <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                     (click)="modal.dismiss('Cross click')">Cancel</button>
+               </div>
+               <!-- </center> -->
+            </div>
+         </ng-template>
+         <button type="button" class="btn btn-dark m-1 " (click)="export()"><i class="bi bi-save2"></i> Export</button>
+         <button type="button" class="btn btn-dark m-1 " (click)="importFile()"><i class="bi bi-save2"></i>
+            Import</button>
+      </span>
+   </div>
+   <!-- <form [formGroup]="formMaster"> -->
+   <table class="table table-bordered" #MyTable id="MyTable">
+      <thead class="bg-secondary text-white">
+         <tr>
+            <th>Sr. No.</th>
+            <th>From City</th>
+            <th>To City</th>
+            <th>Vehicle Type</th>
+            <th>Loadability</th>
+            <th>Lane Category</th>
+            <th>Monthly Target</th>
+         </tr>
+      </thead>
+      <tbody>
+         <tr class="zoom-in" *ngFor="let data of lanePeriorityListByCustId ; index as i">
+            <td>{{i+1}}</td>
+            <td>{{data?.fromCity}}</td>
+            <td>{{data?.toCity}}</td>
+            <td>{{data?.vehicletype}}</td>
+            <td>
+               <!-- {{data?.loadabilityId}} -->
+               <ng-select class="pb-2 " placeholder="Select" [searchable]="true" [clearable]="true"
+               (change)="VloadAbili(i,$event)" [(ngModel)]="data.loadabilityId">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                  *ngFor="let item of VloadAbilityList">{{item.codeDesc}}</ng-option>
+            </ng-select>
+            </td>
+            <td>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="Select" [searchable]="true" [clearable]="true"
+                     (change)="laneCategory(i,$event)" [(ngModel)]="data.categoryGeneralId">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of laneCategoryList">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <!-- <div *ngIf="submitted && f['laneCategory'].errors">
+                     <small class="text-danger" *ngIf="f['laneCategory'].errors?.['required']">please select
+                         lane category
+                     </small>
+                     <small class="text-danger" *ngIf="f['laneCategory'].errors?.serverError">{{
+                         f['pinCode'].errors.serverError}}</small>
+                     </div> -->
+               </div>
+            </td>
+            <td>
+               <div class=" col-sm-6 col-lg-6">
+                  <input type="number" class="form-control" #dataNumber value="{{data?.monthTarget}}"
+                     (change)="numberData(i,dataNumber.value)">
+                  <!-- <div *ngIf="submitted && f['branchName'].errors">
+                     <small class="text-danger" *ngIf="f['branchName'].errors?.['required']">please enter
+                         Monthly Target
+                     </small>
+                     <small class="text-danger" *ngIf="f['branchName'].errors?.serverError">{{
+                         f['pinCode'].errors.serverError}}</small>
+                     </div> -->
+               </div>
+            </td>
+            <td><span class="text-danger">{{ data.error }}</span></td>
+         </tr>
+      </tbody>
+   </table>
+   <div class="row pb-2">
+      <div class="col-lg-12">
+         <div class="float-end">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+               (click)="OnSubmit()">Submit</button>
+         </div>
+      </div>
+   </div>
+   <!-- </form> -->
+</div>

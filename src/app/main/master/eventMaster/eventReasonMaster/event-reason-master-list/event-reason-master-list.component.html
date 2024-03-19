@@ -1,0 +1,150 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">Event Reason Master List
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create Event Reason Master" placement="bottom"
+            (click)="modelopen(modalmsg,'create')"><i class="bi bi-plus-lg "></i> Create </button>
+
+         <!-- popup confirm-->
+         <ng-template #modalmsg let-modal>
+            <div class="modal-header qut-hd">
+               <h6 class="modal-title" id="exampleModalCenterTitle">New Event Reason</h6>
+               <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                     aria-hidden="true" class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body" tabindex="0" ngbAutofocus>
+               <form [formGroup]="formMaster">
+                  <div class="row">
+
+                     <div class="col-lg-5">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Descriptions<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <textarea type="text" class="form-control" formControlName="descriptions"
+                                 [ngClass]="{'is-invalid':submitted && f['descriptions'].errors}"></textarea>
+
+                              <div *ngIf="submitted && f['descriptions'].errors">
+                                 <small class="text-danger" *ngIf="f['descriptions'].errors?.['required']">please enter
+                                    event descriptions</small>
+
+                                 <small class="text-danger" *ngIf="f['descriptions'].errors?.serverError">{{
+                                    f['descriptions'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-5">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Sub Event<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="pb-2 " placeholder="Sub Event Select" formControlName="subEventId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['subEventId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [disabled]='!item.isActive' [value]="item.eventId"
+                                    *ngFor="let item of eventTypeList ">{{item.eventDesc}}</ng-option>
+                              </ng-select>
+
+                              <div *ngIf="submitted && f['subEventId'].errors">
+                                 <small class="text-danger" *ngIf="f['subEventId'].errors?.['required']">select event
+                                    Descriptions</small>
+                                 <small class="text-danger" *ngIf="f['subEventId'].errors?.serverError">{{
+                                    f['subEventId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-2">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label"> Status
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <div class="form-check form-switch p-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isActive">
+                                 <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                                    f['isActive'].errors?.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+               <br>
+               <!-- <span> success</span> -->
+               <!-- <p class="text-center">Request No: <span class="font-weight-light">{{Viewrcmc?.REF_NO}}</span> -->
+               <!-- <center> -->
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                  (click)="submit()">Submit</button>
+                  <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                     (click)="modal.dismiss('Cross click')">cancel</button>
+               </div>
+               <!-- </center> -->
+            </div>
+         </ng-template>
+         <!-- close popup confirm-->
+         <button class="btn btn-secondary text-white" (click)="downloadExcel(MyTable)" ngbTooltip="Download File"
+            placement="bottom" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Descriptions</th>
+               <th>Event Descriptions</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let Item of reasonmasterList; let i=index;">
+               <td>{{i+1}}</td>
+               <td>{{Item.descriptions}}</td>
+               <td>{{Item.eventDesc}}</td>
+               <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{Item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2">
+                  <a routerLink="/master/event-master/view-event-reason-master/{{Item.reasonId}}" ngbTooltip="View " placement="bottom" class="view"><i
+                        class="bi bi-eye-fill pr"></i></a>
+                  <a ngbTooltip="Edit " placement="bottom" class="edit"><i class="bi bi-pen-fill pr"
+                     (click)="modelopen(modalmsg,Item?.reasonId)"></i></a>
+                  <a ngbTooltip="Active/Inactive " placement="bottom" class="delete">
+                     <div class="form-check form-switch "
+                     (click)="activeInactive(Item.reasonId)">
+                        <input type="checkbox" class="form-check-input" 
+                        *ngIf="Item.isActive==true"checked title="Inactive">
+                     </div>
+                  </a>
+
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

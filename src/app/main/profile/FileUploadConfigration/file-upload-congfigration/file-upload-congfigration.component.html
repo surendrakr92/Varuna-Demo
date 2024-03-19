@@ -1,0 +1,73 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">File Uploading Configuration List
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Customer Master" placement="bottom"
+            routerLink="/profile/file-uploading-configration/new-file-uploading-configration"><i
+               class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" (click)="downloadExcel(MyTable)" ngbTooltip="Download List"
+            placement="bottom" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable" >
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Menu Caption</th>
+               <th>Documnet Type Name</th>
+               <th>Primary Route Path</th>
+               <th>Absolute Path</th>
+               <th>Primary Virtual Path</th>
+               <th>Archive Virtual Path</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of FileUploadCongList; let i=index;">
+               <td>{{i+1}}</td>
+               <td>{{item.menuCaption}}</td>
+               <td>{{item.documnetTypeName}}</td>
+               <td>{{item.primaryRoutePath}}</td>
+               <td>{{item.absolutePath}}</td>
+               <td>{{item.primaryVirtualPath}}</td>
+               <td>{{item.archiveVirtualPath}}</td>
+               <td> <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2">
+                  <a routerLink="/profile/view-file-uploading-configration/{{item?.fileSatupId}}" ngbTooltip="View "
+                     placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a>
+                  <a (click)="redirectionEdit(item?.fileSatupId)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                  <a ngbTooltip="Active/Inactive " placement="bottom" class="delete">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                           (click)="activeInactive(item?.fileSatupId)" checked>
+                     </div>
+                  </a>
+
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

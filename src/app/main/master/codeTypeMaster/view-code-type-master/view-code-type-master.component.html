@@ -1,0 +1,41 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+      <a routerLink="/master/general-master-configuration"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Genral Master Cong. Master "
+         placement="right"></i> </a>
+      </span>
+      <span class=" title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+      </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">General Master Configuration</h5>
+      <span class="title">
+      <a routerLink=""> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i> </a>
+      </span>
+   </div>
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="row p-1 bgborder" >
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Header Description:</strong><span> {{CodeTYpeDetailsById?.headerDesc}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>id Description:</strong><span>  {{CodeTYpeDetailsById?.idDesc}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Name Description:</strong><span>{{CodeTYpeDetailsById?.nameDesc}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>To Support:</strong><span> {{CodeTYpeDetailsById?.toSupport}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong> Created Date:</strong><span>{{CodeTYpeDetailsById?.createdOn | date }}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Active:  </strong><span> {{CodeTYpeDetailsById?.isActive}}</span></label>
+            </div>
+         </div>
+      </div>
+   </div>

@@ -1,0 +1,152 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">DFM Location Edit</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+
+    <form [formGroup]="formMaster">
+        <div class="row mt-3 d-flex justify-content-center  mb-2">
+            <div class="col-lg-5">
+                <div class="row">
+           
+                    <div class="col-lg-9">
+                        <div class="row">
+                            <label for="inputText" class="col-sm-5 col-lg-5 col-form-label">(DFM/PFM/FM) No.<span
+                                    class="text-danger">*</span></label>
+                            <div class=" col-sm-7 col-lg-7 ">
+                                <input type="text" class="form-control" formControlName="fmno"
+                                [ngClass]="{'is-invalid':submitted && f['fmno'].errors}" >
+        
+                                <div *ngIf="submitted && f['fmno'].errors">
+                                    <small class="text-danger" *ngIf="f['fmno'].errors?.['required']">Please select document
+                                    </small>
+        
+                                    <small class="text-danger" *ngIf="f['fmno'].errors?.serverError">{{
+                                        f['fmno'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    
+        
+                    <div class=" col-lg-3">
+                        <button type="button" (click)="searchFilter()"
+                            class="btn btn-warning rounded-pill btn-padding2 btn-sm"><i class="bi bi-search"></i> Search </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+
+
+    <div class="table-responsive">
+        <table class="table table-bordered">
+            <thead>
+                <th>S.No</th>
+              <th>Docket No</th>
+                <th>(DFM/PFM/FM) No</th>
+                <th>(DFM/PFM/FM) Date</th>
+                <th>Forward Location</th>
+       
+                <th>action</th>
+             
+              
+            </thead>
+            <tbody>
+                <tr>
+                    <td>1</td>
+                    <td>DockNo</td>
+                    <td>fmno</td>
+                    <td>fmdate</td>
+                    <td>Doc_FWD_To</td>
+                  
+             
+                   <td>  <a  (click)="modelOpen(modelmsg)" ngbTooltip="Edit " placement="bottom" class="edit"><i
+                    class="bi bi-pen-fill pr"></i></a></td>
+                
+                   
+                  
+                </tr>
+            </tbody>
+    
+        </table>
+
+            <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+        <div class="modal-header qut-hd">
+           <h6 class="modal-title" id="exampleModalCenterTitle">DFM Location Edit</h6>
+           <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+              aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+              aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+          <div class="row">
+            <div class="col-lg-6">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Docket No.<span
+                    class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="drivermobileno" readonly
+                         [ngClass]="{'is-invalid':submitted && fs['drivermobileno'].errors}" >
+                         <div *ngIf="submitted2 && fs['drivermobileno'].errors">
+                            <small class="text-danger" *ngIf="fs['drivermobileno'].errors?.['required']">Please enter Date</small>
+                            <small class="text-danger" *ngIf="fs['drivermobileno'].errors?.serverError">{{
+                               fs['drivermobileno'].errors.serverError}}</small>
+                         </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-6">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Forward PFM Loaction<span
+                    class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="drivermobileno" 
+                         [ngClass]="{'is-invalid':submitted && fs['drivermobileno'].errors}" >
+                         <div *ngIf="submitted2 && fs['drivermobileno'].errors">
+                            <small class="text-danger" *ngIf="fs['drivermobileno'].errors?.['required']">Please Forward PFM Loaction</small>
+                            <small class="text-danger" *ngIf="fs['drivermobileno'].errors?.serverError">{{
+                               fs['drivermobileno'].errors.serverError}}</small>
+                         </div>
+                   </div>
+                </div>
+             </div>
+          
+          </div>
+          <div class="row">
+            <div class="text-center mt-4 mb-2">
+                <button type="button"  class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+            </div>
+        </div>
+
+
+        </div>
+     </ng-template>
+     <!-- close popup confirm-->
+    
+    </div>
+
+
+
+
+
+
+</div>

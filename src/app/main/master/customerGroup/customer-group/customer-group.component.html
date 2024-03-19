@@ -1,0 +1,68 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+        <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="bottom"></i> </a>
+    </span>
+    <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Customer Group Master
+    </h5>
+ 
+    <div class=" pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/master/customer-group/new-customer-group" ngbTooltip="Create City Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+          ngbTooltip="Download List" placement="bottom" type="button" >
+          <i class="bi bi-download"></i>
+       </button>
+    </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover "
+        datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No.</th>
+             <th>Group Code</th>
+             <th>Group Name</th>
+             <th>Is this main group</th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of customerList; let i=index;">
+             <td>{{1+i}}</td>
+             <td>{{Item.groupCode}}</td>
+             <td> {{Item.groupName}}</td>
+             <td>{{Item.isMainGroup?'Yes':'No'}}</td>
+             <td>  <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{Item.isActive?'Active':'Inactive'}}</span>
+          </td>
+ 
+ 
+             <td class="display2">
+                <a  ngbTooltip="view" placement="bottom" class="view" routerLink="/master/customer-group/view-customer-group/{{Item.custGroupId}}"><i class="bi bi-eye-fill pr"></i></a>
+                <a (click)="redirectionEdit(Item.custGroupId)" ngbTooltip="Edit" placement="bottom" class="edit" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+                      <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                         <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" 
+                            *ngIf="Item.isActive==true"
+                               (click)="activeInactive(Item.custGroupId)" checked title="Inactive">
+                         </div>
+                      </a>
+ 
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+ </div>

@@ -1,0 +1,277 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/group-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Group Master" placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+               placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">Group Master
+   </h5>
+   <form [formGroup]="FromMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Group ID
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" value="System generated" placeholder="System generated"
+                     style="color: red;" readonly value="{{this.patchedData?.groupId}}">
+
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Group Name
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="groupName"
+                     readonly="{{this.patchedData.groupId}}"
+                     [ngClass]="{'is-invalid':submitted && f['groupName'].errors}">
+                  <div *ngIf="submitted && f['groupName'].errors">
+                     <small class="text-danger" *ngIf="f['groupName'].errors?.['required']">Please enter group
+                        name</small>
+                     <small class="text-danger" *ngIf="f['groupName'].errors?.serverError">{{
+                        f['groupName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Group Desc. <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="groupDesc"
+                     [ngClass]="{'is-invalid':submitted && f['groupDesc'].errors}">
+                  <div *ngIf="submitted && f['groupDesc'].errors">
+                     <small class="text-danger" *ngIf="f['groupDesc'].errors?.['required']">please enter group
+                        description</small>
+                     <small class="text-danger" *ngIf="f['groupDesc'].errors?.serverError">{{
+                        f['groupDesc'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="row">
+
+
+               <div class="col-lg-6">
+                  <div class="form-group ">
+                     <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Base Group
+                     </label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check listcls"><input type="checkbox" class="form-check-input m-1 checklistcls"
+                              formControlName="isBaseGroup" (change)="setupDynValidation('chck')"> </div>
+                        <div *ngIf="submitted && f['isBaseGroup'].errors">
+                           <small class="text-danger" *ngIf="f['isBaseGroup'].errors?.['required']">Please enter
+                              Base Group</small>
+                           <small class="text-danger" *ngIf="f['isBaseGroup'].errors?.serverError">{{
+                              f['isBaseGroup'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6">
+                  <div class="form-group ">
+                     <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+                     </label>
+                     <div class=" col-sm-12 col-lg-8">
+                        <div class="form-check form-switch ">
+                           <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <ng-container *ngIf="this.FromMaster.controls['isBaseGroup'].value==0">
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Select Base Group
+                     <span class="text-danger">*</span> </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select class="pb-2 " placeholder="Select Base Group" formControlName="baseGroupId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['baseGroupId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.groupId" *ngFor="let item of groupMasterList"
+                           [disabled]='!item.isActive'><span
+                              [title]="item.groupName">{{item.groupName}}</span></ng-option>
+                     </ng-select>
+
+                     <div *ngIf="submitted && f['baseGroupId'].errors">
+                        <small class="text-danger" *ngIf="f['baseGroupId'].errors?.['required']">Please select base
+                           group
+                        </small>
+                        <small class="text-danger" *ngIf="f['baseGroupId'].errors?.serverError">{{
+                           f['baseGroupId'].errors.serverError}}</small>
+                     </div>
+
+
+
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Loaded Avg. Per KM/L
+                     <span class="text-danger">*</span> </label>
+                  <div class=" col-sm-12 col-lg-12">
+
+                     <input type="number" min="0" class="form-control" formControlName="loadedAvgPerKML"
+                        [ngClass]="{'is-invalid':submitted && f['loadedAvgPerKML'].errors}">
+                     <div *ngIf="submitted && f['loadedAvgPerKML'].errors">
+                        <small class="text-danger" *ngIf="f['loadedAvgPerKML'].errors?.['required']">Please enter Loaded
+                           Avg. Per KM/L
+                        </small>
+                        <small class="text-danger" *ngIf="f['loadedAvgPerKML'].errors?.serverError">{{
+                           f['loadedAvgPerKML'].errors.serverError}}</small>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Empty Avg Per KM/L
+                     <span class="text-danger">*</span> </label>
+                  <div class=" col-sm-12 col-lg-12">
+
+                     <input type="number" min="0" class="form-control" formControlName="emptyAvgPerKML"
+                        [ngClass]="{'is-invalid':submitted && f['emptyAvgPerKML'].errors}">
+                     <div *ngIf="submitted && f['emptyAvgPerKML'].errors">
+                        <small class="text-danger" *ngIf="f['emptyAvgPerKML'].errors?.['required']">Please enter Empty
+                           Avg
+                           Per KM/L
+                        </small>
+                        <small class="text-danger" *ngIf="f['emptyAvgPerKML'].errors?.serverError">{{
+                           f['emptyAvgPerKML'].errors.serverError}}</small>
+                     </div>
+
+                  </div>
+               </div>
+            </div>
+
+            <div class="col-lg-3">
+               <div class="row">
+                  <div class="col-lg-7" style="padding-right: 1px;">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Excess Cash
+                           <span class="text-danger">*</span> </label>
+                        <div class=" col-sm-12 col-lg-12">
+
+                           <input type="number" min="0" class="form-control" formControlName="excessCash"
+                              [ngClass]="{'is-invalid':submitted && f['excessCash'].errors}">
+
+
+                           <div *ngIf="submitted && f['excessCash'].errors">
+                              <small class="text-danger" *ngIf="f['excessCash'].errors?.['required']">Please enter
+                                 excess
+                                 cash
+                              </small>
+                              <small class="text-danger" *ngIf="f['excessCash'].errors?.serverError">{{
+                                 f['excessCash'].errors.serverError}}</small>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-5" style="padding-left: 1px;">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Cash Type
+                           <span class="text-danger">*</span> </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Select Base Group" formControlName="cashValueTypeId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['cashValueTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.id" *ngFor="let item of Parameter"><span
+                                    [title]="item.type">{{item.type}}</span></ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['cashValueTypeId'].errors">
+                              <small class="text-danger" *ngIf="f['cashValueTypeId'].errors?.['required']">
+                                 select cash type
+                              </small>
+
+                              <small class="text-danger" *ngIf="f['cashValueTypeId'].errors?.serverError">{{
+                                 f['cashValueTypeId'].errors.serverError}}</small>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="row">
+                  <div class="col-lg-7" style="padding-right: 1px;">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Excess Toll
+                           <span class="text-danger">*</span> </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="number" min="0" class="form-control" formControlName="excessToll"
+                              [ngClass]="{'is-invalid':submitted && f['excessToll'].errors}">
+                           <div *ngIf="submitted && f['excessToll'].errors">
+                              <small class="text-danger" *ngIf="f['excessToll'].errors?.['required']">Please enter
+                                 excess toll
+                              </small>
+                              <small class="text-danger" *ngIf="f['excessToll'].errors?.serverError">{{
+                                 f['excessToll'].errors.serverError}}</small>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-5" style="padding-left: 1px;">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Toll Type
+                           <span class="text-danger">*</span> </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Select Base Group" formControlName="tollValueTypeId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['tollValueTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.id" *ngFor="let item of Parameter"><span
+                                    [title]="item.type">{{item.type}}</span></ng-option>
+
+                           </ng-select>
+                           <div *ngIf="submitted && f['tollValueTypeId'].errors">
+                              <small class="text-danger" *ngIf="f['tollValueTypeId'].errors?.['required']">select
+                                 toll type
+                              </small>
+
+                              <small class="text-danger" *ngIf="f['tollValueTypeId'].errors?.serverError">{{
+                                 f['tollValueTypeId'].errors.serverError}}</small>
+                           </div>
+
+                        </div>
+                     </div>
+                  </div>
+
+               </div>
+
+            </div>
+         </ng-container>
+
+      </div>
+      <div class="row">
+         <div class="col-lg-12 mt-3 mb-2">
+            <div class="float-end">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="submit()">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>

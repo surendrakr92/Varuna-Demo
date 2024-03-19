@@ -1,0 +1,81 @@
+<div class="main-contianer">
+
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">Pin Code List
+      </h5>
+      <div class="pb-2">
+         <button type="button" class="btn btn-success m-1" routerLink="/master/pin-code/new-pin-code"
+            ngbTooltip="Create New Pin Code" placement="bottom"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" ngbTooltip="Download List" placement="bottom"
+            (click)="downloadExcel()" title="Download File" type="button"><i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <label for="">Page Size:</label>
+      <select class="  form-select mx-4 rounded selectclass w-auto" (change)="pagePerData($event)">
+         <option value="5">5</option>
+         <option value="10">10</option>
+         <option value="20">20</option>
+         <option value="50">50</option>
+         <option value="100">100</option>
+         <!-- <option value="100">All</option> -->
+      </select>
+      <div style="margin: 12px;" class="float-end">
+         <input type="text" name="" class="" id="dataaa" #dataaa placeholder="enter pincode for search"
+            (keyup)="searchData(dataaa.value)">
+         <!-- <button 
+         style="margin: 1px;" (click)="searchData(dataaa.value)">
+            search
+         </button> -->
+         <button style="margin: 1px;" (click)="resetData()">
+            Reset
+         </button>
+      </div>
+      <table class="table table-report table-hover ">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Pin Code</th>
+               <th>Country Name</th>
+               <th>State Name</th>
+               <th>City Name</th>
+               <th>Area</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in"
+               *ngFor="let Item of pinCodeList | paginate: {id: 'paginationId', itemsPerPage: itemsPerPage, currentPage: p, totalItems:totalItems }; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{Item.pinCode}}</td>
+               <td>{{Item.countryName}}</td>
+               <td>{{Item.stateName}}</td>
+               <td>{{Item.cityName}}</td>
+               <td>{{Item.area}}</td>
+               <td class="display2">
+                  <a routerLink="/master/pin-code/view-pin-code/{{Item.pincodeId}}" ngbTooltip="View" placement="bottom"
+                     class="view"><i class="bi bi-eye-fill pr"></i></a>
+                  <a (click)="redirectionEdit(Item.pincodeId)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                  <!-- <a  title="Delete" class="delete"
+               (click)="activeInactive(Item.cityId)"><i class="bi bi-trash3  "></i></a> -->
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <pagination-controls *ngIf="this.searchD==''" (pageChange)="pagination($event)" id="paginationId"
+         (pageBoundsCorrection)="correctPage($event)"></pagination-controls>
+   </div>
+</div>

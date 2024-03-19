@@ -1,0 +1,151 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/role-master"><i class="bi bi-arrow-return-left booticon"  ngbTooltip="Back to Role Master "
+             ></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+    <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+      
+       <h5 class="card-title">{{this.rolemasterId?'Update':'Create'}} Role Master
+       </h5>
+       <form [formGroup]="rolemasterForm">
+          <div class="row">
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                      Role Name <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="roleName"
+                         [ngClass]="{'is-invalid':submitted && f['roleName'].errors}">
+ 
+                      <div *ngIf="submitted && f['roleName'].errors">
+                         <small class="text-danger" *ngIf="f['roleName'].errors?.['required']">Please enter role name</small>
+                         <small class="text-danger" *ngIf="f['roleName'].errors?.['pattern']">Invalid role name</small>
+                         <small class="text-danger" *ngIf="f['roleName'].errors?.serverError">{{
+                            f['roleName'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                      Role Description <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <textarea type="text" class="form-control" formControlName="description"
+                         [ngClass]="{'is-invalid':submitted && f['description'].errors}" style="height: 30px;"></textarea>
+ 
+                      <div *ngIf="submitted && f['description'].errors">
+                         <small class="text-danger" *ngIf="f['description'].errors?.['required']">Please enter role description</small>
+                         <small class="text-danger" *ngIf="f['description'].errors?.['pattern']">description name can
+                            not
+                            be
+                            blank</small>
+                         <small class="text-danger" *ngIf="f['description'].errors?.serverError">{{
+                            f['description'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Allow Name Edit
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch p-2">
+                         <input type="checkbox" class="form-check-input" formControlName="allowNameEdit">
+                         <small class="text-danger" *ngIf="f['allowNameEdit'].errors?.serverError">{{
+                            f['allowNameEdit'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <div class="form-check form-switch ">
+                         <input type="checkbox" class="form-check-input" formControlName="isActive">
+                         <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                            f['isActive'].errors?.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="row pb-2">
+                <div class="col-lg-12">
+                   <div class="float-end">
+ 
+                      <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                         (click)="submit()">Submit</button>
+                   </div>
+                </div>
+ 
+             </div>
+          </div>
+ 
+       </form>
+    </ng-container>
+ 
+    <ng-container *ngIf="viewPagecom=='view'">
+      <div class="display">
+         <h5 class="card-title">Role Master</h5>
+         <span class="title">
+            <a (click)="download_pdf_print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i>
+            </a>
+         </span>
+      </div>
+  
+       <div class="row"  id="viewData_information">
+      
+         <div class="col-lg-12">
+         
+            <div class="row p-1 bgborder" >
+           <div class="col-lg-4">
+           
+                 <label for="inputText" ><strong>Role Name:</strong><span> {{rolemasterId?.roleName}}</span></label>
+            
+           </div>
+           <div class="col-lg-4">
+           
+                 <label for="inputText"><strong>Description:</strong><span> {{rolemasterId?.description}}</span></label>
+          
+           </div>
+           <div class="col-lg-4">
+          
+                <label for="inputText"><strong>Allow Name Edit:</strong><span> {{rolemasterId?.allowNameEdit?'Yes':'No'}}</span></label>
+            
+          </div>
+   
+     
+      
+         
+           <div class="col-lg-4">
+           
+                 <label for="inputText"><strong> Created Date:</strong><span>{{rolemasterId?.createdOn | date }}</span></label>
+              
+           </div>
+         
+           <div class="col-lg-4">
+              
+                 <label for="inputText"><strong>Active:  </strong><span> {{rolemasterId?.isActive?'Yes':'No'}}</span></label>
+            
+           </div>
+           </div>
+         
+         
+         
+         </div>
+
+         
+         </div>
+    </ng-container>
+ 
+ </div>

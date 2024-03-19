@@ -1,0 +1,386 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to indent "
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">POD Approval</span>
+
+        <span class=" title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboad"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="border-bottom mb-3 mt-3 pb-2 row">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Pay Basis
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="paybasisId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['paybasisId'].errors}">
+                            <ng-option value="" selected>All</ng-option>
+                            <ng-option [value]="item.generalId" [disabled]="!item.isActive"
+                                *ngFor="let item of payBasicList ">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['paybasisId'].errors">
+                            <small class="text-danger" *ngIf="f['paybasisId'].errors?.['required']">Please select pay
+                                basis
+                            </small>
+                            <small class="text-danger" *ngIf="f['paybasisId'].errors?.serverError">{{
+                                f['paybasisId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        POD Approval Supervisor
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+
+                        <ng-select class="pb-2 " placeholder="Select  POD Approval Supervisor"
+                            formControlName="podSupervisorId" appendTo="body" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['podSupervisorId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.userId" [disabled]="!item.isActive"
+                                *ngFor="let item of userList ">{{item.name}}</ng-option>
+                        </ng-select>
+
+
+                        <div *ngIf="submitted && f['podSupervisorId'].errors">
+                            <small class="text-danger" *ngIf="f['podSupervisorId'].errors?.['required']">Please select
+                                POD approval supervisor
+                            </small>
+                            <small class="text-danger" *ngIf="f['podSupervisorId'].errors?.serverError">{{
+                                f['podSupervisorId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Customer
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+
+                        <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="custId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['custId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.custId"
+                                *ngFor="let item of customerList ">{{item.custName}}</ng-option>
+                        </ng-select>
+
+
+                        <div *ngIf="submitted && f['custId'].errors">
+                            <small class="text-danger" *ngIf="f['custId'].errors?.['required']">Please select customer
+                            </small>
+                            <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                                f['custId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Select POD Scanned Date <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="rangeDate"
+                            [searchable]="true" [clearable]="true" (change)="selectionDate($event)"
+                            [ngClass]="{'is-invalid':submitted && f['rangeDate'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.id" *ngFor="let item of dateRange ">{{item.type}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['rangeDate'].errors">
+                            <small class="text-danger" *ngIf="f['rangeDate'].errors?.['required']">Please select date
+                                range
+                            </small>
+                            <small class="text-danger" *ngIf="f['rangeDate'].errors?.serverError">{{
+                                f['rangeDate'].errors.serverError}}</small>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 ">
+                <div class="row">
+                    <div class="col-lg-6 " style="padding-right: 0px !important;">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                From Date
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="date" class="form-control" value="{{currentDate}}"
+                                    formControlName="scanDateFrom"
+                                    [readOnly]="[2, 3, 4].includes(this.formMaster.controls['rangeDate'].value)">
+
+                                <div *ngIf="submitted && f['scanDateFrom'].errors">
+                                    <small class="text-danger" *ngIf="f['scanDateFrom'].errors?.['required']">Please
+                                        select date
+                                    </small>
+                                    <small class="text-danger" *ngIf="f['scanDateFrom'].errors?.serverError">{{
+                                        f['scanDateFrom'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 " style="padding-left:4px !important;">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                TO Date
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="date" class="form-control" value="{{currentDate}}"
+                                    formControlName="scanDateTo"
+                                    [readOnly]="[2, 3, 4].includes(this.formMaster.controls['rangeDate'].value)">
+                                <div *ngIf="submitted && f['scanDateTo'].errors">
+                                    <small class="text-danger" *ngIf="f['scanDateTo'].errors?.['required']">Please
+                                        select date
+                                    </small>
+                                    <small class="text-danger" *ngIf="f['scanDateTo'].errors?.serverError">{{
+                                        f['scanDateTo'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3 ">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Docket Delivered Status
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="isDelivered"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['isDelivered'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.id"
+                                *ngFor="let item of Docket_Delivered_Status ">{{item.type}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['isDelivered'].errors">
+                            <small class="text-danger" *ngIf="f['isDelivered'].errors?.['required']">Please select
+                                docket delivered status </small>
+                            <small class="text-danger" *ngIf="f['isDelivered'].errors?.serverError">{{
+                                f['isDelivered'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 ">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Docket POD Scan Status
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="isPODScan"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['isPODScan'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.id"
+                                *ngFor="let item of Docket_POD_Scan_Status ">{{item.type}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['isPODScan'].errors">
+                            <small class="text-danger" *ngIf="f['isPODScan'].errors?.['required']">Please select Docket
+                                POD scan status
+                            </small>
+                            <small class="text-danger" *ngIf="f['isPODScan'].errors?.serverError">{{
+                                f['isPODScan'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div class="row mb-2">
+            <div class="text-center">
+                <button type="submit" class="btn btn-warning rounded-pill btn-sm btn-padding "
+                    (click)="Onsubmit()">Submit</button>
+
+            </div>
+        </div>
+    </form>
+    <ng-container>
+        <div class="table-responsive">
+            <table class="table table-borderless ">
+                <thead class="bg-secondary text-white">
+                    <tr>
+                        <th>
+                            <div class="form-check listcls" style="margin-left: 5px;">
+                                <input type="checkbox" id="gridCheck2" class="form-check-input" #checkkAL
+                                    (change)="handleAllMen(checkkAL.checked)">
+                            </div>
+                        </th>
+
+                        <th style="min-width: 50px;">Sr No.</th>
+                        <th style="min-width: 100px;">Docket/LR No</th>
+                        <th style="min-width: 110px;">Docket/LR Date.</th>
+                        <th style="min-width: 80px;">Pay basis</th>
+
+                        <th style="min-width: 70px;">Origin</th>
+                        <th style="min-width: 70px;">Branch</th>
+                        <th style="min-width: 110px;">Party/ Customer</th>
+                        <th style="min-width: 100px;">Scanned At</th>
+                        <th style="min-width: 75px;">Scan Date</th>
+
+
+                        <th style="min-width: 140px;">Scan POD View </th>
+
+                        <th>Approval</th>
+                        <th>Reject Reason</th>
+                        <th style="min-width: 90px;">Vehicle No.</th>
+
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class=" zoom-in" *ngFor="let item of indentFilter; let i=index;">
+                        <td>
+                            <div class="form-check listcls">
+                                <input type="checkbox" id="gridCheck2" class="form-check-input" #checSing
+                                    [(ngModel)]="item.checked" (change)="singleMen(checSing.checked,i,item)">
+                            </div>
+                        </td>
+                        <td>{{i+1}}</td>
+                        <td>{{item.docketNo}}</td>
+                        <td>{{item.docketDate |date}}</td>
+                        <td>{{item.paybasis}}</td>
+                        <td>{{item.originBranch}}</td>
+                        <td>{{item.destBranch}}</td>
+                        <td>{{item.custName}}</td>
+                        <td>{{item.scanAtName}}</td>
+                        <td>{{item.scanDt |date}}</td>
+                        <td><button class="btn btn-warning btn-sm" (click)="modelOpen(modelmsg)"><i
+                                    class="bi bi-eye-fill"></i> view</button><!-- popup confirm-->
+                            <ng-template #modelmsg let-modal>
+                                <div class="modal-header qut-hd">
+                                    <h6 class="modal-title" id="exampleModalCenterTitle">Scan POD View </h6>
+                                    <button type="button" class="clos-btn bg-light-blue"
+                                        (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <button type="button" rippleefect="" class="btn btn-icon"
+                                        (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                                            class="fa fa-times"></i></button>
+                                </div>
+                                <div class="modal-body p-0" tabindex="0" ngbAutofocus>
+                                    <object data="https://www.africau.edu/images/default/sample.pdf"
+                                        type="application/pdf" width="100%" height="500px">
+
+                                    </object>
+
+                                </div>
+                            </ng-template>
+                            <!-- close popup confirm-->
+
+                        </td>
+
+                        <td>
+                            <div>
+                                <ng-select class="pb-2 " placeholder="Approval Select" appendTo="body"
+                                    style="width: 150px;" [searchable]="true" [clearable]="true"
+                                    [ngModel]="item.isPODApproved" (change)="setupJson($event,i,'isPODApproved')">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.id"
+                                        *ngFor="let item of approval ">{{item.type}}</ng-option>
+                                </ng-select>
+                            </div>
+                        </td>
+                        <td>
+                            <div>
+                                <ng-select class="pb-2 " placeholder="Select Reject Reason " appendTo="body"
+                                    style="width: 300px;" [searchable]="true" [clearable]="true"
+                                    (change)="setupJson($event,i,'podRjctReasonId')">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.generalId"
+                                        *ngFor="let item of Reason_For_POD_Rejection "><span
+                                            [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                                </ng-select>
+                            </div>
+                        </td>
+                        <td>
+
+                            <button type="button" (click)="modelOpen2(modelmsg2)"
+                                class="btn btn-link">{{item.vehicleNo}}</button>
+                            <ng-template #modelmsg2 let-modal>
+                                <div class="modal-header qut-hd">
+                                    <h6 class="modal-title" id="exampleModalCenterTitle">Vehicle View </h6>
+                                    <button type="button" class="clos-btn bg-light-blue"
+                                        (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    <button type="button" rippleefect="" class="btn btn-icon"
+                                        (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                                            class="fa fa-times"></i></button>
+                                </div>
+                                <div class="modal-body pt-0" tabindex="0" ngbAutofocus>
+                                    <div class="table-responsive">
+                                        <table class="table table-report table-hover " datatable [dtOptions]="dtOptions"
+                                            [dtTrigger]="dtTrigger" #MyTable id="MyTable">
+                                            <thead class="bg-secondary text-white">
+                                                <tr>
+                                                <tr>
+                                                    <th>Sr. No.</th>
+                                                    <th>Is CV</th>
+                                                    <th>Trucks No.</th>
+                                                    <th>Location</th>
+                                                    <th>last Status</th>
+                                                    <th>Last Updated</th>
+
+
+
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="zoom-in" *ngFor="let item of vehicleList;index as i">
+                                                    <td>{{i+1}}</td>
+                                                    <td>{{item?.isType==true?'Yes':'No'}}</td>
+                                                    <td>{{item.vehicleNo}}
+                                                    </td>
+                                                    <td>{{item?.location}}</td>
+                                                    <td><span class="text-success"><i
+                                                                class="bi bi-check2-square pr"></i>EMPTY RUN
+                                                            <span class="status">({{item.lastEventDesc}})</span></span>
+                                                    </td>
+                                                    <td>{{item.eventDate | date:'dd/MM/yyyy'}}</td>
+                                                </tr>
+
+                                            </tbody>
+                                        </table>
+
+                                    </div>
+
+                                </div>
+                            </ng-template>
+                        </td>
+
+                    </tr>
+                </tbody>
+            </table>
+            <span class="text-primary" *ngIf="this.indentFilter.length==0">data not found []</span>
+        </div>
+        <div class="row mb-2 mt-3">
+            <div class="text-center">
+                <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding "
+                    [disabled]="this.setupJsonn.length==0" (click)="podApproval()">Submit</button>
+
+            </div>
+        </div>
+    </ng-container>
+
+
+</div>

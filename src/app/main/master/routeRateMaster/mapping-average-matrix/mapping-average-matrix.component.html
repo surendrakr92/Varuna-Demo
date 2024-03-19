@@ -1,0 +1,127 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Mapping Average Matrix </span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row mt-3 d-flex justify-content-center  mb-2">
+
+            <div class="col-lg-6">
+                <div class="row">
+                    <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end"> Group Name
+                            <span class="text-danger">*</span></span> </label>
+                    <div class=" col-lg-5 ">
+                        <ng-select class="pb-2 " placeholder="Select Group Name " [searchable]="true" [clearable]="true"
+                            formControlName="groupId" [ngClass]="{'is-invalid':submitt && fs['groupId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.groupId" *ngFor="let item of groupList">{{item.groupName
+                                }}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitt && fs['groupId'].errors">
+                            <small class="text-danger" *ngIf="fs['groupId'].errors?.['required']">please select
+                                group name
+                            </small>
+                            <small class="text-danger" *ngIf="fs['groupId'].errors?.serverError">{{
+                                fs['groupId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                    <div class=" col-lg-3 ">
+                        <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm"
+                            (click)="OnSearch()">Next <i class="bi bi-chevron-double-right"></i>
+                        </button>
+
+                    </div>
+
+                </div>
+            </div>
+
+
+        </div>
+    </form>
+    <div class="row">
+        <div class="pb-1 display3">
+            <button type="button" class="btn btn-success m-1" 
+                routerLink="/master/mapping-average-matrix/create-mapping-average-matrix/{{this.formMaster.controls['groupId'].value}}"><i
+                    class="bi bi-plus-lg "></i> Create</button>
+                    <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+                    ngbTooltip="Download List" type="button" >
+                    <i class="bi bi-download"></i>
+                 </button>
+        </div>
+    </div>
+
+    <table class="table  table-borderless table-report"  #MyTable
+    id="MyTable" >
+        <thead class="bg-secondary text-white">
+            <tr>
+                <th class="text-bg-success">Matrix ID</th>
+                <th class="text-bg-success">Group Name</th>
+                <th class="text-bg-primary">Start KM</th>
+                <th class="text-bg-primary">End KM</th>
+                <th class="text-bg-warning">Start Weight</th>
+                <th class="text-bg-warning">End Weight</th>
+                <th class="text-bg-warning">Date Validity From</th>
+                <th class="text-bg-warning">Date Validity To</th>
+                <th class="text-bg-warning">Loaded Avg. KM/L</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+      <tbody>
+<tr class="zoom-in"  *ngFor="let item of AllmatrixList;">
+    <td class="text-success">{{item.matrixId}}</td>
+    <td class="text-success">{{item.groupName}}</td>
+    <td colspan="2">
+<table class="table table-borderless">
+    <tbody>
+    <tr *ngFor="let item of item.averageRange">
+        <td class="text-primary">{{item.startKM}}</td>
+        <td class="text-primary">{{item.endKM}}</td>
+    </tr>
+  
+</tbody>
+</table>
+    </td>
+    <td colspan="5">
+        <table class="table table-borderless">
+            <tbody >
+                <tr  *ngFor="let item of item.averageWeight" >
+                <td class="text-warning" >{{item.startWeight}}</td>
+                <td class="text-warning" >{{item.endWeight}}</td>
+                <td class="text-warning" >{{item.validityFrom | date}}</td>
+                <td class="text-warning" >{{item.validityTo | date}}</td>
+                <td class="text-warning">{{item.loadedAvgKM}}</td>
+            </tr>
+           
+        </tbody>
+        </table>
+
+    </td>
+
+  <td>
+    <span class="{{item.isActive ?'Successbg':' warningbg'}}">
+        {{item.isActive?'Active':'Inactive'}}</span>
+</td>
+   
+
+  
+    <td class="display2">
+     
+        <a  class="edit" ngbTooltip="Edit" placement="bottom" ><i
+              class="bi bi-pen-fill pr"></i></a>
+  
+     </td>
+</tr>
+
+      </tbody>
+    </table>
+</div>

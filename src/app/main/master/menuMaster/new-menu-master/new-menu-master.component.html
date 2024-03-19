@@ -1,0 +1,380 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/menu-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Menu master "
+             ></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">New Menu Master
+   </h5>
+   <form [formGroup]="formMenuMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Menu Caption<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="menuCaption"
+                     [ngClass]="{'is-invalid':submitted && f['menuCaption'].errors}" placeholder="Enter Menu Caption">
+
+                  <div *ngIf="submitted && f['menuCaption'].errors">
+                     <small class="text-danger" *ngIf="f['menuCaption'].errors?.['required']">Please enter Menu
+                        Caption</small>
+                     <small class="text-danger" *ngIf="f['menuCaption'].errors?.serverError">{{
+                        f['menuCaption'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Icon<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="tel" class="form-control" formControlName="icon"
+                     [ngClass]="{'is-invalid':submitted && f['icon'].errors}" placeholder="Enter Menu Icon">
+
+                  <div *ngIf="submitted && f['icon'].errors">
+                     <small class="text-danger" *ngIf="f['icon'].errors?.['required']">Please enter icon
+                     </small>
+                     <small class="text-danger" *ngIf="f['icon'].errors?.serverError">{{
+                        f['icon'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Module Id <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="module Select" formControlName="moduleId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['moduleId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.moduleId" [disabled]='!item.isActive'
+                        *ngFor="let item of modulelists">{{item.moduleName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['moduleId'].errors">
+                     <small class="text-danger" *ngIf="f['moduleId'].errors?.['required']">Please select module 
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Parent Id </label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="Menu Select" formControlName="parentId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['parentId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.webPageId"
+                        *ngFor="let item of menuMasterList">{{item.webPageName}}</ng-option>
+
+                  </ng-select>
+                  <div *ngIf="submitted && f['parentId'].errors">
+                     <small class="text-danger" *ngIf="f['parentId'].errors?.['required']">Please select Parent 
+                     </small>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Dept Id <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="Country Select" formControlName="deptId"
+                     [searchable]="true" [clearable]="true" [ngClass]="{'is-invalid':submitted && f['deptId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.deptId"
+                        *ngFor="let item of deptttList">{{item.departmentName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['deptId'].errors">
+                     <small class="text-danger" *ngIf="f['deptId'].errors?.['required']">Please select department
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Web Page Path <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="tel" class="form-control" formControlName="webPagePath"
+                     [ngClass]="{'is-invalid':submitted && f['webPagePath'].errors}" placeholder="Enter Web Page Path">
+
+                  <div *ngIf="submitted && f['webPagePath'].errors">
+                     <small class="text-danger" *ngIf="f['webPagePath'].errors?.['required']">Please enter Web Page
+                        Path</small>
+                     <!-- <small class="text-danger" *ngIf="f['webPagePath'].errors?.['pattern']"> Web Page Path can not be
+                        blank</small> -->
+                     <small class="text-danger" *ngIf="f['webPagePath'].errors?.serverError">{{
+                        f['webPagePath'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Web Page Name <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="webPageName"
+                     [ngClass]="{'is-invalid':submitted && f['webPageName'].errors}" placeholder="Enter Web Page Name">
+
+                  <div *ngIf="submitted && f['webPageName'].errors">
+                     <small class="text-danger" *ngIf="f['webPageName'].errors?.['required']">Please enter web page name
+                     </small>
+                     <!-- <small class="text-danger" *ngIf="f['webPageName'].errors?.['pattern']">Web Page Name can not be
+                        blank</small> -->
+                     <small class="text-danger" *ngIf="f['webPageName'].errors?.serverError">{{
+                        f['webPageName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Page Description <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="pageDescription"
+                     placeholder="Enter Web Page Description"
+                     [ngClass]="{'is-invalid':submitted && f['pageDescription'].errors}" style="height: 30px;"></textarea>
+
+                  <div *ngIf="submitted && f['pageDescription'].errors">
+                     <small class="text-danger" *ngIf="f['pageDescription'].errors?.['required']">Please enter page
+                        description </small>
+                     <!-- <small class="text-danger" *ngIf="f['pageDescription'].errors?.['pattern']">Page Description  can not be
+                        blank</small> -->
+                     <small class="text-danger" *ngIf="f['pageDescription'].errors?.serverError">{{
+                        f['pageDescription'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Tool Tip <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="toolTip"
+                     [ngClass]="{'is-invalid':submitted && f['toolTip'].errors}" placeholder="Enter Tool Tip">
+
+                  <div *ngIf="submitted && f['toolTip'].errors">
+                     <small class="text-danger" *ngIf="f['toolTip'].errors?.['required']">Please enter toolTip</small>
+                     <!-- <small class="text-danger" *ngIf="f['toolTip'].errors?.['pattern']">country name can not be
+                        blank</small> -->
+                     <small class="text-danger" *ngIf="f['toolTip'].errors?.serverError">{{
+                        f['toolTip'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Display Order <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="number"class="form-control" formControlName="displayOrder"
+                  min="0" max="100"
+                     [ngClass]="{'is-invalid':submitted && f['displayOrder'].errors}" placeholder="Enter display order">
+                  <div *ngIf="submitted && f['displayOrder'].errors">
+                     <small class="text-danger" *ngIf="f['displayOrder'].errors?.['required']">Please enter display order</small>
+                     <!-- <small class="text-danger" *ngIf="f['displayOrder'].errors?.['pattern']">country name can not be
+                        blank</small> -->
+                     <small class="text-danger" *ngIf="f['displayOrder'].errors?.serverError">{{
+                        f['displayOrder'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row mt-3 mb-3">
+         <div class="card-title text-center" style="background-color:#52456314">Sub Menu Entities Details
+         </div>
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="modelopen(modalmsg)">+ Add Sub Menu Entities</button>
+               </div>
+            </div>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-report table-hover ">
+               <thead class="bg-secondary text-white">
+                  <tr>
+                     <th>Sr. No.</th>
+                     <th>Action</th>
+                     <th>Action URL </th>
+                     <th>Description</th>
+                     <th>Sort Order</th>
+                     <th>Is Active</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="zoom-in" *ngFor="let data of subEntities; index as i;">
+                     <td>{{i+1}}</td>
+                     <td>{{dataFind(data?.actionId)}}</td>
+                     <td>{{data?.actionURL}}</td>
+                     <td>{{data?.description}}</td>
+                     <td>{{data?.sortOrder}}</td>
+                     <td>{{data?.isActive?'Yes':'No'}}</td>
+                     <td class="display2">
+                        <a (click)="redirectionEditForOwner(data,modalmsg,i)" ngbTooltip="Edit "
+                           placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="row pb-2">
+         <div class="col-lg-12">
+            <div class="float-end">
+
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="countrysubmit()">Submit</button>
+            </div>
+         </div>
+
+      </div>
+   </form>
+
+ <!-- popup confirm-->
+ <ng-template #modalmsg let-modal>
+   <div class="modal-header qut-hd">
+      <h6 class="modal-title" id="exampleModalCenterTitle">Sub Menu Entities Details</h6>
+      <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+         aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+      </button>
+      <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+         aria-hidden="true" class="fa fa-times"></i></button>
+   </div>
+   <div class="modal-body" tabindex="0" ngbAutofocus>
+      <form action="" [formGroup]="subEntitiesForm">
+         <div class="row ">  
+            <div class="col-lg-4 ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                 Action
+                   </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="General Master Select" formControlName="actionId"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submittO && ff['actionId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.actionId" *ngFor="let item of DroDownactionList"
+                     [disabled]='!item.isActive'>{{item.actionName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submittO && ff['actionId'].errors">
+                     <small class="text-danger" *ngIf="ff['actionId'].errors?.['required']">Please select action
+                     </small>
+                     <small class="text-danger" *ngIf="ff['actionId'].errors?.serverError">{{
+                     ff['actionId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div> 
+            <div class="col-lg-4 ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+              Action URL
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input  class="form-control custom-file-upload"
+                  type="tel" accept=".png, .jpg, .jpeg,.pdf" formControlName="actionURL"
+                  [ngClass]="{'is-invalid':submittO && ff['actionURL'].errors}" >
+                  <div *ngIf="submittO && ff['actionURL'].errors">
+                     <small class="text-danger" *ngIf="ff['actionURL'].errors?.['required']">Please enter action url
+                     </small>
+                     <small class="text-danger" *ngIf="ff['actionURL'].errors?.serverError">{{
+                     ff['actionURL'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+              Sort Order
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input  class="form-control" value="{{this.subEntities.length+1}}"
+                  type="number"  formControlName="sortOrder"
+                  [ngClass]="{'is-invalid':submittO && ff['sortOrder'].errors}" >
+                  <div *ngIf="submittO && ff['sortOrder'].errors">
+                     <small class="text-danger" *ngIf="ff['sortOrder'].errors?.['required']">Please enter sortOrder
+                     </small>
+                     <small class="text-danger" *ngIf="ff['sortOrder'].errors?.serverError">{{
+                     ff['sortOrder'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4 ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Description
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input  class="form-control"
+                  type="tel"  formControlName="description"
+                  [ngClass]="{'is-invalid':submittO && ff['description'].errors}" >
+                  <div *ngIf="submittO && ff['description'].errors">
+                     <small class="text-danger" *ngIf="ff['description'].errors?.['required']">Please enter description
+                     </small>
+                     <small class="text-danger" *ngIf="ff['description'].errors?.serverError">{{
+                     ff['description'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-4">
+               <div class="form-group mb-2">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Is Active </label>
+                  <div class="row">
+                     <div class=" col-sm-12 col-lg-12 has-validation pr-4 mb-2">
+                        <div class="form-check form-switch p-2">
+                           <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="subMenuD()">Submit Sub Menu</button>
+               </div>
+            </div>
+         </div>
+      </form>
+      <br>
+   </div>
+</ng-template>
+<!-- close popup confirm-->
+</div>

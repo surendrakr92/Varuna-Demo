@@ -1,0 +1,69 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">Consignor/Consignee Master List
+      </h5>
+      <div class=" pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Customer Master" placement="bottom"
+            routerLink="/master/cngr-cnge-master/new-cngr-cnge-master/"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" (click)="downloadExcel(MyTable)" ngbTooltip="Download List"
+            placement="bottom" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>Consignor /Consignee name</th>
+               <th>Phone No.</th>
+               <th>Email ID</th>
+               <!-- <th>Address</th> -->
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let item of cngr_cnse_lists; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{item.name}}</td>
+               <td>{{item.phoneNo}}</td>
+               <td>{{item.emailId}}</td>
+               <!-- <td>{{item.addressLine1}}</td> -->
+               <td> <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{item.isActive?'Active':'Inactive'}}</span>
+               </td>
+               <td class="display2">
+                  <a routerLink="/master/cngr-cnge-master/view-cngr-cnge-master/{{item.consiConseId}}" ngbTooltip="View " placement="bottom" class="view"><i
+                        class="bi bi-eye-fill pr"></i></a>
+                  <a (click)="redirectionEdit(item.consiConseId)" ngbTooltip="Edit " placement="bottom" class="edit"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                  <a ngbTooltip="Active/Inactive " placement="bottom"class="delete">
+                      <div class="form-check form-switch ">
+                         <input type="checkbox" class="form-check-input" 
+                         *ngIf="item.isActive==true" (click)="activeInactive(item.consiConseId)"
+                             checked >
+                      </div>
+                   </a>
+
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

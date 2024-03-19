@@ -1,0 +1,193 @@
+<!-- <div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+       <span class="title">
+       <a routerLink="/Operations"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Black List MV Master</span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div> -->
+
+
+
+
+
+    <div class="main-contianer">
+      <div class="display">
+         <span class="title">
+            <a routerLink="/Operations"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Operations "
+                  placement="bottom"></i> </a>
+         </span>
+         <span class=" title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+            </a>
+         </span>
+      </div>
+
+      <div class="display">
+         <h5 class="card-title">Market Vehicle Master list 
+         </h5>
+         <div class=" pb-2">
+            <button type="button" class="btn btn-success m-1" ngbTooltip="Create Blacklist MV Master" 
+            (click)="modelOpen(modelmsg)" placement="bottom"
+              ><i class="bi bi-plus-lg "></i> Create </button>
+            <button class="btn btn-secondary text-white" (click)="downloadExcel(MyTable)"  ngbTooltip="Download List"
+               placement="bottom" type="button">
+               <i class="bi bi-download"></i>
+            </button>
+         </div>
+      </div>
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">MV Master</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+            aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+            aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <form [formGroup]="formMasterNew">
+            <div class="row ">
+               <div class="col-lg-12 ">
+                  <div class="row">
+                    <div class="col-lg-4">
+                       <div class="form-group">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> <span > Market Vehicle No. 
+                     <span class="text-danger">*</span></span> </label>
+                     <div class=" col-lg-12 ">
+                  <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['vehicleNo'].errors}"
+                   formControlName="vehicleNo">
+                        <div *ngIf="submitted && f['vehicleNo'].errors">
+                           <small class="text-danger" *ngIf="f['vehicleNo'].errors?.['required']">please enter vehicle no
+                           </small>
+                           <small class="text-danger" *ngIf="f['vehicleNo'].errors?.serverError">{{
+                           f['vehicleNo'].errors.serverError}}</small>
+                        </div>
+                     </div> 
+                    </div>
+                    </div>
+                    <div class="col-lg-5">
+                       <div class="form-group">
+                       <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> <span >Reason for Blacklist 
+                       <span class="text-danger">*</span></span> </label>
+                       <div class=" col-lg-12 ">
+                    <textarea type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['blackListResion'].errors}"
+                     formControlName="blackListResion"></textarea>
+                          <div *ngIf="submitted && f['blackListResion'].errors">
+                             <small class="text-danger" *ngIf="f['blackListResion'].errors?.['required']">please enter reason    </small>
+                             <small class="text-danger" *ngIf="f['blackListResion'].errors?.serverError">{{
+                             f['blackListResion'].errors.serverError}}</small>
+                          </div>
+                       </div>
+                      </div>
+                      </div>
+                      <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Scan Status</label>
+                           <div class=" col-sm-12 col-lg-12 ">
+                              <div class="form-check form-switch p-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isActive">
+                              </div>
+
+                              
+                           </div>
+                        </div>
+                     </div>
+     
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               
+               <div class=" mt-3  text-center">
+                  <button type="button" class="btn btn-primary rounded-pill btn-padding btn-sm" (click)="OnCreate()" 
+                     > Submit 
+                  </button>
+               </div>
+            </div> 
+           </form>
+         <br>
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+
+
+<!-- <form [formGroup]="formMaster">
+    <div class="row mt-3 d-flex justify-content-center  mb-2">
+       <div class="col-lg-6">
+          <div class="row">
+             <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">Search Value
+             <span class="text-danger">*</span></span> </label>
+             <div class=" col-lg-5 ">
+          <input type="text" class="form-control" formControlName="vehicleNo" 
+          [ngClass]="{'is-invalid':submitt && fs['vehicleNo'].errors}" >
+                <div *ngIf="submitt && fs['vehicleNo'].errors">
+                   <small class="text-danger" *ngIf="fs['vehicleNo'].errors?.['required']">please select
+                   LR No.
+                   </small>
+                   <small class="text-danger" *ngIf="fs['vehicleNo'].errors?.serverError">{{
+                   fs['vehicleNo'].errors.serverError}}</small>
+                </div>
+             </div>
+             <div class=" col-lg-3 ">
+                <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm" (click)="OnSearch()"
+                   ><i class="bi bi-search"></i> Search 
+                </button>
+             </div>
+          </div>
+       </div>
+    </div>
+ </form> -->
+ <div class="table-responsive" >
+<table class="table table-report table-hover dataTable no-footer"  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+#MyTable
+id="MyTable" >
+    <thead class="bg-secondary text-white">
+        <tr>
+            <th>Sr. No.</th>
+            <th>Vehicle No. </th>
+          <th>Black List By </th> 
+            <th>Black List Date </th>
+            <th>Active By </th>
+            <th>Reason </th>
+            <th>Status</th>
+            <th>Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr class="zoom-in" *ngFor="let item of mvVehicleList; index as i;" >
+            <td>{{item.srNo}}</td>
+            <td>{{item.vehicleNo}}</td>
+          <td >{{BlacklistBy}}</td> 
+           <td>{{item.createdOn |date:'mediumDate'}}</td>
+            <td>{{ActiveBy}}</td> 
+            <td>{{item.blackListResion}}</td>
+            <td>
+               <span class="{{item.isActive?'Successbg':'warningbg'}}">
+                  {{item.isActive?'Active':'Inactive'}}
+               </span>
+            </td>
+            <td class="display2">
+               <a  ngbTooltip="Edit" placement="bottom" class="edit" (click)="editmenu(item,modelmsg)" ><i
+                  class="bi bi-pen-fill pr"></i></a>
+
+               <a  ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                  <div class="form-check form-switch " (click)="activeInactive(item.srNo)">
+                     <input type="checkbox" class="form-check-input" *ngIf="item.isActive==false"
+                        checked title="Inactive">
+                  </div>
+               </a>
+
+            </td>
+        </tr>
+    </tbody>
+</table>
+</div>
+    </div>

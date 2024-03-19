@@ -1,0 +1,106 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light">
+       <span class="title">
+       <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Cluster Master "
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Allocation of POD Supervisor Against Customer</span>
+       <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <div class="row">
+       <div class="float-end">
+          <button class="btn btn-warning mt-2 mb-2 float-end"
+             (click)="addRow()">+ Add</button>
+       </div>
+    </div>
+    <!-- [formGroup]="formMaster"  -->
+    <div class="table-responsive" >
+       <form>
+          <table class="table table-borderless" >
+             <thead class="bg-secondary text-white">
+                <tr>
+                   <th>Sr. No</th>
+                   <th>Select Authority</th>
+                   <th>Customer Name</th>
+                   <th> Branch Name</th>
+                   <th>Cancel</th>
+                </tr>
+             </thead>
+             <tbody >
+                <tr class="border-bottom" *ngFor="let item of PodAllJSOn?.allocationlist ; index as i">
+                   <td class="numCls"></td>
+                   <td>
+                      <div class=" col-sm-12 col-lg-12">
+                         <ng-select class="pb-2 " placeholder="Authority Select" 
+                         appendTo="body" style="width: 300px;" [searchable]="true" [clearable]="true"
+                         (change)="setupJson($event,i,'allocationId')">
+                         <ng-option value="" selected>Select</ng-option>
+                         <ng-option [value]="item.userId"
+                         *ngFor="let item of userList ">{{item.name}}</ng-option>
+                         </ng-select>
+                      </div>
+                   </td>
+                   <td>
+                      <div class=" col-sm-12 col-lg-12">
+                         <ng-select class="pb-2 " placeholder="Customer Name Select"
+                         appendTo="body" style="width: 300px;" [searchable]="true" [clearable]="true"
+                         (change)="setupJson($event,i,'custId')">
+                         <ng-option value="" selected>Select</ng-option>
+                         <ng-option [value]="item.custId"
+                         *ngFor="let item of customerList ">{{item.custName}}</ng-option>
+                         </ng-select>
+                      </div>
+                   </td>
+                   <td>
+                      <div class=" col-sm-12 col-lg-12">
+                         <ng-select class="pb-2 " placeholder="Branch Name Select"
+                         appendTo="body" style="width: 300px;" [searchable]="true" [clearable]="true"
+                         (change)="setupJson($event,i,'branchId')">
+                         <ng-option value="" selected>Select</ng-option>
+                         <ng-option [value]="item.branchId"
+                         *ngFor="let item of branchList ">{{item.branchName}}</ng-option>
+                         </ng-select>
+                      </div>
+                   </td>
+                   <td> <a *ngIf="this.PodAllJSOn?.allocationlist.length>1"
+                    (click)="this.PodAllJSOn?.allocationlist.splice(i,1)"><i class="bi bi-x-circle-fill" style="font-size: 18px;"></i></a> </td>
+                </tr>
+             </tbody>
+          </table>
+       </form>
+    </div>
+    <div class="row">
+       <div class="text-center">
+          <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding m-1 "
+             (click)="Onsubmit()">Submit</button>
+       </div>
+    </div>
+    <div class="row">
+       <table class="table table-report">
+          <thead>
+             <tr class="bg-secondary text-white">
+                <th>Sr. No.</th>
+                <th>Select Authority</th>
+                <th>Customer Name</th>
+                <th>Branch Name</th>
+                <th>Updated By</th>
+                <th>Updated On</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr class="zoom-in" *ngFor="let item of responceData ;index as i">
+                <td>{{i+1}}</td>
+                <td>{{item.allocationId}}r</td>
+                <td>{{item.custId}}a</td>
+                <td>{{item.branchId}}</td>
+                <td>{{item.userId}}</td>
+                <td>{{item.Updatedon}}</td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+ </div>

@@ -1,0 +1,1074 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+      <a routerLink="/master/customer-contract-master"><i class="bi bi-arrow-return-left booticon"
+         (click)="saveDataForBackoup()"
+         ngbTooltip="Back to Customer Contract Master" placement="right"></i>
+      </a>
+      </span>
+      <span class="float-end title">
+      <a routerLink="/dashboard">
+      <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+      </span>
+   </div>
+   <h5 class="card-title">{{this.CCDetailsData==''?'':'Update'}} Customer Contract Master
+   </h5>
+   <!--  Tabs -->
+   <!-- (click)="onTabClick('basic_Information')" -->
+   <ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+      <li class="nav-item flex-fill" role="presentation">
+         <button class="nav-link w-100 active" id="contactBasicInfo-tab" data-bs-toggle="tab"
+            data-bs-target="#contactBasicInfo-justified" type="button" role="tab"
+            [class.active]="activeTab == 'basic_Information'" aria-controls="Update basic Information"
+            aria-selected="true">{{this.CCDetailsData==''?'Create':'Update'}} basic Information</button>
+      </li>
+      <!-- (click)="onTabClick('contract_clause')" -->
+      <li class="nav-item flex-fill" role="presentation" *ngIf="this.CCDetailsData!=''">
+         <button class="nav-link w-100" id="serviceSelection-tab" data-bs-toggle="tab"
+            data-bs-target="#clause-justified" type="button" [class.active]="activeTab == 'contract_clause'" role="tab"
+            aria-controls="Update Contract Clause" aria-selected="false">{{this.CCDetailsData==''?'Create':'Update'}}
+         Contract Clause</button>
+      </li>
+      <!-- (click)="onTabClick('service_selection')" -->
+      <li class="nav-item flex-fill" role="presentation" *ngIf="this.CCDetailsData!=''">
+         <button class="nav-link w-100" id="standardCharges-tab" data-bs-toggle="tab"
+            data-bs-target="#selection-justified" type="button" [class.active]="activeTab == 'service_selection'"
+            role="tab" aria-controls="Update Service Selection"
+            aria-selected="false">{{this.CCDetailsData==''?'Create':'Update'}} Service Selection</button>
+      </li>
+   </ul>
+   <div class="pt-2">
+      <!-- //basic form -->
+      <div class="" *ngIf="activeTab == 'basic_Information'">
+         <form [formGroup]="customerBasicForm">
+            <div class="row pt-4">
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Auto Generated Contract ID <span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <span class="text-primary">{{this.ClaausecontratId}}</span>
+                     <!-- <ng-select class="pb-2 " placeholder="Customer Select" formControlName="custId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && basicValidate['custId'].errors}" >
+                      twopointlocId
+                     <ng-option [disabled]='!item.isActive' [value]="item.custId"
+                     *ngFor="let item of customerList ">{{item.custCode}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['custId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custId'].errors?.['required']">Please select
+                        contract Id
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custId'].errors?.serverError">{{
+                        basicValidate['custId'].errors.serverError}}</small>
+                     </div> -->
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Name & Code <span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2 " placeholder="Customer Select" formControlName="custId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['custId'].errors}">
+                      twopointlocId
+                     <ng-option [disabled]='!item.isActive' [value]="item.custId"
+                     *ngFor="let item of customerList ">{{item.custCode}}-{{item.custName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['custId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custId'].errors?.['required']">Please select
+                        customer name and code
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custId'].errors?.serverError">{{
+                        basicValidate['custId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Start Date<span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="date" class="form-control" formControlName="contractStartDate"
+                     [readonly]="CCDetailsData !== ''"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractStartDate'].errors}"
+                     [value]="basicValidate['contractStartDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && basicValidate['contractStartDate'].errors">
+                        <small class="text-danger"
+                           *ngIf="basicValidate['contractStartDate'].errors?.['required']">please contract date
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractStartDate'].errors?.serverError">{{
+                        basicValidate['contractStartDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract End Date<span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="date" class="form-control" formControlName="contractEndDate"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractEndDate'].errors}"
+                     [value]="basicValidate['contractEndDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && basicValidate['contractEndDate'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['contractEndDate'].errors?.['required']">Please
+                        enter validity date
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractEndDate'].errors?.serverError">{{
+                        basicValidate['contractEndDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Type</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2  " placeholder="Pay Basis select" formControlName="contractTypeId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractTypeId'].errors}">
+                      twopointlocId
+                     <ng-option [value]="item.generalId" *ngFor="let item of payBasisList"
+                     [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['contractTypeId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['contractTypeId'].errors?.['required']">please
+                        select
+                        cntract type
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractTypeId'].errors?.serverError">{{
+                        basicValidate['contractTypeId'].errors.serverError}}</small>
+                        <small class="text-danger" *ngIf="basicValidate['contractTypeId'].errors?.serverError">{{
+                        basicValidate['contractTypeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Effective From Date<span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="date" class="form-control" formControlName="contractEffectiveDate"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractEffectiveDate'].errors}"
+                     [value]="basicValidate['contractEffectiveDate'].value | date:'yyyy-MM-dd'">
+                     <div *ngIf="submitted && basicValidate['contractEffectiveDate'].errors">
+                        <small class="text-danger"
+                           *ngIf="basicValidate['contractEffectiveDate'].errors?.['required']">Please enter contract
+                        cat desc
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractEffectiveDate'].errors?.serverError">{{
+                        basicValidate['contractEffectiveDate'].errors.serverError}}</small>
+                        <small class="text-danger" *ngIf="basicValidate['contractEffectiveDate'].errors?.serverError">{{
+                        basicValidate['contractEffectiveDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Signing Location</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2 " placeholder="Contract Signing Location Select"
+                     formControlName="contractSignBranchId" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractSignBranchId'].errors}">
+                      twopointlocId
+                     <ng-option [disabled]='!item.isActive' [value]="item.branchId"
+                     *ngFor="let item of branchMasterList ">{{item.branchCode | uppercase}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['contractSignBranchId'].errors">
+                        <small class="text-danger"
+                           *ngIf="basicValidate['contractSignBranchId'].errors?.['required']">Please select
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractSignBranchId'].errors?.serverError">{{
+                        basicValidate['contractSignBranchId'].errors.serverError}}</small>
+                        <small class="text-danger" *ngIf="basicValidate['contractSignBranchId'].errors?.serverError">{{
+                        basicValidate['contractSignBranchId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Category</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2 " placeholder="Select Contract Category"
+                     formControlName="contractCatId" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractCatId'].errors}">
+                      twopointlocId
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                     *ngFor="let item of contractCatList ">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['contractCatId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['contractCatId'].errors?.['required']">Please
+                        select contract category
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractCatId'].errors?.serverError">{{
+                        basicValidate['contractCatId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Representative</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="custRepresentive"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['custRepresentive'].errors}">
+                     <div *ngIf="submitted && basicValidate['custRepresentive'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custRepresentive'].errors?.['required']">Please
+                        enter customer representive
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custRepresentive'].errors?.['pattern']">invalid
+                        data
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custRepresentive'].errors?.serverError">{{
+                        basicValidate['custRepresentive'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Representative's
+                  Designation</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="custDesignation"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['custDesignation'].errors}">
+                     <div *ngIf="submitted && basicValidate['custDesignation'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custDesignation'].errors?.['required']">Please
+                        enter representive desigination
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custDesignation'].errors?.['pattern']">invalid
+                        data
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custDesignation'].errors?.serverError">{{
+                        basicValidate['custDesignation'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer's Witness</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="custWitness"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['custWitness'].errors}">
+                     <div *ngIf="submitted && basicValidate['custWitness'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custWitness'].errors?.['required']">Please
+                     customer witness
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custWitness'].errors?.['pattern']">invalid data
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custWitness'].errors?.serverError">{{
+                        basicValidate['custWitness'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Company Employee Name</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2 " placeholder="Select Employee nName" formControlName="compEmpId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['compEmpId'].errors}"
+                     (change)="empNamePhone($event)">
+                      twopointlocId
+                     <ng-option [disabled]='!item.isActive' [value]="item.userId"
+                     *ngFor="let item of userMasterList ">{{item.name}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['compEmpId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['compEmpId'].errors?.['required']">Please enter
+                           company employee name
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compEmpId'].errors?.serverError">{{
+                        basicValidate['compEmpId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Company Employee's Designation</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="empDesignation"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['empDesignation'].errors}">
+                     <div *ngIf="submitted && basicValidate['empDesignation'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['empDesignation'].errors?.['required']">Please
+                        enter emp
+                        designation
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['empDesignation'].errors?.['pattern']">invalid
+                        data
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['empDesignation'].errors?.serverError">{{
+                        basicValidate['empDesignation'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Company Employee's
+                  Email ID</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="email" class="form-control" formControlName="compEmail"readOnly
+                        [ngClass]="{'is-invalid':submitted && basicValidate['compEmail'].errors}">
+                     <div *ngIf="submitted && basicValidate['compEmail'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['compEmail'].errors?.['required']">Please enter
+                        employee's
+                        email id
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compEmail'].errors?.['email']">Please
+                        invalid email
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compEmail'].errors?.serverError">{{
+                        basicValidate['compEmail'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Company Employee's
+                  Contact No.</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="tel" class="form-control" formControlName="compPhone"readOnly
+                        [ngClass]="{'is-invalid':submitted && basicValidate['compPhone'].errors}">
+                     <div *ngIf="submitted && basicValidate['compPhone'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['compPhone'].errors?.['required']">Please
+                        company employee contact number
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compPhone'].errors?.['pattern']">invalid data
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compPhone'].errors?.serverError">{{
+                        basicValidate['compPhone'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Company Witness</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="compWitness"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['compWitness'].errors}">
+                     <div *ngIf="submitted && basicValidate['compWitness'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['compWitness'].errors?.['required']">Please
+                        enter company witness
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compWitness'].errors?.['pattern']">Please
+                        enter company witness
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['compWitness'].errors?.serverError">{{
+                        basicValidate['compWitness'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Account Person of Customer</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="custAccPerson"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['custAccPerson'].errors}">
+                     <div *ngIf="submitted && basicValidate['custAccPerson'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['custAccPerson'].errors?.['required']">Please
+                        enter custAccPerson
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custAccPerson'].errors?.['pattern']">Please
+                        enter custAccPerson
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['custAccPerson'].errors?.serverError">{{
+                        basicValidate['custAccPerson'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div> -->
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">C.S.E ‘s Contact No.</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="tel" class="form-control" formControlName="csePhone"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['csePhone'].errors}">
+                     <div *ngIf="submitted && basicValidate['csePhone'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['csePhone'].errors?.['required']">Please enter
+                        csePhone
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['csePhone'].errors?.['pattern']">Please enter
+                        valid email </small>
+                        <small class="text-danger" *ngIf="basicValidate['csePhone'].errors?.serverError">{{
+                        basicValidate['csePhone'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div> -->
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">C.S.E ‘s Email ID</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="email" class="form-control" formControlName="cseEmail"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['cseEmail'].errors}">
+                     <div *ngIf="submitted && basicValidate['cseEmail'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['cseEmail'].errors?.['required']">Please enter
+                        cseEmail
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['cseEmail'].errors?.['email']">Please enter
+                        valid email </small>
+                        <small class="text-danger" *ngIf="basicValidate['cseEmail'].errors?.serverError">{{
+                        basicValidate['cseEmail'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div> -->
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Mode</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2  " placeholder="General Master Select" [searchable]="true"
+                     [clearable]="true" formControlName="contractModeId"
+                     [ngClass]="{'is-invalid':submitted && basicValidate['contractModeId'].errors}">
+                      twopointlocId
+                     <ng-option [value]="item.generalId"
+                     *ngFor="let item of contractModeList">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && basicValidate['contractModeId'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['contractModeId'].errors?.['required']">Please
+                        enter contractModeId
+                        </small>
+                        <small class="text-danger" *ngIf="basicValidate['contractModeId'].errors?.serverError">{{
+                        basicValidate['contractModeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Contract Description</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="text" class="form-control" formControlName="contractDescription"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['contractDescription'].errors}">
+                     <div *ngIf="submitted && basicValidate['contractDescription'].errors">
+                        <small class="text-danger"
+                           *ngIf="basicValidate['contractDescription'].errors?.['required']">Please enter contract
+                        description
+                        </small>
+                     </div>
+                  </div>
+               </div> -->
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> Remarks</label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <textarea type="number" class="form-control" formControlName="remarks"
+                        [ngClass]="{'is-invalid':submitted && basicValidate['remarks'].errors}"></textarea>
+                     <div *ngIf="submitted && basicValidate['remarks'].errors">
+                        <small class="text-danger" *ngIf="basicValidate['remarks'].errors?.['required']">Please enter
+                        remarks
+                        </small>
+                     </div>
+                  </div>
+               </div> -->
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Single Slab</label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" formControlName="isSingleSlab">
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Multiple Slab</label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" formControlName="isMultipleSlab">
+                     </div>
+                  </div>
+               </div>
+               <!-- <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Contract Type Pf<span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" formControlName="isContractTypePf">
+                     </div>
+                  </div>
+               </div> -->
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Status</label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mt-3 mb-3">
+               <div class="col-lg-12">
+                  <div class="float-end">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="BasicFormSubmission('save_and_exit')">Save & Exit</button>
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding m-2"
+                     *ngIf="this.CCDetailsData!=''" (click)="BasicFormSubmission('save_and_continue')">Save &
+                     Continue</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+      <!-- //clause form -->
+      <div class=" pt-4" *ngIf="activeTab == 'contract_clause'">
+         <div class="row pb-2">
+            <div class="col-lg-8">
+               <span class="title display2 mt-2">
+               <span class=" has-validation">
+               <input class="form-control" (change)="onFileSelected()" type="file"
+                  accept="application/pdf,application/vnd.ms-excel" />
+               </span>
+               <button type="button" class="btn btn-dark m-1 "><i class="bi bi-upload"></i> Upload
+               Agreement</button>
+               <button type="button" class="btn btn-warning m-1 " (click)="viewPdfFileOPen(viewPdfFile)"><i
+                  class="bi bi-eye-fill"></i> View</button>
+               </span>
+            </div>
+            <div class="col-lg-4">
+               <span class="title float-end">
+                  <span class=" has-validation">
+                  <button type="button" class="btn btn-dark  " (click)="modelopenforxls(modalmsgxls)">Upload
+                  File</button>
+                  </span>
+                  <span>
+                     <button type="button"
+                     (click)="downloadSampleForCLause()" class="btn bg-success text-white m-1 p-1"><i class="bi bi-download m-1"></i>Download Sample File</button>
+                  </span>
+                  <!-- <button type="button" class="btn btn-dark m-1 "><i class="bi bi-save2"></i> Upload Clause
+                     Behaviour</button> -->
+               </span>
+            </div>
+         </div>
+         <table class="table table-bordered" #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>Sr. No.</th>
+                  <th>Clause Name</th>
+                  <th>Clause Description</th>
+                  <th>Clause Behaviour</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let item of contractClauseJson.clauselist;index as i">
+                  <td>{{i+1}}</td>
+                  <td>
+                     <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true" [clearable]="true"
+                     [disabled]="true"
+                     [(ngModel)]="item.clausegeneralId" (change)="handleClauseDsc($event,i)">
+                      twopointlocId
+                     <ng-option [value]="item.generalId"
+                     *ngFor="let item of contractClauseList">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <textarea type="number" #data [value]="item.clauseDescription"
+                        (change)="handleClauseDesc(data?.value,i)" class="form-control"></textarea>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <textarea type="number" #dataaa (change)="handleDataForClBhv(dataaa.value,i)"
+                        [value]="item.clauseBehaviour" class="form-control"></textarea>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="row pb-2 mb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="contractClauseSubmission('save_and_exit')">Save & exit</button>
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding m-1"
+                     (click)="contractClauseSubmission('save_and_continue')">Save & Continue</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- service selection form -->
+      <div class="" *ngIf="activeTab == 'service_selection'">
+         <form [formGroup]="formGroupForSSelection">
+            <div class="row pt-4">
+               <div class="card-title bgcolortitle text-center">Services Selection</div>
+               <table class="table table-bordered">
+                  <tbody>
+                     <tr>
+                        <td>Transit Mode</td>
+                        <td colspan="4">
+                           <div class="form-check checkbox w-100">
+                              <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true"
+                              [multiple]="true" [clearable]="true" formControlName="transitModeId"
+                              [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['transitModeId'].errors}">
+                               twopointlocId
+                              <ng-option [value]="item.generalId"
+                              *ngFor="let item of transitModeList">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="serviceSBoolean && serviceSValidate['transitModeId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="serviceSValidate['transitModeId'].errors?.['required']">Please select transit
+                                 mode
+                                 </small>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Service Type</td>
+                        <td colspan="4">
+                           <div class="form-check checkbox w-100">
+                              <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true"
+                              [multiple]="true" [clearable]="true" formControlName="serviceTypeId"
+                              [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['serviceTypeId'].errors}">
+                               twopointlocId
+                              <ng-option [value]="item.generalId"
+                              *ngFor="let item of ServiceTypeList">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="serviceSBoolean && serviceSValidate['serviceTypeId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="serviceSValidate['serviceTypeId'].errors?.['required']">Please select
+                                 serviceTypeId
+                                 </small>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Rate Types Allowed</td>
+                        <td colspan="4">
+                           <div class="form-check checkbox w-100">
+                              <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true"
+                              [multiple]="true" [clearable]="true" formControlName="rateTypeId"
+                              [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['rateTypeId'].errors}">
+                               twopointlocId
+                              <ng-option [value]="item.generalId"
+                              *ngFor="let item of rateTypeAllowedList">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="serviceSBoolean && serviceSValidate['rateTypeId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="serviceSValidate['rateTypeId'].errors?.['required']">Please select rateTypeId
+                                 </small>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                     <tr>
+                        <td>Matrices Allowed</td>
+                        <td colspan="4">
+                           <div class="form-check checkbox w-100">
+                              <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true"
+                              [multiple]="true" [clearable]="true" formControlName="matrixTypeId"
+                              [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['matrixTypeId'].errors}">
+                               twopointlocId
+                              <ng-option [value]="item.generalId"
+                              *ngFor="let item of mattrixAllList">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="serviceSBoolean && serviceSValidate['matrixTypeId'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="serviceSValidate['matrixTypeId'].errors?.['required']">Please select
+                                 matrixTypeId
+                                 </small>
+                              </div>
+                           </div>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+               <div class="row mb-2">
+                  <div class="col-lg-3">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pickup/Delivery <span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2" placeholder="General Master Select" [searchable]="true"
+                        [multiple]="true" [clearable]="true" formControlName="pickUpDlyId"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['pickUpDlyId'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of picupDevList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['pickUpDlyId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['pickUpDlyId'].errors?.['required']">Please enter
+                           contract
+                           code
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-title bgcolortitle text-center">MULTIPOINT SERVICES</div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Apply MultiPoint's
+                  charges to <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select class="pb-2  " placeholder="General Master Select" [searchable]="true" [multiple]="true"
+                     [clearable]="true" formControlName="mpChargeAppplicableId"
+                     [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['mpChargeAppplicableId'].errors}">
+                      twopointlocId
+                     <ng-option [value]="item.generalId"
+                     *ngFor="let item of MultiPointList">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="serviceSBoolean && serviceSValidate['mpChargeAppplicableId'].errors">
+                        <small class="text-danger"
+                           *ngIf="serviceSValidate['mpChargeAppplicableId'].errors?.['required']">Please select
+                        multiPoint’s charges to
+                        </small>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-title bgcolortitle text-center mt-2">FRIEGHT SERVICES</div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Type of Minimum freight<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="General Master Select" [searchable]="true"
+                        [clearable]="true" formControlName="isMinFreightPer"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['isMinFreightPer'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of minFreightList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['isMinFreightPer'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['isMinFreightPer'].errors?.['required']">Please select type
+                           minimum frieght</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['isMinFreightPer'].errors?.serverError">{{
+                           serviceSValidate['isMinFreightPer'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-title bgcolortitle text-center mt-2">RISK INFORMATION</div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Risk type<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="General Master Select" [searchable]="true"
+                        [clearable]="true" formControlName="riskTypeId"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['riskTypeId'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of riskType">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['riskTypeId'].errors">
+                           <small class="text-danger" *ngIf="serviceSValidate['riskTypeId'].errors?.['required']">Please
+                           risk information</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['riskTypeId'].errors?.serverError">{{
+                           serviceSValidate['riskTypeId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="card-title bgcolortitle text-center mt-2">BILLING INFORMATION</div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Bill Generation location<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Contract Signing Location Select"
+                        formControlName="billgenbranchId" [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['billgenbranchId'].errors}">
+                         twopointlocId
+                        <ng-option [disabled]='!item.isActive' [value]="item.branchId"
+                        *ngFor="let item of branchMasterList ">{{item.branchCode | uppercase}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['billgenbranchId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['billgenbranchId'].errors?.['required']">Please select billing
+                           information</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['billgenbranchId'].errors?.serverError">{{
+                           serviceSValidate['billgenbranchId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Bill Submission location<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Contract Signing Location Select"
+                        formControlName="billsubbranchId" [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['billsubbranchId'].errors}">
+                         twopointlocId
+                        <ng-option [disabled]='!item.isActive' [value]="item.branchId"
+                        *ngFor="let item of branchMasterList ">{{item.branchCode | uppercase}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['billsubbranchId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['billsubbranchId'].errors?.['required']">Please select billing
+                           submission location
+                           </small>
+                           <small class="text-danger" *ngIf="serviceSValidate['billsubbranchId'].errors?.serverError">{{
+                           serviceSValidate['billsubbranchId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Bill Collection Location<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Contract Signing Location Select"
+                        formControlName="billcolbranchId" [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['billcolbranchId'].errors}">
+                         twopointlocId
+                        <ng-option [disabled]='!item.isActive' [value]="item.branchId"
+                        *ngFor="let item of branchMasterList ">{{item.branchCode | uppercase}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['billcolbranchId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['billcolbranchId'].errors?.['required']">Please select bill
+                           collection location
+                           </small>
+                           <small class="text-danger" *ngIf="serviceSValidate['billcolbranchId'].errors?.serverError">{{
+                           serviceSValidate['billcolbranchId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Billing Instance<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="Billing Instance Select" [searchable]="true"
+                        [clearable]="true" formControlName="billInst"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['billInst'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of billinginsList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['billInst'].errors">
+                           <small class="text-danger" *ngIf="serviceSValidate['billInst'].errors?.['required']">Please
+                           select
+                           billing instance</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['billInst'].errors?.serverError">{{
+                           serviceSValidate['billInst'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Credit Limit (In Rs)<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" class="form-control" formControlName="creditLimit" min="0" maxlength="10"
+                           [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['creditLimit'].errors}">
+                        <div *ngIf="serviceSBoolean && serviceSValidate['creditLimit'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['creditLimit'].errors?.['required']">Please credit limit
+                           </small>
+                           <small class="text-danger" *ngIf="serviceSValidate['creditLimit'].errors?.serverError">{{
+                           serviceSValidate['creditLimit'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Credit days<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" class="form-control" formControlName="creditDay" min="0" max="500"
+                           [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['creditDay'].errors}">
+                        <div *ngIf="serviceSBoolean && serviceSValidate['creditDay'].errors">
+                           <small class="text-danger" *ngIf="serviceSValidate['creditDay'].errors?.['required']">Please
+                           select credit days
+                           </small>
+                           <small class="text-danger" *ngIf="serviceSValidate['creditDay'].errors?.serverError">{{
+                           serviceSValidate['creditDay'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Billing Schedule<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="Billing Instance Select" [searchable]="true"
+                        [clearable]="true" formControlName="billScheduleId"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['billScheduleId'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of billingSeduList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['billScheduleId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['billScheduleId'].errors?.['required']">please select billing
+                           schedule</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['billScheduleId'].errors?.serverError">{{
+                           serviceSValidate['billScheduleId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Basis for due date<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="Billing Instance Select" [searchable]="true"
+                        [clearable]="true" formControlName="dueDateBaseId"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['dueDateBaseId'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of serviceTaxPyList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['dueDateBaseId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['dueDateBaseId'].errors?.['required']">Please basic for due
+                           date</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['dueDateBaseId'].errors?.serverError">{{
+                           serviceSValidate['dueDateBaseId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+             
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Compulsory Business(pm)</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" class="form-control" formControlName="commBusiness" min="0"
+                           max="1000000000"
+                           [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['commBusiness'].errors}">
+                        <div *ngIf="serviceSBoolean && serviceSValidate['commBusiness'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['commBusiness'].errors?.['required']">please enter compulsory bissiness
+                           </small>
+                           <small class="text-danger" *ngIf="serviceSValidate['commBusiness'].errors?.serverError">{{
+                           serviceSValidate['commBusiness'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Base of Billing<span
+                        class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2  " placeholder="Billing Instance Select" [searchable]="true"
+                        [clearable]="true" formControlName="baseOfBillingId"
+                        [ngClass]="{'is-invalid':serviceSBoolean && serviceSValidate['baseOfBillingId'].errors}">
+                         twopointlocId
+                        <ng-option [value]="item.generalId"
+                        *ngFor="let item of basicBillList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['baseOfBillingId'].errors">
+                           <small class="text-danger"
+                              *ngIf="serviceSValidate['baseOfBillingId'].errors?.['required']">Please select
+                           base of billing</small>
+                           <small class="text-danger" *ngIf="serviceSValidate['baseOfBillingId'].errors?.serverError">{{
+                           serviceSValidate['baseOfBillingId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">SKU Wise yes/No</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <div class="form-check form-switch">
+                           <input type="checkbox" class="form-check-input" formControlName="isSky">
+                        </div>
+                        <div *ngIf="serviceSBoolean && serviceSValidate['isSky'].errors">
+                           <small class="text-danger" *ngIf="serviceSValidate['isSky'].errors?.serverError">{{
+                           serviceSValidate['isSky'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Status<span
+                     class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch">
+                        <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row mt-3 mb-3">
+               <div class="col-lg-12">
+                  <div class="float-end">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding mb-2"
+                        (click)="submissionForSc()">Save & Exit</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+      </div>
+   </div>
+   <!-- popup confirm-->
+   <ng-template #viewPdfFile let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">
+            Pdf View
+         </h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+            aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <!-- file:///C:/Users/Laxmi%20Kant/Downloads/Change-Request%2014-04-2023.pdf -->
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <embed src="http://scmdocs.varuna.net/E_Invoice_POD/Output/4_06_2324_I01421_67916607_Signed.pdf" width="100%"
+            height="400px" type="application/pdf">
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">cancel</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+   <!-- popup confirm-->
+   <ng-template #modalmsgxls let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">
+            Contract Clause Upload
+         </h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+            aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="row ">
+            <div class="col-lg-4">
+               <div class="form-group mb-1">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Upload file
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="file" class="form-control" accept=".csv" (change)="onFileChangeCsv($event)">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- 
+            <div class="row">
+               <div class="col-lg-12 ">
+                  <div class="float-end m-1">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="uploadCSVFile()">Upload
+                        File</button>
+                  </div>
+                  <div class="float-end m-1">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Re
+                        Validate</button>
+                  </div>
+            
+               </div>
+            
+            </div> -->
+         <div class="table-responsive">
+            <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th scope="col">Sr No.</th>
+                     <th scope="col">Clause Name</th>
+                     <th scope="col">Clause Description </th>
+                     <th scope="col">Clause Behaviour</th>
+                     <th scope="col">Error Message</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of modulemasterList; let i = index">
+                     <td>{{ i + 1 }}</td>
+                     <td>{{ item['clauseName'] }}</td>
+                     <td>{{ item['clauseDescription'] }}</td>
+                     <td>{{ item['clauseBehaviour'] }}</td>
+                     <td><span class="text-danger">{{item['errorMessage']}}</span></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <br>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-dark m-1 "
+            (click)="uploadlauseJosn()"><i class="bi bi-save2"></i> Upload Clause
+            Behaviour</button>
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">Cancel</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+</div>

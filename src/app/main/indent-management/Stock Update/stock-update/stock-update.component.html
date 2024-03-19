@@ -1,0 +1,174 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Stock Update"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Stock Update</span>
+        <span class=" title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">THC Date (From & to)</label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Select Date" formControlName="rangeDate"
+                            (change)="selectionDate($event)" [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['rangeDate'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.calId" *ngFor="let item of calenderList">{{item.type}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['rangeDate'].errors">
+                            <small class="text-danger" *ngIf="f['rangeDate'].errors?.['required']">Please select date
+                                range
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-3">
+                <div class="row">
+                    <div class="col-lg-6" style="padding-right: 1px;">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                From Date
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="date" class="form-control" formControlName="fromDate"
+                                    [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}"
+                                    [readOnly]="[2, 3, 4].includes(this.formMaster.controls['rangeDate'].value)">
+
+                                <div *ngIf="submitted && f['fromDate'].errors">
+                                    <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please select
+                                        date
+                                    </small>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6 " style="padding-left: 1px;">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                To Date <span class="text-danger">*</span>
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="date" class="form-control" formControlName="toDate"
+                                    [ngClass]="{'is-invalid':submitted && f['toDate'].errors}"
+                                    [readOnly]="[2, 3, 4].includes(this.formMaster.controls['rangeDate'].value)">
+                                <div *ngIf="submitted && f['fromDate'].errors">
+                                    <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please select
+                                        date
+                                    </small>
+
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        THC No
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="thcno"
+                            [ngClass]="{'is-invalid':submitted && f['thcno'].errors}">
+
+                        <div *ngIf="submitted && f['thcno'].errors">
+                            <small class="text-danger" *ngIf="f['thcno'].errors?.['required']">Please enter THC No
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        MF No.
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="mfNo"
+                            [ngClass]="{'is-invalid':submitted && f['mfNo'].errors}">
+
+                        <div *ngIf="submitted && f['mfNo'].errors">
+                            <small class="text-danger" *ngIf="f['mfNo'].errors?.['required']">Please enter MF No.
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Destinations
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Select Destinations" formControlName="branchId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.branchId"
+                                *ngFor="let item of branchList">{{item.branchName}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['branchId'].errors">
+                            <small class="text-danger" *ngIf="f['branchId'].errors?.['required']">Please enter
+                                destinations
+                            </small>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row mt-3">
+            <div class="text-center">
+                <button type="button" class="btn btn-warning rounded-pill btn-sm btn-padding"
+                    (click)="showStockUpdate()">Show THC's for Stock Update</button>
+            </div>
+
+        </div>
+
+    </form>
+
+    <div class="table-responsive">
+        <table class="table table-report table-hover mt-2 " datatable [dtOptions]="dtOptions" id="MyTable"
+        #MyTable>
+            <thead class="bg-secondary text-white">
+                <tr>
+
+                    <th>Sr. No.</th>
+                    <th>THC Branch</th>
+                    <th style="min-width: 200px;">THC</th>
+                    <th> THC Date</th>
+                    <th>Total No of MF</th>
+
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="zoom-in" *ngFor="let item of stockUpdateList ; index as i">
+                    <td>{{i+1}}</td>
+                    <td>{{item?.branchCode}}</td>
+                    <td><a (click)="routelink(item)" class="link-primary titleBold">{{item?.thcNo}}</a></td>
+                    <td>{{item?.thcDate | date}}</td>
+                    <td>{{item?.manifestCount}}</td>
+                </tr>
+              
+            </tbody>
+        </table>
+    </div>
+
+
+</div>

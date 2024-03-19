@@ -1,0 +1,151 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/stationery/split-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Item Master List" placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">Create Split Stock Master </h5>
+
+</div>
+<form action="" [formGroup]="formSplitMaster">
+   <div class="row">
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Branch
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Branch" formControlName="branchId" 
+               (change)='onSRStartSelected($event)'
+               [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.branchId" *ngFor="let item of branchCodeList"
+                  [disabled]='item.isActive'>{{item.branchName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['branchId'].errors">
+                  <small class="text-danger" *ngIf="f['branchId'].errors?.['required']">Please select Branch
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Item
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select item name" formControlName="itemId" 
+               (change)='onItemSelected($event)'
+               [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['itemId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.itemId"*ngFor="let item of empList"
+                  [disabled]=''>{{item.itemCode+":"+item.itemName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['itemId'].errors">
+                  <small class="text-danger" *ngIf="f['itemId'].errors?.['required']">Please select Item
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+    
+      <div class="col-lg-2">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Serial Start No
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="serialStart">
+            </div>
+         </div>
+      </div>
+
+      <div class="col-lg-2">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Serial End No
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="serialEnd">
+            </div>
+         </div>
+      </div>
+
+
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Issue to Branch
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Branch" formControlName="issueToBranchId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['issueToBranchId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.branchId" *ngFor="let item of branchList"
+                  [disabled]='!item.isActive'>{{item.branchName}}</ng-option>
+         
+               </ng-select>
+               <div *ngIf="submitted && f['issueToBranchId'].errors">
+                  <small class="text-danger" *ngIf="f['issueToBranchId'].errors?.['required']">Please select Branch
+                  </small>
+               </div>
+            </div>
+         </div>
+      </div>
+  
+
+      <div class="col-lg-2">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Split Sr No from
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="splitSerialStart"
+                   [ngClass]="{'is-invalid':submitted && f['splitSerialStart'].errors}"
+                  maxlength="5">
+               <div *ngIf="submitted && f['splitSerialStart'].errors">
+                  <small class="text-danger" *ngIf="f['splitSerialStart'].errors?.['required']">Please enter Sr no from
+                  </small>
+                  <small class="text-danger" *ngIf="f['splitSerialStart'].errors?.['pattern']">Invalid qty </small>
+                  <small class="text-danger" *ngIf="f['splitSerialStart'].errors?.serverError">{{
+                     f['splitSerialStart'].errors.serverError}}</small>
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-2">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Split Sr No To
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="splitSerialEnd"
+                  [ngClass]="{'is-invalid':submitted && f['splitSerialEnd'].errors}" maxlength="5">
+               <div *ngIf="submitted && f['splitSerialEnd'].errors">
+                  <small class="text-danger" *ngIf="f['splitSerialEnd'].errors?.['required']">Please enter Sr no to
+                  </small>
+                  <small class="text-danger" *ngIf="f['splitSerialEnd'].errors?.['pattern']">Invalid Sr no to </small>
+                  <small class="text-danger" *ngIf="f['splitSerialEnd'].errors?.serverError">{{
+                     f['splitSerialEnd'].errors.serverError}}</small>
+
+               </div>
+            </div>
+         </div>
+      </div>
+     
+   
+
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="float-end">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="splitSubmit()">Submit</button>
+            </div>
+         </div>
+      </div>
+      </div>
+      </form>
+   

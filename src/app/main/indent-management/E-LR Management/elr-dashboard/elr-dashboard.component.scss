@@ -1,0 +1,11 @@
+.box {
+    background-color: #FFCC55;
+    max-height: 0px;
+    overflow-y: hidden;
+    transition: ease-in-out 400ms max-height;
+}
+
+.box.opened {
+    max-height: 500px;
+    transition: ease-in-out 600ms max-height;
+}

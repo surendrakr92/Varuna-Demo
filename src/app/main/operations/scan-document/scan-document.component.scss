@@ -1,0 +1,22 @@
+.tableInput,  .ng-select  {
+    width: 230px !important;
+}
+
+
+
+.maincontain{
+    display: flex;
+    // flex-wrap: wrap;
+    overflow-x: scroll;
+    z-index: 0;
+    padding-bottom: 20px;
+  
+ }
+ .item{
+    flex-grow: 0;
+    padding: 2px;
+ 
+ }
+.maincontain input{
+    width: 230px !important;
+}

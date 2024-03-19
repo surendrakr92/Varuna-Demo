@@ -1,0 +1,347 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+            <a routerLink="/master/tds-rate-differential-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to TDS Rate Differential Master List" placement="right"></i> </a>
+        </span>
+        <span class="title">
+           <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+        </span>
+     </div>
+    <h5 class="card-title">New TDS Rate Differential Master
+    </h5>
+    <form [formGroup]="formCityMaster" class="novalidate">
+        <div class="row ">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner PAN Number <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select class="pb-2 " placeholder="Owner  PAN Number Select"
+                       
+                        formControlName="ownerId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['ownerId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                   <ng-option [disabled]='!item.isActive'
+                   [value]="item.ownerId"*ngFor="let item of ownerList">{{item.panNo}}</ng-option>
+                        
+                        </ng-select>
+                       <div *ngIf="submitted && f['ownerId'].errors">
+                          <small class="text-danger" *ngIf="f['ownerId'].errors?.['required']">Please select PAN Number 
+                          </small>
+                          
+                       </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner  Name </label>
+                    <div class=" col-sm-12 col-lg-12 ">
+
+                        <ng-select class="pb-2 " placeholder="Owner  Name Select"
+                       
+                        formControlName="ownerId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['ownerId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                   <ng-option [disabled]='!item.isActive'
+                   [value]="item.ownerId"*ngFor="let item of ownerList">{{item.name}}</ng-option>
+</ng-select>
+                       <div *ngIf="submitted && f['ownerId'].errors">
+                          <small class="text-danger" *ngIf="f['ownerId'].errors?.['required']">Please select Name
+                          </small>
+                          
+                       </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Owner Address
+                    </label>
+                    <div class=" col-sm-12 col-lg-12 ">
+
+                        <ng-select class="pb-2 " placeholder="Owner Address Select"
+                       
+                        formControlName="ownerId"
+                        [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submitted && f['ownerId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                   <ng-option [disabled]='!item.isActive'
+                   [value]="item.ownerId"*ngFor="let item of ownerList"><span [title]="item.address">{{item.address}}</span></ng-option>
+</ng-select>
+                       <div *ngIf="submitted && f['ownerId'].errors">
+                          <small class="text-danger" *ngIf="f['ownerId'].errors?.['required']">select address
+                          </small>
+                          
+                       </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Volume of Business 
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" formControlName="businessVoulume"
+                            [ngClass]="{'is-invalid':submitted && f['businessVoulume'].errors}">
+
+                        <div *ngIf="submitted && f['businessVoulume'].errors">
+                            <small class="text-danger" *ngIf="f['businessVoulume'].errors?.['required']">Please enter  Volume of Business 
+                                </small>
+                            <small class="text-danger" *ngIf="f['businessVoulume'].errors?.['pattern']">Invalid  Volume of Business </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Valid From <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" formControlName="validFrom"
+                            [ngClass]="{'is-invalid':submitted && f['validFrom'].errors}">
+
+                        <div *ngIf="submitted && f['validFrom'].errors">
+                            <small class="text-danger" *ngIf="f['validFrom'].errors?.['required']">select date
+                                </small>
+                            <small class="text-danger" *ngIf="f['validFrom'].errors?.['pattern']">Invalid date</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Valid To <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" formControlName="validUpto"
+                            [ngClass]="{'is-invalid':submitted && f['validUpto'].errors}">
+
+                        <div *ngIf="submitted && f['validUpto'].errors">
+                            <small class="text-danger" *ngIf="f['validUpto'].errors?.['required']">select date
+                                </small>
+                            <small class="text-danger" *ngIf="f['validUpto'].errors?.['pattern']">Invalid date</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Rate of TDS % <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" min="0" formControlName="tdsRateTypeId"
+                            [ngClass]="{'is-invalid':submitted && f['tdsRateTypeId'].errors}">
+
+                        <div *ngIf="submitted && f['tdsRateTypeId'].errors">
+                            <small class="text-danger" *ngIf="f['tdsRateTypeId'].errors?.['required']">Please enter  Rate of TDS %
+                                </small>
+                            <small class="text-danger" *ngIf="f['tdsRateTypeId'].errors?.['pattern']">Invalid  Rate of TDS %</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Document Uploader <span class="text-danger">*</span>
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <input type="file" class="form-control" formControlName="tdsFileUpload"
+                            [ngClass]="{'is-invalid':submitted && f['tdsFileUpload'].errors}">
+
+                        <div *ngIf="submitted && f['tdsFileUpload'].errors">
+                            <small class="text-danger" *ngIf="f['tdsFileUpload'].errors?.['required']">Please  Uploader Document 
+                                </small>
+                            <small class="text-danger" *ngIf="f['tdsFileUpload'].errors?.['pattern']">Invalid Document</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-title bgcolortitle text-center mt-2 ">TDS Sections</div>
+            <div class="display mb-2">
+               <div class="disflex">
+                <span class="dis">
+                  <span class="">Number of Cases  <input type="number" min="0" class="form-control"></span>  
+                   </span>
+                   <span >
+                    <button type="button" class="btn btn-warning rounded-pill btn-sm btn-padding m-2 mt-3">Add</button>
+                 </span></div>
+                   <span>
+                    <div class="col-lg-12">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                TDS Specified or Not
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="TDS Specified or Not Select" style="width: 250px;"
+                       
+                                formControlName="specificPersonId"
+                                [searchable]="true" [clearable]="true"
+                                [ngClass]="{'is-invalid':submitted && f['specificPersonId'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive'
+                           [value]="item.generalId"*ngFor="let item of specificPersonList">{{item.codeDesc}}</ng-option>
+        </ng-select>
+
+                    
+                    
+                                <div *ngIf="submitted && f['specificPersonId'].errors">
+                                    <small class="text-danger" *ngIf="f['specificPersonId'].errors?.['required']">select TDS Specified or Not
+                                        </small>
+                                    <small class="text-danger" *ngIf="f['specificPersonId'].errors?.['pattern']">Invalid TDS Specified or Not</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   </span>
+<span>
+    <div class="col-lg-12">
+        <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                IT Declaration Uploader File <span class="text-danger">*</span>
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+                <input type="file" class="form-control"  formControlName="cityName"  style="width: 250px;"
+                    [ngClass]="{'is-invalid':submitted && f['cityName'].errors}">
+    
+                <div *ngIf="submitted && f['cityName'].errors">
+                    <small class="text-danger" *ngIf="f['cityName'].errors?.['required']">upload IT Declaration File
+                        </small>
+                    <small class="text-danger" *ngIf="f['cityName'].errors?.['pattern']">Invalid document</small>
+                </div>
+            </div>
+        </div>
+    </div>
+</span>
+                
+             </div> 
+     
+    <div class="borderClass">
+  <div class="row boderbtm">
+    <div class="col-lg-3">
+        <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Financial Year<span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+                <ng-select  placeholder="Financial Year Select"
+               
+                formControlName="finYearId"
+                [searchable]="true" [clearable]="true"
+                [ngClass]="{'is-invalid':submitted && f['finYearId'].errors}">
+                <ng-option value="" selected>Select</ng-option>
+           <ng-option [disabled]='!item.isActive'
+           [value]="item.finId"*ngFor="let item of finYear">{{item.startDate | date:'yyyy'}} - {{item.endDate | date:'yyyy'}}</ng-option>
+                
+                </ng-select>
+               <div *ngIf="submitted && f['finYearId'].errors">
+                  <small class="text-danger" *ngIf="f['finYearId'].errors?.['required']">Please select Financial Year
+                  </small>
+                  
+               </div>
+            </div>
+         </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Acknowledge Number <span class="text-danger">*</span>
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+                <input type="number" class="form-control" min="0" formControlName="ackNo"
+                    [ngClass]="{'is-invalid':submitted && f['ackNo'].errors}">
+    
+                <div *ngIf="submitted && f['ackNo'].errors">
+                    <small class="text-danger" *ngIf="f['ackNo'].errors?.['required']">Please enter  Acknowledge Number
+                        </small>
+                    <small class="text-danger" *ngIf="f['ackNo'].errors?.['pattern']">Invalid  Acknowledge Number</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Date of Filling ITR <span class="text-danger">*</span>
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+                <input type="date" class="form-control"  formControlName="dateOfReturn"
+                    [ngClass]="{'is-invalid':submitted && f['dateOfReturn'].errors}">
+    
+                <div *ngIf="submitted && f['dateOfReturn'].errors">
+                    <small class="text-danger" *ngIf="f['dateOfReturn'].errors?.['required']">Please enter city name
+                        </small>
+                    <small class="text-danger" *ngIf="f['dateOfReturn'].errors?.['pattern']">Invalid city name</small>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-3">
+        <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Total TDS and TCS Amount in 
+                Last FY <span class="text-danger">*</span> <i class="bi bi-exclamation-circle-fill"  ngbTooltip="Total TDS and TCS Amount in 
+                Last FY (Rs.)<50,000"></i></label>
+            <div class=" col-sm-12 col-lg-12 ">
+    
+                <ng-select  placeholder="TDS Specified or Not Select" 
+                           
+                formControlName="tdsGrather50000"
+                [searchable]="true" [clearable]="true"
+                [ngClass]="{'is-invalid':submitted && f['tdsGrather50000'].errors}">
+                <ng-option value="" selected>Select</ng-option>
+           <ng-option 
+           [value]="item.id"*ngFor="let item of Total_TDS_TCS_Amount">{{item.type}}</ng-option>
+    </ng-select>
+    
+               <div *ngIf="submitted && f['tdsGrather50000'].errors">
+                  <small class="text-danger" *ngIf="f['tdsGrather50000'].errors?.['required']">select Total TDS and TCS Amount in Last FY
+                  </small>
+                  
+               </div>
+            </div>
+         </div>
+    </div>
+  </div>           
+</div> 
+
+
+  
+
+
+         
+          
+         
+          
+           
+         
+           
+            <!-- <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Status
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+        <div class="row mt-3 mb-3">
+            <div class="col-lg-12">
+                <div class="text-center">
+                    <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="OnSubmit()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+</div>

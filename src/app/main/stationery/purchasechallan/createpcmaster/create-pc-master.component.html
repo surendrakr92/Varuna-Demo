@@ -1,0 +1,218 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/stationery/purchase-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Purchase Master" placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">Create Purchase Challan</h5>
+</div>
+<form action="" [formGroup]="formPurchaseMaster">
+   <div class="row">
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Vendor
+               <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Item Code" formControlName="vendorId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['vendorId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.vendorId" *ngFor="let item of vendorCodeList"
+                     [disabled]='!item.isActive'>{{item.vendorCode+":"+item.vendorName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['vendorId'].errors">
+                  <small class="text-danger" *ngIf="f['vendorId'].errors?.['required']">Please select Vendor </small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Challan
+               Number <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="challanNo" (change)='onChangeChallanNo($event)'
+                  [ngClass]="{'is-invalid':submitted && f['challanNo'].errors}" maxlength="50" >
+               <div *ngIf="submitted && f['challanNo'].errors">
+                  <small class="text-danger" *ngIf="f['challanNo'].errors?.['required']">Please enter challan no
+                     code</small>
+                  <small class="text-danger" *ngIf="f['challanNo'].errors?.['maxLength']">Please enter a valid
+                     20-character alphanumeric challan number</small>
+                  <small class="text-danger" *ngIf="f['challanNo'].errors?.['pattern']">special characters not
+                     allowed.</small>
+                  <small class="text-danger" *ngIf="f['challanNo'].errors?.serverError">{{
+                     f['challanNo'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Date of
+               Receipt <span class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input type="text" class="form-control" formControlName="challanDate">
+               <!-- <input type="date" class="form-control" formControlName="challanDate" datePicker
+                  [ngClass]="{'is-invalid':submitted && f['challanDate'].errors}" maxlength="" max="{{minDatePast}}">
+               <div *ngIf="submitted && f['challanDate'].errors">
+                  <small class="text-danger" *ngIf="f['challanDate'].errors?.['required']">Please enter Date of
+                     Receipt
+                  </small>
+               </div> -->
+            </div>
+         </div>
+      </div>
+      <div class="col-lg-3">
+         <div class="form-group ">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Location
+               Name <span class="text-danger">*</span></label>
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">STNERY : HO STATIONERY STORES
+               <span class="text-danger">*</span></label>
+         </div>
+      </div>
+   </div>
+   <div class="row">
+      <h5 class="card-title">List of Item </h5>
+      <form [formGroup]="formItemMaster">
+         <div class="row">
+            <div class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Item
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="hidden" formControlName="challanDetailsId" />
+                     <input type="hidden" formControlName="itemCode" />
+                     <input type="hidden" formControlName="itemName" />
+                     <ng-select class="pb-2 " placeholder="Select Item " (change)='onItemSelected($event)'
+                        formControlName="itemId" [searchable]="true" [clearable]="true"
+                        [ngClass]="{'is-invalid':submittedItem && f2['itemId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.itemId" *ngFor="let item of itemList"
+                           [disabled]='!item.isActive'>{{item.itemCode+":"+item.itemName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submittedItem && f2['itemId'].errors">
+                        <small class="text-danger" *ngIf="f2['itemId'].errors?.['required']">Please select item code
+                        </small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Quantity
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="qty" (change)='onqtyChange($event)'
+                        [ngClass]="{'is-invalid':submittedItem && f2['qty'].errors}" maxlength="4"
+                        (selected)="onqtyChange($event)" onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submittedItem && f2['qty'].errors">
+                        <small class="text-danger" *ngIf="f2['qty'].errors?.['required']">Please enter qty</small>
+                        <small class="text-danger" *ngIf="f2['qty'].errors?.serverError">{{
+                           f2['qty'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div *ngIf="showMyContainerFrom" class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Sr No from
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="serialStart"
+                        (change)='onSRStartSelected($event)'
+                        [ngClass]="{'is-invalid':submittedItem && f2['serialStart'].errors}" maxlength="10"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submittedItem && f2['serialStart'].errors">
+                        <small class="text-danger" *ngIf="f2['serialStart'].errors?.['required']">Please enter Sr no
+                           from</small>
+                        <!-- <small class="text-danger" *ngIf="f2['serialStart'].errors?.['pattern']">Invalid qty </small> -->
+                        <small class="text-danger"
+                           *ngIf="f2['serialStart'].errors?.serverError">{{f2['serialStart'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div *ngIf="showMyContainerTo" class="col-lg-2">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Sr No To
+                     <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="serialEnd"
+                        [ngClass]="{'is-invalid':submittedItem && f2['serialEnd'].errors}" maxlength="10"
+                        onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                     <div *ngIf="submittedItem && f2['serialEnd'].errors">
+                        <small class="text-danger" *ngIf="f2['serialEnd'].errors?.['required']">Please enter Sr no to
+                        </small>
+                        <small class="text-danger" *ngIf="f2['serialEnd'].errors?.['pattern']">Invalid Sr no to </small>
+                        <small class="text-danger" *ngIf="f2['serialEnd'].errors?.serverError">{{
+                           f2['serialEnd'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-2">
+               <div class="float-end pt-4">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="onLocalAdd()">{{btnAddPc}}</button>
+
+                  <!-- <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                       [disabled]="!formItemMaster.valid">{{btnAddPc}}</button> -->
+               </div>
+            </div>
+         </div>
+      </form>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">Item Details</h6>
+         <button type="button" class="clos-btn bg-light-blue">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon"><i aria-hidden="true"
+               class="fa fa-times"></i></button>
+      </div>
+      <div class="table-responsive">
+         <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>Sr. No. </th>
+                  <th>Item</th>
+                  <th>Quantity </th>
+                  <th>Sr no from </th>
+                  <th>Sr no to</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let item of empList; let i=index">
+                  <td>{{i+1}}</td>
+                  <td>{{item.itemCode + ":"+item.itemName}}</td>
+                  <td>{{item.qty}}</td>
+                  <td>{{item.serialStart}}</td>
+                  <td>{{item.serialEnd}}</td>
+                  <td class="display2">
+                     <a (click)="redirectionEdit(item,i)" class="edit" ngbTooltip="Edit" placement="bottom"><i
+                           class="bi bi-pen-fill pr"></i></a>
+                     <a placement="bottom" class="delete" (click)="removeDetails(i)">
+                        <div class="form-check form-switch ">
+                           <i class="bi bi-trash3-fill"></i>
+                        </div>
+                     </a>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <div class="row">
+      <div class="col-lg-12">
+         <div class="float-end">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="pcSubmit()"
+               [disabled]="btnDisabled">Submit</button>
+         </div>
+      </div>
+   </div>
+</form>

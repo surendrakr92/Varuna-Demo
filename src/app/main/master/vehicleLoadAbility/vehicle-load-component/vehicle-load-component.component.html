@@ -1,0 +1,141 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+            <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+                    placement="right"></i> </a>
+        </span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i> </a>
+        </span>
+    </div>
+    <div class="display">
+        <h5 class="card-title">Vehicle Load Ability
+        </h5>
+        <div class="pb-2">
+            <button type="button" class="btn btn-success m-1" (click)="modelOpen(modelmsg,'createW')"
+                ngbTooltip="Create Vendor Master" placement="bottom"><i class="bi bi-plus-lg"></i> Create </button>
+            <button class="btn btn-secondary text-white" ngbTooltip="Download List" placement="bottom"
+                (click)="downloadExcel()" title="Download File" type="button"><i class="bi bi-download"></i>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Vehicle Type</th>
+                    <th>Load Ability</th>
+                    <th>Is Active</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="zoom-in" *ngFor="let item of vehicleLoadTypeList; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.vehicleType}}</td>
+                    <td>{{item.loadability}}</td>
+                    <td><span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                                class="bi bi-check2-square pr"></i>
+                            {{item.isActive?'Active':'Inactive'}}</span>
+                    <td class="display2">
+                        <a routerLink="/master/vendor-master/view-vendor-master/{{item.claimDetailId}}"
+                            ngbTooltip="View" placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a>
+                        <a (click)="modelOpen(modelmsg,item.detailId)" ngbTooltip="Edit" placement="bottom"
+                            class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                        <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                            <div class="form-check form-switch ">
+                                <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                                    (click)="activeInactive(item.detailId)" checked title="Inactive">
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+        <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Vehicle Load Ability</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                    aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form action="" [formGroup]="vehicleLoadAbility">
+                <div class="row ">
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Vehicle Type
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <ng-select class="pb-2 " placeholder="vehicle type Select" formControlName="vehicleTypeId"
+                                [searchable]="true" [clearable]="true"
+                                [ngClass]="{'is-invalid':submitted && f['vehicleTypeId'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [value]="item.generalId" *ngFor="let item of vehicleTypeIdList"
+                                    [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['vehicleTypeId'].errors">
+                                <small class="text-danger" *ngIf="f['vehicleTypeId'].errors?.['required']">Please select
+                                    vehicle type
+                                </small>
+                                <small class="text-danger" *ngIf="f['vehicleTypeId'].errors?.serverError">{{
+                                    f['vehicleTypeId'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Load Ability
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <ng-select class="pb-2 " placeholder="load ability Select" formControlName="loadabilityId"
+                                [searchable]="true" [clearable]="true"
+                                [ngClass]="{'is-invalid':submitted && f['loadabilityId'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [value]="item.generalId" *ngFor="let item of loadabilityIdList"
+                                    [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['loadabilityId'].errors">
+                                <small class="text-danger" *ngIf="f['loadabilityId'].errors?.['required']">Please select
+                                    load ability
+                                </small>
+                                <small class="text-danger" *ngIf="f['loadabilityId'].errors?.serverError">{{
+                                    f['loadabilityId'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Is Active
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="checkbox" class="form-check-input checklistcls" formControlName="isActive">
+                            <div *ngIf="submitted && f['isActive'].errors">
+                                <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                                    f['isActive'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="float-end">
+                            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                                (click)="submitClaimTDetails()">{{this.vehicleLoadTypeAbility?.detailId?'Update':'Submit'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
+        </div>
+    </ng-template>
+    <!-- close popup confirm-->
+</div>

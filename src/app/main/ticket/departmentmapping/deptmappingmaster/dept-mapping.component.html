@@ -1,0 +1,69 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+       <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="right"></i> </a>
+   </span>
+    <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Department Master List
+    </h5>
+ 
+    <div class="pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/master/item-master/create-item-master" ngbTooltip="Create State Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+             ngbTooltip="Download List" type="button" >
+             <i class="bi bi-download"></i>
+          </button>
+           </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No. </th>
+             <th>Department Name</th>
+             <th>Complaint Type</th>
+             <th>First Complain Employee </th>
+             <th>Second Complain Employee</th>
+             <th>Complain Target Day</th>
+             <th>Clouser Target Day</th>
+             <th>Branch Name</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let item of deptList; let i=index">
+             <td>{{i+1}}</td>
+             <td>{{item.departmentName}}</td>
+             <td>Pending from backend</td>
+             <td>{{item.firstEmployee}}</td>
+             <td>{{item.secondEmployee}}</td>
+             <td>{{item.complainTargetDay}}</td>
+             <td>{{item.clouserTargetDay}}</td>
+             <td>{{item.branchName}}</td>
+            
+             <td class="display2">
+                <a  class="view" (click)="rediredctionView(item.itemId)" ngbTooltip="view" placement="bottom" ><i
+                      class="bi bi-eye-fill pr"></i></a>
+                <a (click)="redirectionEdit(item.itemId)"  class="edit" ngbTooltip="Edit" placement="bottom" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+                <a  class="delete" ngbTooltip="Active/Inactive" placement="bottom" >
+                   <div class="form-check form-switch ">
+                      <input type="checkbox" class="form-check-input" 
+                      *ngIf="item.isActive==true"
+                         (click)="activeInactive(item.itemId)" checked >
+                   </div>
+                </a>
+             </td>
+          </tr>
+       </tbody>
+    </table>
+ </div>
+ </div>

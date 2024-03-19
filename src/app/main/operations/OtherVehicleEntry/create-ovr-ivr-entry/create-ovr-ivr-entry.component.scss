@@ -1,0 +1,106 @@
+
+// .restable {
+//     display: flex;
+//     justify-content: space-around;
+//     overflow-x: scroll;
+// }
+.restable{
+    max-width: 100%;
+    min-width: 160px;
+}
+
+.table>:not(caption)>*>* {
+    padding: 0.3rem 0.1rem;
+}
+
+// .restable table td  input{
+//     width: 160px;
+// }
+.btnCircle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    line-height: 18px;
+    vertical-align: center;
+    position: relative;
+    padding: 10px;
+}
+
+.bi-plus-circle-fill {
+    color: #007bff;
+    font-size: 20px;
+    cursor: pointer;
+    border-color: #007bff;
+    transition: ease-in-out;
+    transform: rotate();
+}
+
+.bi-plus-circle-fill:hover {
+    color: #0069d9;
+    font-size: 20px;
+    cursor: pointer;
+    border-color: #0062cc;
+    
+}
+
+.bi-x-circle-fill {
+    font-size: 20px;
+    cursor: pointer;
+    color: #dc3545;
+    border-color: #dc3545;
+    transition: ease-in-out;
+}
+
+.bi-x-circle-fill:hover {
+    font-size: 20px;
+    cursor: pointer;
+    color: #c82333;
+    border-color: #bd2130;
+
+}
+
+// .table-bordered>:not(caption)>*>* {
+//     border-width: 1px;
+// }
+
+// .borderClass {
+//     border: 2px dotted #ccc;
+//     border-radius: 8px !important;
+//     position: relative;
+
+// }
+
+
+
+// .addbutton {
+//     width: 30px;
+//     height: 30px;
+//     position: absolute;
+//     right: 0;
+//     top: 16px;
+// }
+
+
+
+// .adding {
+//     color: #0505d6;
+//     font-size: 20px;
+//     cursor: pointer;
+//     border-color: #0539d6;
+// }
+// .deleting{
+//     color: #d60505;
+//     font-size: 20px;
+//     cursor: pointer;
+//     border-color: #d60505; 
+// }
+
+
+
+// .form-check-input{
+//     width: 0.95rem;
+//     height: 0.95rem;
+// }

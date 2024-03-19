@@ -1,0 +1,58 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Stationery Issue
+         List
+      </h5>
+
+      <div class="pb-2">
+         <button type="button" class="btn btn-success m-1" routerLink="/stationery/branchemp-master/create-be-master"
+            ngbTooltip="Create State Master" placement="bottom"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+            ngbTooltip="Download List" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No. </th>
+               <th>Issue Date</th>
+               <th>Issue By Branch</th>
+               <th>Issue To Branch </th>
+               <th>Issue To Employee</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let pc of issueList; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{pc.issueDate | date :'dd/MM/yyyy'}}</td>
+               <td>{{pc.branchName}}</td>
+               <td>{{pc.issuedToBranchName}}</td>
+               <td>{{pc.issuedToEmployeeName}}</td>
+               <td class="display2">
+                  <!-- <a (click)="redirectionEdit(pc)" *ngIf="pc.isCanceled == false" class="edit" ngbTooltip="Edit"
+                     placement="bottom"><i class="bi bi-pen-fill pr"></i></a>
+                  <a *ngIf="pc.isCanceled == true" class="edit" ngbTooltip="Edit" placement="bottom"><i
+                        (click)="redirectionView(pc.issueId)" class="bi bi-eye-fill pr"></i></a> -->
+                  <a class="edit" ngbTooltip="Edit" placement="bottom"><i
+                        (click)="redirectionView(pc.issueId)" class="bi bi-eye-fill pr"></i></a>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

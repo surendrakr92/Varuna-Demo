@@ -1,0 +1,63 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+           <a routerLink="/master/branch-level"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Branch Level "
+                 placement="right"></i> </a>
+        </span>
+        <span class=" title">
+           <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+           </a>
+        </span>
+     </div>
+
+    <h5 class="card-title">{{this.branchDetailsById?'Update':'Create'}} Branch Level
+    </h5>
+    <form [formGroup]="formBranchMaster" class="novalidate">
+        <div class="row ">
+            <div class="col-lg-3">
+                <div class="form-group mb-3">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Branch Level Name<span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="branchLevelName"
+                         [ngClass]="{'is-invalid':submitted && f['branchLevelName'].errors}" >
+    
+                      <div *ngIf="submitted && f['branchLevelName'].errors">
+                         <small class="text-danger" *ngIf="f['branchLevelName'].errors?.['required']">Please enter branch level name</small>
+                         <small class="text-danger" *ngIf="f['branchLevelName'].errors?.['pattern']">Invalid  branch level name </small>
+                         <!-- <small class="text-danger" *ngIf="f['branchLevelName'].errors?.['minlength']">
+                            Name must be at least 2 characters long.
+                         </small> -->
+                         <small class="text-danger" *ngIf="f['branchLevelName'].errors?.serverError">{{
+                            f['branchLevelName'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+           
+        
+            
+            <div class="col-lg-3">
+                <div class="form-group mb-3">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        Status
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="float-end">
+                    <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="OnSubmit()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

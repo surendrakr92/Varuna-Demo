@@ -1,0 +1,970 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/customer-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Customer Master " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Customer Master
+      </h5>
+   </div>
+   <div class="row">
+      <ul class="nav nav-tabs d-flex" role="tablist">
+         <li class="nav-item flex-fill">
+            <!-- (click)="onTabClick('general_details')" -->
+            <button class="nav-link w-100 active" id="home-tab" data-bs-toggle="tab" role="tab"
+               [class.active]="activeTab == 'general_details'" type="button" role="tab" aria-selected="true">General
+               Details</button>
+         </li>
+         <li class="nav-item flex-fill">
+            <!-- (click)="onTabClick('branch_details')"  -->
+            <button class="nav-link w-100" data-bs-toggle="tab" type="button" role="tab"
+               [class.active]="activeTab == 'branch_details'" role="tab" aria-selected="false" tabindex="-1">Branch
+               Details</button>
+         </li>
+         <li class="nav-item flex-fill">
+            <!-- (click)="onTabClick('kam_details')" -->
+            <button class="nav-link w-100" data-bs-toggle="tab" type="button" role="tab"
+               [class.active]="activeTab == 'kam_details'" role="tab" aria-selected="false" tabindex="-1">KAM
+               Details</button>
+         </li>
+         <li class="nav-item flex-fill">
+            <!-- (click)="onTabClick('customer_address_mapping')" -->
+            <button class="nav-link w-100" data-bs-toggle="tab" type="button" role="tab" role="tab"
+               [class.active]="activeTab == 'customer_address_mapping'" aria-selected="false" tabindex="-1">Customer
+               Address
+               Mapping</button>
+         </li>
+         <li class="nav-item flex-fill">
+            <!-- (click)="onTabClick('cngr_or_cnge_cngemaster')" -->
+            <button class="nav-link w-100" data-bs-toggle="tab" type="button" role="tab" role="tab"
+               [class.active]="activeTab == 'cngr_or_cnge_cngemaster'" aria-selected="false" tabindex="-1">CNGR/CNGE
+               Master</button>
+         </li>
+      </ul>
+      <div class="pt-2">
+         <!-- open general_details tab -->
+         <div class="row " *ngIf="activeTab == 'general_details'">
+            <form [formGroup]="customeformGeneralMaster" class="novalidate">
+               <div class="row">
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Group Code &
+                           Name <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="custGroupId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custGroupId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.custGroupId" *ngFor="let item of CustomerGroupList"
+                                 [disabled]='!item.isActive'>{{item.groupCode}} - {{item.groupName}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custGroupId'].errors">
+                              <small class="text-danger" *ngIf="f['custGroupId'].errors?.['required']">
+                                 select customer group code &
+                                 name</small>
+                              <small class="text-danger" *ngIf="f['custGroupId'].errors?.serverError">{{
+                                 f['custGroupId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Name <span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="text" class="form-control" formControlName="custName" maxlength="150"
+                              [ngClass]="{'is-invalid':submitted && f['custName'].errors}">
+                           <div *ngIf="submitted && f['custName'].errors">
+                              <small class="text-danger" *ngIf="f['custName'].errors?.['required']">enter
+                                 customer name</small>
+                              <small class="text-danger" *ngIf="f['custName'].errors?.['pattern']">Invalid data </small>
+                              <small class="text-danger" *ngIf="f['custName'].errors?.serverError">{{
+                                 f['custName'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Decision Maker Name<span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="decisionMakerEmpId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['decisionMakerEmpId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.userId" *ngFor="let item of userMasterList"
+                                 [disabled]='!item.name'>{{item.name}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['decisionMakerEmpId'].errors">
+                              <small class="text-danger" *ngIf="f['decisionMakerEmpId'].errors?.['required']">
+                                 select
+                                 decision maker name
+                              </small>
+                              <small class="text-danger" *ngIf="f['decisionMakerEmpId'].errors?.serverError">{{
+                                 f['decisionMakerEmpId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Industry Type<span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="industryTypeId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['industryTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of industryTypeList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['industryTypeId'].errors">
+                              <small class="text-danger" *ngIf="f['industryTypeId'].errors?.['required']">select
+                                 industry type</small>
+                              <small class="text-danger" *ngIf="f['industryTypeId'].errors?.serverError">{{
+                                 f['industryTypeId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Mobile Number<span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="text" class="form-control" formControlName="mobileNo"
+                              [ngClass]="{'is-invalid':submitted && f['mobileNo'].errors}">
+                           <div *ngIf="submitted && f['mobileNo'].errors">
+                              <small class="text-danger" *ngIf="f['mobileNo'].errors?.['required']">enter
+                                 mobile number</small>
+                              <small class="text-danger" *ngIf="f['mobileNo'].errors?.['pattern']">Invalid mobile number
+                              </small>
+                              <small class="text-danger" *ngIf="f['mobileNo'].errors?.serverError">{{
+                                 f['mobileNo'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">PAN Number<span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="text" class="form-control" formControlName="panNo"
+                           [disabled]="this.customerDetailsById"
+                           appUpperCase id="code"
+                              [ngClass]="{'is-invalid':submitted && f['panNo'].errors}">
+                           <div *ngIf="submitted && f['panNo'].errors">
+                              <small class="text-danger" *ngIf="f['panNo'].errors?.['required']">enter
+                                 PAN number</small>
+                              <small class="text-danger" *ngIf="f['panNo'].errors?.['pattern']">Invalid PAN
+                                 number</small>
+                              <small class="text-danger" *ngIf="f['panNo'].errors?.serverError">{{
+                                 f['panNo'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Type of Ownership
+                           <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="typeOfOwnerShipId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['typeOfOwnerShipId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of typeOfOwerList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['typeOfOwnerShipId'].errors">
+                              <small class="text-danger" *ngIf="f['typeOfOwnerShipId'].errors?.['required']">select Type
+                                 of Ownership</small>
+                              <small class="text-danger" *ngIf="f['typeOfOwnerShipId'].errors?.serverError">{{
+                                 f['typeOfOwnerShipId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Category Type <span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="custCategoryId"
+                              [searchable]="true" [clearable]="true" (change)="handleValidateFile($event)"
+                              [ngClass]="{'is-invalid':submitted && f['custCategoryId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of CategoryType"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custCategoryId'].errors">
+                              <small class="text-danger" *ngIf="f['custCategoryId'].errors?.['required']">select
+                                 customer category type</small>
+                              <small class="text-danger" *ngIf="f['custCategoryId'].errors?.serverError">{{
+                                 f['custCategoryId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Type <span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="custTypeId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of customertypeList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custTypeId'].errors">
+                              <small class="text-danger" *ngIf="f['custTypeId'].errors?.['required']">select
+                                 customer type</small>
+                              <small class="text-danger" *ngIf="f['custTypeId'].errors?.serverError">{{
+                                 f['custTypeId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Exempt Certificate
+                           Uploader
+                        </label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <!-- <input class="form-control custom-file-upload" type="file" id="file-upload"
+                              formControlName="custTypeFilePath" accept=".png, .jpg, .jpeg"> -->
+                           <input *ngIf="this.selectedFileName==undefined" class="form-control custom-file-upload"
+                              type="file" accept="image/jpeg,image/png,application/pdf,image/x-jpef"
+                              (change)="onFileChange($event)">
+                           <div *ngIf="this.selectedFileName" class="card p-1 text-bg-primary text-center w-auto">
+                              <span>{{this.selectedFileName}}</span>
+                              <span class="badge badge-secondary removeFile" (click)="this.fileReset()">X</span>
+                           </div>
+                           <div *ngIf="submitted && f['custTypeFilePath'].errors">
+                              <small class="text-danger" *ngIf="f['custTypeFilePath'].errors?.['required']">Please
+                                 upload Exempt Certificate
+                              </small>
+                              <small class="text-danger" *ngIf="f['custTypeFilePath'].errors?.serverError">{{
+                                 f['custTypeFilePath'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group mb-2">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">CNGR/CNGE Contract
+                           Updation Mode. <i class="bi bi-exclamation-circle-fill"
+                              ngbTooltip="Consignor/Consignee’s Contract Updation Mode."></i> </label>
+                        <div class="form-check form-switch ">
+                           <input type="checkbox" class="form-check-input" formControlName="isCustContractModeOnline">
+                           &nbsp;&nbsp;
+                           <span
+                              [ngClass]="this.customeformGeneralMaster.controls['isCustContractModeOnline'].value?'text-success':'text-danger'">
+                              {{this.customeformGeneralMaster.controls['isCustContractModeOnline'].value?'Online':'Offline'}}
+                           </span>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Stage <span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="custStageId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custStageId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of customerStageList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custStageId'].errors">
+                              <small class="text-danger" *ngIf="f['custStageId'].errors?.['required']">select
+                                 customer Stage </small>
+                              <small class="text-danger" *ngIf="f['custStageId'].errors?.serverError">{{
+                                 f['custStageId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group mb-2">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><small>Pay Basis
+                              Allowed<span class="text-danger">*</span></small></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation ">
+                           <ng-select class="pb-2 " placeholder="Pay Basis Select" formControlName="payBasisId"
+                              [searchable]="true" [clearable]="true" [closeOnSelect]="false"
+                              [ngClass]="{'is-invalid':submitted && f['payBasisId'].errors}" [multiple]="true">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of payBasicAllowed"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['payBasisId'].errors">
+                              <small class="text-danger" *ngIf="f['payBasisId'].errors?.['required']">select pay
+                                 basis</small>
+                              <small class="text-danger" *ngIf="f['payBasisId'].errors?.serverError">{{
+                                 f['payBasisId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Address </label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <textarea type="text" class="form-control" formControlName="address"
+                              [ngClass]="{'is-invalid':submitted && f['address'].errors}"
+                              style="height: 30px;"></textarea>
+                           <div *ngIf="submitted && f['address'].errors">
+                              <small class="text-danger" *ngIf="f['address'].errors?.['required']">enter
+                                 address</small>
+                              <small class="text-danger" *ngIf="f['address'].errors?.serverError">{{
+                                 f['address'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pincode</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="pincodeId" [searchable]="true"
+                              [clearable]="true" [ngClass]="{'is-invalid':submitted && f['pincodeId'].errors}"
+                              (change)="dropDownForbinding($event,'pincode')"
+                              (keyup)="dropDownForbinding($event,'pincode')">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.pincodeId" *ngFor="let item of pinCodeList"
+                                 [disabled]='item.isActive'>{{item.pinCode}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['pincodeId'].errors">
+                              <small class="text-danger" *ngIf="f['pincodeId'].errors?.['required']">select
+                                 pincode </small>
+                              <small class="text-danger" *ngIf="f['pincodeId'].errors?.serverError">{{
+                                 f['pincodeId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="cityId" [searchable]="true"
+                              [clearable]="true" [ngClass]="{'is-invalid':submitted && f['cityId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.cityId" *ngFor="let item of cityMasterList"
+                                 [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['cityId'].errors">
+                              <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">select
+                                 city</small>
+                              <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                                 f['cityId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Bank Name</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="bankId" [searchable]="true"
+                              [clearable]="true" [ngClass]="{'is-invalid':submitted && f['bankId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of bankNameList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['bankId'].errors">
+                              <small class="text-danger" *ngIf="f['bankId'].errors?.['required']">select
+                                 bank name</small>
+                              <small class="text-danger" *ngIf="f['bankId'].errors?.serverError">{{
+                                 f['bankId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Account Number </label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="text" class="form-control" formControlName="acountNumber"
+                              [ngClass]="{'is-invalid':submitted && f['acountNumber'].errors}">
+                           <div *ngIf="submitted && f['acountNumber'].errors">
+                              <small class="text-danger" *ngIf="f['acountNumber'].errors?.['required']">enter
+                                 acount number</small>
+                              <small class="text-danger" *ngIf="f['acountNumber'].errors?.['pattern']">Invalid acount
+                                 number
+                              </small>
+                              <small class="text-danger" *ngIf="f['acountNumber'].errors?.serverError">{{
+                                 f['acountNumber'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">TIN Number</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <input type="text" class="form-control" formControlName="tinNumber"
+                              [ngClass]="{'is-invalid':submitted && f['tinNumber'].errors}">
+                           <div *ngIf="submitted && f['tinNumber'].errors">
+                              <small class="text-danger" *ngIf="f['tinNumber'].errors?.['required']">enter tin
+                                 number</small>
+                              <small class="text-danger" *ngIf="f['tinNumber'].errors?.serverError">{{
+                                 f['tinNumber'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Billing Submission
+                           Type </label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="billSubmissionTypeId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['billSubmissionTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of billingSubList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['billSubmissionTypeId'].errors">
+                              <small class="text-danger" *ngIf="f['billSubmissionTypeId'].errors?.['required']">
+                                 select billing submission type</small>
+                              <small class="text-danger" *ngIf="f['billSubmissionTypeId'].errors?.serverError">{{
+                                 f['billSubmissionTypeId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">POD Required for Bill
+                        </label>
+                        <div class="form-check form-switch p-2">
+                           <input type="checkbox" class="form-check-input" formControlName="isPodRequired">
+                           <small class="text-danger" *ngIf="f['isPodRequired'].errors?.serverError">{{
+                              f['isPodRequired'].errors?.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Service Opted For
+                           <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select class="pb-2 " placeholder="Select" formControlName="serviceOptedId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['serviceOptedId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of serviceOptList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['serviceOptedId'].errors">
+                              <small class="text-danger" *ngIf="f['serviceOptedId'].errors?.['required']">select
+                                 service Opted</small>
+                              <small class="text-danger" *ngIf="f['serviceOptedId'].errors?.serverError">{{
+                                 f['serviceOptedId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+
+                  <div class="col-lg-3" *ngIf="this.customerDetailsById">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is BlackList
+                        </label>
+                        <div class="form-check form-switch p-2">
+                           <input type="checkbox" class="form-check-input" formControlName="isBlacklist"
+                              (change)="inActiveReason(0)">
+                           <small class="text-danger" *ngIf="f['isBlacklist'].errors?.serverError">{{
+                              f['isBlacklist'].errors?.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3" *ngIf="this.customerDetailsById">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Is blacklist Reason</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <textarea name="" id="" cols="30" rows="10" class="form-control"
+                              formControlName="blacklistReason"></textarea>
+                           <div *ngIf="submitted && f['blacklistReason'].errors">
+                              <small class="text-danger" *ngIf="f['blacklistReason'].errors?.['required']">enter
+                                 black list reason</small>
+                              <small class="text-danger" *ngIf="f['blacklistReason'].errors?.['pattern']">invalid reason</small>
+                              <small class="text-danger" *ngIf="f['blacklistReason'].errors?.serverError">{{
+                                 f['blacklistReason'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active
+                        </label>
+                        <div class="form-check form-switch p-2">
+                           <input type="checkbox" class="form-check-input" formControlName="isActive"
+                              (change)="inActiveReason(1)">
+                           <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                              f['isActive'].errors?.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">In Active Reason</label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <textarea name="" id="" cols="30" rows="10" class="form-control"
+                              formControlName="inActiveReason"></textarea>
+                           <div *ngIf="submitted && f['inActiveReason'].errors">
+                              <small class="text-danger" *ngIf="f['inActiveReason'].errors?.['required']">
+                                 required in active reason</small>
+                                 <small class="text-danger" *ngIf="f['inActiveReason'].errors?.['pattern']">invalid reason</small>
+                              <small class="text-danger" *ngIf="f['inActiveReason'].errors?.serverError">{{
+                                 f['inActiveReason'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <!-- close general_details tab -->
+         <!-- open branch_details tab -->
+         <div class="row" *ngIf="activeTab == 'branch_details'">
+            <form action="" [formGroup]="customerBranch" class="novalidate">
+               <div class="col-lg-3">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Branch Location <span
+                           class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2 " placeholder="Select" [searchable]="true" [clearable]="true"
+                           [multiple]="true" [closeOnSelect]="false" formControlName="branchId"
+                           [ngClass]="{'is-invalid':branchSubmitted && ff['branchId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.branchId" *ngFor="let item of branchMasterList"
+                              [disabled]='!item.isActive'>{{item.branchCode | uppercase}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="branchSubmitted && ff['branchId'].errors">
+                           <small class="text-danger" *ngIf="ff['branchId'].errors?.['required']">select branch
+                              location</small>
+                           <small class="text-danger" *ngIf="ff['branchId'].errors?.serverError">{{
+                              ff['branchId'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <!-- close branch_details tab -->
+         <!-- open billing_details tab -->
+         <!-- close billing_details tab -->
+         <!-- open kam_details tab -->
+         <div *ngIf="activeTab == 'kam_details'">
+            <form action="" [formGroup]="kamDetailsForm" class="novalidate">
+               <div class="row">
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> KAM Type<span
+                              class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select placeholder="Select" formControlName="kamTypeId" [searchable]="true"
+                              [clearable]="true"
+                              [ngClass]="{'is-invalid':kamSubmitted && kamValidate['kamTypeId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId" *ngFor="let item of KamTypeList"
+                                 [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="kamSubmitted && kamValidate['kamTypeId'].errors">
+                              <small class="text-danger" *ngIf="kamValidate['kamTypeId'].errors?.['required']">select
+                                 kam Type</small>
+                              <small class="text-danger" *ngIf="kamValidate['kamTypeId'].errors?.serverError">{{
+                                 kamValidate['kamTypeId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Kam Code & Name
+                           <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select placeholder="Select" formControlName="kamEmpId" [searchable]="true"
+                              [clearable]="true"
+                              [ngClass]="{'is-invalid':kamSubmitted && kamValidate['kamEmpId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.userId" *ngFor="let item of KamNameCodeList"
+                                 [disabled]='!item.userCode'>{{item.userCode}} - {{item.name}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="kamSubmitted && kamValidate['kamEmpId'].errors">
+                              <small class="text-danger" *ngIf="kamValidate['kamEmpId'].errors?.['required']">select kam
+                                 code & name</small>
+                              <small class="text-danger" *ngIf="kamValidate['kamEmpId'].errors?.serverError">{{
+                                 f['kamEmpId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Kam Active
+                        </label>
+                        <div class=" col-sm-12 col-lg-12 form-check form-switch p-2">
+                           <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 ">
+                     <div class="form-group ">
+                        <button type="button" class="btn btn-warning  rounded-pill btn-padding2 mt-4"
+                           (click)="addKamDetails()"><i class="bi bi-plus-lg"></i> Add KAM</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="table-responsive">
+                     <table class="table table-report table-hover ">
+                        <thead class="bg-secondary text-white">
+                           <tr>
+                              <th>Sr. No.</th>
+                              <th>KAM Type</th>
+                              <th>Kam Code & Name </th>
+                              <th>Active/InActive</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="zoom-in" *ngFor="let data of bindJsonForKam ;index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{data.kamType}} </td>
+                              <td>{{data.kamEmpName}}</td>
+                              <td>{{data.isActive?'Active':'InActive'}}</td>
+                              <td class="display2">
+                                 <a ngbTooltip="Active/Inactive " placement="bottom" class="delete">
+                                    <div class="form-check form-switch "
+                                       (click)="this.bindJsonForKam.splice(i,1);this.kamDetailsArray.splice(i,1)">
+                                       <i class="bi bi-trash3-fill"></i>
+                                    </div>
+                                 </a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- close kam_details tab -->
+         <!-- open customer_address_mapping tab -->
+         <div *ngIf="activeTab == 'customer_address_mapping'">
+            <div class="row">
+               <div class="col-lg-3 ">
+                  <div class="form-group ">
+                     <button type="button" (click)="modelopen(modalmsg)"
+                        class="btn btn-warning  rounded-pill btn-padding2 mt-4"><i class="bi bi-plus-lg"></i> Add
+                        Address</button>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="table-responsive">
+                     <table class="table table-report table-hover ">
+                        <thead class="bg-secondary text-white">
+                           <tr>
+                              <th>Sr. No.</th>
+                              <th>Address</th>
+                              <!-- <th>City Name</th>
+                                 <th>State Name</th> -->
+                              <th>Is GST</th>
+                              <th>GST No.</th>
+                              <th>Is TAN</th>
+                              <th>TAN No.</th>
+                              <th>Action</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="zoom-in" *ngFor="let item of newArrayiWithSUbmission ; index as i">
+                              <td>{{i+1}}</td>
+                              <td>{{item.addressLine1}} {{item.addressLine2}} {{item.address}}</td>
+                              <!-- <td>{{item.cityName}}</td>
+                                 <td>{{item.stateName}}</td> -->
+                              <td>
+                                 <div class="form-check form-switch p-2">
+                                    <input type="checkbox" class="form-check-input" #dataisActive
+                                       [checked]="item.isGstApplicable" (change)="isActiveForAddress(i,dataisActive)">
+                                 </div>
+                              </td>
+                              <td>
+                                 <input type="text" class="form-control" #gstNumber
+                                 appUpperCase id="code"
+                                    (change)="isgstForCust(i,gstNumber.value)" value="{{item?.gstNumber}}">
+                              </td>
+                              <td>
+                                 <div class="form-check form-switch p-2">
+                                    <input type="checkbox" class="form-check-input" #isTan
+                                       (change)="isTanForAddress(i,isTan)" [checked]="item.isTanApplicable">
+                                 </div>
+                              </td>
+                              <td>
+                                 <input type="text" class="form-control" #tanNumber value="{{item?.tanNumber}}"
+                                    (change)="isTanForCust(i,tanNumber.value)">
+                              </td>
+                              <td class="display2">
+                                 <a ngbTooltip="delete " placement="bottom" class="delete"
+                                    (click)="this.newArrayiWithSUbmission.splice(i,1)">
+                                    <div class="form-check form-switch ">
+                                       <i class="bi bi-trash3-fill"></i>
+                                    </div>
+                                 </a>
+                              </td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <!-- close customer_address_mapping tab -->
+         <!-- open cngr_or_cnge_cngemaster tab -->
+         <div class="row" *ngIf="activeTab == 'cngr_or_cnge_cngemaster'">
+            <div class="col-lg-3 ">
+               <div class="form-group ">
+                  <button type="button" class="btn btn-warning  rounded-pill btn-padding2 mt-4"
+                     ngbTooltip="Add Consignor/Consignee" (click)="modelopenfor_cng(modalmsg2)"><i
+                        class="bi bi-plus-lg"></i> Add
+                     CNGR/CNGE</button>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-12">
+                  <table class="table table-report table-hover ">
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Sr. No.</th>
+                           <th>Consignor/Consignee Name</th>
+                           <th>Service</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="zoom-in" *ngFor="let item of newArrayWithSUbmissionCngCnse ; index as i">
+                           <td>{{i+1}}</td>
+                           <td>{{item.name}} {{item?.consiConseName}}</td>
+                           <td>
+                              <div class="form-group mb-1">
+                                 <div class=" col-sm-12 col-lg-12 has-validation">
+                                    <ng-select placeholder="Select" (change)="dataOptForCngCns($event,i)"
+                                       [searchable]="true" [clearable]="true" [ngModel]="item.serviceTypeId">
+                                       <ng-option value="" selected>Select</ng-option>
+                                       <ng-option [value]="item.generalId" *ngFor="let item of ConsignorConsigneeList"
+                                          [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                                    </ng-select>
+                                 </div>
+                              </div>
+                           </td>
+                           <td class="display2">
+                              <a ngbTooltip="delete " placement="bottom" class="delete"
+                                 (click)="this.newArrayWithSUbmissionCngCnse.splice(i,1)">
+                                 <div class="form-check form-switch ">
+                                    <i class="bi bi-trash3-fill"></i>
+                                 </div>
+                              </a>
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+         <!-- close cngr_or_cnge_cngemaster tab -->
+         <!-- button manage -->
+         <div class="row">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding mr-5"
+                     *ngIf="this.activeTab!='general_details'" (click)="previous_function()">Previous</button>
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="OnSubmit()">{{this.activeTab=='cngr_or_cnge_cngemaster'?'Submit':'Next'}}</button>
+               </div>
+            </div>
+         </div>
+         <!-- close manage -->
+      </div>
+      <!-- popup confirm-->
+      <ng-template #modalmsg let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Address</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form [formGroup]="addressSearchFilter">
+               <div class="row ">
+                  <div class="col-lg-4">
+                     <div class="form-group mb-1">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City Name
+                           <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select placeholder="Select" formControlName="cityId" [searchable]="true"
+                              [clearable]="true">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.cityId" *ngFor="let item of checCitkList"
+                                 [disabled]='!item.cityName'>{{item.cityName}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="serchValidate && serAddFilter['cityId'].errors">
+                              <small class="text-danger" *ngIf="serAddFilter['cityId'].errors?.['required']">please
+                                 select city</small>
+                              <small class="text-danger" *ngIf="serAddFilter['cityId'].errors?.serverError">{{
+                                 serAddFilter['cityId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="form-group mb-1">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State Name
+                           <span class="text-danger">*</span></label>
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <ng-select placeholder="Select" formControlName="stateId" [searchable]="true"
+                              [clearable]="true">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.stateId" *ngFor="let item of stateMasterList"
+                                 [disabled]='!item.stateName'>{{item.stateName}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="serchValidate && serAddFilter['stateId'].errors">
+                              <small class="text-danger" *ngIf="serAddFilter['stateId'].errors?.['required']">Please
+                                 select state</small>
+                              <small class="text-danger" *ngIf="serAddFilter['stateId'].errors?.serverError">{{
+                                 serAddFilter['stateId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4">
+                     <div class="form-group mb-1">
+                        <button type="button" class="btn btn-warning  rounded-pill btn-padding2 mt-4 text-white"
+                           (click)="searchFilterForAdd()"><i class="bi bi-search"></i> Search</button>
+                     </div>
+                  </div>
+                  <div class="table-responsive checkbox FixPosition">
+                     <table class="table table-report table-hover " datatable [dtOptions]="dtOptions"
+                        [dtTrigger]="dtTrigger" #MyTableAdd id="MyTableAdd">
+                        <thead class="bg-secondary text-white">
+                           <tr>
+                              <th>Sr. No.</th>
+                              <th>Select</th>
+                              <th>Address 1 </th>
+                              <th>Address 2 </th>
+                              <th>City Name</th>
+                              <th>State Name</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="zoom-in" *ngFor="let item of addressMasterList;  let i=index">
+                              <td>{{i+1}}</td>
+                              <td>
+                                 <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck2"
+                                       (change)="getAddressMappingArr(item,i)">
+                                 </div>
+                              </td>
+                              <td>{{item.addressLine1}}</td>
+                              <td>{{item.addressLine2}}</td>
+                              <td>{{item.cityName}}</td>
+                              <td>{{item.stateName}}</td>
+                           </tr>
+                        </tbody>
+                     </table>
+                  </div>
+               </div>
+            </form>
+            <br>
+            <!-- <span> success</span> -->
+            <!-- <p class="text-center">Request No: <span class="font-weight-light">{{Viewrcmc?.REF_NO}}</span> -->
+            <!-- <center> -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary  d-inline  btn-sm" (click)="goTOListing()">Go To
+                  Listing</button>
+               <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                  (click)="modal.dismiss('Cross click')">cancel</button>
+            </div>
+            <!-- </center> -->
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+      <!-- popup confirm-->
+      <ng-template #modalmsg2 let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Consignor/Consignee Details</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <div class="row ">
+               <div class="table-responsive checkbox FixPosition">
+                  <table class="table table-report table-hover ">
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Sr. No.</th>
+                           <th></th>
+                           <th>Select</th>
+                           <th></th>
+                           <th>Consignor/Consignee Name</th>
+                           <!-- <th>Service type</th> -->
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="zoom-in" *ngFor="let item of cngr_cnge_list;  let i=index">
+                           <td>{{i+1}}</td>
+                           <td></td>
+                           <td>
+                              <div class="form-check">
+                                 <input class="form-check-input" type="checkbox" id="gridCheck2"
+                                    (change)="getcngr_cnse_Arr(item,i)">
+                              </div>
+                           </td>
+                           <td></td>
+                           <td>{{item.name}}</td>
+                           <!-- <td>{{item.codeDesc}}</td> -->
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+            <br>
+            <!-- <span> success</span> -->
+            <!-- <p class="text-center">Request No: <span class="font-weight-light">{{Viewrcmc?.REF_NO}}</span> -->
+            <!-- <center> -->
+            <div class="modal-footer">
+               <button type="button" class="btn btn-primary  d-inline  btn-sm" (click)="goToListingForCnge_Cnse()">Go To
+                  Listing</button>
+               <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                  (click)="modal.dismiss('Cross click')">cancel</button>
+            </div>
+            <!-- </center> -->
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+   </div>
+</div>

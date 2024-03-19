@@ -1,0 +1,340 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light">
+        <span class="title">
+            <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Rate Update Approval</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i> </a>
+        </span>
+    </div>
+    <form [formGroup]="filterValidationForm">
+        <div class="row mt-3 d-flex justify-content-center">
+            <div class="col-lg-6 row">
+                <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"><span class="float-end">Customer
+                        Selection<span class="text-danger">*</span></span></label>
+                <div class=" col-sm-7 col-lg-7" style="padding-left: 0px;">
+                    <ng-select class="pb-2  " placeholder="Customer Name and Code" formControlName="custCodeName"
+                        [searchable]="true" [clearable]="true" (change)="refreshGrid()"
+                        [ngClass]="{'is-invalid':submitted && f['custCodeName'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.custId" *ngFor="let item of customerMasterList"
+                            [disabled]='!item.isActive'>{{item.custName}} {{item.custCode}}</ng-option>
+                    </ng-select>
+                    <div *ngIf="submitted && f['custCodeName'].errors">
+                        <small class="text-danger" *ngIf="f['custCodeName'].errors?.['required']">please select
+                            customer
+                        </small>
+                        <small class="text-danger" *ngIf="f['custCodeName'].errors?.serverError">{{
+                            f['custCodeName'].errors.serverError}}</small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-2 ">
+                <div class=" col-sm-12 col-lg-12" style="padding-left: 0px;">
+                    <button (click)="showExistingTables()" type="button"
+                        class="btn btn-primary rounded-pill btn-padding">Next <span
+                            class="arrowanimation"></span></button>
+                </div>
+            </div>
+        </div>
+    </form>
+    <div class="row">
+        <div class="table-responsive">
+            <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                #MyTable id="MyTable">
+                <thead class="bg-secondary text-white">
+                    <tr>
+                        <th>Contract ID</th>
+                        <th>Validate From</th>
+                        <th>Validate To date</th>
+                        <th>Contact Expire Days</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr class="zoom-in" *ngFor="let item of contractByCustlist">
+                        <td>{{item?.contractCode}}</td>
+                        <td>{{item?.contractStartDate | date}}</td>
+                        <td>{{item?.contractEndDate | date}}</td>
+                        <td>{{item?.daysToExpire}} {{item?.daysToExpire?'Days':''}}</td>
+                        <td>
+                            <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                                    class="bi bi-check2-square pr"></i>
+                                {{item?.isActive?'Active':'InActive'}}
+                            </span>
+                        </td>
+                        <td>
+                            <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm"
+                                (click)="modelopen(modalmsg,item)">Next<span class="arrowanimation"></span></button>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+    <!-- popup confirm-->
+    <ng-template #modalmsg let-modal>
+        <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">
+                Selection Criteria
+            </h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                    aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form [formGroup]="seachCrit">
+                <div class="row mt-1">
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Name
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <input type="text" class="form-control" readonly formControlName="name"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['name'].errors}">
+                                <div *ngIf="filterValidate && searchV['name'].errors">
+                                    <small class="text-danger" *ngIf="searchV['name'].errors?.['required']">Please
+                                        select contract
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['name'].errors?.['pattern']">Invalid
+                                        group
+                                        name</small>
+                                    <small class="text-danger" *ngIf="searchV['name'].errors?.serverError">{{
+                                        f['groupName'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Lane Type
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="Lane Type Select" [searchable]="true"
+                                    [clearable]="true" formControlName="laneType"
+                                    [ngModel]="2"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['laneType'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.id" *ngFor="let item of laneType">{{item.type}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['laneType'].errors">
+                                    <small class="text-danger" *ngIf="searchV['laneType'].errors?.['required']">Please
+                                        select Lane Type
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['laneType'].errors?.serverError">{{
+                                        searchV['laneType'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Lane
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="Lane select " [searchable]="true"
+                                    [clearable]="true" formControlName="laneId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['laneId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.laneId"
+                                        *ngFor="let item of lanematserList">{{item.fromlocName}}-{{item?.tolocName}},{{item?.loadability}},{{item?.ratetypeload}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['laneId'].errors">
+                                    <small class="text-danger" *ngIf="searchV['laneId'].errors?.['required']">Please
+                                        select laneId
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['laneId'].errors?.serverError">{{
+                                        f['laneId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Action
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="Action Select" [searchable]="true"
+                                    [clearable]="true" formControlName="action"
+                                    [ngModel]="1"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['action'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.id"
+                                        *ngFor="let item of activeType">{{item.type}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['action'].errors">
+                                    <small class="text-danger" *ngIf="searchV['action'].errors?.['required']">Please
+                                        select Action
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['action'].errors?.serverError">{{
+                                        searchV['action'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                From
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="From city" [searchable]="true" [clearable]="true"
+                                    formControlName="fromCityId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['fromCityId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.cityId"
+                                        *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['fromCityId'].errors">
+                                    <small class="text-danger" *ngIf="searchV['fromCityId'].errors?.['required']">Please
+                                        select reasonUpdate
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['fromCityId'].errors?.serverError">{{
+                                        searchV['fromCityId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                To
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="To city" [searchable]="true" [clearable]="true"
+                                    formControlName="toCityId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['toCityId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.cityId"
+                                        *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['toCityId'].errors">
+                                    <small class="text-danger" *ngIf="searchV['toCityId'].errors?.['required']">Please
+                                        select reasonUpdate
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['toCityId'].errors?.serverError">{{
+                                        searchV['reasonUpdate'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Select FTL Type
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="Select FTL Type" [searchable]="true"
+                                    [clearable]="true" formControlName="ftlTypeId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['ftlTypeId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.generalId"
+                                        *ngFor="let item of ftlTypeList">{{item.codeDesc}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['ftlTypeId'].errors">
+                                    <small class="text-danger" *ngIf="searchV['ftlTypeId'].errors?.['required']">Please
+                                        select ftlTypeId
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['ftlTypeId'].errors?.serverError">{{
+                                        searchV['ftlTypeId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Transport Mode
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="select Transport Mode" [searchable]="true"
+                                    [clearable]="true" formControlName="transTypeId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['transTypeId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.generalId"
+                                        *ngFor="let item of transitModeList">{{item.codeDesc}}</ng-option>
+                                </ng-select>
+
+                                <div *ngIf="filterValidate && searchV['transTypeId'].errors">
+                                    <small class="text-danger"
+                                        *ngIf="searchV['transTypeId'].errors?.['required']">Please
+                                        slect Transport Mode
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['transTypeId'].errors?.serverError">{{
+                                        searchV['transTypeId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Select Matrix Type
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="select matrix" [searchable]="true"
+                                    [clearable]="true" formControlName="matrixTypeId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['matrixTypeId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.generalId"
+                                        *ngFor="let item of matrixAllowed">{{item.codeDesc}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['matrixTypeId'].errors">
+                                    <small class="text-danger"
+                                        *ngIf="searchV['matrixTypeId'].errors?.['required']">Please
+                                        select matrixTypeId
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['matrixTypeId'].errors?.serverError">{{
+                                        f['matrixTypeId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Reason of update
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <ng-select class="pb-2 " placeholder="Reason of update Select" [searchable]="true"
+                                    [clearable]="true" formControlName="reasonId"
+                                    [ngClass]="{'is-invalid':filterValidate && searchV['reasonId'].errors}">
+                                    <ng-option value="" selected>Select</ng-option>
+                                    <ng-option [value]="item.generalId"
+                                        *ngFor="let item of reasonUpdateList">{{item.codeDesc}}</ng-option>
+                                </ng-select>
+                                <div *ngIf="filterValidate && searchV['reasonId'].errors">
+                                    <small class="text-danger" *ngIf="searchV['reasonId'].errors?.['required']">Please
+                                        select reasonId
+                                    </small>
+                                    <small class="text-danger" *ngIf="searchV['reasonId'].errors?.serverError">{{
+                                        f['reasonId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary  d-inline  btn-sm" (click)="submitRate()">Apply</button>
+                <button type="button" class="btn btn-primary  d-inline  btn-sm"
+                    (click)="modal.dismiss('Cross click')">Cancel</button>
+            </div>
+            <!-- </center> -->
+        </div>
+    </ng-template>
+    <!-- close popup confirm-->
+</div>

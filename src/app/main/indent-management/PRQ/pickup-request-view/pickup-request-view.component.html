@@ -1,0 +1,68 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/indent/list-of-pickup-request"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Pickup Request" placement="right"></i> </a>
+       </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="display">
+       <h5 class="card-title">Pickup Request View</h5>
+       <span class="title">
+        <a href="javascript:void(0)"><i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"  (click)="download_pdf_print()"></i> </a>
+       </span>
+    </div>
+
+    <table class="table table-bordered" id="viewData_information">
+        <tbody>
+            <tr>
+                <th colspan="6" class="text-center">Pickup Request  ({{this.prqDetails?.prqNo}})</th>
+            </tr>
+          <tr>
+            <th>Origin Location</th>
+            <td>{{this.prqDetails?.orgnName}}</td>
+            <th>Request Date & time</th>
+            <td>{{this.prqDetails?.prqDt | date:'dd/MM/yyyy'}}</td>
+            <th>Risk Purchase</th>
+            <td>{{this.prqDetails?.isriskPurchase==true?'YES':'NO'}}</td>
+          </tr>
+     
+      
+          <tr>
+            <th>Transportation Mode</th>
+            <td>{{this.prqDetails?.mode}}</td>
+            <th>Pay Basis</th>
+            <td>{{this.prqDetails?.payBasis}}</td>
+            <th>Selection</th>
+            <td>{{this.prqDetails?.type=='C'?'Customer':this.prqDetails?.type=='B'?'Broker':'Transporter'}}</td>
+          </tr>
+          <tr>
+            <th>City</th>
+            <td>{{this.prqDetails?.fromCityName}}</td>
+            <th>Border Route</th>
+            <td>{{this.prqDetails?.borderRoute}}</td>
+            <th>Consignee Payment Term</th>
+            <td>{{this.prqDetails?.consigneePaymentTerms}}</td>
+          </tr>
+          <tr>
+            <th>Vehicle type</th>
+            <td>{{this.prqDetails?.ftlType}}</td>
+            <th>Vehicle Load Type</th>
+            <td>{{this.prqDetails?.vehicleTypeLoadability}}</td>
+            <th>Rate Type Load</th>
+            <td>{{this.prqDetails?.vehicleTypeLoadability}}</td>
+          </tr>
+          <tr>
+            <th>Vehicle assign type</th>
+            <td>{{this.prqDetails?.assignVehicleType}}</td>
+            <th>Remarks</th>
+            <td>{{this.prqDetails?.remark}}</td>
+            <th></th>
+            <td></td>
+          </tr>
+    
+        </tbody>
+        </table>
+
+    </div>

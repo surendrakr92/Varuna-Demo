@@ -1,0 +1,86 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+       <a routerLink="/stationery"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="right"></i> </a>
+   </span>
+    <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Stationery Tracking
+         
+    </h5>
+
+
+    </div>
+
+    <form action="" [formGroup]="formtrackingMaster">
+        <div class="row">
+
+                   
+                  
+        <div class="col-lg-3">
+           <div class="form-group ">
+              <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Document No
+                 <span class="text-danger">*</span> </label>
+              <div class=" col-sm-12 col-lg-12">
+              
+                    <input type="text" class="form-control"  formControlName="docno"
+                    (change)='ondocChange($event)'
+                    [ngClass]="{'is-invalid':submitted && f['docno'].errors}">
+                 <div *ngIf="submitted && f['docno'].errors">
+                    <small class="text-danger" *ngIf="f['docno'].errors?.['required']">Please enter Document No
+                    </small>
+                    <small class="text-danger" *ngIf="f['docno'].errors?.['pattern']">Invalid document no</small>
+                       <small class="text-danger" *ngIf="f['docno'].errors?.serverError">{{
+                          f['docno'].errors.serverError}}</small>
+                 </div>
+     
+     
+           
+              </div>
+           </div>
+        </div>
+                        
+                 </div>
+                 </form>
+                 <div class="table-responsive">
+                  <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+                  #MyTable
+                  id="MyTable" >
+                  <thead class="bg-secondary text-white">
+                     <tr>
+            
+                        <th>Sr. No. </th>
+                        <th>Item Name</th>
+                        <th>Dated</th>
+                        <th>Issued By branch</th>
+                        <th>Issued to branch</th>
+                        <th>Quantity</th>
+                        <th>Start No</th>
+                        <th>End No</th>
+                        <th>Challan No</th>
+                        <th>Remarks</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr class="zoom-in" *ngFor="let tl of trackingList; let i=index">
+                        <td>{{i+1}}</td>
+                        <td>{{tl.itemName}}</td>
+                        <td>{{tl.challanDate | date :'dd/MM/yyyy'}}</td>
+                        <td>{{tl.issueByBranchName}}</td>
+                        <td>{{tl.issueToBranchName}}</td>
+                        <td>{{tl.qty}}</td>
+                        <td>{{tl.startSerial}}</td>
+                        <td>{{tl.endSerial}}</td>
+                        <td>{{tl.challan}}</td>
+                        <td>{{tl.remarks}}</td>
+          
+                      
+                     
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+ </div>

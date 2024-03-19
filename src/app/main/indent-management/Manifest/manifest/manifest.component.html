@@ -1,0 +1,431 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Generate Manifest </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+               placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <form [formGroup]="formMaster">
+      <div class="row m-0">
+         <div class="bg-dark-light p-1 mb-2 text-center">Selection criteria for preparing MF</div>
+         <div class="col-lg-4">
+            <div class="row">
+               <label for="inputText" class=" col-sm-3 col-lg-3 col-form-label">Manual MF
+               </label>
+               <div class=" col-sm-9 col-lg-9">
+                  <input type="text" placeholder="'NA' if Not Applicable" class="form-control"
+                     formControlName="manualTcNo" [ngClass]="{'is-invalid':submitted && f['manualTcNo'].errors}">
+                  <div *ngIf="submitted && f['manualTcNo'].errors">
+                     <small class="text-danger" *ngIf="f['manualTcNo'].errors?.['required']">Please enter Manual
+                        MF</small>
+                     <small class="text-danger" *ngIf="f['manualTcNo'].errors?.serverError">{{
+                        f['manualTcNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4">
+            <div class="row">
+               <label for="inputText" class=" col-sm-3 col-lg-3 col-form-label">MF Date:
+               </label>
+               <div class=" col-sm-9 col-lg-9">
+                  <input type="date" class="form-control" formControlName="tcDate"
+                     [ngClass]="{'is-invalid':submitted && f['tcDate'].errors}">
+                  <div *ngIf="submitted && f['tcDate'].errors">
+                     <small class="text-danger" *ngIf="f['tcDate'].errors?.['required']">Please enter MF Date</small>
+                     <small class="text-danger" *ngIf="f['tcDate'].errors?.serverError">{{
+                        f['tcDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-4">
+            <div class="row">
+               <label for="inputText" class=" col-sm-3 col-lg-3 col-form-label">Next Stop:
+               </label>
+               <div class=" col-sm-9 col-lg-9">
+                  <ng-select class="pb-2 " placeholder="Transition Mode Select" [searchable]="true"
+                     formControlName="toBhCode" [ngClass]="{'is-invalid':submitted && f['toBhCode'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.branchId" *ngFor="let item of branchList"
+                        [disabled]='!item.isActive'>{{item.branchName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['toBhCode'].errors">
+                     <small class="text-danger" *ngIf="f['toBhCode'].errors?.['required']">Please select Next
+                        Stop</small>
+                     <small class="text-danger" *ngIf="f['toBhCode'].errors?.serverError">{{
+                        f['toBhCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="bg-dark-light p-1 mt-2 text-center">Select LR Criteria</div>
+         <div class="col-lg-3">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">LR Date :
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+               <ng-select class="pb-2 " placeholder="LR Date  Select" formControlName="docketDate" [searchable]="true"
+                  (change)="selectionDate($event)" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['docketDate'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.id" *ngFor="let item of dateRanf ">{{item.type}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['docketDate'].errors">
+                  <small class="text-danger" *ngIf="f['docketDate'].errors?.['required']">select LR Date
+                  </small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="ShowDaterange">
+            <div class="row">
+               <div class="col-lg-6" style="padding-right: 2px;">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">From Date:
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="fromDate"
+                        [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}"
+                        [readOnly]="[2, 3, 4].includes(this.formMaster.controls['docketDate'].value)">
+                     <div *ngIf="submitted && f['fromDate'].errors">
+                        <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please select From
+                           Date</small>
+                        <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                           f['fromDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-6 " style="padding-left: 2px;">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">To Date:
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="date" class="form-control" formControlName="toDate"
+                        [ngClass]="{'is-invalid':submitted && f['toDate'].errors}"
+                        [readOnly]="[2, 3, 4].includes(this.formMaster.controls['docketDate'].value)">
+                     <div *ngIf="submitted && f['toDate'].errors">
+                        <small class="text-danger" *ngIf="f['toDate'].errors?.['required']">Please select From
+                           Date</small>
+                        <small class="text-danger" *ngIf="f['toDate'].errors?.serverError">{{
+                           f['toDate'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Transition Mode:
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+               <ng-select class="pb-2 " placeholder="Transition Mode Select" [searchable]="true"
+                  formControlName="transTypeId" [ngClass]="{'is-invalid':submitted && f['transTypeId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.generalId" *ngFor="let item of transitModeList"
+                     [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['transTypeId'].errors">
+                  <small class="text-danger" *ngIf="f['transTypeId'].errors?.['required']">select Transition Mode
+                  </small>
+                  <small class="text-danger" *ngIf="f['transTypeId'].errors?.serverError">{{
+                     f['transTypeId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Destination:
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+               <ng-select class="pb-2 " placeholder="Destination Select" [searchable]="true" appendTo="body"
+                  [clearable]="true" [closeOnSelect]="false" formControlName="destId"
+                  [ngClass]="{'is-invalid':submitted && f['destId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                     [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['destId'].errors">
+                  <small class="text-danger" *ngIf="f['destId'].errors?.['required']">select Transition Mode
+                  </small>
+                  <small class="text-danger" *ngIf="f['destId'].errors?.serverError">{{
+                     f['destId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">From City:
+            </label>
+            <div class=" col-sm-12 col-lg-12">
+               <ng-select class="pb-2 " placeholder="City Select" formControlName="fromCityId" [searchable]="true"
+                  [clearable]="true" [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                     *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+               </ng-select>
+               <div *ngIf="submitted && f['fromCityId'].errors">
+                  <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">Please select From
+                     Date</small>
+                  <small class="text-danger" *ngIf="f['fromCityId'].errors?.serverError">{{
+                     f['fromCityId'].errors.serverError}}</small>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="row">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">To City:
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="toCityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['toCityId'].errors">
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.['required']">Please select TO Date</small>
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.serverError">{{
+                        f['toCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="bg-dark-light p-1 mb-2 text-center mt-2">OR</div>
+         <div class="col-lg-4">
+            <div class="row">
+               <label for="inputText" class=" col-sm-3 col-lg-3 col-form-label">LR No(s).:
+               </label>
+               <div class=" col-sm-9 col-lg-9">
+                  <input type="text" class="form-control" placeholder="Seperated by Comma if multiple"
+                     formControlName="docketNo" [ngClass]="{'is-invalid':submitted && f['docketNo'].errors}">
+                  <div *ngIf="submitted && f['docketNo'].errors">
+                     <small class="text-danger" *ngIf="f['docketNo'].errors?.['required']">Please select From
+                        Date</small>
+                     <small class="text-danger" *ngIf="f['docketNo'].errors?.serverError">{{
+                        f['docketNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row m-3">
+         <div class="text-center">
+            <button type="button" class="btn btn-warning rounded-pill btn-sm btn-padding" (click)="onSubmit()">Show LR
+               List</button>
+         </div>
+      </div>
+   </form>
+   <div class="bg-dark-light p-1 mb-2 text-center">Manifest available for MF Generation</div>
+   <div class="table-responsive">
+      <table class="table  table-bordered">
+         <thead>
+            <tr class="bg-secondary text-white">
+               <th>
+                  <div class="form-check listcls" style="margin-left: 5px;">
+                     <input class="form-check-input" type="checkbox" id="gridCheck2" #checkkAL
+                        (change)="handleAllMen(checkkAL.checked)">
+                  </div>
+               </th>
+               <th>LR </th>
+               <th>Bkg. date <i class="bi bi-exclamation-circle-fill" ngbTooltip="Booking date"></i></th>
+               <th>Trans. Mode <i class="bi bi-exclamation-circle-fill" ngbTooltip="Transit Mode"></i></th>
+               <th>Bkg. Loc. <i class="bi bi-exclamation-circle-fill" ngbTooltip="Booking Location"></i></th>
+               <th>Dely. Loc. <i class="bi bi-exclamation-circle-fill" ngbTooltip="Delivery Location"></i></th>
+               <th>From City </th>
+               <th>To City</th>
+               <th>Comm. Dely Date <i class="bi bi-exclamation-circle-fill" ngbTooltip="Committed delivery date"></i>
+               </th>
+               <th>Pack.[L/B] <i class="bi bi-exclamation-circle-fill" ngbTooltip="Total No. Of Packages [L/B]"></i>
+               </th>
+               <th>Wt. [L/B] <i class="bi bi-exclamation-circle-fill" ngbTooltip="Total Weight [L/B]"></i></th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let item of meniFestDetList ;index as i">
+               <td>
+                  <div class="form-check listcls">
+                     <input class="form-check-input" type="checkbox" id="gridCheck2" #checSing
+                        [(ngModel)]="item.checked" (change)="singleMen(checSing.checked,i,item)">
+                  </div>
+               </td>
+               <td>{{item.docketNo}}</td>
+               <td>{{item.docketDate | date :'dd/MM/yyyy'}}</td>
+               <td>{{item.transMode}}</td>
+               <td>{{item.originBranchId}}</td>
+               <td>{{item.destBranchId}}</td>
+               <td>{{item.fromCity}}</td>
+               <td>{{item.toCity}}</td>
+               <td>{{item.committedDlyDate | date :'dd/MM/yyyy'}}</td>
+               <td><span class="display2"><input type="text" class="form-control" #dataLoad value="{{item.loadPkgsNo}}"
+                        (change)="setJsonForOnCh(dataLoad.value,i,'loadPkgsNo')"
+                        style="width: 90px;margin-right: 3px;">/ 565</span>
+               </td>
+               <td><span class="display2"><input type="text" class="form-control" #dataactWt
+                        value="{{item.loadActualWeight}}"
+                        (change)="setJsonForOnCh(dataactWt.value,i,'loadActualWeight')" value="NA"
+                        style="width: 90px;margin-right: 3px;">/ 4500</span>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <span class="text-primary" *ngIf="this.meniFestDetList.length==0">data not found []</span>
+   </div>
+   <div class="row  mb-3">
+      <div>
+         <button type="button" (click)="modelOpen2(modelmsg2)" [disabled]="this.setupJson.length==0"
+            class="btn btn-primary rounded-pill btn-sm btn-padding2 float-end">Prepare Manifest</button>
+      </div>
+   </div>
+   <!-- popup confirm-->
+   <ng-template #modelmsg2 let-modal>
+      <div class="modal-header qut-hd bg-success">
+         <h6 class="modal-title" id="exampleModalCenterTitle">Transaction Completed</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="table-responsive">
+            <table class="table  table-bordered">
+               <thead>
+                  <tr>
+                     <th>Document Name</th>
+                     <th>System Number </th>
+                     <th>Manual Number</th>
+                     <th>View & Print </th>
+                     <!-- manualTcNo
+                        tcNo -->
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr>
+                     <td>Manifest</td>
+                     <td>MF/HQTR/23/00005</td>
+                     <td>NA</td>
+                     <td><button type="button" [routerLink]="['/indent/manifest-view']"
+                           [queryParams]="{tc: 'MF/HQTR/23/00005'}" (click)="this.modalService.closeModal()"
+                           class="btn btn-warning rounded-pill btn-sm btn-padding2 ">View</button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+   <!-- popup2 confirm-->
+   <ng-template #modelmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">MF View Details </h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="row">
+            <div>
+               <a href="javascript:void(0)"><i class="bi bi-printer booticon float-end" ngbTooltip="Print"
+                     placement="bottom" (click)="download_pdf_print()"></i> </a>
+            </div>
+         </div>
+         <div id="viewData_information">
+            <table class="table table-bordered border-secondary">
+               <tbody>
+                  <tr>
+                     <td colspan="3" rowspan="3"><img src="assets/img/logo2.png" style="width: 200px;"></td>
+                     <th>MF No</th>
+                     <td>MFMUM_0005162</td>
+                  </tr>
+                  <tr>
+                     <th>MF Date </th>
+                     <td>09 SEP 2015</td>
+                  </tr>
+                  <tr>
+                     <th>Manual MF No</th>
+                     <td>--</td>
+                  </tr>
+                  <tr>
+                     <th>Route</th>
+                     <td>:MUM- BLR</td>
+                     <th>From -To </th>
+                     <td>MUM- BLR</td>
+                     <th>THC Start Location</th>
+                  </tr>
+                  <tr>
+                     <th>THC No </th>
+                     <td></td>
+                     <th>THC Date</th>
+                     <td></td>
+                     <th>Vehicle</th>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="table table-bordered border-secondary mt-3">
+               <tbody>
+                  <tr class="bg-secondary text-white">
+                     <th>Sr. No.</th>
+                     <th>Docket No/ Pay Basis</th>
+                     <th>Mode/Service Type</th>
+                     <th>Booking Date</th>
+                     <th>Origin - Delivery Location</th>
+                     <th>From - TO</th>
+                     <th>Consignor</th>
+                     <th>Consignee</th>
+                     <th>Packages L/B</th>
+                     <th>Weight L/B - Kg Total</th>
+                  </tr>
+                  <tr>
+                     <td>1</td>
+                     <td>TBB</td>
+                     <td></td>
+                     <td>09 Sep 2015</td>
+                     <td>MUM - BLR</td>
+                     <td>MUMBAI- PONDICHERRY</td>
+                     <td>MRF LIMITED</td>
+                     <td>MRF LIMITED</td>
+                     <td>565/565.00</td>
+                     <td>4500/4500 - 60000.00</td>
+                  </tr>
+                  <tr>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td></td>
+                     <td>565/565.00</td>
+                     <td>4500/4500 - 60000.00</td>
+                  </tr>
+               </tbody>
+            </table>
+            <table class="table table-bordered border-secondary mt-3">
+               <tbody>
+                  <tr class="bg-light">
+                     <th>Prepared At - Date</th>
+                     <th>Prepared by Staff Name</th>
+                     <th>Approval Sign</th>
+                     <th>Driver Sign</th>
+                     <th>Entered At-Date</th>
+                     <th>Entered by</th>
+                  </tr>
+                  <tr>
+                     <td>MUM : MUMBAI - 09 Sep 2015</td>
+                     <td>00001979: ABHAY KUMAR MISHRA</td>
+                     <td></td>
+                     <td></td>
+                     <td>HQTR - 09 Sep 2015</td>
+                     <td>000001979:ABHAY KUMAR MISHRA</td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+</div>

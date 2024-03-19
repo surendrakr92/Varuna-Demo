@@ -1,0 +1,74 @@
+.newIcon{
+    width: 30px;
+    height: 30px;
+ background-color: #000;
+    color: #fff;
+    text-align: center;
+    line-height: 30px;
+    position: absolute;
+    top: 86px;
+    left: 280px;
+    cursor: pointer;
+}
+
+.header .search-form input {
+    border: 0;
+    font-size: 1.3vmin;
+    color: #012970;
+    border: none;
+    padding: 7px 38px 7px 8px;
+    border-radius: 3px;
+    transition: 0.3s;
+    width: 100%;
+    height: 25px;
+}
+
+.header .search-form input:focus, .header .search-form input:hover {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+.bgTcode{
+    background-color: #ffffff;
+    min-height: 150px;
+    width: 320px;
+     position: absolute;
+     z-index: -1;
+     top: 23px;
+     padding: 7px 7px 7px 7px;
+    transition: 0.3s;
+    border-bottom-left-radius: 3px;
+    border-bottom-right-radius: 3px;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+ display: none;
+   
+}
+.bgTcode ul{
+    list-style: none;
+}
+.bgTcode ul li{
+      display: block;
+     
+      margin-left: -27px;
+      line-height: 20px;
+      cursor: pointer;
+}
+.bgTcode ul li a{
+    padding-right: 5px;
+}
+.search-bar{
+    position: relative;
+    z-index: 444;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 12px;
+
+}
+.btn-outline-primary{
+    color: #1c2c5e;
+    border:1px solid #1c2c5e;
+
+}
+.btn-outline-primary:hover{
+    background-color: #1c2c5e;
+    color: #fff;
+}

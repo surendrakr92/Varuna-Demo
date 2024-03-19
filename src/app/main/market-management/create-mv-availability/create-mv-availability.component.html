@@ -1,0 +1,170 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/market/mv-availability/"
+         (click)="backToList()"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to MV Availability " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <!-- <div class="display">
+       <h5 class="card-title">Rate Update List
+       </h5>
+       
+       </div>  -->
+   <button type="button" class="btn 
+       btn-light m-1 "><b>Vendor</b>: {{this.filterJson.vendorName??'NA'}}</button>
+   <button type="button" class="btn 
+       btn-light m-1 "><b>Vehicle No</b>: {{this.filterJson.vehicleNo}} </button>
+   <button type="button" class="btn 
+       btn-light m-1 "><b>Vehicle Type</b>: {{this.filterJson.vehicleType}}</button>
+   <button type="button" class="btn 
+       btn-light m-1 "><b>From City</b>: {{this.filterJson.fromCity}}</button>
+   <button type="button" class="btn 
+       btn-light m-1 "><b>To City</b>: {{this.filterJson.toCity}}</button>
+   <div class="row mb-1">
+      <div class="float-end" *ngIf="!this.filterJson.unionVehDetailId">
+         <button type="button" class="btn btn-warning btn-sm rounded-pill btn-padding2 float-end" (click)="addRow()"
+            style="width: 60px;"><i class="bi bi-plus"></i> Row</button>
+      </div>
+   </div>
+   <!-- <form> -->
+      <div class="table-responsive">
+         <table class="table table-borderless">
+            <thead>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vendor <span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vendor Phone No.<span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vehicle No. <span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vehicle Type<span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From City<span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To City<span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Rate unit<span
+                        class="text-danger">*</span></label></th>
+               <th> <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Rate<span
+                        class="text-danger">*</span></label></th>
+               <th><label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Entry Remarks</label></th>
+               <th><label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Status</label></th>
+
+
+               <th></th>
+            </thead>
+            <tbody>
+               <tr style="border-bottom: 1px solid #e9e9e9;"
+                  *ngFor="let item of formArrayList.unionVehicleData;index as i">
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="Vendor Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           [(ngModel)]="item.vendorId" (change)="changeVendorName($event,i,'vendorName')">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]="!item.isActive" [value]="item.vendorId" *ngFor="let item of vendorList">{{
+                              item.vendorName }}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <!-- <ng-select placeholder="Phone No Select" [searchable]="true" [clearable]="true"
+                           formControlName="vendorMobileNo"(change)="changeVendorName($event,i,'vendorMobileNo')">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.vendorId"
+                              *ngFor="let item of vendorList">{{item.contactPersonMobileNo}}</ng-option>
+                        </ng-select> -->
+                        <input type="text" name="" id="" class="form-control w-auto" readonly
+                           [value]="item.vendorMobileNo">
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="text" class="form-control"  style="width: 90px;"
+                           #vehicleNoS  [value]="item.vehicleNo"
+                           (change)="changeVendorName(vehicleNoS.value,i,'vehicleNo')">
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="Vehicle Type Select" [searchable]="true" [clearable]="true"
+                           appendTo="body" [(ngModel)]="item.vehicleTypeId"
+                           (change)="changeVendorName($event,i,'vehicleTypeId')">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of vehicleList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="City Select" [searchable]="true" [clearable]="true"
+                           (change)="changeVendorName($event,i,'fromCityId')" [(ngModel)]="item.fromCityId">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                              *ngFor="let item of clityList">{{item.cityName}}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="City Select" [searchable]="true" [clearable]="true"
+                           (change)="changeVendorName($event,i,'toCityId')" [(ngModel)]="item.toCityId">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                              *ngFor="let item of clityList">{{item.cityName}}</ng-option>
+                        </ng-select>
+
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="Rate Unit Select" [searchable]="true" [clearable]="true"
+                           (change)="changeVendorName($event,i,'rateTypeId')" [(ngModel)]="item.rateTypeId">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of rateUnit">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 90px;" #rateS [value]="item?.rate"
+                           (change)="changeVendorName(rateS.value,i,'rate')">
+
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <textarea type="text" class="form-control" #entryRemarks [value]="item?.entryRemarks"
+                           (change)="changeVendorName(entryRemarks.value,i,'entryRemarks')"
+                           style="width: 130px;"></textarea>
+
+                     </div>
+                  </td>
+                  <td>Active</td>
+                  <td *ngIf="this.formArrayList.unionVehicleData.length>1">
+                     <div class=" col-sm-12 col-lg-12  p-0">
+                        <a ngbTooltip="delete " placement="bottom" class="delete"
+                           (click)="this.formArrayList.unionVehicleData.splice(i,1)">
+                           <i class="bi bi-x-circle text-danger"></i>
+                        </a>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+      </div>
+      <div class="row mt-4 mb-4">
+         <div class="text-center">
+            <button type="button" class="btn btn-primary  rounded-pill btn-sm btn-padding  btn-sm" style="width: 100px;"
+               (click)="finalJsonSubmission()">{{this.filterJson.unionVehDetailId?'Update':'Submit'}}</button>
+         </div>
+      </div>
+   <!-- </form> -->
+</div>

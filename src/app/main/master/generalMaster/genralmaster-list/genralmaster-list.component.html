@@ -1,0 +1,67 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/general-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to General Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <div class="display">
+      <h5 class="card-title">{{headerLabel}}
+      </h5>
+      <div class="pb-2">
+         <button class="btn btn-secondary text-white" ngbTooltip="Download List" placement="bottom" type="button"
+         (click)="downloadExcel()">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+
+               <th>Sr. No.</th>
+               <th>Code Id</th>
+               <th>Code Description</th>
+               <th>Is Active</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let Item of genMasterListByCodeType; let i= index">
+               <td>{{i+1}}</td>
+               <td style="cursor: pointer;color: blue;">{{Item.codeId}}</td>
+               <td>{{Item.codeDesc}}</td>
+               <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i
+                        class="bi bi-check2-square pr"></i>
+                     {{Item.isActive?'Active':'Inactive'}}</span> </td>
+               <td class="display2 ">
+                  <a routerLink="/master/view/update-general-master-list"
+                     [queryParams]="{generalId:Item?.generalId,headerLabel:headerLabel,validate:'view'}"
+                     placement="bottom" ngbTooltip="View" class="view"><i class="bi bi-eye-fill pr"></i></a>
+                  <a placement="bottom" ngbTooltip="Edit" class="edit"
+                     routerLink="/master/view/update-general-master-list"
+                     [queryParams]="{generalId:Item?.generalId,headerLabel:headerLabel,validate:'update'}"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                  <a placement="bottom" ngbTooltip="Active/Inactive" class="delete">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" *ngIf="Item.isActive==true"
+                           (click)="activeInactive(Item?.generalId)" checked>
+                     </div>
+                  </a>
+
+
+
+               </td>
+            </tr>
+
+         </tbody>
+      </table>
+   </div>
+</div>

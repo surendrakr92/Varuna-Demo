@@ -1,0 +1,231 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">ELR Dashboard</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+
+    
+<div class=" display border-bottom pb-2 mb-4">
+    <div ><button type="button"  [class.active]="activeSection === 'section1'" class=" btn btnClass" (click)="toggleContent('section1')">Go To ELR Dashboard</button></div>
+    <div ><button type="button"  [class.active]="activeSection === 'section2'" class="btn btnClass" (click)="toggleContent('section2')">Fetch All Eway Bill data Old date</button></div>
+
+    <div ><button type="button"  [class.active]="activeSection === 'section3'" class="btn btnClass" (click)="toggleContent('section3')">Add Invoice to LR</button></div>
+
+    <!-- <div class="col-lg-3"><button type="button"  [class.active]="activeSection === 'section4'" class="btn btnClass" (click)="toggleContent('section4')">Fetch All Eway Bill data Old date</button></div> -->
+</div>
+
+<ng-container *ngIf="showSection1">
+<form [formGroup]="formMaster">
+    <div class="row  d-flex justify-content-center  mb-2 ">
+
+        <div class="col-lg-6">
+            <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">E-Way Bill Mapping <span class="text-danger">*</span></span> </label>
+
+
+                <div class=" col-lg-4 ">
+
+                    <ng-select class="pb-2 " placeholder="Customer Name Select" name="rname" formControlName="customerId"
+                    [searchable]="true" [clearable]="true" (change)="keyup($event)"
+                    [ngClass]="{'is-invalid':submitted && f['customerId'].errors}">
+                    <ng-option value="" selected>Select</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of ewaybillList"
+                    >{{item.type}}</ng-option>
+                    </ng-select>
+
+                    <div *ngIf="submitted && f['customerId'].errors">
+                        <small class="text-danger" *ngIf="f['customerId'].errors?.['required']">please
+                     select Customer Name
+                        </small>
+                        <small class="text-danger" *ngIf="f['customerId'].errors?.['pattern']">invalid
+                            digitized LR</small>
+                        <small class="text-danger" *ngIf="f['customerId'].errors?.serverError">{{
+                            f['customerId'].errors.serverError}}</small>
+                    </div>
+                </div>
+                <div class=" col-lg-2 ">
+                    <button type="button" (click)="searchFilter()"
+                        class="btn btn-warning rounded-pill btn-padding2 btn-sm"> Next <i class="bi bi-chevron-double-right"></i></button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>
+</form>
+
+<div class="table-responsive mt-2">
+<table class="table table-report">
+<thead>
+    <tr class="bg-secondary text-white">
+        <th>Customer </th>
+        <th>E-Way Bill No</th>
+        <th>E-Way Date</th>
+        <th>TransDocNo</th>
+        <th>TranDocDate</th>
+        <th>Vehicle No</th>
+        <th>DocNo</th>
+        <th>DocDate</th>
+
+        <th>From GSTin</th>
+        <th>From TrdName</th>
+        <th>From Add1</th>
+        <th>From Add2</th>
+        <th>From Place</th>
+        <th>From Pincode</th>
+        <th>From State Code</th>
+    </tr>
+</thead>
+<tbody  >
+    <tr class="zoom-in text-success" *ngIf="this.formMaster.controls['customerId'].value==='Completed'  " >
+        <td>4232314</td>
+        <td>32423</td>
+        <td>werwr</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+
+
+    </tr>
+    <tr class="zoom-in text-success" *ngIf="this.formMaster.controls['customerId'].value==='Completed'">
+        <td>4232314</td>
+        <td>32423</td>
+        <td>werwr</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+
+
+    </tr>
+    <tr class="zoom-in text-danger" *ngIf="this.formMaster.controls['customerId'].value==='Pending'"  >
+        <td>4232314</td>
+        <td>32423</td>
+        <td>werwr</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werwer</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+        <td>werweqweqw</td>
+
+
+    </tr>
+</tbody>
+</table>
+</div>
+</ng-container>
+
+<ng-container *ngIf="showSection2">
+
+    <div class="row mt-3 d-flex justify-content-center  mb-2">
+
+        <div class="col-lg-6">
+            <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">Date
+                        <span class="text-danger">*</span></span> </label>
+
+
+                <div class=" col-lg-4 ">
+
+                    <input type="date" class="form-control">
+                    <!-- <input type="text" class="form-control" formControlName="docketId"
+                        [ngClass]="{'is-invalid':submitt && fs['docketId'].errors}">
+                    <div *ngIf="submitt && fs['docketId'].errors">
+                        <small class="text-danger" *ngIf="fs['docketId'].errors?.['required']">please
+                            enter LR No.
+                        </small>
+                        <small class="text-danger" *ngIf="fs['docketId'].errors?.serverError">{{
+                            fs['docketId'].errors.serverError}}</small>
+                    </div> -->
+                </div>
+                <div class=" col-lg-3 ">
+                    <button type="button" 
+                        class="btn btn-primary rounded-pill btn-padding2 btn-sm" >
+                        Submit</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>  
+
+
+   
+</ng-container>
+<ng-container *ngIf="showSection3">
+    <div class="row mt-3 d-flex justify-content-center  mb-2">
+
+        <div class="col-lg-6">
+            <div class="row">
+              <label for="inputText" class="col-sm-4 col-lg-4 col-form-label">
+                 <span class="float-end">Invoice No.
+                        <span class="text-danger">*</span></span>  
+                    </label> 
+
+
+                <div class=" col-lg-4 ">
+
+                    <input type="number" min="0" class="form-control">
+                    <!-- <input type="text" class="form-control" formControlName="docketId"
+                        [ngClass]="{'is-invalid':submitt && fs['docketId'].errors}">
+                    <div *ngIf="submitt && fs['docketId'].errors">
+                        <small class="text-danger" *ngIf="fs['docketId'].errors?.['required']">please
+                            enter LR No.
+                        </small>
+                        <small class="text-danger" *ngIf="fs['docketId'].errors?.serverError">{{
+                            fs['docketId'].errors.serverError}}</small>
+                    </div> -->
+                </div>
+                <div class=" col-lg-3 ">
+                    <button type="button" 
+                        class="btn btn-primary rounded-pill btn-padding2 btn-sm" >
+                        Submit</button>
+
+                </div>
+
+            </div>
+        </div>
+
+
+    </div>  
+</ng-container>
+<ng-container *ngIf="showSection4">
+   <h1> 4th asdfsadf</h1>
+</ng-container>
+    </div>

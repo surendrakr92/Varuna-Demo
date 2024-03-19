@@ -1,0 +1,546 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master" ngbTooltip="Master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+      </span>
+      <span class="float-end title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon "></i> </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">TDS Rate Master
+      </h5>
+   </div>
+   <div class="accordion" id="accordionExample">
+      <div class="accordion-item">
+         <h2 class="accordion-header" id="headingOne">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+               data-bs-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne" style="font-size: 12px;">
+               TDS Section Master
+            </button>
+         </h2>
+         <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+               <form [formGroup]="formTdsRateMaster">
+                  <div class="row">
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">TDS Section<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="pb-2  " placeholder="TDS Rate Master" formControlName="tdsSectionTypeId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted && f['tdsSectionTypeId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId" *ngFor="let item of tdsRateMasterList"
+                                    [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted && f['tdsSectionTypeId'].errors">
+                                 <small class="text-danger" *ngIf="f['tdsSectionTypeId'].errors?.['required']">Please
+                                    select
+                                    TDS Section</small>
+                                 <small class="text-danger" *ngIf="f['tdsSectionTypeId'].errors?.serverError">{{
+                                    f['tdsSectionTypeId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-2">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Active Date<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="date" class="form-control" formControlName="activeDate"
+                                 [ngClass]="{'is-invalid':submitted && f['activeDate'].errors}"
+                                 min="{{minDatePast}}"(change)="mngDt('first')" >
+                              <div *ngIf="submitted && f['activeDate'].errors">
+                                 <small class="text-danger" *ngIf="f['activeDate'].errors?.['required']">please
+                                    select active date
+                                 </small>
+                                 <small class="text-danger" *ngIf="f['activeDate'].errors?.serverError">{{
+                                    f['activeDate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-2">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">InActive Date</label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="date" class="form-control" formControlName="inActiveDate"
+                                 [ngClass]="{'is-invalid':submitted && f['inActiveDate'].errors}"
+                                 min="{{mngFrstD}}">
+                              <div *ngIf="submitted && f['inActiveDate'].errors">
+                                 <small class="text-danger" *ngIf="f['inActiveDate'].errors?.['required']">please
+                                    select inactive date
+                                 </small>
+                                 <small class="text-danger" *ngIf="f['inActiveDate'].errors?.serverError">{{
+                                    f['inActiveDate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-2">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                              Status
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <div class="form-check form-switch p-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isActive">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="float-end">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding mt-4"
+                              (click)="onSubmit()">Submit</button>
+                           <button type="button" type="button"
+                              class="btn btn-warning rounded-pill btn-padding2 mt-4 m-2"
+                              (click)="toggle('tdsSection')">Go to
+                              Listing</button>
+                        </div>
+                     </div>
+
+
+                  </div>
+               </form>
+               <div class="table-responsive">
+                  <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" #MyTable1 *ngIf="isDataLoaded">
+                     <!-- *ngIf="isDataLoaded" -->
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Sr. No.</th>
+                           <th>Section Type</th>
+                           <th>Active From Date</th>
+                           <th>InActive From Date</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="zoom-in" *ngFor="let Item of TdsRateMasterList; let i=index">
+                           <td>{{i+1}}</td>
+                           <td>{{Item.codeDesc}}</td>
+                           <td>{{Item.activeDate | date:'dd/MM/yyyy'}}</td>
+                           <td>{{Item.inActiveDate | date:'dd/MM/yyyy'}}</td>
+                           <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i
+                                    class="bi bi-check2-square pr"></i>
+                                 {{Item.isActive?'Active':'Inactive'}}</span>
+                           </td>
+                           <td class="display2">
+
+                              <a (click)="editfile(Item)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                                    class="bi bi-pen-fill pr"></i></a>
+                              <a ngbTooltip="Active/Inactive" class="delete">
+                                 <div class="form-check form-switch ">
+                                    <input type="checkbox" class="form-check-input" *ngIf="Item.isActive==true"
+                                       (click)="activeInactive(Item.tdsSectionId)" checked>
+                                 </div>
+                              </a>
+
+                           </td>
+                        </tr>
+
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="accordion-item">
+         <h2 class="accordion-header" id="headingTwo">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+               data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo" style="font-size: 12px;">
+               Service Type Master
+            </button>
+         </h2>
+         <div id="collapseTwo" class="accordion-collapse collapse" aria-labelledby="headingTwo"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+               <form [formGroup]="formTdsServicesMaster">
+                  <div class="row">
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">TDS Section<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="pb-2  " placeholder="TDS Rate Master" formControlName="tdsSectionTypeId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted2 && fs['tdsSectionTypeId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId" *ngFor="let item of tdsRateMasterList"
+                                    [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted2 && fs['tdsSectionTypeId'].errors">
+                                 <small class="text-danger" *ngIf="fs['tdsSectionTypeId'].errors?.['required']">Please
+                                    select
+                                    TDS Section</small>
+                                 <small class="text-danger" *ngIf="fs['tdsSectionTypeId'].errors?.serverError">{{
+                                    f['tdsSectionTypeId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Expense Nature <span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="text" class="form-control" formControlName="expenseNature"
+                                 [ngClass]="{'is-invalid':submitted2 && fs['expenseNature'].errors}">
+                              <div *ngIf="submitted2 && fs['expenseNature'].errors">
+                                 <small class="text-danger" *ngIf="fs['expenseNature'].errors?.['required']">please expense
+                                    nature
+                                 </small>
+                                 <small class="text-danger" *ngIf="fs['expenseNature'].errors?.serverError">{{
+                                    f['expenseNature'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Active Date<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="date" class="form-control" formControlName="activeDate"
+                                 [ngClass]="{'is-invalid':submitted2 && fs['activeDate'].errors}"
+                                 min="{{minDatePast}}"
+                                 (change)="mngDt('scnd')">
+                              <div *ngIf="submitted2 && fs['activeDate'].errors">
+                                 <small class="text-danger" *ngIf="fs['activeDate'].errors?.['required']">please
+                                    select active date
+                                 </small>
+                                 <small class="text-danger" *ngIf="fs['activeDate'].errors?.serverError">{{
+                                    f['activeDate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">InActive Date<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="date" class="form-control" formControlName="inactiveDate"
+                                 [ngClass]="{'is-invalid':submitted2 && fs['inactiveDate'].errors}"
+                                 min="{{mngScnD}}">
+                              <div *ngIf="submitted2 && fs['inactiveDate'].errors">
+                                 <small class="text-danger" *ngIf="fs['inactiveDate'].errors?.['required']">please
+                                    select inactive date
+                                 </small>
+                                 <small class="text-danger" *ngIf="fs['inactiveDate'].errors?.serverError">{{
+                                    f['inactiveDate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Service Type
+                              Description<span class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <textarea type="text" class="form-control" formControlName="serviceTypeDescription"
+                                 [ngClass]="{'is-invalid':submitted2 && fs['serviceTypeDescription'].errors}"></textarea>
+                              <div *ngIf="submitted2 && fs['serviceTypeDescription'].errors">
+                                 <small class="text-danger"
+                                    *ngIf="fs['serviceTypeDescription'].errors?.['required']">please service Type Description
+                                 </small>
+                                 <small class="text-danger" *ngIf="fs['serviceTypeDescription'].errors?.serverError">{{
+                                    f['serviceTypeDescription'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                              Status
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <div class="form-check form-switch p-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isActive">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3"></div>
+                     <div class="col-lg-3">
+                        <div class="float-end">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding mt-4"
+                              (click)="onServiceSubmit()">Submit</button>
+                           <button type="button" class="btn btn-warning rounded-pill btn-padding2 mt-4 m-2"
+                              (click)="toggle('serviceToggle')">Go to
+                              Listing</button>
+                        </div>
+                     </div>
+                  </div>
+               </form>
+               <div class="table-responsive">
+                  <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" #MyTable2 *ngIf="isDataLoadedd">
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Sr. No.</th>
+                           <th>Expense Nature</th>
+                           <th>Service Type Description</th>
+                           <th>Active From Date</th>
+                           <th>InActive From Date</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="zoom-in" *ngFor="let Item of TdsServiceMasterList; let i=index">
+                           <td>{{i+1}}</td>
+                           <td>{{Item.expenseNature}}</td>
+                           <td>{{Item.serviceTypeDescription}}</td>
+                           <td>{{Item.activeDate | date:'dd/MM/yyyy'}}</td>
+                           <td>{{Item.inactiveDate | date:'dd/MM/yyyy'}}</td>
+                           <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i
+                                    class="bi bi-check2-square pr"></i>
+                                 {{Item.isActive?'Active':'Inactive'}}</span>
+                           </td>
+                           <td class="display2">
+
+                              <a (click)="editServicefile(Item)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                                    class="bi bi-pen-fill pr"></i></a>
+                              <a ngbTooltip="Active/Inactive" class="delete">
+                                 <div class="form-check form-switch ">
+                                    <input type="checkbox" class="form-check-input" *ngIf="Item.isActive==true"
+                                       (click)="activeInactiveIN(Item.serviceTypeId)" checked>
+                                 </div>
+                              </a>
+
+                           </td>
+                        </tr>
+
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="accordion-item">
+         <h2 class="accordion-header" id="headingThree">
+            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+               data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree"
+               style="font-size: 12px;">
+               TDS Rate Master
+            </button>
+         </h2>
+         <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
+            data-bs-parent="#accordionExample">
+            <div class="accordion-body">
+               <form [formGroup]="formTdsRate">
+                  <div class="row">
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Corporate Rate (%)<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="number" class="form-control" formControlName="corporateRate" min="0"
+                                 max="99" [ngClass]="{'is-invalid':submitted3 && fsr['corporateRate'].errors}">
+                              <div *ngIf="submitted3 && fsr['corporateRate'].errors">
+                                 <small class="text-danger" *ngIf="fsr['corporateRate'].errors?.['required']">
+                                    corporate rate (%)
+                                    percentage
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['corporateRate'].errors?.['max']">
+                                    can't be enter more than 100
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['corporateRate'].errors?.serverError">{{
+                                    f['corporateRate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Non Corporate Rate (%)<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="number" class="form-control" formControlName="nonCorporateRate" min="0"
+                                 max="99" [ngClass]="{'is-invalid':submitted3 && fsr['nonCorporateRate'].errors}">
+                              <div *ngIf="submitted3 && fsr['nonCorporateRate'].errors">
+                                 <small class="text-danger" *ngIf="fsr['nonCorporateRate'].errors?.['required']">enter
+                                    non corporate rate (%)
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['nonCorporateRate'].errors?.['max']">
+                                    can't be enter more than 100
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['nonCorporateRate'].errors?.serverError">{{
+                                    f['nonCorporateRate'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Service Type<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2  " placeholder="TDS Rate Master" formControlName="serviceType"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted3 && fsr['serviceType'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.serviceTypeId" *ngFor="let item of serviceList"
+                                    [disabled]='!item.isActive'>{{item.expenseNature}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted3 && fsr['serviceType'].errors">
+                                 <small class="text-danger" *ngIf="fsr['serviceType'].errors?.['required']">select
+                                    Service Type
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['serviceType'].errors?.serverError">{{
+                                    f['serviceType'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">ThresHold Invoice<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="number" class="form-control" formControlName="thresHoldInvoice" min="0"
+                              max="99"
+                                 [ngClass]="{'is-invalid':submitted3 && fsr['thresHoldInvoice'].errors}">
+                              <div *ngIf="submitted3 && fsr['thresHoldInvoice'].errors">
+                                 <small class="text-danger" *ngIf="fsr['thresHoldInvoice'].errors?.['required']">please
+                                    enter threshold invoice
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['thresHoldInvoice'].errors?.['max']">
+                                    can't be enter more than 100
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['thresHoldInvoice'].errors?.serverError">{{
+                                    f['thresHoldInvoice'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">ThresHold Anual<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <input type="number" class="form-control" formControlName="thresHoldAnual" min="0"
+                                 [ngClass]="{'is-invalid':submitted3 && fsr['thresHoldAnual'].errors}"
+                                 max="99">
+                              <div *ngIf="submitted3 && fsr['thresHoldAnual'].errors">
+                                 <small class="text-danger" *ngIf="fsr['thresHoldAnual'].errors?.['required']">please
+                                    enter threshold anual
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['thresHoldAnual'].errors?.['max']">
+                                    can't be enter more than 100
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['thresHoldAnual'].errors?.serverError">{{
+                                    f['thresHoldAnual'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">TDS Section<span
+                                 class="text-danger">*</span></label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <ng-select class="pb-2  " placeholder="TDS Rate Master" formControlName="tdsSectionId"
+                                 [searchable]="true" [clearable]="true"
+                                 [ngClass]="{'is-invalid':submitted3 && fsr['tdsSectionId'].errors}">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId" *ngFor="let item of tdsRateMasterList"
+                                    [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                              <div *ngIf="submitted3 && fsr['tdsSectionId'].errors">
+                                 <small class="text-danger" *ngIf="fsr['tdsSectionId'].errors?.['required']">please
+                                    select tds section
+                                 </small>
+                                 <small class="text-danger" *ngIf="fsr['tdsSectionId'].errors?.serverError">{{
+                                    f['tdsSectionId'].errors.serverError}}</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-lg-3">
+                        <div class="form-group ">
+                           <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                              Status
+                           </label>
+                           <div class=" col-sm-12 col-lg-12">
+                              <div class="form-check form-switch p-2">
+                                 <input type="checkbox" class="form-check-input" formControlName="isActive">
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+
+                     <div class="col-lg-3">
+                        <div class="float-end">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding mt-4"
+                              (click)="onRateSubmit()">Submit</button>
+                           <button type="button" class="btn btn-warning rounded-pill btn-padding2 mt-4 m-2"
+                              (click)="toggle('rateeee')">Go to
+                              Listing</button>
+                        </div>
+                     </div>
+
+
+                  </div>
+               </form>
+
+               <div class="table-responsive">
+                  <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" #MyTable3 *ngIf="isDataLoadeddd">
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Sr. No.</th>
+                           <th>Non Corporate Rate</th>
+                           <th>Service Type</th>
+                           <th>thresHold Invoice</th>
+                           <th>TDS Section</th>
+                           <th>codeDec</th>
+                           <th>thresHold Anual</th>
+                           <th>Corporate Rate</th>
+                           <th>Status</th>
+                           <th>Action</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr class="zoom-in" *ngFor="let Item of rateList; let i=index">
+                           <td>{{i+1}}</td>
+                           <td>{{Item.nonCorporateRate}}</td>
+                           <td>{{Item.serviceType}}</td>
+                           <td>{{Item.thresHoldInvoice}}</td>
+                           <td>{{Item.tdsSectionId}}</td>
+                           <td>{{Item.codeDec}}</td>
+                           <td>{{Item.thresHoldAnual}}</td>
+                           <td>{{Item.corporateRate}}</td>
+                           <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i
+                                    class="bi bi-check2-square pr"></i>
+                                 {{Item.isActive?'Active':'Inactive'}}</span>
+                           </td>
+                           <td class="display2">
+
+                              <a (click)="editRatefile(Item)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                                    class="bi bi-pen-fill pr"></i></a>
+                              <a ngbTooltip="Active/Inactive" class="delete">
+                                 <div class="form-check form-switch ">
+                                    <input type="checkbox" class="form-check-input" *ngIf="Item.isActive==true"
+                                       (click)="activeInactiverate(Item.tdsRateId)" checked>
+                                 </div>
+                              </a>
+
+                           </td>
+                        </tr>
+
+                     </tbody>
+                  </table>
+               </div>
+            </div>
+         </div>
+      </div>
+   </div>

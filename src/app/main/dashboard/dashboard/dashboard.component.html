@@ -1,0 +1,29 @@
+     
+                    <h5 class="card-title">My Dashboard </h5>
+                    <div class="row" >
+                       <div class="col-lg-2 col-sm-6 " *ngFor="let item of menu">
+                          <div class="single-menu-item">
+                             <a [routerLink]=item.route (click)="redirectToMenu(item.label)">
+                                <div class="module-icon-wrapper child bounce">
+                                   <i class="{{item.icon}} "></i>
+                                </div>
+                                <p>{{item.label}}</p>
+                             </a>
+                          </div>
+                       </div>
+                    </div>
+            
+   
+             <!-- <h5 class="card-title">My Dashboard </h5>
+             <div class="row" >
+                <div class="col-lg-2 col-sm-6 " *ngFor="let item of menu">
+                   <div class="single-menu-item">
+                      <a [routerLink]=item.routePath (click)="redirectToMenu(item)">
+                         <div class="module-icon-wrapper child bounce">
+                            <i class="{{item.moduleImagePath}} "></i>
+                         </div>
+                         <p>{{item.moduleName}}</p>
+                      </a>
+                   </div>
+                </div>
+             </div> -->

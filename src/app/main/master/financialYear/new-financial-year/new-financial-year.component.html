@@ -1,0 +1,101 @@
+<div class="main-contianer">
+    <span class="float-left title">
+       <a routerLink="/master/financial-year"><i class="bi bi-arrow-return-left booticon"></i> </a>
+    </span>
+    <span class="float-end title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+    </span>
+    <h5 class="card-title">{{this.finYearDetailsById?'Update':'Create'}} Financial Year
+    </h5>
+  <form [formGroup]="formFinYear">
+       <div class="row">
+
+        <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Start Date<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control" formControlName="startDate"
+                     [ngClass]="{'is-invalid':submitted && f['startDate'].errors}">
+
+                  <div *ngIf="submitted && f['startDate'].errors">
+                     <small class="text-danger" *ngIf="f['startDate'].errors?.['required']">Please enter your
+                        start Date</small>
+                     <!-- <small class="text-danger" *ngIf="f['startDate'].errors?.['pattern']">Invalid division code</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['startDate'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['startDate'].errors?.serverError">{{
+                        f['startDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">End Date<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control" formControlName="endDate"
+                     [ngClass]="{'is-invalid':submitted && f['endDate'].errors}" >
+
+                  <div *ngIf="submitted && f['endDate'].errors">
+                     <small class="text-danger" *ngIf="f['endDate'].errors?.['required']">Please enter end date</small>
+                     <!-- <small class="text-danger" *ngIf="f['endDate'].errors?.['pattern']">Invalid division name 
+                  </small> -->
+                     <!-- <small class="text-danger" *ngIf="f['endDate'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['endDate'].errors?.serverError">{{
+                        f['endDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">File Name<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="fileName"
+                     [ngClass]="{'is-invalid':submitted && f['fileName'].errors}" >
+
+                  <div *ngIf="submitted && f['fileName'].errors">
+                     <small class="text-danger" *ngIf="f['fileName'].errors?.['required']">Please enter file name</small>
+                     <!-- <small class="text-danger" *ngIf="f['fileName'].errors?.['pattern']">Invalid division name 
+                  </small> -->
+                     <!-- <small class="text-danger" *ngIf="f['fileName'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['fileName'].errors?.serverError">{{
+                        f['fileName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+          <div class="col-lg-3">
+             <div class="form-group mb-3">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active?
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <div class="form-check form-switch p-2">
+                      <input type="checkbox" class="form-check-input" formControlName="isActive">
+                      <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                         f['isActive'].errors?.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="row pb-2">
+             <div class="col-lg-12">
+                <div class="float-end">
+    
+                   <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                      (click)="submit()">Submit</button>
+                </div>
+             </div>
+    
+          </div>
+       </div>
+      
+    </form>
+ 
+ </div>

@@ -1,0 +1,395 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/user-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to User Master "></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">New User Master
+   </h5>
+   <form [formGroup]="formUserMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">User Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="userCode"
+                     [ngClass]="{'is-invalid':submitted && f['userCode'].errors}" maxlength="8">
+
+                  <div *ngIf="submitted && f['userCode'].errors">
+                     <small class="text-danger" *ngIf="f['userCode'].errors?.['required']">Please enter user
+                        code</small>
+                     <small class="text-danger" *ngIf="f['userCode'].errors?.['pattern']">user code can not be
+                        blank</small>
+                     <!-- <small class="text-danger" *ngIf="f['userCode'].errors?.['minlength']">
+                         Name must be at least 2 characters long.
+                      </small> -->
+                     <small class="text-danger" *ngIf="f['userCode'].errors?.serverError">{{
+                        f['userCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Password<span
+                     class="text-danger">*</span></label>
+                     <div class="col-sm-12 col-lg-12 has-validation">
+                        <input type="password" class="form-control" formControlName="password"
+                               [ngClass]="{'is-invalid': submitted && f['password'].errors, 'is-valid': f['password'].valid}"
+                               pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*_=+-]).{8,16}$"
+                               ngbTooltip="{{f['password'].value}}">
+                        <div *ngIf="submitted && f['password'].errors">
+                            <small class="text-danger" *ngIf="f['password'].errors?.['required']">Please enter a password</small>
+                            <small class="text-danger" *ngIf="f['password'].errors?.['pattern']">Be between 8 and 16 characters in length.
+                                Include at least one lowercase letter (a-z).
+                                Include at least one uppercase letter (A-Z).
+                                Include at least one numeric digit (0-9) and atleast one special charcter.
+                                <!-- Include at least one special character from the following: ! @ # $ % ^ & * _ = + - -->
+                            </small>
+                            <small class="text-danger" *ngIf="f['password'].errors?.serverError">{{ f['password'].errors.serverError }}</small>
+                        </div>
+                    
+                        <div *ngIf="f['password'].valid" class="valid-feedback">
+                            Password meets the criteria.
+                        </div>
+                    </div>
+                    
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">User Type<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="user type Select" formControlName="userType"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['userType'].errors}">|
+                     <ng-option [value]="item.generalId" *ngFor="let item of userType ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['userType'].errors">
+                     <small class="text-danger" *ngIf="f['userType'].errors?.['required']">Please enter user
+                        Type</small>
+                     <small class="text-danger" *ngIf="f['userType'].errors?.serverError">{{
+                        f['userType'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">User Status<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="user type Select" formControlName="userStatus"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['userStatus'].errors}">
+                     <ng-option 
+                     [value]="item.id" *ngFor="let item of userStatuslist">{{item.name}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['userStatus'].errors">
+                     <small class="text-danger" *ngIf="f['userStatus'].errors?.['required']">Please enter user
+                        Type</small>
+                     <small class="text-danger" *ngIf="f['userStatus'].errors?.serverError">{{
+                        f['userStatus'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Branch<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Select" [searchable]="true" [clearable]="true"
+                     [closeOnSelect]="false" formControlName="defaultWorkingBranchId"
+                     [ngClass]="{'is-invalid':submitted && f['defaultWorkingBranchId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.branchId" *ngFor="let item of branchMasterList"
+                        [disabled]='!item.isActive'>{{item.branchCode | uppercase}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['defaultWorkingBranchId'].errors">
+                     <small class="text-danger" *ngIf="f['defaultWorkingBranchId'].errors?.['required']">Please enter
+                        user Type</small>
+                     <small class="text-danger" *ngIf="f['defaultWorkingBranchId'].errors?.serverError">{{
+                        f['defaultWorkingBranchId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Name<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="name"
+                     [ngClass]="{'is-invalid':submitted && f['name'].errors}">
+
+                  <div *ngIf="submitted && f['name'].errors">
+                     <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter name</small>
+                     <small class="text-danger" *ngIf="f['name'].errors?.['pattern']">name can not be
+                        blank</small>
+                     <!-- <small class="text-danger" *ngIf="f['name'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['name'].errors?.serverError">{{
+                        f['name'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Gender <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <select class="form-select" formControlName="gender">
+                     <option value="">Select Gender</option>
+                     <option value="M">Male</option>
+                     <option value="F">Female</option>
+
+                  </select>
+
+
+                  <div *ngIf="submitted && f['gender'].errors">
+                     <small class="text-danger" *ngIf="f['gender'].errors?.['required']">Please select gender
+                     </small>
+
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Mobile no<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="mobileno"
+                     [ngClass]="{'is-invalid':submitted && f['mobileno'].errors}" maxlength="12">
+
+                  <div *ngIf="submitted && f['mobileno'].errors">
+                     <small class="text-danger" *ngIf="f['mobileno'].errors?.['required']">Please enter mobile
+                        no</small>
+                     <small class="text-danger" *ngIf="f['mobileno'].errors?.['pattern']">Invalid mobile no</small>
+                     <!-- <small class="text-danger" *ngIf="f['mobileno'].errors?.['minlength']">
+                        mobileno must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['mobileno'].errors?.serverError">{{
+                        f['mobileno'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">DOB<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control" formControlName="dob"
+                     [ngClass]="{'is-invalid':submitted && f['dob'].errors}">
+
+                  <div *ngIf="submitted && f['dob'].errors">
+                     <small class="text-danger" *ngIf="f['dob'].errors?.['required']">Please enter dob</small>
+                     <!-- <small class="text-danger" *ngIf="f['dob'].errors?.['pattern']">Menu Caption can not be
+                        blank</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['dob'].errors?.['minlength']">
+                        dob must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['dob'].errors?.serverError">{{
+                        f['dob'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">DOJ<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control" formControlName="doj"
+                     [ngClass]="{'is-invalid':submitted && f['doj'].errors}">
+
+                  <div *ngIf="submitted && f['doj'].errors">
+                     <small class="text-danger" *ngIf="f['doj'].errors?.['required']">Please enter doj</small>
+                     <!-- <small class="text-danger" *ngIf="f['doj'].errors?.['pattern']">Menu Caption can not be
+                        blank</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['doj'].errors?.['minlength']">
+                        doj must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['doj'].errors?.serverError">{{
+                        f['doj'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Residential Address<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="resiAddress"
+                     [ngClass]="{'is-invalid':submitted && f['resiAddress'].errors}" style="height: 30px;"></textarea>
+
+                  <div *ngIf="submitted && f['resiAddress'].errors">
+                     <small class="text-danger" *ngIf="f['resiAddress'].errors?.['required']">Please enter resi
+                        Address</small>
+                     <!-- <small class="text-danger" *ngIf="f['resiAddress'].errors?.['pattern']">Menu Caption can not be
+                        blank</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['resiAddress'].errors?.['minlength']">
+                        resiAddress must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['resiAddress'].errors?.serverError">{{
+                        f['resiAddress'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Emist Id</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="emistId"
+                     [ngClass]="{'is-invalid':submitted && f['emistId'].errors}">
+
+                  <div *ngIf="submitted && f['emistId'].errors">
+                     <small class="text-danger" *ngIf="f['emistId'].errors?.['required']">Please enter emist id</small>
+                     <!-- <small class="text-danger" *ngIf="f['emistId'].errors?.['pattern']">Menu Caption can not be
+                        blank</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['emistId'].errors?.['minlength']">
+                        emistId must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['emistId'].errors?.serverError">{{
+                        f['emistId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Email Id<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="email" class="form-control" formControlName="emailId"
+                     [ngClass]="{'is-invalid':submitted && f['emailId'].errors}">
+
+                  <div *ngIf="submitted && f['emailId'].errors">
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.['required']">Please enter email id</small>
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.['pattern']">Invalid email id
+                        blank</small>
+                     <!-- <small class="text-danger" *ngIf="f['emailId'].errors?.['minlength']">
+                        emailId must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.serverError">{{
+                        f['emailId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Handover Mobile To</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="phoneNo"
+                     [ngClass]="{'is-invalid':submitted && f['phoneNo'].errors}" maxlength="10">
+
+                  <div *ngIf="submitted && f['phoneNo'].errors">
+                     <small class="text-danger" *ngIf="f['phoneNo'].errors?.['required']">Please enter phone no.</small>
+                     <small class="text-danger" *ngIf="f['phoneNo'].errors?.['pattern']">invalide phone no.</small>
+                     <!-- <small class="text-danger" *ngIf="f['phoneNo'].errors?.['minlength']">
+                        phoneNo must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['phoneNo'].errors?.serverError">{{
+                        f['phoneNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Bank<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Qualification Select" formControlName="bankId"
+                     [searchable]="true" [clearable]="true" [ngClass]="{'is-invalid':submitted && f['bankId'].errors}">|
+                     <ng-option [value]="item.generalId" *ngFor="let item of bankList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['bankId'].errors">
+                     <small class="text-danger" *ngIf="f['bankId'].errors?.['required']">Please enter user Type</small>
+                     <small class="text-danger" *ngIf="f['bankId'].errors?.serverError">{{
+                        f['bankId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Account Number<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="bankAccountNo"
+                  maxlength="12"
+                     [ngClass]="{'is-invalid':submitted && f['bankAccountNo'].errors}">
+                  <div *ngIf="submitted && f['bankAccountNo'].errors">
+                     <small class="text-danger" *ngIf="f['bankAccountNo'].errors?.['required']">Please enter account
+                        number</small>
+                     <small class="text-danger" *ngIf="f['bankAccountNo'].errors?.['pattern']">invalid account</small>
+                     <small class="text-danger" *ngIf="f['bankAccountNo'].errors?.serverError">{{
+                        f['bankAccountNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">IfSc Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="ifscCode"
+                     [ngClass]="{'is-invalid':submitted && f['ifscCode'].errors}" maxlength="11">
+                  <div *ngIf="submitted && f['ifscCode'].errors">
+                     <small class="text-danger" *ngIf="f['ifscCode'].errors?.['required']">Please enter ifsc
+                        Code</small>
+                     <small class="text-danger" *ngIf="f['ifscCode'].errors?.['pattern']">invalid data</small>
+                     <small class="text-danger" *ngIf="f['ifscCode'].errors?.serverError">{{
+                        f['ifscCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active?
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="onsubmit()">Submit</button>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+   </form>
+
+</div>

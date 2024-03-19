@@ -1,0 +1,192 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row  mt-1 d-flex justify-content-center">
+      <div class="col-lg-2"></div>
+      <div class="col-lg-10 row">
+         <div class="row mb-2">
+            <label for="inputText" class="col-sm-2 col-lg-2 col-form-label"><span class="float-end">Customer<span class="text-danger">*</span> :</span> </label>
+            <div class="col-sm-5  ">
+               <ng-select class="pb-2 " placeholder="General Master Select" [searchable]="true" #data [clearable]="true"
+                  [(ngModel)]="selectedCustomer"
+                  (change)="refreshGrid()">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.custId" *ngFor="let item of customerList">{{item.custName}}</ng-option>
+               </ng-select>
+            </div>
+            <div class="col-lg-5">
+            <button type="button" class="btn btn-primary rounded-pill btn-padding" placement="bottom"
+               (click)="showExistCust(selectedCustomer)">Show existing customer </button>
+               </div>
+         </div>
+      </div>
+      <div class="col-lg-2"></div>
+      <div class="display" *ngIf="this.customerListBYPr.length>0 || this.selectedCustomer">
+         <h5 class="card-title">Lane Priority & Target Allocation List
+         </h5>
+         <div class="pb-2">
+            <button type="button" class="btn btn-success m-1" ngbTooltip="Create Lane Priority & Target Allocation"
+               placement="bottom" (click)="modelopen2(modalmsg2)"><i class="bi bi-plus-lg "></i> Create </button>
+            <button class="btn btn-secondary text-white" (click)="downloadExcel()" ngbTooltip="Download List"
+               placement="bottom" type="button">
+               <i class="bi bi-download"></i>
+            </button>
+         </div>
+      </div>
+      <div class="table-responsive">
+         <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>Sr. No.</th>
+                  <th>Customer</th>
+                  <th>From Date</th>
+                  <th>to Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr class="zoom-in" *ngFor="let item of customerListBYPr ; index as i">
+                  <td>{{i+1}}</td>
+                  <td>{{item?.customerCode}}-{{item?.customerName}}</td>
+                  <td>{{item?.fromDate | date }}</td>
+                  <td>{{item?.toDate | date}}</td>
+                  <td> <span class="{{item?.isActive ?'text-success':' text-danger'}}"><i
+                           class="bi bi-check2-square pr"></i>
+                        {{item?.isActive?'Active':'Inactive'}}</span>
+                  </td>
+                  <td class="display2">
+                     <a (click)="update(item)" ngbTooltip="Update" placement="bottom" class="edit"><i
+                           class="bi bi-pen-fill pr"></i></a>
+                     <a ngbTooltip="Active/Inactive " placement="bottom" class="delete">
+                        <div class="form-check form-switch ">
+                           <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                              (click)="activeInactive(item.priorityId)" checked title="Inactive">
+                        </div>
+                     </a>
+                  </td>
+
+               </tr>
+            </tbody>
+         </table>
+      </div>
+   </div>
+   <!-- popup confirm-->
+   <ng-template #modalmsg2 let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">
+            Lane Priority & Target Allocation
+         </h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="row ">
+            <form [formGroup]="formMaster" class="novalidate">
+               <div class="row ">
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Select Customer <span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Customer Select" formControlName="custId"
+                              [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitted && f['custId'].errors}" [(ngModel)]="selectedCustomer">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [disabled]='!item.isActive' [value]="item.custId"
+                                 *ngFor="let item of customerList ">{{item.custName}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitted && f['custId'].errors">
+                              <small class="text-danger" *ngIf="f['custId'].errors?.['required']">please select
+                                 customer
+                              </small>
+                              <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                                 f['custId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Priority Start Date<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="date" class="form-control" formControlName="fromDate"
+                              [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}">
+                           <div *ngIf="submitted && f['fromDate'].errors">
+                              <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">select
+                                 priority
+                                 start date
+                              </small>
+                              <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                                 f['pinCode'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Priority End Date<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="date" class="form-control" formControlName="toDate"
+                              [ngClass]="{'is-invalid':submitted && f['toDate'].errors}">
+                           <div *ngIf="submitted && f['toDate'].errors">
+                              <small class="text-danger" *ngIf="f['toDate'].errors?.['required']">select priority
+                                 end
+                                 date
+                              </small>
+                              <small class="text-danger" *ngIf="f['toDate'].errors?.serverError">{{
+                                 f['toDate'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Status
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <div class="form-check form-switch p-2">
+                              <input type="checkbox" class="form-check-input" formControlName="isActive">
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="row">
+                  <div class="col-lg-12">
+                     <div class="float-end">
+                        <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                           (click)="OnSubmit()">Submit</button>
+                     </div>
+                  </div>
+               </div>
+            </form>
+         </div>
+         <br>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">Cancel</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+</div>

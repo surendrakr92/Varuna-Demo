@@ -1,0 +1,89 @@
+
+
+      
+    <section class="section dashboard">
+      <div class="container">
+      <div class="row">
+
+        <!-- Left side columns -->
+        <div class="col-lg-4">
+          <div class="card mb-4">
+              <div class="card-body text-center">
+                <img src="./assets/img/profile.png" alt="avatar" class="rounded-circle img-fluid" style="width: 130px;">
+                <h5 class="my-3">{{this.userMasterDetailsById?.name}}</h5>
+                <p class="text-muted mb-1">Full Stack Developer</p>
+                <!-- <p class="text-muted mb-4">573, Udyog Vihar Insustrial Area Gurgaon</p> -->
+                <div class="d-flex justify-content-center mb-2">
+                  <button type="button" class="btn btn-primary"><i class="bi bi-pencil-square"></i> Edit</button>
+                  <button type="button" class="btn btn-outline-primary ms-1">Update</button>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="col-lg-8">
+          <div class="card mb-4">
+              <div class="card-body">
+                <div class="row" >
+                  <div class="col-sm-3">
+                    <p class="mb-0">Full Name</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{this.userMasterDetailsById?.name}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row" *ngFor="let Item of profile">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Emp Code:</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <!-- <input type="text"  value="{{this.userMasterDetailsById?.userCode}}"> -->
+                    <p class="text-muted mb-0">{{this.userMasterDetailsById?.userCode}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Email Id:</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">{{this.userMasterDetailsById?.emailId}}</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Secret Question:</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">Varuna@1</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Password</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">Password</p>
+                  </div>
+                </div>
+                <hr>
+                <div class="row">
+                  <div class="col-sm-3">
+                    <p class="mb-0">Secret Answer:</p>
+                  </div>
+                  <div class="col-sm-9">
+                    <p class="text-muted mb-0">Varuna@1</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+
+
+      </div>
+    </div>
+    </section>
+
+

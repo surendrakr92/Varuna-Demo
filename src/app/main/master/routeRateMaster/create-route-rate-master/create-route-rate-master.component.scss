@@ -1,0 +1,34 @@
+// .table .ng-select{
+//     width: 210px;
+// }
+// .table input, select{
+//     width:210px;
+// }
+
+.dis span{
+    font-size: 10px;
+}
+.disflex{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.borderClass{
+    border: 3px dotted #ccc;
+    padding: 10px;
+    margin-top: 25px;
+    border-radius: 8px;
+}
+.dis input{
+    width: 80px;
+    margin-left: 3px;
+}
+.table-responsive input, .ng-select{
+    width: 150px;
+}
+// .table-responsive{
+//     min-width: 100px !important;
+//     padding-bottom: 50px;
+   
+// }

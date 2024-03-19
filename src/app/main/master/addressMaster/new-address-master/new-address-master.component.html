@@ -1,0 +1,340 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/address-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Vendor Address master " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">{{this.addressMasterDetailsById?'Update':'Create'}} Address Master
+   </h5>
+   <form [formGroup]="formMaster" class="novalidate" (ngSubmit)="OnSubmit()">
+      <div class="row ">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Address 1<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="addressLine1"
+                  maxlength="450"
+                     [ngClass]="{'is-invalid':submitted && f['addressLine1'].errors}" style="height: 30px;"></textarea>
+                  <div *ngIf="submitted && f['addressLine1'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['pattern']">
+                        special characters are not allowed invalid.
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.serverError">{{
+                        f['addressLine1'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Address 2</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="addressLine2"
+                     [ngClass]="{'is-invalid':submitted && f['addressLine2'].errors}" style="height: 30px;"></textarea>
+                  <div *ngIf="submitted && f['addressLine2'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine2'].errors?.['required']">Please enter address2
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['pattern']">
+                        special characters are not allowed invalid.
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine2'].errors?.serverError">{{
+                        f['addressLine2'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Address 3</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="addressLine3"
+                     [ngClass]="{'is-invalid':submitted && f['addressLine3'].errors}" style="height: 30px;"></textarea>
+                  <div *ngIf="submitted && f['addressLine3'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine3'].errors?.['required']">Please enter address3
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['pattern']">
+                        special characters are not allowed invalid.
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine3'].errors?.serverError">{{
+                        f['addressLine3'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pin Code
+                  <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="PinCode Select" formControlName="pincodeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['pincodeId'].errors}"
+                     (change)="dropDownForbinding($event,'pincode')" (keyup)="dropDownForbinding($event,'pincode')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.pincodeId" name="item" *ngFor="let item of pinCodeList">
+                        {{item.pinCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['pincodeId'].errors">
+                     <small class="text-danger" *ngIf="f['pincodeId'].errors?.['required']">Please
+                        select
+                        pin code
+                     </small>
+                     <small class="text-danger" *ngIf="f['pincodeId'].errors?.serverError">{{
+                        f['pincodeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City
+                  <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2  " placeholder="City Select" formControlName="cityId" [searchable]="true"
+                  [readonly]="!!formMaster['controls'].cityId.value"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['cityId'].errors}"
+                     (change)="dropDownForbinding($event,'cityName')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.cityId" *ngFor="let item of cityMasterList"
+                        [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['cityId'].errors">
+                     <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">Please
+                        select
+                        city </small>
+                     <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                        f['cityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State
+                  <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="State Select" formControlName="stateId" [searchable]="true"
+                  [readonly]="!!this.formMaster['controls'].stateId.value"
+                     [clearable]="true" (change)="dropDownForbinding($event,'stateName')"
+                     [ngClass]="{'is-invalid':submitted && f['stateId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.stateId" *ngFor="let item of stateList"
+                        [disabled]='!item.isActive'>{{item.stateName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['stateId'].errors">
+                     <small class="text-danger" *ngIf="f['stateId'].errors?.['required']">Please
+                        select
+                        state</small>
+                     <small class="text-danger" *ngIf="f['stateId'].errors?.serverError">{{
+                        f['stateId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Country
+                  <span class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2  " placeholder="Country Select" formControlName="countryId" [searchable]="true"
+                  [readonly]="!!this.formMaster['controls'].countryId.value"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['countryId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.countryId" *ngFor="let item of countryMasterList"
+                        [disabled]='!item.isActive'>{{item.countryName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['countryId'].errors">
+                     <small class="text-danger" *ngIf="f['countryId'].errors?.['required']">Please
+                        select country
+                     </small>
+                     <small class="text-danger" *ngIf="f['countryId'].errors?.serverError">{{
+                        f['countryId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Address Type<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="General Master Select" formControlName="addressTypeId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['addressTypeId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of addressMasterList"
+                        [disabled]='!item.codeDesc'>{{item.codeDesc}}</ng-option>
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['addressTypeId'].errors">
+                     <small class="text-danger" *ngIf="f['addressTypeId'].errors?.['required']">Please select address
+                        type </small>
+
+                     <small class="text-danger" *ngIf="f['addressTypeId'].errors?.serverError">{{
+                        f['addressTypeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Phone No.
+                  <span
+                     class="text-danger">*</span>
+               </label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="phoneNumber"
+                     oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                     [ngClass]="{'is-invalid':submitted && f['phoneNumber'].errors}" maxlength="10">
+
+                  <div *ngIf="submitted && f['phoneNumber'].errors">
+                     <small class="text-danger" *ngIf="f['phoneNumber'].errors?.['required']">Please enter phone
+                        number</small>
+                     <small class="text-danger" *ngIf="f['phoneNumber'].errors?.['pattern']">invalid phone
+                        number</small>
+                     <small class="text-danger" *ngIf="f['phoneNumber'].errors?.serverError">{{
+                        f['phoneNumber'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Email Id</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="email" class="form-control" formControlName="emailId"
+                     [ngClass]="{'is-invalid':submitted && f['emailId'].errors}">
+
+                  <div *ngIf="submitted && f['emailId'].errors">
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.['required']">Please enter email
+                        address</small>
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.['pattern']">Email must be a valid email
+                        address</small>
+                     <small class="text-danger" *ngIf="f['emailId'].errors?.serverError">{{
+                        f['emailId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Longitude</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="number" class="form-control" formControlName="longitude"
+                     [ngClass]="{'is-invalid':submitted && f['longitude'].errors}">
+
+                  <div *ngIf="submitted && f['longitude'].errors">
+                     <small class="text-danger" *ngIf="f['longitude'].errors?.['required']">Please enter
+                        Longitude</small>
+                     <small class="text-danger" *ngIf="f['longitude'].errors?.['pattern']">Invalid longitude</small>
+                     <small class="text-danger" *ngIf="f['longitude'].errors?.serverError">{{
+                        f['longitude'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Latitude</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="number" class="form-control" formControlName="latitude"
+                     [ngClass]="{'is-invalid':submitted && f['latitude'].errors}">
+
+                  <div *ngIf="submitted && f['latitude'].errors">
+                     <small class="text-danger" *ngIf="f['latitude'].errors?.['required']">Please enter latitude
+                     </small>
+                     <small class="text-danger" *ngIf="f['latitude'].errors?.['pattern']">Invalid latitude</small>
+                     <small class="text-danger" *ngIf="f['latitude'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small>
+                     <small class="text-danger" *ngIf="f['latitude'].errors?.serverError">{{
+                        f['latitude'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Lock Status</label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isLock">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">New Pickup Without Exist</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch p-2">
+                        <input type="checkbox" class="form-check-input" formControlName="isNewPickupWithoutExist">
+                     </div>
+                  </div>
+
+
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Geofence Status<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="General Master Select" formControlName="geofanceStatusId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['geofanceStatusId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of geofenceStatusList"
+                        [disabled]='!item.codeDesc'>{{item.codeDesc}}</ng-option>
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['geofanceStatusId'].errors">
+                     <small class="text-danger" *ngIf="f['geofanceStatusId'].errors?.['required']">Please select
+                        geofence status </small>
+                     <small class="text-danger" *ngIf="f['geofanceStatusId'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small>
+                     <small class="text-danger" *ngIf="f['geofanceStatusId'].errors?.serverError">{{
+                        f['geofanceStatusId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Active
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="float-end">
+               <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+            </div>
+         </div>
+
+      </div>
+   </form>
+
+</div>

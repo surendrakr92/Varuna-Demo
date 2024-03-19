@@ -1,0 +1,359 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/cngr-cnge-master">
+            <i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Cngr Cnge Master " placement="right"></i>
+         </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+      <h5 class="card-title">
+         {{viewPagecom=='edit'?'Update Consignor/Consignee Master':'New Consignor/Consignee Master'}}
+      </h5>
+      <form [formGroup]="formMaster" class="novalidate">
+         <div class="row ">
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Consignor /Consignee name <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" formControlName="name"
+                        [ngClass]="{'is-invalid':submitted && f['name'].errors}" maxlength="250">
+                     <div *ngIf="submitted && f['name'].errors">
+                        <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter consignor
+                           /consignee name </small>
+                        <small class="text-danger" *ngIf="f['name'].errors?.['pattern']">invalid consignor /consignee
+                           name </small>
+                        <small class="text-danger" *ngIf="f['name'].errors?.serverError">{{
+                           f['name'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Phone No. <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" formControlName="phoneNo"
+                        [ngClass]="{'is-invalid':submitted && f['phoneNo'].errors}">
+                     <div *ngIf="submitted && f['phoneNo'].errors">
+                        <small class="text-danger" *ngIf="f['phoneNo'].errors?.['required']">Please enter Phone no.
+                        </small>
+                        <small class="text-danger" *ngIf="f['phoneNo'].errors?.['pattern']">invalid phone no.</small>
+                        <small class="text-danger" *ngIf="f['phoneNo'].errors?.serverError">{{
+                           f['phoneNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Email ID
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="email" class="form-control" formControlName="emailId"
+                        [ngClass]="{'is-invalid':submitted && f['emailId'].errors}">
+                     <div *ngIf="submitted && f['emailId'].errors">
+                        <small class="text-danger" *ngIf="f['emailId'].errors?.['required']">Please enter email
+                           id</small>
+                        <small class="text-danger" *ngIf="f['emailId'].errors?.['email']">invalid email</small>
+                        <small class="text-danger" *ngIf="f['emailId'].errors?.serverError">{{
+                           f['emailId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Identification No. Type <span
+                        class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Qualification Select" formControlName="identificationTypeId"
+                        [searchable]="true" [clearable]="true" (change)="handleFIleValidation()"
+                        [ngClass]="{'is-invalid':submitted && f['identificationTypeId'].errors}">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.generalId"
+                           *ngFor="let item of indentficList ">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['identificationTypeId'].errors">
+                        <small class="text-danger" *ngIf="f['identificationTypeId'].errors?.['required']">Please enter
+                           identification no. type </small>
+                        <small class="text-danger" *ngIf="f['identificationTypeId'].errors?.serverError">{{
+                           f['identificationTypeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3" *ngIf="this.formMaster.controls['identificationTypeId'].value">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                     {{this.formMaster.controls['identificationTypeId'].value==1821?'Pan Card Number':'Adhar Card
+                     NUmber'}}
+                     <span class="text-danger">*</span>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" formControlName="docNumber"
+                        [ngClass]="{'is-invalid':submitted && f['docNumber'].errors}" appUpperCase id="code">
+                     <div *ngIf="submitted && f['docNumber'].errors">
+                        <small class="text-danger" *ngIf="f['docNumber'].errors?.['required']">Please enter
+                           {{this.formMaster.controls['identificationTypeId'].value==1821?'pan card number':'aadhar card
+                           number'}} </small>
+                        <small class="text-danger" *ngIf="f['docNumber'].errors?.['pattern']">
+                           invalid {{this.formMaster.controls['identificationTypeId'].value==1821?'pan card
+                           number':'aadhar card number'}} </small>
+                        <small class="text-danger" *ngIf="f['docNumber'].errors?.serverError">{{
+                           f['docNumber'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Reference Uploader
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <!-- <input type="file" class="form-control" formControlName="identificationFilePath"
+                        [ngClass]="{'is-invalid':submitted && f['identificationFilePath'].errors}"> -->
+                     <input *ngIf="this.selectedFileName==undefined || this.selectedFileName==''"
+                        class="form-control custom-file-upload" type="file" accept=".pdf"
+                        (change)="onFileChange($event)">
+                     <div *ngIf="this.selectedFileName" class="card p-1 text-bg-primary text-center w-auto">
+                        <span>{{this.selectedFileName}}</span>
+                        <span class="badge badge-secondary removeFile" (click)="this.fileReset()">X</span>
+                     </div>
+                     <div *ngIf="submitted && f['identificationFilePath'].errors">
+                        <small class="text-danger" *ngIf="f['identificationFilePath'].errors?.['required']">Please enter
+                           header description </small>
+                        <small class="text-danger" *ngIf="f['identificationFilePath'].errors?.serverError">{{
+                           f['identificationFilePath'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 pt-1 mt-4">
+               <div class="form-group ">
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <button type="button" class="btn btn-warning btn-sm rounded-pill btn-padding2"
+                        (click)="modelOpen(modelmsg)">Add Address</button>
+                  </div>
+               </div>
+
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label"> Active </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch p-2">
+                        <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <div class="row mt-3 ">
+         <div class="table-responsive">
+            <table class="table table-bordered">
+               <thead class="bg-secondary text-white">
+                  <tr>
+                     <th>Sr. No.</th>
+                     <th>Address </th>
+                     <th>Country </th>
+                     <th>State </th>
+                     <th>City </th>
+                     <th>Delete</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of newAddressDetails ;index as i">
+                     <td>{{i+1}}</td>
+                     <td>{{item.addressLine1}} {{item.addressLin2}}</td>
+                     <td>{{item.countryName}}</td>
+                     <td>{{item.stateName}}</td>
+                     <td> {{item.cityName}}</td>
+                     <td (click)="this.newAddressDetails.splice(i,1)">
+                        <i class="bi bi-x-circle-fill text-danger pointer"></i>
+                     </td>
+                  </tr>
+                  <span class="float-end" *ngIf="this.newAddressDetails.length==0">data not found []</span>
+               </tbody>
+            </table>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="float-end">
+               <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="OnSubmit()">Submit</button>
+            </div>
+         </div>
+      </div>
+      <!-- popup confirm-->
+      <ng-template #modelmsg let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Add Address Details</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')">
+               <i aria-hidden="true" class="fa fa-times"></i>
+            </button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form action="" [formGroup]="searchCriteria">
+               <div class="row p-1">
+                  <div class="col-lg-2 mb-2">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Country Name </label>
+                        <div class=" col-sm-12 col-lg-12 ">
+                           <ng-select class="pb-2 " placeholder="State Select" formControlName="countryId"
+                              [searchable]="true" [clearable]="true">
+                              <ng-option value="" selected class="">Select</ng-option>
+                              <ng-option [disabled]='!item.isActive' [value]="item.countryId"
+                                 *ngFor="let item of countryList ">{{item.countryName}}</ng-option>
+                           </ng-select>
+                        </div>
+
+                     </div>
+                  </div>
+                  <div class="col-lg-1 mt-4 pt-2">OR</div>
+                  <div class="col-lg-2 mb-2">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State Name </label>
+                        <div class=" col-sm-12 col-lg-12 ">
+                           <ng-select class="pb-2 " placeholder="State Select" formControlName="stateId"
+                              [searchable]="true" [clearable]="true">
+                              <ng-option value="" selected class="">Select</ng-option>
+                              <ng-option [disabled]='!item.isActive' [value]="item.stateId"
+                                 *ngFor="let item of stateList ">{{item.stateName}}</ng-option>
+                           </ng-select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-1 mt-4 pt-2">OR</div>
+                  <div class="col-lg-2">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City Name </label>
+                        <div class=" col-sm-12 col-lg-12 ">
+                           <ng-select class="pb-2 " placeholder="City Select" formControlName="cityId"
+                              [searchable]="true" [clearable]="true">
+                              <ng-option value="" selected class="">Select</ng-option>
+                              <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                                 *ngFor="let item of clityList ">{{item.cityName}}</ng-option>
+                           </ng-select>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-1 mt-4 pt-2">OR</div>
+                  <div class="col-lg-2">
+                     <div class="form-group ">
+                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pin Code </label>
+                        <div class=" col-sm-12 col-lg-12 ">
+                           <input type="text" name="" class="form-control" id="" formControlName="pincode">
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-1 pt-1 mt-4">
+                     <div class="form-group ">
+                        <div class=" col-sm-12 col-lg-12 has-validation">
+                           <button type="button" class="btn btn-primary btn-sm rounded-pill btn-padding2"
+                              (click)="searchCriteriaDe()">
+                              <i class="bi bi-search"></i> Search </button>
+                        </div>
+                     </div>
+                  </div>
+                  <table class="table table-bordered table-hover">
+                     <thead class="bg-secondary text-white">
+                        <tr>
+                           <th>Select</th>
+                           <th>Address </th>
+                           <th>Country </th>
+                           <th>State </th>
+                           <th>City </th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr *ngFor="let item of addressDetails ;index as i">
+                           <td>
+                              <div class="form-check listcls">
+                                 <input class="form-check-input" type="checkbox" id="gridCheck2" #checkBox
+                                    (change)="changeSavedAddressDetals(item,i)">
+                              </div>
+                           </td>
+                           <td>{{item.addressLine1}} {{item.addressLin2}}</td>
+                           <td>{{item.countryName}}</td>
+                           <td>{{item.stateName}}</td>
+                           <td> {{item.cityName}}</td>
+                        </tr>
+                        <span class="float-end" *ngIf="this.addressDetails.length==[]">No data found
+                           [💡]</span>
+                     </tbody>
+                  </table>
+               </div>
+            </form>
+            <div class="float-end">
+               <button type="submit" class="btn btn-warning rounded-pill  btn-padding "
+                  (click)="submissionADd()">Add</button>
+            </div>
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+   </ng-container>
+   <ng-container *ngIf="viewPagecom=='view'">
+      <div class="display">
+         <h5 class="card-title">Consignor/Consignee Master</h5>
+         <span class="title">
+            <a (click)="download_pdf_print()" href="javascript:voide(0);">
+               <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i>
+            </a>
+         </span>
+      </div>
+      <div class="col-lg-12" id="viewData_information">
+         <div class="row p-1 bgborder">
+            <div class="col-lg-4">
+               <label for="inputText">
+                  <strong>Consignor/Consignee Master Name:</strong>
+                  <span>{{cng_cnse_details_by_Id[0]?.name}}</span>
+               </label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText">
+                  <strong>Consignor/Consignee Phone No :</strong>
+                  <span>{{cng_cnse_details_by_Id[0]?.phoneNo}}</span>
+               </label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText">
+                  <strong>Consignor/Consignee Email Id:</strong>
+                  <span>
+                     {{cng_cnse_details_by_Id[0]?.emailId}}</span>
+               </label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText">
+                  <strong>Consignor/Consignee Identification File Path:</strong>
+                  <span>
+                     {{cng_cnse_details_by_Id[0]?.identificationFilePath}}</span>
+               </label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText">
+                  <strong>Is Active:</strong>
+                  <span>{{cng_cnse_details_by_Id[0]?.isActive?'Yes':'No'}}</span>
+               </label>
+            </div>
+         </div>
+      </div>
+   </ng-container>
+
+</div>

@@ -1,0 +1,70 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+          <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+                placement="bottom"></i> </a>
+       </span>
+       <span class=" title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+          </a>
+       </span>
+    </div>
+ 
+ 
+    <div class="display">
+       <h5 class="card-title">Branch User Mapping List
+       </h5>
+       <div class="pb-2">
+          <button type="button" class="btn btn-success m-1" ngbTooltip="Create Branch User Mapping" placement="bottom" routerLink="/master/branch-user-mapping/new-branch-user-mapping"><i
+                class="bi bi-plus-lg "></i> Create </button>
+                <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+                ngbTooltip="Download List" placement="bottom" type="button" >
+                <i class="bi bi-download"></i>
+             </button>
+       </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+     id="MyTable" #MyTable>
+       <thead class="bg-secondary text-white">
+             <tr>
+                <th>Sr. No.</th>
+                <th>Branch Name</th>
+                <th>User Name</th>
+                <th>is Default Branch</th>
+                 <!-- <th>is Active</th> -->
+                <th>Action</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr class="zoom-in" *ngFor="let Item of branchuserMappingList; let i=index">
+                <td>{{i+1}}</td>
+                <td>{{Item.branchName}}</td>
+                <td>{{Item.name}}</td>
+                <td><span class="{{Item.isDefaultBranch ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                     {{Item.isDefaultBranch?'Active':'Inactive'}}</span>
+
+                </td>
+                <!-- <td>  <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                   {{Item.isActive?'Active':'Inactive'}}</span>
+             </td> -->
+                <td class="display2">
+                   <a routerLink="/master/branch-user-mapping/view-branch-user-mapping/{{Item.branchMappingId}}" ngbTooltip="View" placement="bottom" class="view"><i
+                         class="bi bi-eye-fill pr"></i></a>
+                   <a (click)="redirectionEdit(Item.branchMappingId)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                         class="bi bi-pen-fill pr"></i></a>
+                   <a ngbTooltip="Active/Inactive"  class="delete">
+                            <div class="form-check form-switch ">
+                               <input type="checkbox" class="form-check-input" 
+                               *ngIf="Item.isActive==true"
+                                  (click)="activeInactive(Item.branchMappingId)" checked >
+                            </div>
+                         </a>
+ 
+                </td>
+             </tr>
+ 
+          </tbody>
+       </table>
+    </div>
+ </div>

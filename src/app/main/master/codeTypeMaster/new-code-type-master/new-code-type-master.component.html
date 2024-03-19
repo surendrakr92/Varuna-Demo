@@ -1,0 +1,136 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+           <a routerLink="/master/general-master-configuration"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Cluster Master "
+                 placement="right"></i> </a>
+        </span>
+        <span class=" title">
+           <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+           </a>
+        </span>
+     </div>
+
+    <h5 class="card-title">General Master Configuration 
+    </h5>
+    <form [formGroup]="formCodeType" class="novalidate">
+        <div class="row ">
+
+             <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Header Description <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control toUpperCase" formControlName="headerDesc"
+                         [ngClass]="{'is-invalid':submitted && f['headerDesc'].errors}"id="code" appUpperCase >
+                      <div *ngIf="submitted && f['headerDesc'].errors">
+                         <small class="text-danger" *ngIf="f['headerDesc'].errors?.['required']">Please enter header description  </small>
+                         <small class="text-danger" *ngIf="f['headerDesc'].errors?.['pattern']">Invalid header desc</small>
+                         <!-- <small class="text-danger" *ngIf="f['headerDesc'].errors?.['minlength']">
+                            Name must be at least 2 characters long.
+                         </small> -->
+                         <small class="text-danger" *ngIf="f['headerDesc'].errors?.serverError">{{
+                            f['headerDesc'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <!-- <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Header Access <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="headerAccess"
+                         [ngClass]="{'is-invalid':submitted && f['headerAccess'].errors}" >
+    
+                      <div *ngIf="submitted && f['headerAccess'].errors">
+                         <small class="text-danger" *ngIf="f['headerAccess'].errors?.['required']">Please enter header access </small>
+                        <small class="text-danger" *ngIf="f['headerAccess'].errors?.['pattern']">Invalid header desc</small> 
+                          <small class="text-danger" *ngIf="f['headerAccess'].errors?.['minlength']">
+                            Name must be at least 2 characters long.
+                         </small> 
+                         <small class="text-danger" *ngIf="f['headerAccess'].errors?.serverError">{{
+                            f['headerAccess'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div> -->
+             <div class="col-lg-3">
+               <div class="form-group ">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Id Description <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" formControlName="idDesc"
+                        [ngClass]="{'is-invalid':submitted && f['idDesc'].errors}" >
+   
+                     <div *ngIf="submitted && f['idDesc'].errors">
+                        <small class="text-danger" *ngIf="f['idDesc'].errors?.['required']">Please enter id description </small>
+                        <!-- <small class="text-danger" *ngIf="f['idDesc'].errors?.['pattern']">Invalid header desc</small> -->
+                        <!-- <small class="text-danger" *ngIf="f['idDesc'].errors?.['minlength']">
+                           Name must be at least 2 characters long.
+                        </small> -->
+                        <small class="text-danger" *ngIf="f['idDesc'].errors?.serverError">{{
+                           f['idDesc'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+             <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Name Description <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" formControlName="nameDesc"
+                         [ngClass]="{'is-invalid':submitted && f['nameDesc'].errors}" >
+    
+                      <div *ngIf="submitted && f['nameDesc'].errors">
+                         <small class="text-danger" *ngIf="f['nameDesc'].errors?.['required']">Please enter name description  </small>
+                         <!-- <small class="text-danger" *ngIf="f['nameDesc'].errors?.['pattern']">Invalid header desc</small> -->
+                         <!-- <small class="text-danger" *ngIf="f['nameDesc'].errors?.['minlength']">
+                            Name must be at least 2 characters long.
+                         </small> -->
+                         <small class="text-danger" *ngIf="f['nameDesc'].errors?.serverError">{{
+                            f['nameDesc'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div> 
+             <div class="col-lg-3">
+                <div class="form-group ">
+                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To Support <span class="text-danger">*</span></label>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control toUpperCase" formControlName="toSupport"
+                         [ngClass]="{'is-invalid':submitted && f['toSupport'].errors}" >
+    
+                      <div *ngIf="submitted && f['toSupport'].errors">
+                         <small class="text-danger" *ngIf="f['toSupport'].errors?.['required']">Please enter To Support  </small>
+                         <!-- <small class="text-danger" *ngIf="f['toSupport'].errors?.['pattern']">Invalid header desc</small> -->
+                         <!-- <small class="text-danger" *ngIf="f['toSupport'].errors?.['minlength']">
+                            Name must be at least 2 characters long.
+                         </small> -->
+                         <small class="text-danger" *ngIf="f['toSupport'].errors?.serverError">{{
+                            f['toSupport'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Active
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch p-2">
+                            <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="float-end">
+                    <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="OnSubmit()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

@@ -1,0 +1,80 @@
+this.isFilehideshow(1).pipe(
+    concatMap(() => this.isFilehideshow(2))
+
+    ....unused
+
+      // onFileChange(evt: any) {
+  //   debugger
+  //   /* wire up file reader */
+  //   const target: DataTransfer = <DataTransfer>(evt.target);
+  //   if (target.files.length !== 1) throw new Error('Cannot use multiple files');
+  //   const reader: FileReader = new FileReader();
+  //   reader.onload = (e: any) => {
+  //     /* read workbook */
+  //     const bstr: string = e.target.result;
+  //     const wb: XLSX.WorkBook = XLSX.read(bstr, { type: 'binary' });
+
+  //     /* grab first sheet */
+  //     const wsname: string = wb.SheetNames[0];
+  //     const ws: XLSX.WorkSheet = wb.Sheets[wsname];
+
+  //     /* save data */
+  //     this.data = <AOA>(XLSX.utils.sheet_to_json(ws, { header: 1 }));
+  //     console.log(this.data);
+  //     this.lanePeriorityListByCustId=this.data
+  //   };
+  //   reader.readAsBinaryString(target.files[0]);
+  // }
+
+
+  document.addEventListener('contextmenu', function(e) {
+  e.preventDefault();
+});
+
+document.onkeydown = (e) => {
+    if (e.key == 123) {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'I') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'C') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.shiftKey && e.key == 'J') {
+        e.preventDefault();
+    }
+    if (e.ctrlKey && e.key == 'U') {
+        e.preventDefault();
+    }
+};
+__________________________________________________________________________________________
+  debugger
+  //place this code in main.ts
+  if (environment.production) {
+    debugger
+    // enableProdMode();
+  
+    //     document.addEventListener('contextmenu', function(e) {
+    //     e.preventDefault();
+    //     });
+    
+    //     document.onkeydown = (e: any) => {
+    //     if (e.key == 123 || (e.ctrlKey && e.shiftKey && (e.key == 'I' || e.key == 'C' || e.key == 'J' || e.key == 'U'))) {
+    //         e.preventDefault();
+    //     }
+    //     };
+  }
+  
+The code you provided is typically used in the main.ts file of an Angular application. The purpose of this code is to disable certain browser developer tools and prevent the right-click context menu in a production environment. Here's a breakdown:
+
+if (environment.production): This checks if the Angular application is running in production mode. In Angular, the environment configuration is typically set in the environments folder, and the production flag is true in the environment.prod.ts file.
+
+enableProdMode();: This function call sets Angular into production mode. In production mode, certain checks and features are disabled to improve performance.
+
+document.addEventListener('contextmenu', function(e) { e.preventDefault(); });: This prevents the context menu (usually triggered by a right-click) from appearing.
+
+document.onkeydown = (e: any) => { ... }: This disables specific keyboard shortcuts related to developer tools. For example, it prevents the default behavior when pressing F12 (key code 123) or certain key combinations like Ctrl+Shift+I, Ctrl+Shift+C, Ctrl+Shift+J, and Ctrl+Shift+U.
+
+By including this code in the main.ts file and ensuring that the environment.production flag is set to true, you activate these measures to enhance the security of your Angular application in a production environment. Keep in mind that these measures are not foolproof and are mainly aimed at preventing casual users from accessing the browser's developer tools. Serious security measures should be implemented on the server-side.
+_______________________________________________________________________________________________________________________________________________________________________________________

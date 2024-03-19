@@ -1,0 +1,318 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/Operations/ovr-ivr-entry"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Operations" placement="right"></i> </a>
+      </span>
+      <span class="titlemed">create ovr OVR Entry</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+      <div class="row">
+         <form [formGroup]="formMaster">
+            <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Type <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select placeholder="Select Document" formControlName="typeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['typeId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of TypeList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['typeId'].errors">
+                     <small class="text-danger" *ngIf="f['typeId'].errors?.['required']">Please select
+                        document
+                     </small>
+                     <small class="text-danger" *ngIf="f['typeId'].errors?.serverError">{{
+                        f['typeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['typeId'].value== 1846">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Type <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select placeholder="Select Customer Type" formControlName="customerTypeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['customerTypeId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId"
+                        *ngFor="let item of customerTypeList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['customerTypeId'].errors">
+                     <small class="text-danger" *ngIf="f['customerTypeId'].errors?.['required']">Please select customer
+                        type
+                     </small>
+                     <small class="text-danger" *ngIf="f['customerTypeId'].errors?.serverError">{{
+                        f['customerTypeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Name <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select placeholder="select customer name" formControlName="custTest" [searchable]="true"
+                     [clearable]="true" (change)="customerDetls($event)"
+                     [ngClass]="{'is-invalid':submitted && f['custTest'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item" *ngFor="let item of customerList ">{{item.custName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['custTest'].errors">
+                     <small class="text-danger" *ngIf="f['custTest'].errors?.['required']">Please select customer name
+                     </small>
+                     <small class="text-danger" *ngIf="f['custTest'].errors?.serverError">{{
+                        f['custTest'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="row">
+               <div class="col-lg-9" style="padding-right: 1px;">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Address Id <span
+                           class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control " formControlName="customerAddressId"
+                           placeholder=" Customer Address Id" readonly>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 pt-4 mt-1" style="padding-left: 1px;">
+                  <div class="form-group ">
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <button type="button" class="btn active btn-sm" (click)="modelOpen(modelmsg)">Click</button>
+                        <!-- <input type="text" class="form-control " placeholder="Click for Customer Address" > -->
+                     </div>
+                  </div>
+                  <!-- popup confirm-->
+                  <ng-template #modelmsg let-modal>
+                     <div class="modal-header qut-hd">
+                        <h6 class="modal-title" id="exampleModalCenterTitle">Customer Address </h6>
+                        <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                           aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="button" rippleefect="" class="btn btn-icon"
+                           (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                              class="fa fa-times"></i></button>
+                     </div>
+                     <div class="modal-body" tabindex="0" ngbAutofocus>
+                        <table class="table table-bordered">
+                           <tbody>
+                              <tr>
+                                 <th>Select</th>
+                                 <th>Address</th>
+                                 <th>City</th>
+                                 <th>Pincode</th>
+                                 <th>Phone No.</th>
+                                 <th>Email</th>
+                                 <th>State</th>
+                              </tr>
+                              <tr *ngFor="let item of this.selectedCustomerdetails.customerAdd ; index as i">
+                                 <td>
+                                    <div class="form-check"><input _ngcontent-civ-c54="" (change)="setupJson(item)"
+                                          type="radio" name="gridRadios1" class="form-check-input m-1"></div>
+                                 </td>
+                                 <td>{{item.address}}</td>
+                                 <td>{{item.cityName}}</td>
+                                 <td>{{item.pinCode}}</td>
+                                 <td>{{item.phoneNumber}}</td>
+                                 <td>{{item.emailId}}</td>
+                                 <td>{{item.stateName}}</td>
+                              </tr>
+                           </tbody>
+                        </table>
+                        <br>
+                     </div>
+                  </ng-template>
+                  <!-- close popup confirm-->
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Loading address <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control " readonly formControlName="address"></textarea>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control " formControlName="state" readonly>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Loading date <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control " formControlName="loadingDate" readonly>
+                  <div *ngIf="submitted && f['loadingDate'].errors">
+                     <small class="text-danger" *ngIf="f['loadingDate'].errors?.['required']">Please select Pay
+                        Basis
+                     </small>
+                     <small class="text-danger" *ngIf="f['loadingDate'].errors?.serverError">{{
+                        f['loadingDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Update Two Point Delivery<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <div class="form-check"><input type="checkbox" formControlName="ivrTwoPointDelivery" id="gridCheck2"
+                        class="form-check-input m-1 checklistcls"></div>
+               </div>
+            </div>
+         </div>
+         </div>
+      </form> 
+         <div class="mt-1 ">
+            <hr>
+            <div class="display3 mb-1">
+
+               <button type="button" (click)="addListOnVehicle()" class="btn btn-warning btn-padding2">+ Add</button>
+            </div>
+
+            <div class="table-responsive">
+               <table class="table table-borderless ">
+                  <thead class="bg-secondary text-white">
+                     <tr>
+                        <th style="width: 43px;">Sr. No.</th>
+                        <th>From Location </th>
+                        <th *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==0">To Location</th>
+                        <th *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==1">To Location 1st Point</th>
+                        <th *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==1">To Loc Last Point</th>
+                        <th>FTL type</th>
+                        <th>Loadability </th>
+                        <th>No. of vehicles</th>
+                        <th>Transporter Name</th>
+                        <th>Action</th>
+                     </tr>
+                  </thead>
+                  <tbody>
+                     <tr *ngFor="let item of vehicleEntryDltEntity ; index as i">
+                        <td>{{i+1}}</td>
+                        <td>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select From Location" [searchable]="true"
+                                 [clearable]="true" appendTo="body"
+                                 [(ngModel)]="item.fromLocationId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'fromLocationId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.cityId"
+                                    *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==0">
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select To Location" [searchable]="true"
+                                 [clearable]="true" appendTo="body" [(ngModel)]="item.toLocationId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'toLocationId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.cityId"
+                                    *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==1">
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select To Location 1st Point" [searchable]="true"
+                                 [clearable]="true" appendTo="body"[(ngModel)]="item.firstLocationId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'firstLocationId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.cityId"
+                                    *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td *ngIf="this.formMaster.controls['ivrTwoPointDelivery'].value==1">
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select To Loc Last Point" [searchable]="true"
+                                 [clearable]="true" appendTo="body" [(ngModel)]="item.toLocationId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'toLocationId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.cityId"
+                                    *ngFor="let item of cityList ">{{item.cityName}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select FTL Type" [searchable]="true"
+                                 [clearable]="true" appendTo="body"[(ngModel)]="item.ftlTypeId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'ftlTypeId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of ftlList ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select Loadability " [searchable]="true"
+                                 [clearable]="true" appendTo="body"
+                                 [(ngModel)]="item.loadabilityId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'loadabilityId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.generalId"
+                                    *ngFor="let item of LoadablilityList ">{{item.codeDesc}}</ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <input type="text" class="form-control restable" #vhNo
+                              [value]="item.vehicleNo"
+                              (change)="setupJsonVhDtlEntity(vhNo.value,i,'vehicleNo')">
+                           </div>
+                        </td>
+                        <td>
+                           <div class=" col-sm-12 col-lg-12 has-validation">
+                              <ng-select class="restable" placeholder="Select Transport " [searchable]="true"
+                                 [clearable]="true" appendTo="body"
+                                 [(ngModel)]="item.transportedId"
+                                 (change)="setupJsonVhDtlEntity($event,i,'transportedId')">
+                                 <ng-option value="" selected>Select</ng-option>
+                                 <ng-option [value]="item.vendorId" *ngFor="let item of vendorList ">
+                                    <span [title]="item.vendorTypeName">{{item.vendorTypeName}}</span></ng-option>
+                              </ng-select>
+                           </div>
+                        </td>
+                        <td class="display2"><br>
+                           <a class="float-end" *ngIf="this.vehicleEntryDltEntity.length>1"
+                            (click)="this.vehicleEntryDltEntity.splice(i,1)"><i
+                                 class="bi bi-x-circle-fill"></i></a>
+                        </td>
+                     </tr>
+                  </tbody>
+               </table>
+            </div>
+         </div>
+         <div class="row">
+            <div class="text-center pt-3 pb-2">
+               <button type="submit" (click)="onSubmit()"
+                  class="btn btn-primary rounded-pill btn-sm btn-padding ">Submit</button>
+            </div>
+         </div>
+      </div>
+   <!-- </form> -->
+</div>

@@ -1,0 +1,113 @@
+.btnCircle {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: #fff;
+    transform: translate(-50%, -50%);
+    line-height: 18px;
+    vertical-align: center;
+    position: relative;
+    padding: 10px;
+}
+
+.bi-plus-circle-fill {
+    color: #007bff;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #007bff;
+}
+
+.bi-plus-circle-fill:hover {
+    color: #0069d9;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #0062cc;
+}
+
+.bi-x-circle-fill {
+    font-size: 22px;
+    cursor: pointer;
+    color: #dc3545;
+    border-color: #dc3545;
+}
+
+.bi-x-circle-fill:hover {
+    font-size: 22px;
+    cursor: pointer;
+    color: #c82333;
+    border-color: #bd2130;
+
+}
+
+.table-bordered>:not(caption)>*>* {
+    border-width: 1px;
+}
+
+.borderClass {
+    border: 2px dotted #ccc;
+    border-radius: 8px !important;
+    position: relative;
+
+}
+
+.bi-backspace-reverse-fill {
+    font-size: 22px;
+    cursor: pointer;
+    color: #dc3545;
+}
+
+.bi-backspace-reverse-fill:hover {
+    color: #bd2130;
+}
+
+.addbutton {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 0;
+    top: 16px;
+}
+
+.bgleft {
+    background-color: #ff980045;
+    padding-right: 5px;
+}
+
+.bgside {
+    border-left: 2px dotted #ccc;
+    background-color: #ff980014;
+}
+
+.centerTotal {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.bi-shield-fill-plus {
+    color: #ff9800;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #ff9800;
+}
+
+.bi-shield-fill-plus:hover {
+    color: #d68205;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #d68205;
+}
+
+.adding {
+    color: #0505d6;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #0539d6;
+}
+.deleting{
+    color: #d60505;
+    font-size: 22px;
+    cursor: pointer;
+    border-color: #d60505; 
+}

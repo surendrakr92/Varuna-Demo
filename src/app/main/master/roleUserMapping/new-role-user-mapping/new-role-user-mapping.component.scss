@@ -1,0 +1,46 @@
+
+.list-group{
+    position: relative;
+    height: 200px;
+    overflow-y: auto;
+}
+
+.rightswitch{
+  
+    position: absolute;
+    top: 10px;
+    right: 10px;
+}
+.list-group-item:hover{
+    background-color: #e8ebff;
+
+}
+.rightswitch .form-check-input {
+    width: 23px !important;
+    margin-left: -2.5em;
+    height: 11px !important;
+}
+.trList{
+    position: relative;
+ 
+   
+}
+.trList .form-check-input {
+    margin-top: 2px !important;
+    margin-left: 0px !important;
+}
+.tableFixHead {
+    overflow: auto;
+    height: 220px;
+    border-radius:8px;
+  }
+ 
+  .tableFixHead thead th {
+    position: sticky;
+    top: 0;
+    z-index: 400;
+    background-color: #cde5ff;
+  }
+
+
+

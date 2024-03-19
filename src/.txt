@@ -1,0 +1,151 @@
+[5:15 PM] Laxmikant Pandey
+  this.dtOptions = {
+
+         pagingType: 'full_numbers',//hide all datatble functioanlity[simple,simple_numbers,full]
+        lengthMenu:[5,10,20,50,100],//set number pages loading
+         searching:false //enable disable of search option
+         processing:true,//just process
+         paging:false //enable disable of paging option
+         lengthChange:false //set rest length change functionlity
+         language:{
+         searchPlaceholder:'search'
+        }  //set placeholder according to text
+
+      } 
+
+  countryList:any=[]
+
+  dtOptions: DataTables.Settings = {};
+
+  dtTrigger:Subject<any>=new Subject<any>()
+
+html tag
+
+<table class="table row-border hover " datatable [dtOptions]="dtOptions" 
+   [dtTrigger]="dtTrigger">
+  with_in_list
+   this.dtTrigger.next(null)
+
+$('#MyTable').DataTable().destroy();
+for distroy
+______________________________________________________________________
+change condition
+two way to use active/inactive
+(A)pipe
+(b)[disabled]='item.isActive'
+need to wokr module and globally toaster
+______________________________________________________________________
+xls.code 
+donwloadExcel(tableId:any){
+
+    let fileName='countryMaster.xLsx'
+      let element = document.getElementById(tableId.id);
+      const ws: XLSX.WorkSheet = XLSX.utils.table_to_sheet(element);
+       
+/* generate workbook and add the worksheet */
+      const wb: XLSX.WorkBook = XLSX.utils.book_new();
+      XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+      
+ /* save to file */
+      XLSX.writeFile(wb, fileName);
+}
+______________________________________________________________________
+Build_production=>
+ng build --configuration production
+_______________________
+module routing module login page
+_________________________________________________________________________
+  const doc = new jsPDF("p", "pt", "a4");
+  const source = (<HTMLInputElement>document.getElementById("viewData_information"));
+
+  html2canvas(source).then((canvas) => {
+    const imgData = canvas.toDataURL('image/png');
+    const imgWidth = 595.28; // A4 width in pixels
+    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+
+    doc.addImage(imgData, 'PNG', 0, 0, imgWidth, imgHeight);
+    doc.save('countryInformation.pdf');
+  });
+  _______________________
+   const doc = new jsPDF("p", "pt", "a1");
+     const source = (<HTMLInputElement>document.getElementById("viewData_information"));
+     // doc.text("Test", 40, 20);
+     doc.setFontSize(10)
+     doc.html(source, {
+       callback: function(pdf) {
+         doc.output("dataurlnewwindow"); // preview pdf file when exported
+       }
+     });
+     ______________________________________________________________________
+     prevent to inspection.
+     document.addEventListener('contextmenu', event => event.preventDefault());
+     __________________________________________________________________________________________________
+routess
+      const queryParams = { custId: this.CCDetailsData.custId };
+      const navigationExtras: NavigationExtras = {
+        queryParams,
+        skipLocationChange: false,
+      };
+      this.routes.navigate(['/master/customer-contract-master'], navigationExtras);
+      console.log(this.customerBasicForm.value)
+__________________________________________________________________________________________________
+if (this.formMaster.invalid) {
+  // Get the form controls
+  const controls = this.formMaster.controls;
+  // Iterate over the form controls and check which ones are invalid
+  for (const control in controls) {
+    if (controls[control].invalid) {
+      console.log(`Invalid control: ${control}`);
+    }
+  }
+}
++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+prevent copy paste
+ $('#email').bind("cut copy paste",function(e) {
+     e.preventDefault();
+ });
+ _____________________________________________________________
+ function disableButton() {
+    const createButton = document.getElementById("createButton");
+    createButton.disabled = true;
+}
+
+// Call the function when needed, for example:
+disableButton();
+______________________________________________________Manages Json__
+ this.FromMaster.valueChanges.subscribe(() => {
+      // Iterate over form controls
+      Object.keys(this.FromMaster.controls).forEach(controlName => {
+        // Check if control value is null
+        if (this.FromMaster.get(controlName).value === null) {
+          // If null, set control value to 0
+          this.FromMaster.get(controlName).setValue(0);
+        }
+      });
+    });
+  
+____________________________________________________________________manages browser __ cross (angular & js)
+import { HostListener } from '@angular/core';
+
+@Component({
+  selector: 'app-your-component',
+  templateUrl: './your-component.component.html',
+  styleUrls: ['./your-component.component.css']
+})
+export class YourComponent {
+
+  @HostListener('window:beforeunload', ['$event'])
+  unloadNotification($event: any) {
+    // Cancel the event
+    $event.returnValue = true;
+    // Prompt the user with a confirmation dialog
+    return 'Are you sure you want to leave?';
+  }
+
+}
+window.addEventListener('beforeunload', function(event) {
+  // Cancel the event
+  event.returnValue = true;
+  // Prompt the user with a confirmation dialog
+  return 'Are you sure you want to leave?';
+});

@@ -1,0 +1,83 @@
+<div class="main-contianer">
+    <span class="float-left title">
+       <a routerLink="/master/division-master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+    </span>
+    <span class="float-end title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+    </span>
+    <h5 class="card-title">{{this.divisionDetailsById?'Update':'Create'}} Division Master
+    </h5>
+  <form [formGroup]="formDivisionMaster">
+       <div class="row">
+
+        <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Division Code<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="divisionCode" id="code" appUpperCase
+                     [ngClass]="{'is-invalid':submitted && f['divisionCode'].errors}" maxlength="5">
+
+                  <div *ngIf="submitted && f['divisionCode'].errors">
+                     <small class="text-danger" *ngIf="f['divisionCode'].errors?.['required']">Please enter your
+                        division code</small>
+                     <small class="text-danger" *ngIf="f['divisionCode'].errors?.['pattern']">Invalid division code</small>
+                     <!-- <small class="text-danger" *ngIf="f['divisionCode'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['divisionCode'].errors?.serverError">{{
+                        f['divisionCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Division Name<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="divisionName"
+                  maxlength="25"
+                     [ngClass]="{'is-invalid':submitted && f['divisionName'].errors}" >
+
+                  <div *ngIf="submitted && f['divisionName'].errors">
+                     <small class="text-danger" *ngIf="f['divisionName'].errors?.['required']">Please enter division name</small>
+                     <small class="text-danger" *ngIf="f['divisionName'].errors?.['pattern']">Invalid division name 
+                  </small>
+                     <!-- <small class="text-danger" *ngIf="f['divisionName'].errors?.['minlength']">
+                        Name must be at least 2 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['divisionName'].errors?.serverError">{{
+                        f['divisionName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+          <div class="col-lg-3">
+             <div class="form-group mb-3">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active?
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <div class="form-check form-switch ">
+                      <input type="checkbox" class="form-check-input" formControlName="isActive">
+                      <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                         f['isActive'].errors?.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="row pb-2">
+             <div class="col-lg-12">
+                <div class="float-end">
+    
+                   <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                      (click)="submit()">Submit</button>
+                </div>
+             </div>
+    
+          </div>
+       </div>
+      
+    </form>
+ 
+ </div>

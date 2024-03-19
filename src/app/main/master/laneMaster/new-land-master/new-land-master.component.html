@@ -1,0 +1,167 @@
+<div class="main-contianer">
+   <span class="float-left title">
+      <a routerLink="/master/lane-master-list"><i class="bi bi-arrow-return-left booticon"></i> </a>
+   </span>
+   <span class="float-end title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+   </span>
+   <h5 class="card-title">{{this.laneMsterDetailById.laneId?'Update':'New'}} Lane Master
+   </h5>
+   <form [formGroup]="formLaneMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">System Generated Id</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control text-danger" name="" id="" disabled
+                     value="{{this.laneMsterDetailById.laneId}}" placeholder="System Generated Id">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From Location<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="fromCityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of CityMsaterList">{{item.cityName}}</ng-option>
+
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['fromCityId'].errors">
+                     <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">Please select From
+                        Location</small>
+
+                     <small class="text-danger" *ngIf="f['fromCityId'].errors?.serverError">{{
+                        f['fromCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To Location<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="toCityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of CityMsaterList">{{item.cityName}}</ng-option>
+
+                  </ng-select>
+
+
+                  <div *ngIf="submitted && f['toCityId'].errors">
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.['required']">Please select to
+                        location</small>
+
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.serverError">{{
+                        f['toCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Vehicle type<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="loadabilityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['loadabilityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of vehicleMasterList">{{item.codeDesc}}</ng-option>
+
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['loadabilityId'].errors">
+                     <small class="text-danger" *ngIf="f['loadabilityId'].errors?.['required']">Please select vehicle
+                        type</small>
+
+                     <small class="text-danger" *ngIf="f['loadabilityId'].errors?.serverError">{{
+                        f['loadabilityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Load Type<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="ftlTypeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['ftlTypeId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of loadTypeMasterList">{{item.codeDesc}}</ng-option>
+
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['ftlTypeId'].errors">
+                     <small class="text-danger" *ngIf="f['ftlTypeId'].errors?.['required']">Please select load
+                        type</small>
+
+                     <small class="text-danger" *ngIf="f['ftlTypeId'].errors?.serverError">{{
+                        f['ftlTypeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Rate type Load<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Rate type Load Select" formControlName="rateTypeId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['rateTypeId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of rateTypeMasterList">{{item.codeDesc}}</ng-option>
+
+                  </ng-select>
+
+                  <div *ngIf="submitted && f['rateTypeId'].errors">
+                     <small class="text-danger" *ngIf="f['rateTypeId'].errors?.['required']">Please select rate type
+                        load</small>
+
+                     <small class="text-danger" *ngIf="f['rateTypeId'].errors?.serverError">{{
+                        f['rateTypeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="submit()">Submit</button>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+   </form>
+
+</div>

@@ -1,0 +1,78 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/country-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Country Master List" placement="right"></i> </a>
+      </span>
+      <span class="float-end title">
+         <a routerLink="/dashboard">
+            <i class="bi bi-house-gear booticon "  ngbTooltip="Dashboard" placement="bottom" ></i> </a>
+      </span>
+   </div>
+   <h5 class="card-title">{{this.countryDetailsById?'Update':'Create'}} Country Master
+   </h5>
+ <form [formGroup]="formCountryMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Short Code <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="shortCode" id="code" appUpperCase
+                     [ngClass]="{'is-invalid':submitted && f['shortCode'].errors}" maxlength="5">
+                  <div *ngIf="submitted && f['shortCode'].errors">
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.['required']">Please enter your
+                        short code</small>
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.['pattern']">Invalid short code</small>
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.serverError">{{
+                        f['shortCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Country Name <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="countryName"
+                     [ngClass]="{'is-invalid':submitted && f['countryName'].errors}" >
+
+                  <div *ngIf="submitted && f['countryName'].errors">
+                     <small class="text-danger" *ngIf="f['countryName'].errors?.['required']">Please enter your
+                        country name</small>
+                     <small class="text-danger" *ngIf="f['countryName'].errors?.['pattern']">Invalid country name
+                       </small>
+                        <!-- <small class="text-danger" *ngIf="f['countryName'].errors?.['minlength']">countryname should be atleast 3 characters</small> -->
+                     <small class="text-danger" *ngIf="f['countryName'].errors?.serverError">{{
+                        f['countryName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+   
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="countrysubmit()">Submit</button>
+               </div>
+            </div>
+   
+         </div>
+      </div>
+     
+   </form>
+
+</div>

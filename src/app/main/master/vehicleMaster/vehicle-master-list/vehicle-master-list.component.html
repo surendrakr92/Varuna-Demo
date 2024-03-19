@@ -1,0 +1,74 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+       <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="right"></i> </a>
+   </span>
+    <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Vehicle Master List
+    </h5>
+ 
+    <div class="pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/master/vehicle-master-list/create-vehicle-master/" ngbTooltip="Create Vehicle Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+             ngbTooltip="Download List" type="button" >
+             <i class="bi bi-download"></i>
+          </button>
+           </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No. </th>
+             <th>Vehicle Type</th>
+             <th>Vehicle Reg Number</th>
+             <th>Vehicle Branch</th>
+             <th>Vehicle Fitness Validity Date</th>
+             <th>Veicle Registeration Date</th>
+             <th>Vehicle Status</th>
+             <th>Insurance Party Name</th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of vehicleList; let i=index">
+             <td>{{i+1}}</td>
+             <td>{{Item.vehicleType}}</td>
+             <td>{{Item.vehicleRegNo}}</td>
+             <td>{{Item.vehicleBranch}}</td>
+             <td>{{Item.vehicleFitnessValidityDate | date}}
+            <td>{{Item.veicleRegDate | date}}</td>
+            <td>{{Item.vehicleStatus}}</td>
+            <td>{{Item.insurancePartyName}}</td>
+             
+            
+             <td>  <span class="{{Item.isVehicleActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{Item.isVehicleActive?'Active':'Inactive'}}</span>
+          </td>
+             <td class="display2">
+                <a  class="view" (click)="rediredctionView(Item.vehicleDetailId)" ngbTooltip="view" placement="bottom" ><i
+                      class="bi bi-eye-fill pr"></i></a>
+                <a (click)="redirectionEdit(Item.vehicleDetailId)"  class="edit" ngbTooltip="Edit" placement="bottom" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+                <a  class="delete" ngbTooltip="Active/Inactive" placement="bottom" >
+                   <div class="form-check form-switch ">
+                      <input type="checkbox" class="form-check-input" 
+                      *ngIf="Item.isVehicleActive==true"
+                         (click)="activeInactive(Item.vehicleDetailId)" checked >
+                   </div>
+                </a>
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+ </div>

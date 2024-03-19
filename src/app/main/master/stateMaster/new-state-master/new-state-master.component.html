@@ -1,0 +1,131 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/state-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to State Master List" placement="right"></i> </a>
+     </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+      </span>
+   </div>
+
+   <h5 class="card-title">{{this.statwDetailsById?'Update':'Create'}} State Master
+   </h5>
+   <form [formGroup]="formStateMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Country
+               Select <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="Country Select"
+                  formControlName="countryId"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['countryId'].errors}">
+                  <ng-option value="" selected>Select</ng-option>
+                  <ng-option [value]="item.countryId"*ngFor="let item of countryList"
+                  [disabled]='!item.isActive'>{{item.countryName}}</ng-option>
+                  
+                  </ng-select>
+                  <div *ngIf="submitted && f['countryId'].errors">
+                     <small class="text-danger" *ngIf="f['countryId'].errors?.['required']">Please select country
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Short
+               Code <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="shortCode"
+                  id="code" appUpperCase
+                     [ngClass]="{'is-invalid':submitted && f['shortCode'].errors}" maxlength="5">
+                  <div *ngIf="submitted && f['shortCode'].errors">
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.['required']">Please enter short
+                     code</small>
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.['pattern']">Invalid short code</small>
+                     <small class="text-danger" *ngIf="f['shortCode'].errors?.serverError">{{
+                        f['shortCode'].errors.serverError}}</small>                
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">State
+               Name <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="stateName"
+                     [ngClass]="{'is-invalid':submitted && f['stateName'].errors}">
+                  <div *ngIf="submitted && f['stateName'].errors">
+                     <small class="text-danger" *ngIf="f['stateName'].errors?.['required']">please enter state
+                     name</small>
+                     <small class="text-danger" *ngIf="f['stateName'].errors?.['pattern']">Invalid state name</small>
+                        <small class="text-danger" *ngIf="f['stateName'].errors?.serverError">{{
+                           f['stateName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">State
+               Code <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="stateCode"
+                     [ngClass]="{'is-invalid':submitted && f['stateName'].errors}" maxlength="5">
+                  <div *ngIf="submitted && f['stateCode'].errors">
+                     <small class="text-danger" *ngIf="f['stateCode'].errors?.['required']">Please enter State
+                        code</small>
+                     <small class="text-danger" *ngIf="f['stateCode'].errors?.['pattern']">Invalid state code</small>
+                        <small class="text-danger" *ngIf="f['stateCode'].errors?.serverError">{{
+                           f['stateCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">GST No.
+                  <span class="text-danger">*</span> </label>
+               <div class=" col-sm-12 col-lg-12">
+               
+                     <input type="text" class="form-control"  formControlName="gstIn"
+                     appUpperCase id="code"
+                     [ngClass]="{'is-invalid':submitted && f['gstIn'].errors}">
+                  <div *ngIf="submitted && f['gstIn'].errors">
+                     <small class="text-danger" *ngIf="f['gstIn'].errors?.['required']">Please enter GST number
+                     </small>
+                     <small class="text-danger" *ngIf="f['gstIn'].errors?.['pattern']">Invalid GST number</small>
+                        <small class="text-danger" *ngIf="f['gstIn'].errors?.serverError">{{
+                           f['gstIn'].errors.serverError}}</small>
+                  </div>
+
+
+                  
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+               </label>
+               <div class=" col-sm-12 col-lg-8">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="float-end">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="StateSubmit()">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>

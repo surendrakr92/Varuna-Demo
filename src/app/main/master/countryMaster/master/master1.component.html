@@ -1,0 +1,615 @@
+
+<div class="main-contianer">
+   <!-- <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon"  ngbTooltip="Back to Master "
+             ></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div> -->
+     
+
+  
+
+<h1 class="text-center pt-5">Welcome to Master Page</h1>
+
+<router-outlet></router-outlet>
+
+   </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!-- <div class="main-contianer">
+   <h5 class="card-title">Master</h5>
+   <div class="dashboardlink">
+     <a  routerLink="/dashboard"
+     > <i class="bi bi-house-gear-fill " style="font-size: 20px;"></i></a>
+   </div>
+
+
+    
+
+
+     <ul class="nav nav-tabs nav-tabs-bordered" id="borderedTab" role="tablist">
+       <li class="nav-item" role="presentation">
+         <button class="nav-link active" id="Customer-tab" data-bs-toggle="tab" data-bs-target="#bordered-Customer" type="button" role="tab" aria-controls="Customer" aria-selected="true"> Customer Master</button>
+       </li>
+       <li class="nav-item" role="presentation">
+         <button class="nav-link" id="address-tab" data-bs-toggle="tab" data-bs-target="#bordered-address" type="button" role="tab" aria-controls="address" aria-selected="false">Customer Address</button>
+       </li>
+       <li class="nav-item" role="presentation">
+         <button class="nav-link" id="Decision-tab" data-bs-toggle="tab" data-bs-target="#bordered-Decision" type="button" role="tab" aria-controls="Decision" aria-selected="false">Decision Maker</button>
+       </li>
+       <li class="nav-item" role="presentation">
+         <button class="nav-link" id="Kam-tab" data-bs-toggle="tab" data-bs-target="#bordered-Kam" type="button" role="tab" aria-controls="kam" aria-selected="false">Kam Detail</button>
+       </li>
+     </ul>
+
+
+     <div class="tab-content pt-4" id="borderedTabContent">
+       <div class="tab-pane fade show active" id="bordered-Customer" role="tabpanel" aria-labelledby="Customer-tab">
+       
+         <form>
+            <div class="row">
+            <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class="col-sm-12 col-form-label">Group Code</label>
+                  <div class=" col-sm-12">
+                     <div class="form-floating ">
+                        <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                           <ng-option value="1">2022-2023</ng-option>
+                           <ng-option value="2">2024-2025</ng-option>
+                           <ng-option value="3">2026-2027</ng-option>
+                           <ng-option value="4">2028-2029</ng-option>
+                           <ng-option value="5">2030-2031</ng-option>
+                        </ng-select>
+                     </div>
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class=" col-sm-12 col-form-label">Customer Name</label>
+                  <div class=" col-sm-12">
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+            </div>
+              <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class="col-sm-12 col-form-label">System Generated</label>
+                  <div class=" col-sm-12">
+                    <input type="text" class="form-control">
+                  </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class=" col-sm-12 col-form-label">Industry</label>
+                  <div class=" col-sm-12">
+                     <div class="form-floating ">
+                        <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                           <ng-option value="1">2022-2023</ng-option>
+                           <ng-option value="2">2024-2025</ng-option>
+                           <ng-option value="3">2026-2027</ng-option>
+                           <ng-option value="4">2028-2029</ng-option>
+                           <ng-option value="5">2030-2031</ng-option>
+                        </ng-select>
+                     </div>
+                  </div>
+                </div>
+            </div>
+             </div>
+           
+                <div class="row">
+             
+                  <div class="col-lg-3">
+                     <div class="form-group mb-3">
+                        <label for="inputText" class="col-sm-12 col-form-label">GST Number</label>
+                        <div class=" col-sm-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                  </div>
+                    <div class="col-lg-3">
+                     <div class="form-group mb-3">
+                        <label for="inputText" class=" col-sm-12 col-form-label">Service Tax Number</label>
+                        <div class=" col-sm-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-1">
+                     <div class="form-group mb-3 pt-2">
+                        <label for="inputText" class="col-sm-12 form-check-label" for="flexCheckChecked">Active Flag</label>
+                        <div class=" col-sm-12">
+                           <input class="form-check-input" type="checkbox" id="gridCheck2" checked="">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-2">
+                     <div class="form-group mb-3 pt-2">
+                        <label for="inputText" class=" col-sm-12 form-check-label" for="flexCheckChecked">Mobile Service</label>
+                        <div class=" col-sm-12">
+                           <input class="form-check-input" type="checkbox" id="gridCheck2" checked="">
+                        </div>
+                      </div>
+                  </div>
+                  <div class="col-lg-3">
+                     <div class="form-group mb-3">
+                        <label for="inputText" class=" col-sm-12 col-form-label">Mobile Number</label>
+                        <div class=" col-sm-12">
+                          <input type="text" class="form-control">
+                        </div>
+                      </div>
+                  </div>
+                   </div>
+
+                   <div class="row">
+                   
+                  
+                   
+                     <div class="col-lg-3">
+                        <div class="form-group mb-3">
+                           <label for="inputText" class=" col-sm-12 col-form-label">LST Number</label>
+                           <div class="col-sm-12">
+                              <input type="text" class="form-control">
+                           </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group mb-3">
+                           <label for="inputText" class=" col-sm-12 col-form-label">	PAN Number</label>
+                           <div class="col-sm-12">
+                              <input type="text" class="form-control">
+                           </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group mb-3">
+                           <label for="inputText" class="col-sm-12 col-form-label"> Type of ownership<span class="text-danger">*</span></label>
+                           <div class="col-sm-12">
+                              <div class="form-floating ">
+                                 <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                                    <ng-option value="1">2022-2023</ng-option>
+                                    <ng-option value="2">2024-2025</ng-option>
+                                    <ng-option value="3">2026-2027</ng-option>
+                                    <ng-option value="4">2028-2029</ng-option>
+                                    <ng-option value="5">2030-2031</ng-option>
+                                 </ng-select>
+                              </div>
+                           </div>
+                         </div>
+                     </div>
+                     <div class="col-lg-3">
+                        <div class="form-group mb-3">
+                           <label for="inputText" class=" col-sm-12 col-form-label">Customer Category Type<span class="text-danger">*</span></label>
+                           <div class=" col-sm-12">
+                              <div class="form-floating ">
+                                 <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                                    <ng-option value="1">2022-2023</ng-option>
+                                    <ng-option value="2">2024-2025</ng-option>
+                                    <ng-option value="3">2026-2027</ng-option>
+                                    <ng-option value="4">2028-2029</ng-option>
+                                    <ng-option value="5">2030-2031</ng-option>
+                                 </ng-select>
+                              </div>
+                           </div>
+                         </div>
+                     </div>
+                      </div>   
+                      
+                
+
+                         <div class="row">
+                     
+                           <div class="col-lg-3">
+                              <div class="form-group mb-3">
+                                 
+                                 <label for="inputText" class="col-sm-12 col-form-label">	 Customer Locations <small>(Separated by commas)<span class="text-danger">*</span></small></label>
+                                 <div class="col-sm-12">
+                                    <input type="text" class="form-control">
+                                 </div>
+                               </div>
+                           </div>
+                             <div class="col-lg-3">
+                              <div class="form-group mb-3">
+                                 <label for="inputText" class=" col-sm-12 col-form-label"> E-mail :</label>
+                                 <div class="col-sm-12">
+                                    <div class="form-floating ">
+                                       <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                                          <ng-option value="1">2022-2023</ng-option>
+                                          <ng-option value="2">2024-2025</ng-option>
+                                          <ng-option value="3">2026-2027</ng-option>
+                                          <ng-option value="4">2028-2029</ng-option>
+                                          <ng-option value="5">2030-2031</ng-option>
+                                       </ng-select>
+                                    </div>
+                                 </div>
+                               </div>
+                           </div>
+                           <div class="col-lg-3">
+                              <div class="form-group mb-3">
+                                 <label for="inputText" class=" col-sm-12 col-form-label">Web site</label>
+                                 <div class="col-sm-12">
+                                    <input type="text" class="form-control">
+                                 </div>
+                               </div>
+                           </div>
+                           <div class="col-lg-3">
+                              <div class="form-group mb-3 pt-2">
+                                 <label for="inputText" class=" col-sm-12 form-check-label" for="flexCheckChecked">Is Main Customer</label>
+                                 <div class="col-sm-12">
+                                    <input class="form-check-input" type="checkbox" id="gridCheck2">
+                                 </div>
+                               </div>
+                           </div>
+                            </div>   
+                            
+                            <div class="row">
+                          
+                         
+                                <div class="col-lg-3">
+                                 <div class="form-group mb-3">
+                                    <label for="inputText" class=" col-sm-12 col-form-label"> GST No.</label>
+                                    <div class="col-sm-12">
+                                       <input type="text" class="form-control">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3">
+                                 <div class="form-group mb-3">
+                                    <label for="inputText" class="col-sm-12 col-form-label">TAN No.</label>
+                                    <div class=" col-sm-12">
+                                       <input type="text" class="form-control">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3">
+                                 <div class="form-group mb-3">
+                                    <label for="inputText" class=" col-sm-12 col-form-label">Payment Target Days</label>
+                                    <div class=" col-sm-12">
+                                       <input class="form-check-input" type="checkbox" id="gridCheck2">
+                                    </div>
+                                  </div>
+                              </div>
+                              <div class="col-lg-3">
+                                 <div class="form-group mb-3">
+                                    <label for="inputText" class=" col-sm-12 col-form-label"> Billing Submission Type<span class="text-danger">*</span></label>
+                                    <div class="col-sm-12">
+                                       <input type="text" class="form-control">
+                                    </div>
+                                  </div>
+                              </div>
+                               </div> 
+
+                               <div class="row">
+                             
+                           
+                            
+                                 <div class="col-lg-3">
+                                    <div class="form-group mb-3">
+                                       <label for="inputText" class=" col-sm-12 col-form-label">Billing Schedule<span class="text-danger">*</span></label>
+                                       <div class="col-sm-12">
+                                          <div class="form-floating ">
+                                             <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                                                <ng-option value="1">2022-2023</ng-option>
+                                                <ng-option value="2">2024-2025</ng-option>
+                                                <ng-option value="3">2026-2027</ng-option>
+                                                <ng-option value="4">2028-2029</ng-option>
+                                                <ng-option value="5">2030-2031</ng-option>
+                                             </ng-select>
+                                          </div>
+                                       </div>
+                                     </div>
+                                 </div>
+                                  </div> 
+
+                                  
+                               <div class="row">
+                             
+                           
+                                 <div class="col-lg-12">
+                                    <div class="float-end">
+                                      
+                                       <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Next</button></div>
+                               </div>
+                     
+                                </div> 
+         </form>
+    
+        
+        
+        
+        
+        
+       </div>
+       <div class="tab-pane fade" id="bordered-address" role="tabpanel" aria-labelledby="address-tab">
+         <div class="table-responsive">
+         <table class="table table-bordered border-secondary table-sm">
+            <tbody>
+              
+               <tr class="bg-secondary text-light">
+                  <th colspan="4">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="gridCheck2" checked="">
+                        <label class="form-check-label" for="gridCheck2">
+                           Billing address same as customer address
+                        </label>
+                     </div>
+                  </th>
+               </tr>
+               <tr>
+                  <td>Address </td>
+                  <td><textarea class="form-control" style="height: 50px;" spellcheck="false"></textarea></td>
+                  <td>Billing address</td>
+                  <td><textarea class="form-control" style="height: 50px;" spellcheck="false"></textarea></td>
+               </tr>
+               <tr>
+                  <td>City </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Billing city</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Pincode </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Billing pincode</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Bank name </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Branch</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Bank Account number</td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Turnover (Rs in Cr)</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Tin Number</td>
+                  <td><input type="text" class="form-control"></td>
+                  <td></td>
+                  <td></td>
+               </tr>
+               <tr>
+                  <td><span class="text-danger">*</span> Pay basis allowed</td>
+                  <td style="    display: flex; justify-content: space-around;border: none;">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           Paid
+                        </label>
+                     </div>
+         
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           TBB
+                        </label>
+                     </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           To Pay
+                        </label>
+                     </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           FOC
+                        </label>
+                     </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           Scrap
+         
+                        </label>
+                     </div>
+                  </td>
+         
+                  <td><span class="text-danger">*</span>  POD Required For Billing</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+               </tr>
+               <tr>
+                  <td>Service Opted For</td>
+                  <td style="    display: flex; justify-content: space-around;border: none;">
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           WAREHOUSE
+                        </label>
+                     </div>
+                     <div class="form-check">
+                        <input class="form-check-input" type="checkbox">
+                        <label class="form-check-label" for="gridCheck2">
+                           FLEET
+                        </label>
+                     </div>
+                  </td>
+                  <td></td>
+                  <td></td>
+               </tr>
+         <tr>
+            <td colspan="4" >
+               <div class="display">
+               <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Previous</button>
+               <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Next</button>
+            </div>
+            </td>
+          
+         </tr>
+         
+              
+            </tbody>
+         </table>
+         </div> 
+
+       </div>
+       <div class="tab-pane fade" id="bordered-Decision" role="tabpanel" aria-labelledby="Decision-tab">
+         <div class="table-responsive">
+         <table class="table table-bordered border-secondary table-sm">
+            <tbody>
+       
+               <tr class="bg-secondary text-light">
+                  <th colspan="4">Decision maker</th>
+               </tr>
+               <tr>
+                  <td>Name </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Designation</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Mobile </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>E-mail id</td>
+                  <td><input type="text" class="form-control"></td>
+               </tr>
+               <tr>
+                  <td>Target Days </td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Customer Type</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+               </tr>
+              
+               <tr>
+                  <td colspan="4" >
+                     <div class="display">
+                     <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Previous</button>
+                     <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Next</button>
+                  </div>
+                  </td>
+                
+               </tr>
+            </tbody>
+         </table> 
+         </div>
+
+       </div>
+       <div class="tab-pane fade" id="bordered-Kam" role="tabpanel" aria-labelledby="Kam-tab">
+         <div class="table-responsive">
+            <table class="table table-bordered border-secondary table-sm">
+            <tbody>
+              
+               <tr class="bg-secondary text-light">
+                  <th colspan="4">Kam Detail</th>
+               </tr>
+               <tr>
+                  <td>NATIONAL KAM</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+                  <td>ZONAL/CLUSTER KAMs</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+               </tr>
+         
+               <tr>
+                  <td>CBO</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+                  <td>Customer Stage</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+               </tr>
+         
+               <tr>
+                  <td>Customer Type (Offline/Online)</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+                  <td>OPS KAM</td>
+                  <td>   <div class="form-floating ">
+                     <ng-select placeholder="Select Finacial Year" [virtualScroll]="true">
+                        <ng-option value="1">2022-2023</ng-option>
+                        <ng-option value="2">2024-2025</ng-option>
+                        <ng-option value="3">2026-2027</ng-option>
+                        <ng-option value="4">2028-2029</ng-option>
+                        <ng-option value="5">2030-2031</ng-option>
+                     </ng-select>
+                  </div></td>
+               </tr>
+               <tr>
+                  <td colspan="4" >
+                     <div class="display">
+                     <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Previous</button>
+                     <button type="button" class="btn btn-secondary rounded-pill  btn-sm">Submit</button>
+                  </div>
+                  </td>
+                
+               </tr>
+            </tbody>
+         </table> 
+         </div>
+
+       </div>
+     </div>
+
+   </div> -->

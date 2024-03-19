@@ -1,0 +1,124 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/role-user-mapping"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Role User Mapping" placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">New Role User Mapping
+   </h5>
+   <form [formGroup]="formRoleUserMapping">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">User Name
+                  Select <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2  " placeholder="Country Select" formControlName="userId" [searchable]="true"
+                  [readonly]="this.roleUserMappingDetailsById"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['userId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.userId" *ngFor="let item of UserMasterList"
+                        [disabled]='!item.isActive'>{{item.name}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['userId'].errors">
+                     <small class="text-danger" *ngIf="f['userId'].errors?.['required']">Please select user name
+                     </small>
+                     <small class="text-danger" *ngIf="f['userId'].errors?.serverError">{{
+                        f['userId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Role Name
+                  Select <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="text" class="form-control" (keyup)="filter($event)" (mouseover)="filter($event)"
+                     placeholder="Search Role Name And Select">
+                  <!-- <ul class="list-group" *ngIf="this.filteredUsers.length>0">
+                        <li class="list-group-item" *ngFor="let item of filteredUsers">
+                           <input class="form-check-input me-1" type="checkbox" value="">
+                           {{item.roleName}}
+                           <span class="form-check form-switch rightswitch"><input class="form-check-input" type="checkbox"
+                                 role="switch" id="flexSwitchCheckDefault"></span>
+                        </li>
+                     </ul> -->
+                  <div class="tableFixHead" *ngIf="this.filteredUsers.length>0">
+                     <table class="table table-bordered table-hover">
+                        <thead>
+                           <tr class="text-center">
+                              <th>Select</th>
+                              <th>Role Name</th>
+                              <th>Default Role</th>
+                           </tr>
+                        </thead>
+                        <tbody>
+                           <tr class="trList" *ngFor="let item of filteredUsers;index as i">
+                              <td> <input class="form-check-input me-1" type="checkbox" value=""
+                                    [checked]="item.selected" (change)="takeRoleValue(item,i)"></td>
+                              <td>{{item.roleName}}</td>
+                              <td> <span class="form-check form-switch rightswitch" *ngIf="item.selected"><input
+                                       class="form-check-input" #checker [checked]="item.default"
+                                       [disabled]="!item.default && this.formRoleUserMapping.controls['defaultRole'].value"
+                                       (change)="setupDefult(item,checker.checked)" type="checkbox" role="switch"
+                                       id="flexSwitchCheckDefault"></span></td>
+                           </tr>
+
+                        </tbody>
+                     </table>
+                  </div>
+                  <!-- <div *ngIf="submitted && f['roleId'].errors">
+                     <small class="text-danger" *ngIf="f['roleId'].errors?.['required']">Please select role name
+                     </small>
+                     <small class="text-danger" *ngIf="f['roleId'].errors?.serverError">{{
+                        f['roleId'].errors.serverError}}</small>
+                  </div> -->
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" style="display: none;">
+            <div class="form-group mb-3">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Default Role <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="defaultRole" readonly
+                     [ngClass]="{'is-invalid':submitted && f['defaultRole'].errors}">
+                  <div *ngIf="submitted && f['defaultRole'].errors">
+                     <small class="text-danger" *ngIf="f['defaultRole'].errors?.['required']">Please enter defalut role
+                     </small>
+                     <small class="text-danger" *ngIf="f['defaultRole'].errors?.['pattern']">invalid defalut
+                        role</small>
+                     <small class="text-danger" *ngIf="f['defaultRole'].errors?.serverError">{{
+                        f['defaultRole'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group mb-3">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Active
+               </label>
+               <div class=" col-sm-12 col-lg-8">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12">
+            <div class="float-end">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                  (click)="onSubmit()">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>

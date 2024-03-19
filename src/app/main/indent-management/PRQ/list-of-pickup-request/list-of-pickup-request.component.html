@@ -1,0 +1,58 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+          <a routerLink="/indent/pickup-request"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Pickup Request "
+                placement="bottom"></i> </a>
+       </span>
+       <span class=" title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+          </a>
+       </span>
+    </div>
+    <div class="display">
+        <h5 class="card-title">List of Pickup Request(PRQ)
+        </h5>
+        <div class=" pb-2">
+           <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Customer Master" placement="bottom"
+              routerLink="/indent/pickup-request"><i class="bi bi-plus-lg "></i> Create </button>
+        </div>
+     </div> 
+     <div class="table-responsive">
+        <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+        id="MyTable" >
+        <thead class="bg-secondary text-white">
+           <tr>
+                <th>Sr. No.</th>
+              <th>PRQ No.</th>
+              <th>PRQ Date</th>
+              <th>Placement Date</th>
+              <th>Customer Name</th>
+              <th>From City</th>
+              <th>TO City</th>
+              <th>Action</th>
+           </tr>
+        </thead>
+        <tbody>
+           <tr class="zoom-in" *ngFor="let item of prqList ; index as i">
+              <td>{{i+1}}</td>
+              <td>{{item.prqNo}}</td>
+              <td>{{item.prqDt | date :'dd/MM/yyyy'}}</td>
+              <td>{{item.placementDt | date :'dd/MM/yyyy'}}</td>
+              <td>{{item.custName}}</td>
+              <td>{{item.fromCityName}}</td>
+              <td>{{item.toCityName}}</td>
+              <td class="display2">
+                 <a  routerLink="/indent/list-of-pickup-request/pickup-request-view/{{item.prqId}}" ngbTooltip="view" placement="bottom" class="view" 
+                 ><i class="bi bi-eye-fill pr"></i></a>
+                 <a  (click)=" OnCLick(item.prqId)" ngbTooltip="Edit" placement="bottom" class="edit" ><i
+                       class="bi bi-pen-fill pr"></i></a>
+              </td>
+           </tr>
+  
+        </tbody>
+     </table>
+  </div>
+
+
+
+    </div>

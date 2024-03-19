@@ -1,0 +1,80 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+      <a routerLink="/master/department-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Department Master "
+         placement="right"></i> </a>
+      </span>
+      <span class=" title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+      </a>
+      </span>
+   </div>
+   <ng-container *ngIf="viewPagecom=='edit'||viewPagecom==''">
+      <h5 class="card-title">New Department Master
+      </h5>
+      <form [formGroup]="formdepartmentMaster">
+         <div class="row">
+            <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">
+                  Department Name <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" formControlName="departmentName"
+                        [ngClass]="{'is-invalid':submitted && f['departmentName'].errors}">
+                     <div *ngIf="submitted && f['departmentName'].errors">
+                        <small class="text-danger" *ngIf="f['departmentName'].errors?.['required']">Please enter department name</small>
+                        <small class="text-danger" *ngIf="f['departmentName'].errors?.['pattern']">Invalid department name</small>
+                        <small class="text-danger" *ngIf="f['departmentName'].errors?.serverError">{{
+                        f['departmentName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <div class="form-group mb-3">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" formControlName="isActive">
+                        <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row pb-2">
+               <div class="col-lg-12">
+                  <div class="float-end">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="submit()">Submit</button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+   </ng-container>
+   <ng-container *ngIf="viewPagecom=='view'">
+      <div class="display">
+         <h5 class="card-title">Department Master</h5>
+         <span class="title">
+         <a (click)="print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i> </a>
+         </span>
+      </div>
+      <div class="row" id="viewData_information">
+         <div class="col-lg-12">
+            <div class="row p-1 bgborder" >
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Department Name:</strong><span>{{departmentmasterById?.departmentName}}</span></label>
+               </div>
+              <div class="col-lg-4">
+                  <label for="inputText" ><strong> Created Date:</strong><span>{{departmentmasterById?.createdOn | date }}</span></label>
+               </div>
+               <div class="col-lg-4">
+                  <label for="inputText" ><strong>Active:  </strong><span> {{departmentmasterById?.isActive?'Yes':'No'}}</span></label>
+               </div>
+            </div>
+         </div>
+      </div>
+   </ng-container>
+</div>

@@ -1,0 +1,393 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/rate-approval" (click)="saveDataForBackUp()"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Rate Approval " placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Matrix Type</b>: {{this.filterpatchedJson?.matrixTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Lane Type</b>: {{this.filterjson?.laneType==2?'Active Lane':'InActive Lane'}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Active</b>: {{this.filterjson?.action==1?'Approved Lanes':'Inactive'}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Transport Mode</b>: {{this.filterpatchedJson?.transTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>From Location</b>: {{this.filterpatchedJson?.fromCityId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>To Location</b>: {{this.filterpatchedJson?.toCityId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Vehicle Type</b>: {{this.filterpatchedJson?.ftlTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Contract Period</b>: {{this.filterpatchedJson?.contractStartDate |
+      date}}-{{this.filterpatchedJson?.contractEndDate | date}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Customer Valid
+         Location</b>:{{this.filterpatchedJson?.location?.fromlocName}},{{this.filterpatchedJson?.location?.tolocName}},{{this.filterpatchedJson?.location?.loadability}}</button>
+   <div class="row">
+      <div class="card-title bgcolortitle  text-center ">FTL Freight Matrix
+      </div>
+      <!-- <form [formGroup]="formMaster"> -->
+      <div class="table-responsive">
+         <table class="table table-bordered">
+            <thead class="bg-secondary text-white ">
+               <tr>
+                  <td scope="col">
+                     <div class="form-check checkbox" style="margin-top: -16px;">
+                        <input type="checkbox" id="gridCheck4" style="width: 15px; height: 15px;" #cehccc
+                           (change)="checkAllrelvent(cehccc.checked)" class="form-check-input">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Lane ID
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Rate
+                  </td>
+                  <td scope="col" class="pt-2">
+                     No. of Vehicle
+                  </td>
+                  <td scope="col" class="pt-2">
+                     TAT
+                  </td>
+                  <td scope="col" class="pt-2">
+                     TAT Base
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Holiday status
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Rate type
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Loading term
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Proposed- LT
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Unloading terms
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Proposed-ULT
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Reason of Update
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Discount in %
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Start Date
+                  </td>
+                  <td scope="col" class="pt-2">
+                     End Date
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Primary Source
+                  </td>
+                  <td scope="col" class="pt-2" *ngIf="this.filterjson.action==2">
+                     Active Status
+                  </td>
+                  <td scope="col" class="pt-2" *ngIf="this.filterjson.action==1">
+                     Approved Status
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Delivery Type
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Second delivery Point
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Other Amount
+                  </td>
+                  <td scope="col" class="pt-2">
+                     <span>Status</span>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     SOB %
+                  </td>
+                  <td scope="col">
+                     Total Pickup in a Year
+                  </td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr style="border-bottom: 1px solid #e9e9e9;" *ngFor="let item of rateApprovalJson ; index as i">
+                  <td>
+                     <div class="form-check checkbox ">
+                        <input type="checkbox" id="gridCheck2" style="width: 15px; height: 15px;"
+                           [(ngModel)]="item.checked" class="form-check-input" #checSing
+                           (change)="singleCheckRel(checSing.checked,i,item)">
+                     </div>
+                  </td>
+                  <td class="newchangecss">
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="lane Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           [(ngModel)]="item.laneId" [disabled]="true" style=" width: 260px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.laneId"
+                              *ngFor="let item of laneMasterList">{{item.fromlocName}}:{{item.tolocName}},{{item.ratetypeload}},{{item.loadability}}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 100px;" min="0"
+                           [value]="item.ftlTripRate" [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 90px;" min="0"
+                           [value]="item.noofVehicle" [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 90px;" min="0" maxlength="3"
+                           [disabled]="true" [value]="item.tatforpickup">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="TAT Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           [(ngModel)]="item.tatbase" [disabled]="true" style="width: 105px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of tatBaseList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Holiday Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           style="  width: 112px;" [disabled]="true" [(ngModel)]="item.holidaystatus">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of holidayStatus">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Rate Type Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           style="  width: 150px;" [disabled]="true" [(ngModel)]="item.ftlRateTypeId">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of RateTypeList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Loading term Select" [searchable]="true" [clearable]="true"
+                           appendTo="body" style="  width: 112px;" [disabled]="true" [(ngModel)]="item.loadingtermId">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 90px;" maxlength="5"
+                           [value]="item.proposedlt" [disabled]="true" style="  width: 112px;">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Unloading Select" [searchable]="true" [clearable]="true"
+                           [(ngModel)]="item.unloadingtermId" [disabled]="true" appendTo="body" style="  width: 112px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" min="0" style="width: 90px;" maxlength="5"
+                           [value]="item.proposedult" [disabled]="true" appendTo="body" style="  width: 112px;">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Reason of Update Select" [searchable]="true" [clearable]="true"
+                           [(ngModel)]="item.reasonId" [disabled]="true" appendTo="body" style="  width: 140px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of reasonUpdateList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" ol-sm-12 col-lg-12">
+                        <input type="number" class="form-control" min="0" style="width: 90px;"
+                           [value]="item.discountinPer" [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" style="  width: 112px;"
+                           [value]="item.startDate | date:'yyyy-MM-dd'" [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" style="  width: 112px;"
+                           [value]="item.endDate | date:'yyyy-MM-dd'" [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="primary source Select" [searchable]="true" [clearable]="true"
+                           [(ngModel)]="item.primarySource" [disabled]="true" appendTo="body" style="  width: 120px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of primaarySourceList">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td *ngIf="this.filterjson.action==2">
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder=" Active Status Select" [searchable]="true" [clearable]="true"
+                           appendTo="body" (change)="approvedStatus($event,i)" style="  width: 120px;">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.id" *ngFor="let item of ActiveStaus">{{item.type}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td *ngIf="this.filterjson.action==1">
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder=" Approved Status Select" [searchable]="true"
+                           (change)="actionStatus($event,i)" [ngModel]="1" [clearable]="true" appendTo="body"
+                           style="  width: 130px;">
+                           <ng-option [value]="item.id" *ngFor="let item of ApprovedStaus">{{item.type}}</ng-option>
+                        </ng-select>
+                        <div class=" col-sm-12 col-lg-12 mt-2" *ngIf="item.reasonofDisapproved">
+                           <textarea class="form-control" cols="3" rows="2" style="height: 50px;" #taggss
+                              (change)="remakrss(taggss.value,i)"></textarea>
+                        </div>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Delivery Type Select" [searchable]="true" [clearable]="true"
+                           [(ngModel)]="item.deliverytypeId" [disabled]="true" appendTo="body" style="width: 125px;">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of deliveryType">{{item.codeDesc}}</ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Second delivery Point Select" [searchable]="true" [clearable]="true"
+                           appendTo="body" style="  width: 150px;" [disabled]="true" [(ngModel)]="item.twopointlocId">
+                           <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                              *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 105px;" [value]="item.otherAmount"
+                           [disabled]="true">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <div class="form-check form-switch" style="margin-top: -10px;">
+                           <input type="checkbox" class="form-check-input" style="width: 100%;"
+                              [(ngModel)]="item.isActive" [disabled]="true">
+                           <div class="forntClass">
+                              <p></p>
+                           </div>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 90px;"
+                           [value]="item.committedPercentage" [disabled]="true" style="  width: 110px;">
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 90px;" [value]="item.pickupinyear"
+                           [disabled]="true" style="  width: 110px;">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+         <div class="text-center">
+            <span *ngIf="rateApprovalJson.length==0">data not found []</span>
+         </div>
+      </div>
+      <div class="row mt-5 mb-5">
+         <div class="text-center" *ngIf="this.sendingJsonForUpload.length>0">
+            <button type="button" class="btn btn-primary rounded-pill btn-padding p-2" style="width: 120px;"
+               (click)="saveExit()">Save &
+               Exit</button>
+            <!-- <button type="button" class="btn btn-primary  rounded-pill btn-padding p-2 m-1"
+                  style="width: 150px;">Validate Contract</button> -->
+         </div>
+      </div>
+      <!-- </form> -->
+   </div>
+</div>

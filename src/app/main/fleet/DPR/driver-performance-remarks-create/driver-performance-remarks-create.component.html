@@ -1,0 +1,186 @@
+<div class="main-contianer">
+    <div class="display display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/fleet/driver-performance-remarks-entry"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Feet"
+                    placement="right"></i> </a>
+        </span>
+
+        <span class="titlemed">Driver Performance & trip Event</span>
+
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+        <div class="row">
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Driver Code<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <ng-select class="pb-2 " placeholder="Select Code/Name"
+                    [readonly]="true"
+                     formControlName="driverId" 
+                    [searchable]="true"
+                    [clearable]="true" [ngClass]="{'is-invalid':submitted && f['driverId'].errors}"
+                    (change)="FllterChange($event)">
+                    <ng-option value="" selected>Select</ng-option>
+                    <ng-option [value]="item" *ngFor="let item of driverList"
+                       [disabled]='!item.isDriverActive'>{{item.manualDriverCode}}</ng-option>
+                 </ng-select>
+                    <div *ngIf="submitted && f['driverId'].errors">
+                        <small class="text-danger" *ngIf="f['driverId'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Driver Name<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+<input type="text" class="form-control" formControlName="driverName" readonly>       
+                    <div *ngIf="submitted && f['driverName'].errors">
+                        <small class="text-danger" *ngIf="f['driverName'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Tripsheet No.<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['groupId'].errors}" readonly>
+                    <div *ngIf="submitted && f['groupId'].errors">
+                        <small class="text-danger" *ngIf="f['groupId'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Vehicle No.<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['vehicleNo'].errors}" readonly>
+                    <div *ngIf="submitted && f['vehicleNo'].errors">
+                        <small class="text-danger" *ngIf="f['vehicleNo'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Date of Remarks<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['dprDate'].errors}" readonly>
+                    <div *ngIf="submitted && f['dprDate'].errors">
+                        <small class="text-danger" *ngIf="f['dprDate'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Performance Remarks<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <ng-select class="pb-2 " placeholder="Select Code/Name" formControlName="remarksID" [searchable]="true"
+                    [clearable]="true" [ngClass]="{'is-invalid':submitted && f['remarksID'].errors}">
+                    <ng-option value="" selected>Select</ng-option>
+                    <ng-option [value]="item.remarksID" *ngFor="let item of remarkList"
+                       [disabled]='!item.isActive'>{{item.remarks}}</ng-option>
+                 </ng-select>
+                    <div *ngIf="submitted && f['remarksID'].errors">
+                        <small class="text-danger" *ngIf="f['remarksID'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Driver Remarks<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['driverRemark'].errors}">
+                    <div *ngIf="submitted && f['driverRemark'].errors">
+                        <small class="text-danger" *ngIf="f['driverRemark'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Date of Joining<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="date" class="form-control"  formControlName="createdOn" 
+                    [ngClass]="{'is-invalid':submitted && f['createdOn'].errors}" readonly>
+                    <div *ngIf="submitted && f['createdOn'].errors">
+                        <small class="text-danger" *ngIf="f['createdOn'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Driver Type<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['groupId'].errors}" readonly>
+                    <div *ngIf="submitted && f['groupId'].errors">
+                        <small class="text-danger" *ngIf="f['groupId'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Staff Remarks<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <textarea type="text" class="form-control" 
+                    [ngClass]="{'is-invalid':submitted && f['staffRemark'].errors}"></textarea>
+                    <div *ngIf="submitted && f['staffRemark'].errors">
+                        <small class="text-danger" *ngIf="f['staffRemark'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Supervisor Comment/Action Taken<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <textarea type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['actionTaken'].errors}"></textarea>
+                    <div *ngIf="submitted && f['actionTaken'].errors">
+                        <small class="text-danger" *ngIf="f['actionTaken'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Penalty<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <input type="text" class="form-control" [ngClass]="{'is-invalid':submitted && f['penalty'].errors}">
+                    <div *ngIf="submitted && f['penalty'].errors">
+                        <small class="text-danger" *ngIf="f['penalty'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3  ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Case Close<span
+                            class="text-danger">*</span></span></label>
+                <div class=" col-sm-12 col-lg-12">
+                    <ng-select class="pb-2 " placeholder="Select Code/Name" formControlName="isCaseClosed" [searchable]="true"
+                    [clearable]="true" [ngClass]="{'is-invalid':submitted && f['isCaseClosed'].errors}">
+                    <ng-option value="" selected>Select</ng-option>
+                    <ng-option [value]="item.id" *ngFor="let item of caseClose"
+                      >{{item.type}}</ng-option>
+                 </ng-select>
+                    <div *ngIf="submitted && f['isCaseClosed'].errors">
+                        <small class="text-danger" *ngIf="f['isCaseClosed'].errors?.['required']">Please select date
+                        </small>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="float-end mt-2 mb-2"><button  type="button" class="btn btn-primary rounded-pill btn-sm btn-padding m-1"
+            (click)="saveDetails()">Submit</button></div>
+    </form>
+</div>

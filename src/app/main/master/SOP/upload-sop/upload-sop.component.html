@@ -1,0 +1,155 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/master/manage-sop"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Manage Sop"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Upload SOP</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+               placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+
+   <form [formGroup]="formmaster">
+      <div class="row mt-3 d-flex justify-content-center mb-2 ">
+         <div class="col-lg-5 borderRadius">
+            <div class="row">
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class="col-sm-3 col-lg-3 col-form-label textRight">
+                        Project<span class="text-danger">*</span>:- </label>
+                        
+                     <div class=" col-sm-9 col-lg-9 has-validation">
+
+                        <ng-select class="pb-2  " placeholder="Select Project" formControlName="customer"
+                           [ngClass]="{'is-invalid':submitted && f['customer'].errors}" [searchable]="true"
+                           [clearable]="true">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [disabled]='!item.isActive' [value]="item.companyName"
+                              *ngFor="let item of companyList">{{item.companyName}}</ng-option>
+                        </ng-select>
+
+
+
+                        <div *ngIf="submitted && f['customer'].errors">
+                           <small class="text-danger" *ngIf="f['customer'].errors?.['required']">Please enter
+                              project</small>
+                           <small class="text-danger" *ngIf="f['customer'].errors?.serverError">{{
+                              f['customer'].errors.serverError}}</small>
+                        </div>
+                        <!-- <div *ngIf="f['customer'].valid" class="valid-feedback">
+                     Password meets the criteria.
+                 </div> -->
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class="col-sm-3 col-lg-3 col-form-label textRight">
+                        Module<span class="text-danger">*</span> :-</label>
+                     <div class=" col-sm-9 col-lg-9 has-validation">
+                        <input type="text" class="form-control" formControlName="moduleName"
+                           [ngClass]="{'is-invalid': submitted && f['moduleName'].errors}">
+
+                        <div *ngIf="submitted && f['moduleName'].errors">
+                           <small class="text-danger" *ngIf="f['moduleName'].errors?.['required']">Please enter
+                              module</small>
+                           <small class="text-danger" *ngIf="f['moduleName'].errors?.serverError">{{
+                              f['moduleName'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class="col-sm-3 col-lg-3 col-form-label textRight">
+                        Sop Title<span class="text-danger">*</span> :-</label>
+                     <div class=" col-sm-9 col-lg-9 has-validation">
+                        <input type="text" class="form-control" formControlName="sopTitle"
+                           [ngClass]="{'is-invalid': submitted && f['sopTitle'].errors}">
+
+                        <div *ngIf="submitted && f['sopTitle'].errors">
+                           <small class="text-danger" *ngIf="f['sopTitle'].errors?.['required']">Please enter sop
+                              title</small>
+                           <small class="text-danger" *ngIf="f['sopTitle'].errors?.serverError">{{
+                              f['sopTitle'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class="col-sm-3 col-lg-3 col-form-label textRight">
+                        File<span class="text-danger">*</span> :-</label>
+                     <div class=" col-sm-9 col-lg-9 has-validation">
+                        <input *ngIf="this.uploadSOP==undefined" class="form-control custom-file-upload" type="file"
+                           accept=".png, .jpg, .jpeg ,.pdf" (change)="onFileChancancelChqque($event,3)">
+                        <div *ngIf="this.uploadSOP" class="card p-1 text-bg-primary text-center w-auto">
+                           <span>{{this.uploadSOP}}</span>
+                           <span class="badge badge-secondary removeFile" (click)="this.fileResetPan()">X</span>
+                        </div>
+                        <div *ngIf="submitted && f['sopFileName'].errors">
+                           <small class="text-danger" *ngIf="f['sopFileName'].errors?.['required']">Please upload file
+                           </small>
+                           <small class="text-danger" *ngIf="f['sopFileName'].errors?.['pattern']">Invalid upload file
+                              name</small>
+                           <small class="text-danger" *ngIf="f['sopFileName'].errors?.serverError">{{
+                              f['sopFileName'].errors.serverError}}</small>
+                        </div>
+
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class="col-sm-3 col-lg-3 col-form-label textRight">
+                        Description<span class="text-danger">*</span> :-</label>
+                     <div class=" col-sm-9 col-lg-9 has-validation">
+                        <textarea type="text" class="form-control" formControlName="sopDescription"
+                           style="min-height:60px !important;"
+                           [ngClass]="{'is-invalid': submitted && f['sopDescription'].errors}"></textarea>
+
+                        <div *ngIf="submitted && f['sopDescription'].errors">
+                           <small class="text-danger" *ngIf="f['sopDescription'].errors?.['required']">Please enter
+                              description</small>
+                           <small class="text-danger" *ngIf="f['sopDescription'].errors?.serverError">{{
+                              f['sopDescription'].errors.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-12 mt-2">
+                  <div class="row ">
+                     <label for="inputText" class=" col-sm-3 col-lg-3 col-form-label textRight">Status :-
+                     </label>
+                     <div class=" col-sm-9 col-lg-9 mt-1">
+                        <div class="form-check form-switch ">
+                           <input type="checkbox" class="form-check-input" formControlName="isActive">
+                           <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                              f['isActive'].errors?.serverError}}</small>
+                        </div>
+                     </div>
+                  </div>
+               </div>
+
+            </div>
+            <div class="text-center">
+               <button (click)="OnSubmit()" type="button"
+                  class="btn btn-primary rounded-pill btn-sm btn-padding mt-2 mb-2">Submit</button>
+            </div>
+         </div>
+      </div>
+
+  
+
+   </form>
+
+
+
+
+
+
+</div>

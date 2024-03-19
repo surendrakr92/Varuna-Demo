@@ -1,0 +1,193 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row">
+      <div class="card-title bgcolortitle text-center">Customer Contract Master</div>
+      <form [formGroup]="filterValidationForm">
+         <div class="row">
+            <div class="col-lg-4 row">
+               <label for="inputText" class="col-sm-3 col-lg-3 col-form-label"><span class="float-end">Type<span
+                        class="text-danger">*</span></span></label>
+               <div class=" col-sm-9 col-lg-9">
+                  <ng-select class="pb-2  " placeholder="Pay Basis select" formControlName="contractType"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && filerValidate['contractType'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of payBasisList"
+                        [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && filerValidate['contractType'].errors">
+                     <small class="text-danger" *ngIf="filerValidate['contractType'].errors?.['required']">please select
+                        Type
+                     </small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-5 row" style="width: 44%;">
+               <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"><span class="float-end">Customer Name and
+                     Code<span class="text-danger">*</span></span></label>
+               <div class=" col-sm-7 col-lg-7">
+                  <ng-select class="pb-2  " placeholder="Customer Name and Code" formControlName="custNC"
+                     [searchable]="true" [clearable]="true" (change)="gridRefresh()"
+                     [ngClass]="{'is-invalid':submitted && filerValidate['custNC'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.custId" *ngFor="let item of customerMasterList"
+                        [disabled]='!item.isActive'>{{item.custName}} {{item.custCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && filerValidate['custNC'].errors">
+                     <small class="text-danger" *ngIf="filerValidate['custNC'].errors?.['required']">please
+                        select Customer Name and Code
+                     </small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3 row">
+               <div class="row ">
+                  <!-- <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"></label> -->
+                  <div class=" col-sm-12 col-lg-12">
+                     <button (click)="showExistingTables()" type="button"
+                        class="btn btn-primary rounded-pill btn-padding2">Show Existing Contract <span
+                           class="arrowanimation"></span></button>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <div>
+         <div class="row" *ngIf="this.filterValidationForm.controls['custNC'].value!=null">
+            <div class="pb-1">
+               <button type="button" class="btn btn-success m-1" style="float: right;" (click)="Next('create')"><i
+                     class="bi bi-plus-lg "></i> Create</button>
+            </div>
+         </div>
+         <div class="table-responsive" *ngIf="contractByCustlist.length>0">
+            <table class="table table-report table-hover ">
+               <thead class="bg-secondary text-white">
+                  <tr>
+                     <th>Contract ID</th>
+                     <th>Validate From</th>
+                     <th>Validate To date</th>
+                     <th>Contact Expire Days</th>
+                     <th>Status</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="zoom-in" *ngFor="let item of contractByCustlist">
+                     <td>{{item?.contractCode}}</td>
+                     <td>{{item?.contractStartDate | date : 'dd/MM/yyyy'}}</td>
+                     <td>{{item?.contractEndDate | date : 'dd/MM/yyyy'}}</td>
+                     <td>{{item?.daysToExpire}} {{item?.daysToExpire?'Days':''}}</td>
+                     <td>
+                        <span><i class="bi bi-check2-square pr"></i>
+                           Active
+                        </span>
+                     </td>
+                     <td>
+                        <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm"
+                           (click)="Next(item)"
+                           ngbTooltip="Update basic Info./ Update Contract Clause /  Update Service Selection">Next<span
+                              class="arrowanimation"></span></button>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </div>
+   <!-- popup confirm-->
+   <ng-template #modalmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">New Customer Contact master</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <!-- <form [formGroup]="formMaster">
+            <div class="row">
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Code & Name  <span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <ng-select placeholder="Load Type Select" [searchable]="true" [clearable]="true"
+                     formControlName="cutomerCode">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.custId"
+                     *ngFor="let item of masterList">{{item.custGroupName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['customerCode'].errors">
+                        <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter distance
+                        </small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Payment Basis<span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <select class="form-select">
+                        <option>Select</option>
+                        <option>Paid</option>
+                        <option>TBB</option>
+                     </select>
+                     <div *ngIf="submitted && f['customerCode'].errors">
+                        <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter distance
+                        </small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Start Date<span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="date" class="form-control" formControlName="customerCode"
+                        [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                     <div *ngIf="submitted && f['customerCode'].errors">
+                        <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter distance
+                        </small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">	End Date<span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <input type="date" class="form-control" formControlName="customerCode"
+                        [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                     <div *ngIf="submitted && f['customerCode'].errors">
+                        <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter distance
+                        </small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Description<span class="text-danger">*</span></label>
+                  <div class=" col-sm-12 col-lg-12 ">
+                     <textarea type="text" class="form-control" formControlName="customerCode"
+                        [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  ></textarea>
+                     <div *ngIf="submitted && f['customerCode'].errors">
+                        <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter distance
+                        </small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </form> -->
+         <br>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary  d-inline  btn-sm">Submit</button>
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">cancel</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+</div>

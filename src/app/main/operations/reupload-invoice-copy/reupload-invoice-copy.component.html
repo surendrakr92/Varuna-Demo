@@ -1,0 +1,92 @@
+
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Reupload Invoice copy</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+    <form [formGroup]="formMaster">
+
+        <div class="row mt-3 d-flex justify-content-center  mb-2">
+
+            <div class="col-lg-8">
+                <div class="row">
+                    <div class="col-lg-6 ">
+                        <div class="row">
+                            <label for="inputText" class="col-sm-4 col-lg-4 col-form-label ">Docket/ LR No. <span
+                                    class="text-danger">*</span></label>
+                            <div class=" col-sm-8 col-lg-8 ">
+
+                                <input type="text" class="form-control" formControlName="DockNo"
+                                [ngClass]="{'is-invalid':submitted && f['DockNo'].errors}" >
+
+        
+                                <div *ngIf="submitted && f['DockNo'].errors">
+                                    <small class="text-danger" *ngIf="f['DockNo'].errors?.['required']">Please enter Docket/ LR No.
+                                    </small>
+        
+                                    <small class="text-danger" *ngIf="f['DockNo'].errors?.serverError">{{
+                                        f['DockNo'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <div class="row">
+                            <label for="inputText" class="col-sm-4 col-lg-4 col-form-label">Upload Invoice   <span
+                                    class="text-danger">*</span></label>
+                            <div class=" col-sm-8 col-lg-8 ">
+                                <input *ngIf="this.selectuploadCopy==undefined" class="form-control custom-file-upload"
+                                type="file" accept=".png, .jpg, .jpeg ,.pdf" (change)="onFileChancancelChqque($event,3)">
+                                <div *ngIf="this.selectuploadCopy" class="card p-1 text-bg-primary text-center w-auto">
+                                   <span>{{this.selectuploadCopy}}</span>  
+                                   <span class="badge badge-secondary removeFile" (click)="this.fileResetPan()">X</span>
+                                </div>
+                                <div *ngIf="submitted && f['documentName'].errors">
+                                   <small class="text-danger" *ngIf="f['documentName'].errors?.['required']">Please upload Invoice
+                                   </small>
+                                   <!-- <small class="text-danger" *ngIf="f['documentName'].errors?.['pattern']">Invalid upload file
+                                   name</small> -->
+                                   <small class="text-danger" *ngIf="f['documentName'].errors?.serverError">{{
+                                   f['documentName'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+                    
+        
+             
+
+                </div>
+            </div>
+
+
+        </div>
+
+
+        <div class="row">
+            <div class="text-center mt-4 mb-2">
+                <button type="button" (click)="onSubmit()" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+            </div>
+        </div>
+  
+
+    </form>
+
+
+
+
+
+
+
+</div>

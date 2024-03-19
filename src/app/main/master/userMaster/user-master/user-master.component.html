@@ -1,0 +1,89 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon"  ngbTooltip="Back to Master "
+             ></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+    <div class="display">
+       <h5 class="card-title">User Master List
+       </h5>
+ 
+       <div class=" pb-2">
+          <button type="button" class="btn btn-success m-1" routerLink="/master/user-master/new-user-master" placement="bottom"
+             ngbTooltip="Create New User Master"><i class="bi bi-plus-lg "></i> Create </button>
+ 
+          <button class="btn btn-secondary text-white" placement="bottom"
+          (click)="downloadExcel(MyTable)"
+          ngbTooltip="Download List" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+             <i class="bi bi-download"></i>
+          </button>
+ 
+       </div>
+ 
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+          #MyTable>
+          <thead class="bg-secondary text-white">
+             <tr>
+                <th>Sr. No.</th>
+                <th>User Code</th>
+                <th>User Type</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>dob</th>
+                <th>doj</th>
+                <th>Resi Address</th>
+                <th>Mobile No</th>
+                 <th>Email Id</th>
+                <th>Phone No</th>
+                <th>Bank Account No</th>
+                <th>IFSC Code</th>
+                <th>Mobile Deviceid</th>
+                  <th>is Active</th>
+                <th>Action</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr class="zoom-in" *ngFor="let item of userMasterList; let i=index;">
+                <td>{{i+1}}</td>
+                <td>{{item.userCode}} </td>
+                <td>{{item.userType}}</td>
+                <td>{{item.name}}</td>
+                <td>{{item.gender}}</td>
+                <td>{{item.dob | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.doj | date:'dd/MM/yyyy'}}</td>
+                <td>{{item.resiAddress}}</td>
+                <td>{{item.mobileno}}</td>
+                 <td>{{item.emailId}}</td>
+                <td>{{item.phoneNo}}</td>
+                <td>{{item.bankAccountNo}}</td>
+                <td>{{item.mobileDeviceid}}</td>
+                <td>{{item.ifscCode}}</td>
+               
+                <td>
+ 
+                   <span class="{{item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                      {{item.isActive?'Active':'Inactive'}}</span>
+                
+                </td>
+                <td class="display2 ">
+                         <a (click)="rediredctionView(item.userId)" placement="bottom" ngbTooltip="View" class="view"><i
+                           class="bi bi-eye-fill pr"></i></a>
+                     <a (click)="redirectionEdit(item.userId)" placement="bottom" ngbTooltip="Edit" class="edit"><i
+                           class="bi bi-pen-fill pr"></i></a>
+                </td>
+             </tr>
+ 
+          </tbody>
+       </table>
+ 
+    </div>
+ 
+ </div>

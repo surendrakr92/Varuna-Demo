@@ -1,0 +1,84 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+      <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+         placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Scan Document</span>
+      <span class="title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+         placement="bottom"></i>
+      </a>
+      </span>
+   </div>
+   <div class="row  mt-4 d-flex justify-content-center">
+      <div class="col-lg-5">
+         <div class="row mb-2">
+            <label for="inputText" class="col-sm-9 col-form-label" style="width: 37%;"><span class="float-end">Number Of
+            Rows :</span> </label>
+            <div class="col-sm-3" style="margin-left: 0px; padding-left: 0px;    padding-right: 0px;">
+               <input type="number" class="form-control" #noRow max="60" min="1">
+            </div>
+            <div class="col-sm-4">
+               <button type="button" class="btn btn-warning rounded-pill btn-padding  p-1"
+               (click)="addRowForTables(noRow.value)"  >+ Add Rows</button>
+            </div>
+         </div>
+      </div>
+   </div>
+      <div class="maincontain" *ngFor="let data of saveedJson.documentsData ; index as i">
+         <div class="item">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Type of Document<span
+               class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <ng-select class="pb-2 " placeholder="Select Document"
+               [searchable]="true" [clearable]="true" appendTo="body"
+               (change)="setupJson($event,i,'docType')">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [value]="item.id" *ngFor="let item of documentList ">{{item.type}}</ng-option>
+               </ng-select>
+            </div>
+         </div>
+         <div class="item">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">POD Number<span
+               class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <input type="text" class="form-control" #podDt
+               (change)="setupJson(podDt.value,i,'docketNo')">
+            </div>
+         </div>
+         <div class="item">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Document Number<span
+               class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <input type="text" class="form-control"
+               (change)="setupJson(podDt.value,i,'documentNo')"></div>
+         </div>
+         <div class="item">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Scan Status<span
+               class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12 ">
+               <input type="text" class="form-control" readonly 
+               (change)="setupJson(podDt.value,i,'scanStatus')">
+            </div>
+         </div>
+         <div class="item">
+            <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Upload Copy<span
+               class="text-danger">*</span></label>
+            <div class=" col-sm-12 col-lg-12">
+               <input *ngIf="data.documentName==undefined || data.documentName==''" class="form-control custom-file-upload"
+               type="file" accept=".png, .jpg, .jpeg ,.pdf" (change)="onFileChancancelChqque($event,3,i)">
+               <div *ngIf="data.documentName" class="card p-1 text-bg-primary text-center w-auto">
+                  <span>{{data.documentName}}</span>  
+                  <span class="badge badge-secondary removeFile" (click)="this.fileResetPan(i)">X</span>
+               </div>
+              
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="text-center mt-2 mb-2">
+            <button type="button" (click)="onSubmit()" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+         </div>
+      </div>
+</div>

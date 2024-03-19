@@ -1,0 +1,543 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/master/owner-master"><i class="bi bi-arrow-return-left booticon"
+          ngbTooltip="Back to Owner Master " placement="right"></i> </a>
+       </span>
+       <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <ng-container *ngIf="viewPagecom=='edit'||viewPagecom== ''">
+       <h5 class="card-title">{{viewPagecom=='edit'?'Update Owner Master':' New Owner Master'}} </h5>
+       <form [formGroup]="ownerMasterForm" (ngSubmit)="onsubmit()">
+       <div class="row ">
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Owner Name <span class="text-danger">*</span>
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="name"
+                   [ngClass]="{'is-invalid':submitted && f['name'].errors}">
+                <div *ngIf="submitted && f['name'].errors">
+                   <small class="text-danger" *ngIf="f['name'].errors?.['required']">Please enter owner name
+                   </small>
+                   <small class="text-danger" *ngIf="f['name'].errors?.['pattern']">invalid data</small>
+                   <small class="text-danger" *ngIf="f['name'].errors?.serverError">{{
+                   f['name'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Owner Address <span class="text-danger">*</span>
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <textarea type="text" class="form-control" formControlName="address"
+                   [ngClass]="{'is-invalid':submitted && f['address'].errors}"
+                   style="height: 30px;"></textarea>
+                <div *ngIf="submitted && f['address'].errors">
+                   <small class="text-danger" *ngIf="f['address'].errors?.['required']">Please enter address
+                   </small>
+                   <small class="text-danger" *ngIf="f['address'].errors?.serverError">{{
+                   f['address'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner Pin Code<span class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12 ">
+                   <ng-select class="pb-2 " placeholder="PinCode Select" formControlName="pincodeId"
+                   [searchable]="true" [clearable]="true"
+                   [ngClass]="{'is-invalid':submitted && f['pincodeId'].errors}"
+                   (change)="dropDownForbinding($event,'pincode')"(keyup)="dropDownForbinding($event,'pincode')">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item.pincodeId" name="item" *ngFor="let item of pinCodeList">
+                   {{item.pinCode}}</ng-option>
+                   </ng-select>
+                   <div *ngIf="submitted && f['pincodeId'].errors">
+                      <small class="text-danger" *ngIf="f['pincodeId'].errors?.['required']">Please
+                      select
+                      pin code
+                      </small>
+                      <small class="text-danger" *ngIf="f['pincodeId'].errors?.serverError">{{
+                      f['pincodeId'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner City <span class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12 ">
+                   <ng-select class="pb-2 " placeholder="City Select" formControlName="cityId"
+                   [searchable]="true" [clearable]="true"
+                   [ngClass]="{'is-invalid':submitted && f['cityId'].errors}"
+                   (change)="dropDownForbinding($event,'cityName')">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                   [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+                   </ng-select>
+                   <div *ngIf="submitted && f['cityId'].errors">
+                      <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">Please
+                      select
+                      city </small>
+                      <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                      f['cityId'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner State <span class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12 ">
+                   <ng-select class="pb-2 " placeholder="State Select" formControlName="stateId"
+                   [searchable]="true" [clearable]="true"
+                   (change)="dropDownForbinding($event,'stateName')"
+                   [ngClass]="{'is-invalid':submitted && f['stateId'].errors}">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item.stateId" *ngFor="let item of stateList"
+                   [disabled]='!item.isActive'>{{item.stateName}}</ng-option>
+                   </ng-select>
+                   <div *ngIf="submitted && f['stateId'].errors">
+                      <small class="text-danger" *ngIf="f['stateId'].errors?.['required']">Please
+                      select
+                      state</small>
+                      <small class="text-danger" *ngIf="f['stateId'].errors?.serverError">{{
+                      f['stateId'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner Country <span class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12 ">
+                   <ng-select class="pb-2  " placeholder="Country Select" formControlName="countryId"
+                   [searchable]="true" [clearable]="true"
+                   [ngClass]="{'is-invalid':submitted && f['countryId'].errors}">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option [value]="item.countryId" *ngFor="let item of countryMasterList"
+                   [disabled]='!item.isActive'>{{item.countryName}}</ng-option>
+                   </ng-select>
+                   <div *ngIf="submitted && f['countryId'].errors">
+                      <small class="text-danger" *ngIf="f['countryId'].errors?.['required']">Please
+                      select country
+                      </small>
+                      <small class="text-danger" *ngIf="f['countryId'].errors?.serverError">{{
+                      f['countryId'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Owner Pan Number <span class="text-danger">*</span>
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="panNo"
+                id="code" appUpperCase
+                   [ngClass]="{'is-invalid':submitted && f['panNo'].errors}">
+                <div *ngIf="submitted && f['panNo'].errors">
+                   <small class="text-danger" *ngIf="f['panNo'].errors?.['required']">Please enter pan number
+                   </small>
+                   <small class="text-danger" *ngIf="f['panNo'].errors?.['pattern']">Invalid data</small>
+                   <small class="text-danger" *ngIf="f['panNo'].errors?.serverError">{{
+                   f['panNo'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Owner Phone Number <span class="text-danger">*</span>
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="phoneNo"
+                   [ngClass]="{'is-invalid':submitted && f['phoneNo'].errors}" maxlength="10">
+                <div *ngIf="submitted && f['phoneNo'].errors">
+                   <small class="text-danger" *ngIf="f['phoneNo'].errors?.['required']">Please enter phone no
+                   </small>
+                   <small class="text-danger" *ngIf="f['phoneNo'].errors?.['pattern']">Invalid phone no
+                   </small>
+                   <small class="text-danger" *ngIf="f['phoneNo'].errors?.serverError">{{
+                   f['phoneNo'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Upload Pan Card 
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <!-- <input type="file" class="form-control" formControlName="panCardFilePath"
+                   [ngClass]="{'is-invalid':submitted && f['panCardFilePath'].errors}"> -->
+                <input *ngIf="this.selectedPanCard==undefined" class="form-control custom-file-upload"
+                type="file" accept=".png, .jpg, .jpeg ,.pdf" (change)="onFileChancancelChqque($event,3)">
+                <div *ngIf="this.selectedPanCard" class="card p-1 text-bg-primary text-center w-auto">
+                   <span>{{this.selectedPanCard}}</span>  
+                   <span class="badge badge-secondary removeFile" (click)="this.fileResetPan()">X</span>
+                </div>
+                <div *ngIf="submitted && f['panCardFilePath'].errors">
+                   <small class="text-danger" *ngIf="f['panCardFilePath'].errors?.['required']">Please upload file
+                   </small>
+                   <small class="text-danger" *ngIf="f['panCardFilePath'].errors?.['pattern']">Invalid upload file
+                   name</small>
+                   <small class="text-danger" *ngIf="f['panCardFilePath'].errors?.serverError">{{
+                   f['panCardFilePath'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Bank Name
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <ng-select class="pb-2 " placeholder="Select Bank Name" formControlName="bankId"
+                [searchable]="true" [clearable]="true"
+                [ngClass]="{'is-invalid':submitted && f['bankId'].errors}">
+                <ng-option value="" selected>Select</ng-option>
+                <ng-option [value]="item.generalId" *ngFor="let item of bankNameList"
+                [disabled]='!item.codeDesc'>{{item.codeDesc}}</ng-option>
+                </ng-select>
+                <div *ngIf="submitted && f['bankId'].errors">
+                   <small class="text-danger" *ngIf="f['bankId'].errors?.['required']">Please select bank name
+                   </small>
+                   <small class="text-danger" *ngIf="f['bankId'].errors?.serverError">{{
+                   f['bankId'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Account Number
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="accountNo"
+                   [ngClass]="{'is-invalid':submitted && f['accountNo'].errors}" maxlength="30">
+                <div *ngIf="submitted && f['accountNo'].errors">
+                   <small class="text-danger" *ngIf="f['accountNo'].errors?.['required']">Please enter account
+                   number
+                   </small>
+                   <small class="text-danger" *ngIf="f['accountNo'].errors?.['pattern']">Invalid account
+                   number</small>
+                   <small class="text-danger" *ngIf="f['accountNo'].errors?.serverError">{{
+                   f['accountNo'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Clearing Code 
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="clearingCode"
+                   [ngClass]="{'is-invalid':submitted && f['clearingCode'].errors}" maxlength="30">
+                <div *ngIf="submitted && f['clearingCode'].errors">
+                   <small class="text-danger" *ngIf="f['clearingCode'].errors?.['required']">Please enter ifsc
+                   code
+                   </small>
+                   <small class="text-danger" *ngIf="f['clearingCode'].errors?.['pattern']">Invalid ifsc
+                   code</small>
+                   <small class="text-danger" *ngIf="f['clearingCode'].errors?.serverError">{{
+                   f['clearingCode'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             SWIFT Code
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input type="text" class="form-control" formControlName="swiftBIC"
+                   [ngClass]="{'is-invalid':submitted && f['swiftBIC'].errors}" maxlength="30">
+                <div *ngIf="submitted && f['swiftBIC'].errors">
+                   <small class="text-danger" *ngIf="f['swiftBIC'].errors?.['required']">Please enter SWIFT Code
+                   </small>
+                   <small class="text-danger" *ngIf="f['swiftBIC'].errors?.['pattern']">Invalid SWIFT Code</small>
+                   <small class="text-danger" *ngIf="f['swiftBIC'].errors?.serverError">{{
+                   f['swiftBIC'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Cancel Cheque Copy uploader
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <input *ngIf="this.selectedcancelCheque==undefined" class="form-control custom-file-upload"
+                type="file" accept=".png, .jpg, .jpeg,.pdf" (change)="onFileChancancelChqque($event,1)">
+                <div *ngIf="this.selectedcancelCheque" class="card p-1 text-bg-primary text-center w-auto">
+                   <span>{{this.selectedcancelCheque}}</span>
+                   <span class="badge badge-secondary removeFile"
+                      (click)="this.fileResetcancelCheque()">X</span>
+                </div>
+                <div *ngIf="submitted && f['cancelChequePath'].errors">
+                   <small class="text-danger" *ngIf="f['cancelChequePath'].errors?.['required']">Please upload  Cancel cheque
+                   </small>
+                   <small class="text-danger" *ngIf="f['cancelChequePath'].errors?.['pattern']">Invalid  Cancel cheque
+                   name</small>
+                   <small class="text-danger" *ngIf="f['cancelChequePath'].errors?.serverError">{{
+                   f['cancelChequePath'].errors.serverError}}</small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-1 ">
+             <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+             Status
+             </label>
+             <div class=" col-sm-12 col-lg-12">
+                <div class="form-check form-switch ">
+                   <input type="checkbox" class="form-check-input" formControlName="isActive">
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-3 mb-3">
+          <div class="card-title text-center" style="background-color:#52456314">Owner Details
+          </div>
+          <div class="row">
+             <div class="col-lg-12">
+                <div class="float-end">
+                   <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                      (click)="modelopen(modalmsg)">+ Add Owner Details</button>
+                </div>
+             </div>
+          </div>
+          <div class="table-responsive">
+             <table class="table table-report table-hover ">
+                <thead class="bg-secondary text-white">
+                   <tr>
+                      <th>Sr. No.</th>
+                      <th>15G Submitted </th>
+                      <th>Upload 15G Certificate</th>
+                      <th>Valid From Date</th>
+                      <th>Valid To Date</th>
+                      <th>Action</th>
+                   </tr>
+                </thead>
+                <tbody>
+                   <tr class="zoom-in" *ngFor="let data of ownerDetailsArray; index as i;">
+                      <td>{{i+1}}</td>
+                      <td><span>{{data?.is15GSubmited?'Submitted':'Not Submitted'}}</span></td>
+                      <td>{{data?.filePath}}</td>
+                      <td>{{data?.fromDate}}</td>
+                      <td>{{data?.toDate}}</td>
+                      <td class="display2">
+                         <a (click)="redirectionEditForOwner(data,modalmsg,i)" ngbTooltip="Edit "
+                            placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                         <!-- <a placement="bottom" class="delete" (click)="removeDetails(i)">
+                            <div class="form-check form-switch ">
+                                <i class="bi bi-trash3-fill"></i>
+                            </div>
+                            </a> -->
+                      </td>
+                   </tr>
+                </tbody>
+             </table>
+          </div>
+       </div>
+       <div class="row">
+          <div class="col-lg-12">
+             <div class="float-end">
+                <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                   (click)="onsubmit()">Submit</button>
+             </div>
+          </div>
+       </div>
+       </form>
+    </ng-container>
+    <!-- popup confirm-->
+    <ng-template #modalmsg let-modal>
+       <div class="modal-header qut-hd">
+          <h6 class="modal-title" id="exampleModalCenterTitle">Owner Details</h6>
+          <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+             aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+             aria-hidden="true" class="fa fa-times"></i></button>
+       </div>
+       <div class="modal-body" tabindex="0" ngbAutofocus>
+          <form action="" [formGroup]="ownerDetailForm">
+             <div class="row ">
+                <div class="col-lg-4">
+                   <div class="form-group mb-2">
+                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">15G Submitted </label>
+                      <div class="row">
+                         <div class=" col-sm-12 col-lg-12 has-validation pr-4 mb-2">
+                            <div class="form-check form-switch p-2">
+                               <input type="checkbox" class="form-check-input" formControlName="is15GSubmited"
+                                  (change)="is15Submitted($event)">
+                            </div>
+                         </div>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-lg-4 " *ngIf="this.ownerDetailForm.controls['is15GSubmited'].value==true">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                   Upload 15G Certificate
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <input *ngIf="this.selected15GsubFile==undefined" class="form-control custom-file-upload"
+                      type="file" accept=".png, .jpg, .jpeg,.pdf" (change)="onFileChancancelChqque($event,2)">
+                      <div *ngIf="this.selected15GsubFile" class="card p-1 text-bg-primary text-center w-auto">
+                         <span>{{this.selected15GsubFile}}</span>
+                         <span class="badge badge-secondary removeFile" (click)="this.fileresetForGS()">X</span>
+                      </div>
+                      <div *ngIf="submittO && ff['filePath'].errors">
+                         <small class="text-danger" *ngIf="ff['filePath'].errors?.['required']">Please upload 15G certificate
+                         </small>
+                         <small class="text-danger" *ngIf="ff['filePath'].errors?.['pattern']">Invalid group
+                         name</small>
+                         <small class="text-danger" *ngIf="ff['filePath'].errors?.serverError">{{
+                         ff['filePath'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-lg-4 ">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                   Valid From date
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <input type="date" class="form-control" formControlName="fromDate"
+                      [readOnly]="this.owenerDetailsId>-1"
+                      [ngClass]="{'is-invalid':submittO && ff['fromDate'].errors}">
+                      <div *ngIf="submittO && ff['fromDate'].errors">
+                         <small class="text-danger" *ngIf="ff['fromDate'].errors?.['required']">Valid from date
+                         </small>
+                         <small class="text-danger" *ngIf="ff['fromDate'].errors?.['pattern']">Valid from date</small>
+                         <small class="text-danger" *ngIf="ff['fromDate'].errors?.serverError">{{
+                         ff['fromDate'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+                <div class="col-lg-4 ">
+                   <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                   Validate To Date
+                   </label>
+                   <div class=" col-sm-12 col-lg-12">
+                      <input type="date" class="form-control" formControlName="toDate"
+                      [readOnly]="this.owenerDetailsId>-1"
+                      [ngClass]="{'is-invalid':submittO && ff['toDate'].errors}" maxlength="30">
+                      <div *ngIf="submittO && ff['toDate'].errors">
+                         <small class="text-danger" *ngIf="ff['toDate'].errors?.['required']">Validate To Date
+                         </small>
+                         <small class="text-danger" *ngIf="ff['toDate'].errors?.['pattern']">Validate To Date
+                         </small>
+                         <small class="text-danger" *ngIf="ff['toDate'].errors?.serverError">{{
+                         ff['toDate'].errors.serverError}}</small>
+                      </div>
+                   </div>
+                </div>
+             </div>
+             <div class="row">
+                <div class="col-lg-12">
+                   <div class="float-end">
+                      <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                         (click)="submitOwnerD()">Submit Owner</button>
+                   </div>
+                </div>
+             </div>
+          </form>
+          <br>
+       </div>
+    </ng-template>
+    <!-- close popup confirm-->
+    <!-- </ng-container> -->
+    <ng-container *ngIf="viewPagecom== 'view'">
+       <div class="display">
+          <h5 class="card-title">Owner Master</h5>
+          <span class="title">
+          <a (click)="download_pdf_print()" href="javascript:voide(0);"> <i class="bi bi-printer booticon"
+             ngbTooltip="Print" placement="bottom"></i> </a>
+          </span>
+       </div>
+       <div class="col-lg-12" id="viewData_information">
+          <div class="row p-1 bgborder">
+             <div class="card-title bg-dark-light text-center">Owner Details
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Name:</strong><span>{{driverDetailsById?.name}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Address:</strong><span> {{driverDetailsById?.address}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Pin Code:</strong><span>
+                {{driverDetailsById?.pinCode}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner City Name:</strong><span>
+                {{driverDetailsById?.cityName}}</span></label>
+             </div>
+             <div class="col-lg-4">
+               <label for="inputText"><strong>Owner State Name:</strong><span>
+               {{driverDetailsById?.stateName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Owner Country Name:</strong><span>
+               {{driverDetailsById?.countryName }}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText"><strong>Owner PAN Number :</strong><span>
+               {{driverDetailsById?.panNo}}</span></label>
+            </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Phone Number:</strong><span>
+                {{driverDetailsById?.phoneNo}}</span></label>
+             </div>
+         
+          
+          
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Pan Card File
+                :</strong><span>{{driverDetailsById?.panCardFilePath}}</span></label>
+             </div>
+             <!-- <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Bank Name</strong><span>
+                {{driverDetailsById?.bankId}}</span></label>
+             </div> -->
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Account Number</strong><span>
+                {{driverDetailsById?.accountNo}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Clearing Code</strong><span>
+                {{driverDetailsById?.clearingCode}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Owner Cancel Cheque</strong><span>
+                {{driverDetailsById?.cancelChequePath}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Status</strong><span>
+                {{driverDetailsById?.isActive?'Yes':'No'}}</span></label>
+             </div>
+          </div>
+          <div class="row p-1 bgborder">
+             <div class="card-title bg-dark-light text-center" >Owner 15G Details
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>
+               15G Submited:</strong><span>{{driverDetailsById?.ownerDetails[0].is15GSubmited?'Yes':'No'}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>File Path:</strong><span>
+                {{driverDetailsById?.ownerDetails[0].filePath}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>From Date:</strong><span>
+                {{driverDetailsById?.ownerDetails[0].fromDate | date}}</span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>To Date::</strong><span>
+                {{driverDetailsById?.ownerDetails[0].toDate | date}}</span></label>
+             </div>
+          </div>  
+       </div>
+    </ng-container>
+ </div>

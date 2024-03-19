@@ -1,0 +1,144 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Zone Master" placement="bottom"></i> </a>
+       </span>
+       <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="display">
+       <h5 class="card-title">PRQ Closure Update</h5>
+    </div>
+    <form [formGroup]="formMaster">
+    <div class="row  d-flex justify-content-center mb-2">
+       <div class="col-lg-2">
+          <span class="float-end">PRQ Number</span> 
+       </div>
+       <div class="col-lg-3">
+         <div class="form-group ">
+            
+             <div class=" col-sm-12 col-lg-12">
+                 <input type="text" class="form-control" formControlName="prqNo"
+                     [ngClass]="{'is-invalid':submitted && f['prqNo'].errors}">
+
+                 <div *ngIf="submitted && f['prqNo'].errors">
+                     <small class="text-danger" *ngIf="f['prqNo'].errors?.['required']">Please enter
+                        PRQ number
+                         </small>
+                         <small class="text-danger" *ngIf="f['prqNo'].errors?.serverError">{{
+                           f['prqNo'].errors.serverError}}</small>
+                 </div>
+             </div>
+         </div>
+     </div>
+       <div class="col-lg-2">
+          <button type="button" class="btn btn-warning rounded-pill  btn-padding " (click)="PRQFilter()"><i class="bi bi-search"></i> Search</button>
+       </div>
+    </div>
+  </form>
+  
+
+    <table class="table table-bordered">
+          <thead class="bg-secondary text-white">
+             <tr>
+                <th>Sr. No.</th>
+                <th>LR No.</th>
+                <th>Pick-up City</th>
+                <th>Consignor</th>
+                <th>Consignor Address</th>
+                <th>Delivery city</th>
+                <th>Consignee</th>
+                <th>Consignee Address</th>
+             </tr>
+          </thead>
+          <tbody>
+             <tr *ngFor="let item of closerUpdateList; let i= index;">
+                <td>{{i+1}}</td>
+                <td>{{item.dockNo}}</td>
+                <td>
+             <div class=" col-sm-12 col-lg-12">
+               <ng-select class="pb-2 " placeholder="Select Pick up City" 
+                 [searchable]="true" [clearable]="true" 
+                 [(ngModel)]="item.fromCityName">
+                 <ng-option 
+                 selected="item.fromCityId" >{{item.fromCityName}} </ng-option>
+                 </ng-select> 
+                     
+                   </div> 
+                </td>
+      
+                <td>
+                  <div class=" col-sm-12 col-lg-12">
+     
+                    <ng-select class="pb-2 " placeholder="Select Consignor" 
+                    [searchable]="true" [clearable]="true" 
+                    [(ngModel)]="item.consgnName">
+                    <ng-option 
+                    selected="item.consgnId" >{{item.consgnName}} </ng-option>
+                    </ng-select> 
+
+
+                        </div> 
+                     </td>
+                     <td>
+                        <div class=" col-sm-12 col-lg-12">
+           
+                          <ng-select class="pb-2 " placeholder="Select Consignor" 
+                    [searchable]="true" [clearable]="true" 
+                    [(ngModel)]="item.consgnAddress">
+                    <ng-option 
+                    selected="item.consgnAddId" >{{item.consgnAddress}} </ng-option>
+                    </ng-select> 
+                              </div> 
+                     </td>
+                     <td>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Select Consignor" 
+                           [searchable]="true" [clearable]="true" 
+                           [(ngModel)]="item.toCityName">
+                           <ng-option 
+                           selected="item.toCityId" >{{item.toCityName}} </ng-option>
+                           </ng-select> 
+                              </div> 
+                     </td>
+                     <td>
+                        <div class=" col-sm-12 col-lg-12">
+           
+                          <input type="text" class="form-control"  value="{{item.consgneeId}}">
+                          <ng-select class="pb-2 " placeholder="Select Consignor" 
+                          [searchable]="true" [clearable]="true" 
+                          [(ngModel)]="item.toCityName">
+                          <ng-option 
+                          selected="item.toCityId" >{{item.toCityName}} </ng-option>
+                          </ng-select>
+                              </div> 
+                     </td>
+                     <td>
+                        <div class=" col-sm-12 col-lg-12">
+           
+                          <input type="text" class="form-control"  value="{{item.consgneeAddId}}">
+                            <!-- <ng-select class="pb-2 " placeholder="Select Pick up City" 
+                            [searchable]="true" [clearable]="true"  formControlName="fromCityId"
+                            [ngClass]="{'is-invalid':submitted && fs['fromCityId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.fromCityId" *ngFor="let item of cityList"
+                           >{{item.fromCityName}} </ng-option>
+                            </ng-select> -->
+                                 <!-- <div *ngIf="submitted && fs['consgneeAddId'].errors">
+                                    <small class="text-danger" *ngIf="fs['consgneeAddId'].errors?.['required']"> From city Address
+                                    </small>
+                                 </div> -->
+                              </div> 
+                     </td>
+             </tr>
+         
+          </tbody>
+       </table> 
+       <div class="row mt-2 mb-2">
+          <span class="text-center">
+          <button type="button" class="btn btn-primary rounded-pill btn-padding">Submit</button>
+          </span>
+       </div> 
+     
+ </div>

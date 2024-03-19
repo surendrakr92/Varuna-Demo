@@ -1,0 +1,72 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+        <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="bottom"></i> </a>
+    </span>
+    <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">General Master Configuration List
+    </h5>
+ 
+    <div class=" pb-2">
+       <button type="button" class="btn btn-success m-1" 
+       routerLink="/master/general-master-configuration/new-general-master-configuration" ngbTooltip="Create City Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+          ngbTooltip="Download List" placement="bottom" type="button" >
+          <i class="bi bi-download"></i>
+       </button>
+    </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" 
+       [dtTrigger]="dtTrigger"
+       #MyTable id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No.</th>
+             <th>Header Description</th>
+             <th>Id Description</th>
+             <th>Name Description</th>
+             <th>To Support</th>
+             <th>Is Active</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of codeTypeList; let i= index">
+             <td>{{i+1}}</td>
+             <td   >{{Item.headerDesc}}</td>
+                         <td>{{Item.idDesc}}</td>
+             <td>{{Item.nameDesc}}</td>
+             <td>{{Item.toSupport}}</td>
+           <td> <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+            {{Item.isActive?'Active':'Inactive'}}</span> </td>
+ 
+ 
+             <td class="display2">
+
+                <a  routerLink="/master/general-master-configuration/view-general-master-configuration/{{Item.codeTypeId}}" ngbTooltip="view" placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a>
+                <a (click)="redirectionEdit(Item.codeTypeId)" ngbTooltip="Edit" placement="bottom" class="edit" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+               
+ 
+                      <a ngbTooltip="Active/Inactive" placement="bottom" class="delete"  (click)="activeInactive(Item.codeTypeId)">
+                         <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" *ngIf="Item.isActive==true" 
+                            checked>
+                         </div>
+                      </a>
+ 
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+ </div>
+

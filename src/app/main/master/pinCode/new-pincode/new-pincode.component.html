@@ -1,0 +1,135 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/pin-code"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Pin Code "
+               placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">{{this.pinCodeDetailsById?'Update':'Create'}} Pin Code
+   </h5>
+   <form [formGroup]="formPinCodeMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Country Name
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " (change)="dropdownBindState($event,1)" placeholder="State Select"
+                     formControlName="countryId" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['countryId'].errors}">
+                     <ng-option value="" selected class="">Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.countryId"
+                        *ngFor="let item of countryList ">{{item.countryName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['countryId'].errors">
+                     <small class="text-danger" *ngIf="f['countryId'].errors?.['required']">Please select country 
+                   
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State Name <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="State Select" formControlName="stateId" [searchable]="true"
+                     (change)="dropdownBindState($event,2)" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['stateId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.stateId"
+                        *ngFor="let item of stateList ">{{item.stateName}}</ng-option>
+
+                  </ng-select>
+                  <div *ngIf="submitted && f['stateId'].errors">
+                     <small class="text-danger" *ngIf="f['stateId'].errors?.['required']">Please select state 
+                    
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City Name
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="cityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['cityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+
+                  </ng-select>
+                  <div *ngIf="submitted && f['cityId'].errors">
+                     <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">Please select city 
+                       
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Area<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="area"
+                     [ngClass]="{'is-invalid':submitted && f['area'].errors}">
+
+                  <div *ngIf="submitted && f['area'].errors">
+                     <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter area</small>
+                     <!-- <small class="text-danger" *ngIf="f['area'].errors?.['pattern']">pin code can not be
+                        blank and must be 6 numbers</small> -->
+                     <!-- <small class="text-danger" *ngIf="f['area'].errors?.['minlength']">
+                        area must be 6 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
+                        f['area'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pin Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="pinCode"
+                     [ngClass]="{'is-invalid':submitted && f['pinCode'].errors}">
+                  <div *ngIf="submitted && f['pinCode'].errors">
+                     <small class="text-danger" *ngIf="f['pinCode'].errors?.['required']">Please enter pin code</small>
+                     <small class="text-danger" *ngIf="f['pinCode'].errors?.['pattern']">pin code can not be
+                        blank and must be 6 or 5 numbers</small>
+                     <!-- <small class="text-danger" *ngIf="f['pinCode'].errors?.['minlength']">
+                        pincode must be 6 characters long.
+                     </small> -->
+                     <small class="text-danger" *ngIf="f['pinCode'].errors?.serverError">{{
+                        f['pinCode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="pinCodesubmit()">Submit</button>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+   </form>
+</div>

@@ -1,0 +1,125 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row ">
+      <div class="card-title bgcolortitle text-center">Route Rate Master</div>
+      <form [formGroup]="formMaster">
+
+         <div class="row  d-flex justify-content-center">
+            <div class="col-lg-12">
+               <div class="row">
+
+                  <div class="col-lg-3  ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Group Name<span
+                              class="text-danger">*</span></span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Group Select" formControlName="groupId" [searchable]="true"
+                           [clearable]="true" [ngClass]="{'is-invalid':submitted && f['groupId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.groupId" *ngFor="let item of routeGroupList"
+                              [disabled]='!item.isActive'>{{item.groupName}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['groupId'].errors">
+                           <small class="text-danger" *ngIf="f['groupId'].errors?.['required']">Please select group
+                              name
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3  ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>From City</span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="From City Select" formControlName="fromCityId"
+                           [searchable]="true" [clearable]="true"
+                           [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                              [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['fromCityId'].errors">
+                           <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">Please select City
+                              name
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3  ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>To City</span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="To City Select" formControlName="toCityId"
+                           [searchable]="true" [clearable]="true"
+                           [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                              [disabled]='!item.isActive'>{{item.cityName}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['toCityId'].errors">
+                           <small class="text-danger" *ngIf="f['toCityId'].errors?.['required']">Please select user name
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3 mt-4 ">
+
+                     <!-- <label for="inputText" class="col-sm-5 col-lg-5 col-form-label"></label> -->
+                     <div class=" col-sm-12 col-lg-12">
+                        <button type="button" class="btn btn-primary rounded-pill btn-padding2 m-1"
+                           (click)="searchFilter()"><i class="bi bi-search"></i> Search <span
+                              class="arrowanimation"></span></button>
+                        <button type="button" class="btn btn-primary rounded-pill btn-padding2 " (click)="Reset()"><i
+                              class="bi bi-x-lg"></i> Clear <span class="arrowanimation"></span></button>
+                     </div>
+                  </div>
+
+               </div>
+            </div>
+         </div>
+      </form>
+      <ng-container *ngIf="show">
+         <div class="row">
+            <div class="pb-1">
+               <button type="button" class="btn btn-success m-1" style="float: right;"
+                  routerLink="/master/route-rate-master/create-route-rate-master/{{this.formMaster.controls['groupId'].value}}"><i
+                     class="bi bi-plus-lg "></i> Create</button>
+            </div>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+               #MyTable id="MyTable">
+               <thead class="bg-secondary text-white">
+                  <tr>
+                     <th>Sr. No.</th>
+                     <th>Group Name</th>
+                     <th>From City</th>
+                     <th>TO City</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="zoom-in" *ngFor="let item of groupNameList;let i= index;">
+                     <td>{{i+1}}</td>
+                     <td>{{item.groupName}}</td>
+                     <td>{{item.fromCityName}}</td>
+                     <td>{{item.toCityName}}</td>
+
+                     <td class="display2">
+                        <!-- <a ngbTooltip="View " placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a> -->
+                        <a ngbTooltip="Edit " placement="bottom" class="edit" (click)="edit(item.rateId)"><i
+                              class="bi bi-pen-fill pr"></i></a>
+
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </ng-container>
+   </div>
+</div>

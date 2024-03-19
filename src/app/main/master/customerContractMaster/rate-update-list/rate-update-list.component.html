@@ -1,0 +1,679 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/rate-update"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master "
+               placement="bottom" (click)="saveDataForBackUp()"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Matrix Type</b>: {{this.filterpatchedJson?.matrixTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Transport Mode</b>: {{this.filterpatchedJson?.transTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>From Location</b>: {{this.filterpatchedJson?.fromCityId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>To Location</b>: {{this.filterpatchedJson?.toCityId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Vehicle Type</b>: {{this.filterpatchedJson?.ftlTypeId}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Contract Period</b>: {{this.filterpatchedJson?.contractStartDate |
+      date}}-{{this.filterpatchedJson?.contractEndDate | date}}</button>
+   <button type="button" class="btn 
+      btn-light m-1 "><b>Customer Valid
+         Location</b>:{{this.filterpatchedJson?.location?.fromlocName}},{{this.filterpatchedJson?.location?.tolocName}},{{this.filterpatchedJson?.location?.loadability}}</button>
+   <div class="row">
+      <div class="card-title bgcolortitle  text-center ">FTL Freight Matrix
+      </div>
+      <div class="display3">
+         <div class="pb-2">
+            <span class="title">
+               <button type="button" class="btn btn-dark m-1 " (click)="modelopen(modalmsg)"><i class="bi bi-save2"></i>
+                  Upload
+                  File</button>
+            </span>
+         </div>
+      </div>
+      <div class="row  mt-2 d-flex justify-content-center">
+         <div class="col-lg-5">
+            <div class="row mb-2">
+               <label for="inputText" class="col-sm-9 col-form-label" style="width: 37%;"><span class="float-end">Number
+                     Of
+                     Rows :</span> </label>
+               <div class="col-sm-3" style="margin-left: 0px; padding-left: 0px;    padding-right: 0px;">
+                  <input type="number" class="form-control" #noRow max="60" min="1">
+               </div>
+               <div class="col-sm-4">
+                  <button type="button" class="btn btn-warning rounded-pill btn-padding2 "
+                     (click)="addRowForTables(noRow.value)">+ Add Rows</button>
+               </div>
+            </div>
+         </div>
+      </div>
+      <!-- <form action=""> -->
+         <div class="exterior">
+            <div class="interior">
+
+
+    
+         <table class="table table-bordered">
+            <thead class="bg-secondary text-white ">
+               <tr>
+                  <!-- <td scope="col">
+                     <div class="form-check checkbox" style="margin-top: -16px;">
+                        <input type="checkbox" id="gridCheck4" style="width: 12px; height: 12px;"
+                           class="form-check-input">
+                     </div>
+                     </td> -->
+                  <td scope="col" class="pt-2 left col1 bg-secondary text-white">
+                     Lane ID <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Select Lane" [searchable]="true" [clearable]="true" appendTo="body" 
+                          (change)="updateLaneIdAll($event,'laneId')">
+                          <ng-option [disabled]='!item.isActive' [value]="item.laneId"
+                        *ngFor="let item of laneMasterList"><span [title]="item.fromlocName+ ':'+item.tolocName+ ':'+item.ftltypecode ">{{item.fromlocName}}:{{item.tolocName}},{{item.loadability}},{{item.ftltypecode}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2 ">
+                     Rate <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="number" class="form-control"  min="0" #data style="width: 100px;"
+                           (change)="updateLaneIdAll(data?.value,'ftlTripRate')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Rate type<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Select Rate Type " [searchable]="true" [clearable]="true" appendTo="body" style="  width: 130px;"
+                           (change)="updateLaneIdAll($event,'ftlRateTypeId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of RateTypeList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+
+
+                
+                  <td scope="col" class="pt-2">
+                     No. of Vehicle <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1 ">
+                        <input type="number" class="form-control"  min="0" #noveh style="width: 90px;"
+                           (change)="updateLaneIdAll(noveh.value,'noofVehicle')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     TAT<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1 ">
+                        <input type="number" class="form-control" style="width: 60px;" min="0" #tatt style="width: 90px;"
+                           (change)="updateLaneIdAll(tatt.value,'tatforpickup')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     TAT Base<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="TAT Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 105px;"
+                           (change)="updateLaneIdAll($event,'tatbase')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of tatBaseList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Holiday status <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Select Holiday " [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           (change)="updateLaneIdAll($event,'holidaystatus')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of holidayStatus"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+               
+                  <!-- <td scope="col" class="pt-2">
+                     Transit Hours<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="text" class="form-control" #trtHr
+                           (change)="updateLaneIdAll(trtHr.value,'transitHours')">
+                     </div>
+                  </td> -->
+                  <td scope="col" class="pt-2">
+                     Loading term <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Loading term Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           (change)="updateLaneIdAll($event,'loadingtermId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Proposed- LT <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12  pb-1">
+                        <input type="number" class="form-control"  maxlength="5" #prpLt  style="  width: 112px;"
+                           (change)="updateLaneIdAll(prpLt.value,'proposedlt')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Unloading terms<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Unloading term Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           (change)="updateLaneIdAll($event,'unloadingtermId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Proposed-ULT<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12  pb-1">
+                        <input type="number" class="form-control" style="width: 90px;" maxlength="5" #prpult  style=" width: 112px;"
+                           (change)="updateLaneIdAll(prpult.value,'proposedult')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Reason of Update<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Reason of Update Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 125px;"
+                           (change)="updateLaneIdAll($event,'reasonId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of reasonUpdateList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Discount in %<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="number" class="form-control" style="width: 90px;" #discount style="  width: 120px;"
+                           (change)="updateLaneIdAll(discount.value,'discountinPer')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Start Date<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="date" class="form-control" #strtDate style="  width: 110px;"
+                           (change)="updateLaneIdAll(strtDate.value,'startDate')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     End Date<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="date" class="form-control" #endDate  style="  width: 112px;"
+                           (change)="updateLaneIdAll(endDate.value,'endDate')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Primary Source<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Select Primary Source " [searchable]="true" [clearable]="true" appendTo="body" style="  width: 120px;"
+                           (change)="updateLaneIdAll($event,'primarySource')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of primaarySourceList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Delivery Type<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="Delivery Type Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 125px;"
+                           (change)="updateLaneIdAll($event,'deliverytypeId')" [ngModel]=521>
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of deliveryType"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     Second delivery Point<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <ng-select placeholder="city Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 200px;"
+                           (change)="updateLaneIdAll($event,'twopointlocId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                              *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                        </ng-select>
+                     </div>
+                     </td>
+                  <td scope="col" class="pt-2">
+                     Other Amount<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="number" class="form-control"  maxlength="10000000" #otherAmount  style="  width: 105px;"
+                           (change)="updateLaneIdAll(otherAmount.value,'otherAmount')">
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     <span>Status</span> <span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1 mt-1">
+                        <!-- checked -->
+                        <div class="form-check form-switch " style="  min-height: 16px;">
+                           <input type="checkbox" class="form-check-input" style="width: 100%;" #isActive  
+                              (change)="updateLaneIdAll(isActive.checked,'isActive')">
+                        </div>
+                     </div>
+                  </td>
+                  <td scope="col" class="pt-2">
+                     SOB %<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="number" class="form-control" style="width: 90px;" maxlength="100" style="  width: 105px;"
+                           #committedPercentage
+                           (change)="updateLaneIdAll(committedPercentage.value,'committedPercentage')">
+                     </div>
+                  </td>
+                  <td scope="col">
+                     Total Pickup in a Year<span class="text-danger">*</span>
+                     <div class=" col-sm-12 col-lg-12 pb-1">
+                        <input type="number" class="form-control" style="width: 90px;" maxlength="3000000" style="width: 110px;"
+                           #pickupinyearS (change)="updateLaneIdAll(pickupinyearS.value,'pickupinyear')">
+                     </div>
+                  </td>
+               </tr>
+            </thead>
+            <tbody>
+               <tr style="border-bottom: 1px solid #e9e9e9;"
+                  *ngFor="let item of contractRateJson?.contractRatelist ; index as i">
+                  <!-- <td>
+                     <div class="form-check checkbox ">
+                        <input type="checkbox" id="gridCheck2" style="width: 12px; height: 12px;"
+                           class="form-check-input">
+                     </div>
+                     </td> -->
+                  <td class="newchangecss left col1" style="background-color: #fff;">
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="lane Select" [searchable]="true" [clearable]="true" appendTo="body"
+                           [(ngModel)]="item.laneId" (change)="getLanedetails(i,$event)">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.laneId"
+                              *ngFor="let item of laneMasterList"><span [title]="item.fromlocName+ ':'+item.tolocName+ ':'+item.ftltypecode ">{{item.fromlocName}}:{{item.tolocName}},{{item.loadability}},{{item.ftltypecode}}</span></ng-option>
+                        </ng-select>
+                        <!-- <div class="forntClass">
+                           <p>{{item.flocaton}}-{{item.tolocName}},{{item.loadability}},{{item.ratetypeload}}</p>
+                           </div> -->
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control"  [value]="item.ftlTripRate" style="width: 100px;"
+                           #ftlTripRateS (change)="singleInheritData(ftlTripRateS.value,i,'ftlTripRate')" min="0">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Select Rate Type " [searchable]="true" [clearable]="true" appendTo="body" style="  width: 130px;"
+                           [(ngModel)]="item.ftlRateTypeId" (change)="singleInheritData($event,i,'ftlRateTypeId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of RateTypeList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 90px;" min="0"  
+                           [value]="item.noofVehicle" #noofVehicleS
+                           (change)="singleInheritData(noofVehicleS.value,i,'noofVehicle')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="number" class="form-control" style="width: 90px;" min="0" maxlength="3"   
+                           [value]="item.tatforpickup" #tatbaseS
+                           (change)="singleInheritData(tatbaseS.value,i,'tatforpickup')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <ng-select placeholder="TAT Select" [searchable]="true" [clearable]="true" appendTo="body"  style="width: 105px;"
+                           [(ngModel)]="item.tatbase" (change)="singleInheritData($event,i,'tatbase')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of tatBaseList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Holiday Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           [(ngModel)]="item.holidaystatus" (change)="singleInheritData($event,i,'holidaystatus')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of holidayStatus"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+            
+                  <!-- <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="text" class="form-control" [value]="item.transitHours" #transitHoursS
+                           (change)="singleInheritData(transitHoursS.value,i,'transitHours')">
+                     </div>
+                     <div class="forntClass">
+                        <p></p>
+                     </div>
+                  </td> -->
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Loading term Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           [(ngModel)]="item.loadingtermId" (change)="singleInheritData($event,i,'loadingtermId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control"  maxlength="5"  style="  width: 112px;"
+                           [value]="item.proposedlt" #proposedltS
+                           (change)="singleInheritData(proposedltS.value,i,'proposedlt')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Unloading Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 112px;"
+                           [(ngModel)]="item.unloadingtermId" (change)="singleInheritData($event,i,'unloadingtermId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of unloadingTeams"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 90px;" maxlength="5" appendTo="body" style="  width: 112px;"
+                           [value]="item.proposedult" #proposedultS
+                           (change)="singleInheritData(proposedultS.value,i,'proposedult')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Reason of Update Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 125px;"
+                           [(ngModel)]="item.reasonId" (change)="singleInheritData($event,i,'reasonId')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of reasonUpdateList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" ol-sm-12 col-lg-12">
+                        <input type="number" class="form-control"  [value]="item.discountinPer"  style="  width: 120px;"
+                           #discountinPerS (change)="singleInheritData(discountinPerS.value,i,'discountinPer')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" [value]="item.startDate"style="  width: 105px;"
+                           [value]="item.startDate | date:'yyyy-MM-dd'" #startDateS
+                           (change)="singleInheritData(startDateS.value,i,'startDate')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control" [value]="item.endDate" style="  width: 100px;"
+                           [value]="item.endDate | date:'yyyy-MM-dd'" #endDateS
+                           (change)="singleInheritData(endDateS.value,i,'endDate')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="primary source Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 120px;"
+                           [(ngModel)]="item.primarySource" (change)="singleInheritData($event,i,'primarySource')">
+                           
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of primaarySourceList"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="Delivery Type Select" [searchable]="true" [clearable]="true" appendTo="body"
+                         style="width: 125px;"
+                           [(ngModel)]="item.deliverytypeId" (change)="singleInheritData($event,i,'deliverytypeId')">
+                           <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                              *ngFor="let item of deliveryType"><span [title]="item.codeDesc">{{item.codeDesc}}</span></ng-option>
+                        </ng-select>
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select placeholder="city Select" [searchable]="true" [clearable]="true" appendTo="body" style="  width: 110px;"
+                        [(ngModel)]="item.twopointlocId"
+                        style=" font-size: 8px;" (change)="singleInheritData($event,i,'twopointlocId')">
+                        
+                        <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                           *ngFor="let item of cityList"><span [title]="item.cityName">{{item.cityName}}</span></ng-option>
+                     </ng-select>
+                     </div>
+                     </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control" style="width: 105px;" maxlength="100000"
+                           [value]="item.otherAmount" #otherAmountS
+                           (change)="singleInheritData(otherAmountS.value,i,'otherAmount')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <div class="form-check form-switch pt-1" >
+                           <input type="checkbox" class="form-check-input" style="width: 100%;"
+                              [(ngModel)]="item.isActive" #isActiveS
+                              (change)="singleInheritData(isActiveS.checked,i,'isActive')">
+                           <div class="forntClass">
+                              <p></p>
+                           </div>
+                        </div>
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control"  maxlength="3" style="  width: 110px;"
+                           [value]="item.committedPercentage" #committedPercentageS
+                           (change)="singleInheritData(committedPercentageS.value,i,'committedPercentage')">
+                     </div>
+                  </td>
+                  <td>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="number" class="form-control"  maxlength="3" style="  width: 110px;"
+                           [value]="item.pickupinyear" #pickupinyearS
+                           (change)="singleInheritData(pickupinyearS.value,i,'pickupinyear')">
+                        <div class="forntClass">
+                           <p></p>
+                        </div>
+                     </div>
+                  </td>
+               </tr>
+            </tbody>
+         </table>
+    
+      </div>
+      </div>
+      <div class="row mt-5 mb-5">
+         <div class="text-center">
+            <button type="button" class="btn btn-primary rounded-pill btn-padding p-2" style="width: 120px;"
+               (click)="saveExit()">Save &
+               Exit</button>
+            <!-- <button type="button" class="btn btn-primary  rounded-pill btn-padding p-2 m-1"
+               style="width: 150px;">Validate Contract</button> -->
+         </div>
+      </div>
+      <!-- </form> -->
+   </div>
+   <!-- popup confirm-->
+   <ng-template #modalmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">
+            Lane File UpLoad
+         </h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="row ">
+            <!-- <div class="col-lg-4">
+               <div class="form-group mb-1">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Against Lane id
+                     <a href="#" Download="src/assets/img/Against_Lane_ID.xlsx">(Sample Download!)</a></label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="file" class="form-control">
+                  </div>
+               </div>
+               </div> -->
+            <div class="col-lg-4">
+               <div class="form-group mb-1">
+                  <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Against Lane
+                     <a href="www.javascript:void(0)" (click)="downloadSampleAgainstLane()">(Sample Download!)</a>
+                  </label>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="file" class="form-control" (change)="onFileChangeCsv($event)" accept=".csv">
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row">
+            <div class="col-lg-12 ">
+               <!-- <div class="float-end m-1">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Upload
+                     File</button>
+                  </div> -->
+               <div class="float-end m-1">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="revalidateJsonToCsv()">{{this.xlsJsonUploadData.length==0?'...':'Re Validate'}}</button>
+               </div>
+            </div>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-bordered">
+               <thead>
+                  <tr>
+                     <th scope="col">Lane ID </th>
+                     <th scope="col">Rate </th>
+                     <!-- <th scope="col">No. of Vehicle </th> -->
+                     <th scope="col">TAT</th>
+                     <th scope="col">TAT Base</th>
+                     <th scope="col">Holiday status</th>
+                     <th scope="col">Rate type</th>
+                     <th scope="col">Transit Mode</th>
+                     <th scope="col">Loading term</th>
+                     <th scope="col">Unloading terms</th>
+                     <th scope="col">Proposed- LT</th>
+                     <!-- xlsmisn -->
+                     <th scope="col"> Proposed-ULT</th>
+                     <!-- xlsmisn -->
+                     <th scope="col">Reason of Update</th>
+                     <th scope="col">Discount in %</th>
+                     <th scope="col">Start Date</th>
+                     <th scope="col">End Date</th>
+                     <th scope="col"> Primary Source</th>
+                     <!-- <th scope="col">Delivery Type</th>
+                     <th scope="col"> Second delivery Point</th> -->
+                     <!-- <th scope="col"> Other Amount</th> -->
+                     <!-- <th scope="col">Status</th> -->
+                     <th scope="col">SOB %</th>
+                     <th scope="col">Total Pickup in a Year</th>
+                     <th scope="col">Error Mesaage</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of xlsJsonUploadData ">
+                     <td>{{item.laneId}}</td>
+                     <td>{{item.ftlTripRate}}</td>
+                     <!-- <td>dummy</td> -->
+                     <!-- xls and rep miss -->
+                     <td>{{item.tatforpickup}}</td>
+                     <td>{{item.tatbasedesc}}</td>
+                     <td>{{item.holidaystatusdesc}}</td>
+                     <td>{{item.rateTypeLoad}}</td>
+                     <td>{{item.transType}}</td>
+                     <td>{{item.loadingterm}}</td>
+                     <td>{{item.unloadingterm}}</td>
+                     <td>{{item.proposedlt}}</td>
+                     <td>{{item.proposedult}}</td>
+                     <td>{{item.reason}}</td>
+                     <td>{{item.discountinPer}}</td>
+                     <td>{{item.startDate | date:'dd/MM/YYYY'}}</td>
+                     <td>{{item.endDate | date :'dd/MM/YYYY'}}</td>
+                     <td>{{item.primarySourcedesc}}</td>
+                     <!-- <td>-</td>
+                     <td>-</td> -->
+                     <!-- <td>{{item?.otherAmount}}</td> -->
+                     <!-- <td>-</td> -->
+                     <td>{{item.committedPercentage}}</td>
+                     <td>{{item.pickupinyear}}</td>
+                     <td><span class="text-danger">{{item?.errorMessage}}</span></td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+         <br>
+         <div class="modal-footer">
+            <!-- <button type="button" class="btn btn-primary  d-inline  btn-sm ">Save </button> -->
+            <button type="button" class="btn btn-danger  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">Cancel</button>
+            <button type="button" class="btn btn-success  d-inline  btn-sm"
+               (click)="submissionCsvData()">submit</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+</div>

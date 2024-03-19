@@ -1,0 +1,1065 @@
+<aside id="sidebar" class="sidebar ">
+   <ul class="sidebar-nav newsidebar" id="sidebar-nav" *ngIf="$menu==''" style="position: relative;">
+      <li class="nav-item" *ngFor="let menu of sideBarData">
+         <a class="nav-link collapsed" [routerLink]=menu.route (click)="redirectToMenu(menu.label)">
+            <i class="{{menu.icon}}"></i>
+            <span>{{menu.label}}</span>
+         </a>
+      </li>
+   </ul>
+   <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item" *ngIf="$menu=='Master'">
+         <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-people"></i><span>Master</span><i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+
+            <li>
+               <a routerLink="master/testssrs" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>SS RS
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/country-master" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Country Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/state-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>State Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/city-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>City Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/pin-code" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Pin Code
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/sub-city-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Sub City Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/company-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Company Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/division-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Division Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/zone-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Zone Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/branch-level" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Branch Level
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/branch-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Branch Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/cluster-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Cluster Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/sub-cluster-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Sub Cluster Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/department-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Department Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/module-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Module Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/menu-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Menu Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/role-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Role Master
+                  </span>
+               </a>
+            </li>
+            <li *ngIf="this.userId=='00001979'||this.userId=='00001581' || this.userId=='00005550'">
+               <a routerLink="master/user-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>User Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/cluster-mapping" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Cluster Mapping
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/menu-access-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Menu Role Mapping
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/role-user-mapping" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Role User Mapping
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/branch-user-mapping" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Branch User Mapping
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/general-master-configuration" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>General Master Configuration
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/general-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>General Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/financial-year" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Financial Year
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/vendor-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Vendor Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/customer-group" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Customer Group Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/address-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Address Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/driver-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Driver Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/customer-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Customer Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/load-ability-mapping/" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>VIL & Customer Vehicle Mapping
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/cngr-cnge-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Consignor/Consignee Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/owner-master" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Owner Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/lane-master-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Lane Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/route-master-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Route Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/vehicle-master-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Vehicle Master
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/claim-type/claim-type-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Claim Type
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/vehicle-loadability/vehicle-loadability-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Vehicle Loadability
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/customer-mis/customer-mis-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Customer MIS
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="master/lane-priority-list" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Lane Priority and Target Allocation
+                  </span>
+               </a>
+            </li>
+
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-SOP" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>SOP</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-SOP" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navSOP"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/manage-sop" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manage SOP
+                        </span>
+                     </a>
+                  </li>            
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-route" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Route Rate Master</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-route" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navroute"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/group-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Group Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/mapping-average-matrix" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span> Avg. Matrix Mapping Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/">
+                        <i class="bi bi-circle"></i><span>Vehicle Mapping Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/route-rate-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Route Rate Master
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+          
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-TDS" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>TDS Automation</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-TDS" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navTDS"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/tds-rate-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>TDS Rate Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/tds-rate-differential-master" [routerLinkActive]="['active']"
+                        ngbTooltip="Lane wise Rate master update">
+                        <i class="bi bi-circle"></i><span>TDS Rate Differential Master
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-contract" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Contract Management</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-contract" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navcontract"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/customer-contract-master" [routerLinkActive]="['active']" ngbTooltip="New Contract Create
+                        Basic information update Service Selection Clause Update">
+                        <i class="bi bi-circle"></i><span>Create / Update Contract
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/rate-update" [routerLinkActive]="['active']"
+                        ngbTooltip="Lane wise Rate master update">
+                        <i class="bi bi-circle"></i><span>Rate Update
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/labour-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Labor Rate Update
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/">
+                        <i class="bi bi-circle"></i><span>SOB
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-Approved" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Contract Management Approved</span><i
+                     class="bi bi-chevron-down ms-auto" style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-Approved" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navApproved"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/rate-approval" [routerLinkActive]="['active']" ngbTooltip="New Contract Create
+                        Basic information update Service Selection Clause Update">
+                        <i class="bi bi-circle"></i><span>Rate Approval
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/labour-master-approved" ngbTooltip="Lane wise Rate master update">
+                        <i class="bi bi-circle"></i><span>Labour Rate Approval
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="javascript:void(0)" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>SOB Approval
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-event" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Event Master</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-event" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navevent"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="master/main-and-sub-event-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Sub-Event Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/event-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span> Main Event Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="master/event-reason-Master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Event Reason Master
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </li>
+      <li class="nav-item" *ngIf="$menu=='Fleet'">
+         <a class="nav-link collapsed" data-bs-target="#charts-Fleet" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-truck"></i><span> Fleet</span><i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+
+         <ul id="charts-Fleet" class="nav-content collapse show" data-bs-parent="#sidebar-Fleet">
+
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-route" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Trip Operations</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-route" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navroute"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="/fleet/trip-open" [routerLinkActive]="['active']" ngbTooltip="New Contract Create
+                        Basic information update Service Selection Clause Update">
+                        <i class="bi bi-circle"></i><span>Trip Open
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="/fleet/trip-advance" [routerLinkActive]="['active']"
+                        ngbTooltip="Lane wise Rate master update">
+                        <i class="bi bi-circle"></i><span>Trip Advance
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="/fleet/trip-open-details" [routerLinkActive]="['active']"
+                        ngbTooltip="Lane wise Rate master update">
+                        <i class="bi bi-circle"></i><span>Trip Open Details
+                        </span>
+                     </a>
+                  </li>
+
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-vehicleAss" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Vehicle Assignment to PRQ</span><i
+                     class="bi bi-chevron-down ms-auto" style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-vehicleAss" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-vehicleAss"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="/fleet/vehicle-Assignment-to-PRQ" [routerLinkActive]="['active']" ngbTooltip="New Contract Create
+                        Basic information update Service Selection Clause Update">
+                        <i class="bi bi-circle"></i><span>Vehicle Assignment
+                        </span>
+                     </a>
+                  </li>
+
+
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-dpr" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Driver Performance Remarks(DPR)</span><i
+                     class="bi bi-chevron-down ms-auto" style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-dpr" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-dpr"
+                  style="padding-left: 10px;">
+
+                  <li>
+                     <a routerLink="/fleet/main-category-master-dashboard" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Main Category Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="/fleet/sub-category-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Sub category Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="/fleet/remarks-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Remarks Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="/fleet/driver-performance-remarks-entry" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Driver Performance Remarks Entry
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+
+
+
+
+
+
+
+
+
+
+      </li>
+      <li class="nav-item" *ngIf="$menu=='Operations'">
+         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-gear-wide-connected"></i><span>Operations </span><i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+
+         <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-DFM" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>DFM</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-DFM" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navDFM"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="Operations/scan-document" routerLinkActive="active" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Scan Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/forward-document" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span> Forward Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/acknowledge-document" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Acknowledge Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/view-print" routerLinkActive="active" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>View & Print Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/track-document" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Track Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/document-pending-for-scan" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Document Pending for Scan
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/re-scan-document" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Re-scan Document
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/dfm-location-edit" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>DFM Location Edit
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/update-arrival-date-time" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Arrival Date & Time Update
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/courier-details-update" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Courier Details Update
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/upload-invoice" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Upload Invoice
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="Operations/reupload-invoice" routerLinkActive="active"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Reupload Invoice
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+
+            </li>
+            <li>
+               <a routerLink="Operations/empty-route-request" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Empty Route Request
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="Operations/ovr-ivr-entry" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>OVR/IVR ENTRY
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="Operations/extendewaybillexpiry" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Extend E-way Bill Expiry
+                  </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="Operations/black-list-mv-master" routerLinkActive="active" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span> BlackList MV Master
+                  </span>
+               </a>
+            </li>
+         </ul>
+
+        
+
+      </li>
+      <li class="nav-item" *ngIf="$menu=='Event Management'">
+         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-file-earmark-bar-graph-fill"></i><span> Event Management </span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="icons-nav" class="nav-content collapse show " data-bs-parent="#sidebar-nav">
+            <li>
+               <a routerLink="event-management/vehicle-status">
+                  <i class="bi bi-circle"></i><span>Vehicle Status</span>
+               </a>
+            </li>
+         </ul>
+      </li>
+      <li class="nav-item" *ngIf="$menu=='Market'">
+         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-megaphone-fill"></i><span>Market Management </span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li>
+               <a routerLink="market/mv-availability" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>MV Availability </span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="market/mv-non-placed-vehicle" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>MV Non Placed Vehicle(Cancellation)</span>
+               </a>
+            </li>
+            <li>
+               <a routerLink="market/mv-vehicleList" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>MV Add Union Vehicle</span>
+               </a>
+            </li>
+         </ul>
+      </li>
+      <li class="nav-item" *ngIf="$menu=='Indent'">
+         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-megaphone-fill"></i><span>Indent Management </span><i
+               class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-PRQ" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Pickup Request (PRQ)</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-PRQ" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navPRQ"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/pickup-request" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Pickup Request</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/list-of-pickup-request" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span> Pickup Request Edit</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/pickup-closure" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>PRQ Closure</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/pickup-closure-update" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>PRQ Closure Update</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-manifest" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Manifest</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-manifest" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navmanifest"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/manifest" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manifest Entry
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/manifest-view" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manifest View
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/manifest-Cancellation" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manifest Cancellation
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/manifest-arrival" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manifest Arrival
+                        </span>
+                     </a>
+                  </li>
+                  
+
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-docket" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Docket Entry(LR)</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-docket" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navdocket"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/docket-entry" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Entry
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docket-list" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket View/Edit
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docket-club-edit" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Club Edit
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docket-cancellation" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Cancellation
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docket-finencial-list" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Financial Edit
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docket-nestle-list" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Financial Edit (Nestle)
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/docketUnfinalized" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Docket Unfinalized
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-POD" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Proof of Delivery(POD) </span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-POD" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navPOD"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/upload-pod-copy" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Upload POD copy</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/pod-approval" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>POD Approval</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/allocation-of-POD-Supervisor-Against-Customer"
+                        [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Allocation of POD Supervisor Against Customer</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/change_POD_Location" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Change POD Location</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/POD-PFM-Target-days" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>POD & PFM TARGET DAYS</span>
+                     </a>
+                  </li>
+             
+               
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-E-LR" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>E-LR Management </span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-E-LR" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navE-LR"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/manageDigitizedLR" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Manage Digitized LR</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/allow-ELR-Customer-address-Master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Allow ELR Customer address Master</span>
+                     </a>
+                  </li>
+
+                  <li>
+                     <a routerLink="indent/eway-Bill-Correction" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>EWAY Bill Correction</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/elr-dashboard" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>ELR Dashboard</span>
+                     </a>
+                  </li>
+
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-ELRProduct" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>ELR Product Master </span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-ELRProduct" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navELRProduct"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/un-mapped-product" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Un-Mapped Product</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/mapped-product" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Mapped Product</span>
+                     </a>
+                  </li>
+
+
+               </ul>
+            </li>
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-thc" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Manual/Auto THC - MV/CV </span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-thc" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navthc"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="indent/empty-auto-thc" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Empty Auto THC</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="indent/loaded-auto-thc" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Loaded Auto THC</span>
+                     </a>
+                  </li>
+
+                  <li>
+                     <a routerLink="indent/loaded-manual-thc" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Loaded Manual THC</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+            <li>
+               <a routerLink="indent/stock-update" [routerLinkActive]="['active']">
+                  <i class="bi bi-circle"></i><span>Stock Update
+                  </span>
+               </a>
+            </li>
+         </ul>
+      </li>
+      <li class="nav-item" *ngIf="$menu=='stationery'">
+         <a class="nav-link collapsed" data-bs-target="#icons-Stationery" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-box-fill"></i><span>Stationery </span><i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="icons-Stationery" class="nav-content collapse show" data-bs-parent="#sidebar-Stationery">
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-Stationery" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Stationery</span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-Stationery" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navStationery"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="stationery/item-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Item Master
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/purchase-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Purchase Challan
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/branchemp-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Stationery Issue
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/receipt-master-list" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Stationery Receipt
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/requistion-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Stationery Requistion
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/tracking-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Stationery Tracking
+                        </span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="stationery/split-master" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Split Stock
+                        </span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </li>
+      <li class="nav-item" *ngIf="$menu=='ticket'">
+         <a class="nav-link collapsed" data-bs-target="#icons-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-ticket-detailed"></i><span>Ticket </span><i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="icons-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li class="nav-item">
+               <a class="nav-link collapsed" data-bs-target="#forms-ticket" data-bs-toggle="collapse" href="#"
+                  style="font-size: 12px;">
+                  <i class="bi bi-circle"></i><span>Ticket </span><i class="bi bi-chevron-down ms-auto"
+                     style="font-size: 16px;    margin-right: 10px;"></i>
+               </a>
+               <ul id="forms-ticket" class="nav-content collapse bglicolor" data-bs-parent="#sidebar-navticket"
+                  style="padding-left: 10px;">
+                  <li>
+                     <a routerLink="ticket/ticket-entry" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Ticket/Complaint Entry</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="ticket/complaint-fwd" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Complaint Forward/Update/Close</span>
+                     </a>
+                  </li>
+                  <li>
+                     <a routerLink="ticket/dept-mapping" [routerLinkActive]="['active']">
+                        <i class="bi bi-circle"></i><span>Department Mapping Master</span>
+                     </a>
+                  </li>
+               </ul>
+            </li>
+         </ul>
+      </li>
+   </ul>
+</aside>
+<!-- <aside id="sidebar" class="sidebar ">
+   <ul class="sidebar-nav newsidebar" id="sidebar-nav" *ngIf="$menu==''" style="position: relative;">
+      <li class="nav-item" *ngFor="let menu of sideBarData">
+         <a class="nav-link collapsed" [routerLink]=menu.routePath (click)="redirectToMenu(menu)">
+            <i class="{{menu.moduleImagePath}}"></i>
+            <span>{{menu.moduleName}}</span>
+         </a>
+      </li>
+   </ul>
+   <ul class="sidebar-nav" id="sidebar-nav">
+      <li class="nav-item" *ngIf="$menu=='Master'">
+         <a class="nav-link " data-bs-target="#components-nav" data-bs-toggle="collapse" href="#">
+            <i class="bi bi-people"></i><span>{{this.menuItems[0].menuCaption??'NA'}}</span>
+            <i class="bi bi-chevron-down ms-auto"></i>
+         </a>
+         <ul id="components-nav" class="nav-content collapse show" data-bs-parent="#sidebar-nav">
+            <li *ngFor="let item of menuItems[0].childMenus"routerLinkActive="active">
+               <a [routerLink]="[item.webPagePath]" [routerLinkActive]="['active']"
+               (click)="setupActionHandler(item)">
+                  <i class="{{item.icon}}"></i><span>{{item.menuCaption}}
+                  </span>
+               </a>
+            </li>
+         </ul>
+      </li>
+   </ul>
+</aside> -->

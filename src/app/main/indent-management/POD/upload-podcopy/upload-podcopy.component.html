@@ -1,0 +1,134 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light">
+       <span class="title">
+       <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Cluster Master "
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Upload POD Copy</span>
+       <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboad"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <form [formGroup]="formMaster">
+       <div class="row mt-3">
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Type of Document <span class="text-danger">*</span>
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <ng-select class="pb-2 " placeholder="Type of Document Select" formControlName="docType"
+                   [searchable]="true" [clearable]="true"
+                   [ngClass]="{'is-invalid':submitted && f['docType'].errors}">
+                   <ng-option value="" selected>Select</ng-option>
+                   <ng-option  [value]="item.id"
+                   *ngFor="let item of documentTIme ">{{item.type}}</ng-option>
+                   </ng-select>
+                   <div *ngIf="submitted && f['docType'].errors">
+                      <small class="text-danger" *ngIf="f['docType'].errors?.['required']">Please select type of document
+                      </small>
+                      <small class="text-danger" *ngIf="f['docType'].errors?.serverError">{{
+                      f['docType'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                POD Number <span class="text-danger">*</span>
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <input type="text"  class="form-control" formControlName="docketNo"
+                      [ngClass]="{'is-invalid':submitted && f['docketNo'].errors}">
+                   <div *ngIf="submitted && f['docketNo'].errors">
+                      <small class="text-danger" *ngIf="f['docketNo'].errors?.['required']">Please enter POD number
+                      </small>
+                      <small class="text-danger" *ngIf="f['docketNo'].errors?.serverError">{{
+                      f['docketNo'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Document Number<span class="text-danger">*</span>
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <input type="text" class="form-control" formControlName="documentNo"
+                      [ngClass]="{'is-invalid':submitted && f['documentNo'].errors}">
+                   <div *ngIf="submitted && f['documentNo'].errors">
+                      <small class="text-danger" *ngIf="f['documentNo'].errors?.['required']">Please enter document number
+                      </small>
+                      <small class="text-danger" *ngIf="f['documentNo'].errors?.['minlength']">invalid document number
+                      </small>
+                      <small class="text-danger" *ngIf="f['documentNo'].errors?.serverError">{{
+                      f['documentNo'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3 ">
+             <div class="form-group ">
+                <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                Scan Status
+                </label>
+                <div class=" col-sm-12 col-lg-12">
+                   <input type="text" class="form-control" placeholder="Scan Status" formControlName="scanStatus" readonly
+                      [ngClass]="{'is-invalid':submitted && f['scanStatus'].errors}">
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <div class="form-group ">
+                <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Upload Copy<span
+                   class="text-danger">*</span></label>
+                <div class=" col-sm-12 col-lg-12">
+                   <input *ngIf="this.selectedPanCard==undefined" class="form-control custom-file-upload"
+                   type="file" accept=".png, .jpg, .jpeg ,.pdf" (change)="onFileChancancelChqque($event,3)">
+                   <div *ngIf="this.selectedPanCard" class="card p-1 text-bg-primary text-center w-auto">
+                      <span>{{this.selectedPanCard}}</span>  
+                      <span class="badge badge-secondary removeFile" (click)="this.fileResetPan()">X</span>
+                   </div>
+                   <div *ngIf="submitted && f['documentName'].errors">
+                      <small class="text-danger" *ngIf="f['documentName'].errors?.['required']">Please upload file
+                      </small>
+                      <small class="text-danger" *ngIf="f['documentName'].errors?.['pattern']">Invalid upload file
+                      name</small>
+                      <small class="text-danger" *ngIf="f['documentName'].errors?.serverError">{{
+                      f['documentName'].errors.serverError}}</small>
+                   </div>
+                </div>
+             </div>
+          </div>
+       </div>
+       <div class="row mt-5">
+          <div class="text-center">
+             <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="Onsubmit(modelmsg)">Submit</button>
+          </div>
+       </div>
+    </form>
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+       <div class="modal-header qut-hd bg-success">
+          <h6 class="modal-title" id="exampleModalCenterTitle">Success Message </h6>
+          <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+             aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+             aria-hidden="true" class="fa fa-times"></i></button>
+       </div>
+       <div class="modal-body" tabindex="0" ngbAutofocus>
+       <p>sucessfully uploaded pod copy for Document No #{{respoceData}}</p>
+          <br>
+       </div>
+       <div class="mt-2 mb-2">
+          <button  type="button" class="btn btn-padding btn-primary btn-sm float-end mr-5 rounded-pill"  (click)="modal.dismiss('Cross click')">Cancel</button>
+       </div>
+    </ng-template>
+    <!-- close popup confirm-->
+ </div>

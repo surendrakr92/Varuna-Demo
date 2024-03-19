@@ -1,0 +1,170 @@
+<div class="main-contianer">
+   <span class="float-left title">
+      <a routerLink="/master/route-rate-master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+   </span>
+   <span class="float-end title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+   </span>
+   <h5 class="card-title"> Route Rate Master Addition
+   </h5>
+
+   <div class="display mb-2" *ngIf="this.pathcedDetails==''">
+      <span class="dis">
+         <span class="disflex">Number of Cases <input type="number" class="form-control" #noRow></span>
+      </span>
+      <span class="dis">
+         <button type="button" class="btn btn-warning" (click)="addRowForTables(noRow.value)"><i
+               class="bi bi-plus-lg"></i> Add</button>
+      </span>
+   </div>
+   <!-- <form> -->
+   <div class="table-responsive">
+      <table class="table table-bordered ">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Rate ID</th>
+               <th>Group Name</th>
+               <th>From city</th>
+               <th>To City</th>
+               <th>Via City</th>
+               <th>Distance (In KM)</th>
+               <th>Additional Loaded Avg (KM)</th>
+               <th>Additional Empty Avg (KM)</th>
+               <th>Diesel (In Liter)</th>
+               <th>Cash</th>
+               <th>Cash on Trailer</th>
+               <th>Toll</th>
+               <th>Start Date</th>
+               <th>End Date</th>
+               <!-- <th>End Date</th> -->
+               <th>Delete</th>
+
+            </tr>
+         </thead>
+         <tbody>
+            <tr *ngFor="let item of routeMasterDetails.rateEntities ;index as i">
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" readonly value="{{item.rateId}}">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Group Name Select" [searchable]="true" [clearable]="true"
+                        appendTo="body" [(ngModel)]="item.groupId" (change)="setUpJsonStruct($event,i,'groupId')"
+                        [readonly]="this.pathcedDetails">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [value]="item.groupId" *ngFor="let item of routeGroupList"
+                           [disabled]='!item.isActive'>{{item.groupName}}</ng-option>
+                     </ng-select>
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Search And Select City" appendTo="body" [searchable]="true"
+                        [clearable]="true" style="width: 12rem;" [(ngModel)]="item.fromcity??item.fromCityName"
+                        (change)="setUpJsonStruct($event,i,'fromCityId')"
+                        (keyup)="setUpJsonStructK($event,i,'fromCityId')"
+                        [readonly]="this.pathcedDetails">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [disabled]='!item.isActive' [value]="item"
+                           *ngFor="let item of routeMasterList">{{item.fromcity}}</ng-option>
+                     </ng-select>
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Search And Select City" appendTo="body" [searchable]="true"
+                        [clearable]="true" style="width: 12rem;" [(ngModel)]="item.tocity??item.toCityName"
+                        (change)="setUpJsonStruct($event,i,'toCityId')" (keyup)="setUpJsonStructK($event,i,'toCityId')"
+                        [readonly]="this.pathcedDetails">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [disabled]='!item.isActive' [value]="item"
+                           *ngFor="let item of toRouteListData">{{item.tocity}}</ng-option></ng-select>
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Via City Select" appendTo="body" [searchable]="true"
+                        [clearable]="true" style="width: 12rem;" [(ngModel)]="item.viaCityId"
+                        (change)="setUpJsonStruct($event,i,'viaCityId')"
+                        [readonly]="this.pathcedDetails">
+                        <ng-option value="" selected>Select</ng-option>
+                        <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                           *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                     </ng-select>
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="number" min="0" class="form-control" #distancee readonly value="{{item.distance}}">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="number" min="0" class="form-control" #additionalLoadedAveragePerKmM
+                        value="{{item.additionalLoadedAveragePerKm}}"
+                        (change)="setUpJsonStruct(additionalLoadedAveragePerKmM.value,i,'additionalLoadedAveragePerKm')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="number" min="0" class="form-control" #additionalEmptyAveragePerKmM
+                        value="{{item.additionalEmptyAveragePerKm}}"
+                        (change)="setUpJsonStruct(additionalEmptyAveragePerKmM.value,i,'additionalEmptyAveragePerKm')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" #dieselLtrM value="{{item.dieselLtr}}"
+                        (change)="setUpJsonStruct(dieselLtrM.value,i,'dieselLtr')"
+                        [readonly]="this.pathcedDetails" >
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" #cashM value="{{item.cash}}"
+                        (change)="setUpJsonStruct(cashM.value,i,'cash')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" #cashOnTrailerM value="{{item.cashOnTrailer}}"
+                        (change)="setUpJsonStruct(cashOnTrailerM.value,i,'cashOnTrailer')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="text" class="form-control" #tollAmountM value="{{item.tollAmount}}"
+                        (change)="setUpJsonStruct(tollAmountM.value,i,'tollAmount')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="date" class="form-control" #startDateM value="{{item.startDate | slice:0:10}}"
+                        (change)="setUpJsonStruct(startDateM.value,i,'startDate')">
+                  </div>
+               </td>
+               <td>
+                  <div class=" col-sm-12 col-lg-12 has-validation">
+                     <input type="date" class="form-control" #endDateM value="{{item.endDate | slice:0:10}}"
+                        (change)="setUpJsonStruct(endDateM.value,i,'endDate')">
+                  </div>
+               </td>
+               <td (click)="deleteArray(i)"><a href="javascript:void(0)"><i class="bi bi-x-circle"></i></a></td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+   <div class="row pb-2 mt-3">
+      <div class="col-lg-12">
+         <div class="text-center">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+               (click)="finalSubmission()">{{this.pathcedDetails!=''?'Update':'Submit'}}</button>
+         </div>
+      </div>
+
+   </div>
+   <!-- </form> -->
+
+</div>

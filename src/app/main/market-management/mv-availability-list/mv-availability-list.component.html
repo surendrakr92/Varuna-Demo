@@ -1,0 +1,252 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+        <a routerLink="/market/mv-availability/create-mv-availability"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="bottom"></i> </a>
+    </span>
+    <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">MV Availability List
+    </h5>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+             <th>Sr. No.</th>
+             <th>Location Name</th>
+             <th>placement Date</th>
+             <th>Vendor</th>
+             <th>Vehicle Type</th>
+             <th>From City</th>
+             <th>To City</th>
+             <!-- <th>Status</th> -->
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let Item of msList; let i=index;">
+             <td>{{1+i}}</td>
+             <td>{{Item.locationname}}</td>
+             <td>{{Item.placementDt | date}}</td>
+             <td> {{Item.vendor}}</td>
+             <td>{{Item.vehicleType}}</td>
+             <td>{{Item.fromCity}}</td>
+             <td>{{Item.toCity}}</td>
+             <!-- <td>  <span class="{{Item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{Item.isActive?'Active':'Inactive'}}</span>
+          </td>
+  -->
+             <td class="display2">
+           <a ngbTooltip="Edit" placement="bottom" class="edit" (click)="viewPdfFileOPen(modelmsg)" ><i
+                      class="bi bi-pen-fill pr"></i></a>        
+                      <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                         <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" 
+                            *ngIf="Item.isActive==true"
+                               checked title="Inactive">
+                         </div>
+                      </a>
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+
+   <!-- popup confirm-->
+   <ng-template #modelmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">MS Availability</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+            aria-label="Close">
+         <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+            aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <form action="" [formGroup]="formMaster">
+            <div class="row ">
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Vendor 
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="Vendor Select" [searchable]="true" [clearable]="true"
+                     formControlName="vendorName">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]="!item.isActive" [value]="item.vendorId"
+                     *ngFor="let item of vendorList">{{
+                     item.vendorName }}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['vendorName'].errors">
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.['required']">select vendor name
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.serverError">{{
+                           f['vendorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+          
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Vendor Phone No.
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="Vendor Select" [searchable]="true" [clearable]="true"
+                     formControlName="vendorMobileNo">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]="!item.isActive" [value]="item.vendorId"
+                     *ngFor="let item of vendorList">{{
+                     item.regNumber }}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['vendorMobileNo'].errors">
+                        <small class="text-danger" *ngIf="f['vendorMobileNo'].errors?.['required']">select vendor
+                           mobile no.
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorMobileNo'].errors?.serverError">{{
+                           f['vendorMobileNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Vehicle No. 
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="text" class="form-control" formControlName="vehicleNo" >
+                     <div *ngIf="submitted && f['vehicleNo'].errors">
+                        <small class="text-danger" *ngIf="f['vehicleNo'].errors?.['required']">select Vehicle No.
+                        </small>
+                        <small class="text-danger" *ngIf="f['vehicleNo'].errors?.serverError">{{
+                           f['vehicleNo'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Vehicle Type
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="Vehicle Type Select" [searchable]="true" [clearable]="true"
+                         formControlName="vehicleTypeId">
+                         <ng-option value="" selected>Select</ng-option>
+                         <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                         *ngFor="let item of vehicleList">{{item.codeDesc}}</ng-option>
+                         </ng-select>
+                     <div *ngIf="submitted && f['vehicleTypeId'].errors">
+                        <small class="text-danger" *ngIf="f['vehicleTypeId'].errors?.['required']">select vehicle
+                           type
+                           </small>
+
+                        <small class="text-danger" *ngIf="f['vehicleTypeId'].errors?.serverError">{{
+                           f['vehicleTypeId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     From City
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="City Select" [searchable]="true" [clearable]="true"
+                     formControlName="fromCityId">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                     *ngFor="let item of clityList">{{item.cityName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['fromCityId'].errors">
+                        <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">select from city
+                        </small>
+                        <small class="text-danger" *ngIf="f['fromCityId'].errors?.serverError">{{
+                           f['fromCityId'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     To City
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="City Select" [searchable]="true" [clearable]="true"
+                     formControlName="fromCityId">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                     *ngFor="let item of clityList">{{item.cityName}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['vendorName'].errors">
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.['required']">select from city
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.serverError">{{
+                           f['vendorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Rate unit
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <ng-select placeholder="Rate Unit Select" formControlName="rateTypeId" [searchable]="true"
+                     [clearable]="true">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                     *ngFor="let item of rateUnit">{{item.codeDesc}}</ng-option>
+                     </ng-select>
+                     <div *ngIf="submitted && f['vendorName'].errors">
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.['required']">select rate unit
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.serverError">{{
+                           f['vendorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                     Rate
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <input type="number" class="form-control" formControlName="rate" >
+                     <div *ngIf="submitted && f['vendorName'].errors">
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.['required']">enter  Rate
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.serverError">{{
+                           f['vendorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-3 ">
+                  <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  	Entry Remarks
+                  </label>
+                  <div class=" col-sm-12 col-lg-12">
+                     <textarea type="text" class="form-control" formControlName="entryRemarks"></textarea>
+                     <div *ngIf="submitted && f['vendorName'].errors">
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.['required']">select vendor name
+                        </small>
+                        <small class="text-danger" *ngIf="f['vendorName'].errors?.serverError">{{
+                           f['vendorName'].errors.serverError}}</small>
+                     </div>
+                  </div>
+               </div>
+            </div>
+            <div class="row">
+               <div class="col-lg-12">
+                  <div class="float-end">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="submit()">Submit</button>
+                  </div>
+               </div>
+            </div>
+         </form>
+         <br>
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+
+ </div>
+ </div>

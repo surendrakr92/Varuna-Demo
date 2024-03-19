@@ -1,0 +1,193 @@
+xls documentation
+       export(): void {
+    /* generate worksheet */
+    const ws: XLSX.WorkSheet = XLSX.utils.aoa_to_sheet(this.data);
+
+    /* generate workbook and add the worksheet */
+    const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(wb, ws, 'Sheet1');
+
+    /* save to file */
+    XLSX.writeFile(wb, this.fileName);
+  }
+  onFileChange(event: any) {
+    debugger
+    const file = event.target.files[0];
+    if (file) {
+      this.readExcelFile(file);
+    }
+  }
+  readExcelFile(file: File) {
+    debugger
+    const fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      const arrayBuffer = e.target.result;
+      const workbook = XLSX.read(arrayBuffer, { type: 'array' });
+      const worksheet = workbook.Sheets[workbook.SheetNames[0]];
+      const data = XLSX.utils.sheet_to_json(worksheet, { raw: true });
+      // Validate and process the data
+      this.processExcelData(data);
+    };
+    fileReader.readAsArrayBuffer(file);
+  }
+  processExcelData(data: any[]) {
+    debugger
+    this.lanePeriorityListByCustId = data.map((item, index) => {
+      const errors = this.validateData(item); // Implement your validation logic
+
+      if (errors.length > 0) {
+        // Set error messages
+        item.error = errors.join(', ');
+      } else {
+        item.error = ''; // No errors
+      }
+
+      return item;
+    });
+  }
+
+  validateData(item: any): string[] {
+    debugger
+    // Implement your validation logic here and return an array of error messages
+    const errors: string[] = [];
+
+    // Example validation:
+    if (!item.fromCity) {
+      errors.push('From City is required.');
+    } else if (!item.toCity) {
+      errors.push('TO City is required.');
+    } else if (!item.monthTarget) {
+      errors.push('Monthly Target is required.');
+    } else if (!item.laneCategory) {
+      errors.push('Lane Category is required.');
+    }
+    // Add more validation rules as needed
+
+    return errors;
+  }
+  //csv documentation
+    onFileChangeCsv(event: any) {
+    debugger;
+    const file = event.target.files[0];
+    if (file) {
+      this.readCsvFile(file);
+    }
+  }
+  readCsvFile(file: File) {
+    const fileReader = new FileReader();
+    fileReader.onload = (e: any) => {
+      const content = e.target.result;
+      const lines = content.split("\n");
+      // Extract headers (first line)
+      const headers = lines[0].split(",");
+      // Initialize an array to hold the data
+      const data = [];
+      // Iterate over lines starting from the second line (data rows)
+      for (let i = 1; i < lines.length; i++) {
+        const values = lines[i].split(",");
+        // Create an object with keys from headers and corresponding values
+        const rowData: any = {};
+        for (let j = 0; j < headers.length; j++) {
+          const key = headers[j]?.trim(); // Remove leading/trailing spaces
+          rowData[key] = values[j]?.trim(); // Remove leading/trailing spaces
+        }
+        // Push the row data into the data array
+        data.push(rowData);
+      }
+      // Now, 'data' contains the parsed CSV data
+      this.processCsvData(data);
+    };
+    fileReader.readAsText(file);
+  }
+  processCsvData(data: any[]) {
+    // Clear previous data if needed
+    this.modulemasterList = [];
+  
+    // Validate and process each row of data
+    for (const row of data) {
+      // Skip rows that are entirely empty
+      if (Object.values(row).every(value => !value)) {
+        continue;
+      }
+  
+      // Implement your data validation logic here
+  
+      // Add an "error" key if validation fails
+      if (!this.isValid(row)) {
+        row.error = 'Validation failed'; // You can provide a more descriptive error message
+      }
+  
+      // Add the row to the table data
+      this.modulemasterList.push(row);
+    }
+  }
+  isValid(row: any): boolean {
+    debugger;
+    // Implement your validation logic here
+    // Return true if the row is valid, false otherwise
+    // For example, check if required columns are present and have valid values
+
+    // Example validation: Check if 'From City' and 'To City' columns are present
+    if (!row["From City"] || !row["To City"]) {
+      return false;
+    }
+
+    // Add more validation rules as needed
+
+    return true;
+  }
+  ___________________________________________________-
+  lane periority target allocation
+    importFile() {
+    // let fileName = "LanePriorityCategory.xLsx";
+    // const ws: XLSX.WorkSheet = XLSX.utils.json_to_sheet(
+    //   this.lanePeriorityListByCustId
+    // );
+    // Object.keys(ws).forEach((key) => {
+    //   if (ws[key].v === "Action") {
+    //     delete ws[key];
+    //   }
+    // });
+    // /* generate workbook and add the worksheet */
+    // const wb: XLSX.WorkBook = XLSX.utils.book_new();
+    // XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+
+    // /* save to file */
+    // XLSX.writeFile(wb, fileName);
+    let fileName = 'LanePriorityCategory.csv';
+    // Convert the data to a CSV format string
+    const csvData = this.convertJsonToCsv(this.lanePeriorityListByCustId);
+    
+    // Create a Blob from the CSV data
+    const blob = new Blob([csvData], { type: 'text/csv' });
+    
+    // Create a download link and trigger the download
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = fileName;
+    link.click();
+  }
+  convertJsonToCsv(jsonData: any[]) {
+    const separator = ',';
+    // Extract the headers from the first object in the array
+    const headers = Object.keys(jsonData[0]);
+    // Create the header row
+    const headerRow = headers.join(separator);
+    // Create an array of CSV rows
+    const csvRows = jsonData.map((data) => {
+        return headers.map(header => {
+            let field = data[header];
+            if (field !== null && field !== undefined) {
+                // Escape double quotes
+                field = field.toString().replace(/"/g, '""');
+                // Enclose fields with double quotes if they contain special characters
+                if (field.search(/("|,|\n)/g) >= 0) {
+                    field = `"${field}"`;
+                }
+            }
+            return field;
+        }).join(separator);
+    });
+    // Combine the header row and CSV rows into a single string
+    return [headerRow, ...csvRows].join('\n');
+}

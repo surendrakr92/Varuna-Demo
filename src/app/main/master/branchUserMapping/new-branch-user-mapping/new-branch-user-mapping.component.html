@@ -1,0 +1,85 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+           <a routerLink="/master/branch-user-mapping"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Branch User Mapping "
+                 placement="right"></i> </a>
+        </span>
+        <span class=" title">
+           <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+           </a>
+        </span>
+     </div>
+
+    <h5 class="card-title">New Branch User Mapping 
+    </h5>
+    <form [formGroup]="formBranchMaster" class="novalidate">
+        <div class="row ">
+            <div class="col-lg-3">
+                <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Branch Name <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                       <ng-select class="pb-2 " placeholder="Branch Select"
+                       formControlName="branchId"
+                       [searchable]="true" [clearable]="true"
+                       [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+                       <ng-option value="" selected>Select</ng-option>
+                  <ng-option [disabled]='!item.isActive'
+                  [value]="item.branchId"*ngFor="let item of branchMasterList">{{item.branchName}}</ng-option>
+                       
+                       </ng-select>
+                       <div *ngIf="submitted && f['branchId'].errors">
+                          <small class="text-danger" *ngIf="f['branchId'].errors?.['required']">Please select branch name
+                          </small>
+                       </div>
+                    </div>
+                 </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group mb-3">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select User Name <span class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 ">
+                       <ng-select class="pb-2 " placeholder="Branch Select"
+                       formControlName="userId"
+                       [searchable]="true" [clearable]="true"
+                       [ngClass]="{'is-invalid':submitted && f['userId'].errors}">
+                       <ng-option value="" selected>Select</ng-option>
+                  <ng-option [disabled]='!item.isActive'
+                  [value]="item.userId"*ngFor="let item of userMasterList">{{item.name}}</ng-option>
+                       
+                       </ng-select>
+                       <div *ngIf="submitted && f['userId'].errors">
+                          <small class="text-danger" *ngIf="f['userId'].errors?.['required']">Please select user name
+                          </small>
+                       </div>
+                    </div>
+                 </div>
+            </div>
+
+           
+        
+            
+            <div class="col-lg-3">
+                <div class="form-group mb-3">
+                    <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                        is Default Branch
+                    </label>
+                    <div class=" col-sm-12 col-lg-12">
+                        <div class="form-check form-switch">
+                            <input type="checkbox" class="form-check-input" formControlName="isDefaultBranch">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="float-end">
+                    <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                        (click)="OnSubmit()">Submit</button>
+                </div>
+            </div>
+
+        </div>
+    </form>
+
+</div>

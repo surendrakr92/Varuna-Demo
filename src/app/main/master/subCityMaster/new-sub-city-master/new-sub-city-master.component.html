@@ -1,0 +1,186 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/master/sub-city-master"><i class="bi bi-arrow-return-left booticon"
+               ngbTooltip="Back to Sub City List " placement="right"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">{{this.subCityMasterDetailsById?'Update':'Create'}} Sub City Master
+   </h5>
+   <form [formGroup]="formSubCityMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Sub City Name<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="subCityName"
+                     [ngClass]="{'is-invalid':submitted && f['subCityName'].errors}" maxlength="20">
+                  <div *ngIf="submitted && f['subCityName'].errors">
+                     <small class="text-danger" *ngIf="f['subCityName'].errors?.['required']">Please enter sub city
+                        name</small>
+                     <small class="text-danger" *ngIf="f['subCityName'].errors?.['pattern']">Invalid data</small>
+                     <small class="text-danger" *ngIf="f['subCityName'].errors?.serverError">{{
+                        f['subCityName'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Fleet City<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2  " placeholder="city Select" formControlName="fleetCityId"
+                     [ngClass]="{'is-invalid':submitted && f['fleetCityId'].errors}" [searchable]="true"
+                     [clearable]="true">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of fleetCityList">{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['fleetCityId'].errors">
+                     <small class="text-danger" *ngIf="f['fleetCityId'].errors?.['required']">Please select fleet
+                        city</small>
+                     <small class="text-danger" *ngIf="f['fleetCityId'].errors?.['pattern']">invalid data</small>
+                     <small class="text-danger"
+                        *ngIf="f['fleetCityId'].errors?.serverError">{{f['fleetCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">ODA <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <select class="form-select" formControlName="oda"
+                     [ngClass]="{'is-invalid':submitted && f['oda'].errors}">
+                     <option value="">Select oda</option>
+                     <option value=true>Yes</option>
+                     <option value=false>No</option>
+                  </select>
+                  <div *ngIf="submitted && f['oda'].errors">
+                     <small class="text-danger" *ngIf="f['oda'].errors?.['required']">Please select oda
+                     </small>
+                     <small class="text-danger" *ngIf="f['oda'].errors?.serverError">{{
+                        f['oda'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">OLA <span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <select class="form-select" formControlName="ola"
+                     [ngClass]="{'is-invalid':submitted && f['ola'].errors}">
+                     <option value="">Select ola</option>
+                     <option value=true>Yes</option>
+                     <option value=false>No</option>
+                  </select>
+                  <div *ngIf="submitted && f['ola'].errors">
+                     <small class="text-danger" *ngIf="f['ola'].errors?.['required']">Please select ola
+                     </small>
+                     <small class="text-danger" *ngIf="f['ola'].errors?.serverError">{{
+                        f['ola'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Pin Code
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="Pin Code Select" formControlName="pinCodeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['pinCodeId'].errors}"
+                     (keyup)="dropDownForbinding($event,'pincode')" (change)="dropDownForbinding($event,'pincode')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.pincodeId" *ngFor="let item of pinCodeList">{{item.pinCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['pinCodeId'].errors">
+                     <small class="text-danger" *ngIf="f['pinCodeId'].errors?.['required']">Please select pin code
+                     </small>
+                     <small class="text-danger" *ngIf="f['pinCodeId'].errors?.serverError">{{
+                        f['pinCodeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">City Name
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2 " placeholder="City Select" formControlName="cityId" [searchable]="true"
+                     [readonly]="!!this.formSubCityMaster['controls'].cityId.value"
+                     (change)="dropDownForbinding($event,'cityName')" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['cityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                        *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['cityId'].errors">
+                     <small class="text-danger" *ngIf="f['cityId'].errors?.['required']">Please select city
+
+                     </small>
+                     <small class="text-danger" *ngIf="f['cityId'].errors?.serverError">{{
+                        f['cityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">State Name
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <ng-select class="pb-2  " placeholder="State Select" formControlName="stateId"
+                     [ngClass]="{'is-invalid':submitted && f['stateId'].errors}" [searchable]="true" [clearable]="true"
+                     [readonly]="!!this.formSubCityMaster['controls'].stateId.value">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.stateId"
+                        *ngFor="let item of stateList">{{item.stateName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['stateId'].errors">
+                     <small class="text-danger" *ngIf="f['stateId'].errors?.['required']">Please select state
+
+                     </small>
+                     <small class="text-danger" *ngIf="f['stateId'].errors?.serverError">{{
+                        f['stateId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Status
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                        f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="onSubmit()">Submit</button>
+               </div>
+            </div>
+
+         </div>
+      </div>
+
+   </form>
+
+</div>

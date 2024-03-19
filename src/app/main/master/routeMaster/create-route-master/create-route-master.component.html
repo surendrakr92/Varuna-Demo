@@ -1,0 +1,161 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/master/route-master-list/"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Route Master List"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">CITY BASED ROUTE MASTER </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+
+
+   <div class="row  mt-4 d-flex justify-content-center">
+      <div class="col-lg-5">
+         <div class="row mb-2">
+            <label  class="col-sm-9 col-form-label" style="width: 37%;"><span class="float-end">Number Of
+                  Rows :</span> </label>
+            <div class="col-sm-3" style="margin-left: 0px; padding-left: 0px;    padding-right: 0px;">
+               <input type="number" class="form-control" #noRow max="60" min="1">
+            </div>
+            <div class="col-sm-4" style="padding-left: 10px;">
+               <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm"
+                  (click)="addRowForTables(noRow.value)">+ Add Rows</button>
+            </div>
+         </div>
+      </div>
+   </div>
+
+  <div class="table-responsive">
+<table class="table table-borderless ">
+<thead class="bg-secondary text-white">
+   <tr>
+      <th >Route Code</th>
+      <th> From City <span
+         class="text-danger">*</span></th>
+      <th>      To City <span
+         class="text-danger">*</span></th>
+      <th>    Route Category Type <span
+         class="text-danger">*</span></th>
+      <th>   Remarks<span
+         class="text-danger">*</span></th>
+      <th>Route Category <span
+         class="text-danger">*</span></th>
+      <th> Route Start Date <span
+         class="text-danger">*</span></th>
+      <th>    Distance (In KM) <span
+         class="text-danger">*</span></th>
+      <th>  Transit Hour <span
+         class="text-danger">*</span></th>
+      <th>Express Hours </th>
+      <th> Empty Allow </th>
+      <th> Action </th>
+   </tr>
+</thead>
+<tbody>
+   <tr *ngFor="let item of Arrayindex; index as i" class="bodyRow border-bottom">
+      <td><div class=" col-sm-12 col-lg-12 ">
+         <input type="text" class="form-control" placeholder="System Generated" style="width: 120px;" readonly>
+      </div>
+   </td>
+      <td>     <div class=" col-sm-12 col-lg-12 ">
+         <ng-select placeholder="City Select" [searchable]="true" [clearable]="true" #ValueForfnn appendTo="body"
+            style="width: 160px;" (change)="ValueForFromCity($event, i)">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [disabled]="!item.isActive" [value]="item.cityId" *ngFor="let item of cityList">{{
+               item.cityName }}</ng-option>
+         </ng-select>
+      </div>
+   </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <ng-select placeholder="City Select" [searchable]="true" [clearable]="true" appendTo="body"
+               style="width: 160px;" (change)="ValueForToCity($event, i)">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [disabled]='!item.isActive' [value]="item.cityId"
+                  *ngFor="let item of cityList">{{item.cityName}}</ng-option>
+            </ng-select>
+         </div>
+      </td>
+      <td>       <div class=" col-sm-12 col-lg-12 ">
+         <ng-select placeholder="Route Category type" [searchable]="true" [clearable]="true" appendTo="body"
+            style="width: 130px;" (change)="ValueForRoute($event, i)">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+               *ngFor="let item of routeCategoryList">{{item.codeDesc}}</ng-option>
+         </ng-select>
+      </div>
+   </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12">
+            <input name="" id=""  #remarkss (change)="ValueForRemarks(remarkss.value, i)" readonly
+               [value]="item.remarkss==undefined?'':item.remarkss" appendTo="body" style="width: 150px;"
+               class="form-control">
+             
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <ng-select placeholder="Route Select" [searchable]="true" [clearable]="true" appendTo="body"
+               style="width: 160px;" (change)="ValueForRoute2($event, i)">
+               <ng-option value="" selected>Select</ng-option>
+               <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                  *ngFor="let item of routeCategoryList2">{{item.codeDesc}}</ng-option>
+            </ng-select>
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <input type="date" class="form-control" #startDate (change)="ValueForStartDate(startDate, i)"
+               style="width: 110px;">
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <input type="number" class="form-control" min="0" #distance (change)="ValueFordistance(distance, i)"
+               style="width: 100px;">
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <input type="text" class="form-control" min="1" max="150" #transitHour style="width: 100px;"
+               (change)="ValueForTransitHours(transitHour, i)">
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <input type="text" class="form-control" min="1" max="24" #expressHour style="width: 120px;"
+               (change)="ValueForexpressHours(expressHour, i)">
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <div class="form-check">
+               <input class="form-check-input" type="checkbox" id="gridCheck2" #emptyAllow
+                  (change)="ValueForemptyAllowed(emptyAllow, i)">
+            </div>
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <a ngbTooltip="Clear " placement="bottom" class="delete" (click)="deleteArray(i)">
+               <i class="bi bi-trash3-fill"></i>
+            </a>
+         </div>
+      </td>
+   </tr>
+</tbody>
+   
+</table>
+</div> 
+
+
+</div>
+<div class="row mt-2 mb-2">
+   <div class="text-center">
+      <button type="button" class="btn btn-primary rounded-pill btn-padding2 btn-sm" style="width: 100px;"
+         (click)="finalSubmission()">Submit</button>
+   </div>
+</div>

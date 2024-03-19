@@ -1,0 +1,336 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/fleet"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Fleet"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Vehicle Assignment to PRQ</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <form [formGroup]="formMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Branch Name
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="Branch Name Select" formControlName="branchId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['branchId'].errors}">
+                     <ng-option value="" Select>Select</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.branchId"
+                        *ngFor="let item of branchMasterList ">{{item.branchCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['branchId'].errors">
+                     <small class="text-danger" *ngIf="f['branchId'].errors?.['required']">select
+                        Branch Name
+                     </small>
+                     <small class="text-danger" *ngIf="f['branchId'].errors?.serverError">{{
+                        f['branchId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Date
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="date" class="form-control" formControlName="date"
+                     [ngClass]="{'is-invalid':submitted && f['date'].errors}"
+                     max="{{tommarrow}}">
+                  <div *ngIf="submitted && f['date'].errors">
+                     <small class="text-danger" *ngIf="f['date'].errors?.['required']">select
+                        Date
+                     </small>
+                     <small class="text-danger" *ngIf="f['date'].errors?.serverError">{{
+                        f['date'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Show Data
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2 " placeholder="Data Select" formControlName="showDataList" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['showDataList'].errors}">
+                     <ng-option value="" Select>Select</ng-option>
+                     <ng-option value="0">All</ng-option>
+                     <ng-option [disabled]='!item.isActive' [value]="item.generalId"
+                        *ngFor="let item of showDataList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['showDataList'].errors">
+                     <small class="text-danger" *ngIf="f['showDataList'].errors?.['required']">select
+                        Show Data
+                     </small>
+                     <small class="text-danger" *ngIf="f['showDataList'].errors?.serverError">{{
+                        f['showDataList'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 mt-1 pt-4">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+               (click)="onSubmit()">Show</button>
+         </div>
+      </div>
+   </form>
+   <div class="table-responsive">
+      <table class="table table-borderless mt-3 newTable"
+      datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable">
+         <thead>
+            <tr class="bg-secondary text-white">
+               <th>S. No.</th>
+               <th>PRQ no.</th>
+               <th>PRQ date</th>
+               <th>Placement Date</th>
+               <th>Location</th>
+               <th>Party Name</th>
+               <th>Pickup city</th>
+               <th>Destination city(1st point)</th>
+               <th>Destination city(2nd Point)</th>
+               <th>Vehicle type</th>
+               <th>PRQ load type</th>
+               <th>Assign Date</th>
+               <th>Lane Category</th>
+               <th>Route Category</th>
+               <th>Month Target</th>
+               <th>Vehicle No.</th>
+               <th>Change Vehicle Remarks</th>
+               <th>Change Vehicle Reason</th>
+               <th>Fleet Hub</th>
+               <th>Assign/Un-Assign</th>
+               <th>Previous Assignment View</th>
+            </tr>
+         </thead>
+         <tbody >
+            <tr data-title=" {{item.vehicleNo==null?'Confirmed PRQ ':'This PRQ is under Lane Approval. You can not assign vehicle.'}}" class="border-bottom {{item.vehicleNo==null?'tablclass':''}} " *ngFor="let item of prqListByAssignVeh ;index as i">
+               <td>{{i+1}}</td>
+               <td>{{item.prqNo}}</td>
+               <td>{{item?.prqDt | date:'dd/MM/yyyy'}}</td>
+               <td>{{item?.placementDt | date:'dd/MM/yyyy'}}</td>
+               <td>{{item?.orgnName}}</td>
+               <td>{{item?.custName}}</td>
+               <td>{{item?.fromCityName}}</td>
+               <td>{{item?.toCityName}}</td>
+               <td>{{item?.toCityName}}</td>
+               <td>{{item?.ftlType}}</td>
+               <td>{{item?.rateTypeLoad}}</td>
+               <td>NA</td>
+               <td>{{item?.assignVehicleType}}</td>
+               <td>NA</td>
+               <td>{{item.monthtarget}}</td>
+               <td>
+                  <ng-select class="pb-2 " placeholder="Vehicle No. Select" [searchable]="true" [clearable]="true"
+                     [closeOnSelect]="false" appendTo="body" style="width: 250px;" 
+                     (change)="setUpJson($event,i,'vehicleId')">
+                     <ng-option value="" select>Select</ng-option>
+                     <ng-option [value]="item" *ngFor="let item of vehicleList">{{item?.vehicleNo}}</ng-option>
+                  </ng-select>
+                              </td>
+               <td>
+                  <ng-select class="pb-2 " placeholder="Change Vehicle Select" [searchable]="true" [clearable]="true"
+                     [closeOnSelect]="true" appendTo="body" style="width: 200px;"
+                     [ngModel]="item?.remark"
+                     (change)="setUpJson($event,i,'remarkId')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of Change_Vehicle_Remarks"
+                        [disabled]='!item.isActive'><span [title]="item.codeDesc">{{item.codeDesc }}</span></ng-option>
+                  </ng-select>
+                              </td>
+               <td>
+                  <input type="text" class="form-control" style="width: 150px;"
+                     value="{{item?.prqStatusReason}}"
+                     #reasonss
+                     [disabled]="!item.hndl"
+                     (change)="setUpJson(reasonss.value,i,'reason')">
+                               </td>
+               <td>NA</td>
+               <td class="display"><button type="button" *ngIf="item?.vehicleNo==null"
+                  (click)="onAssign(item,'assign')"
+                     class="btn btn-warning  rounded-pill btn-sm btn-padding "
+                     style="margin-right: 2px;">Assign</button>
+                     <button type="button" *ngIf="item?.vehicleNo!=null"
+                  (click)="onAssign(item,'reassign')"
+                     class="btn btn-success  rounded-pill btn-sm btn-padding "
+                     style="margin-right: 2px;">Reassign</button>
+                  <button type="button" class="btn btn-warning  rounded-pill btn-sm btn-padding"
+                  (click)="onAssign(item,'remove')">Remove</button>
+               </td>
+               <td>
+                  <button type="button" class="btn btn-info  rounded-pill btn-sm btn-padding display "
+                     (click)="modelOpen(modelmsg)"><i class="bi bi-eye " style="padding-right:3px;"></i> Previous
+                  </button>
+               </td>
+            </tr>
+       
+            <!-- <tr class="border-bottom bg-danger-light">
+               <td>1</td>
+               <td>543243</td>
+               <td>09/12/2023</td>
+               <td>Gurgaon</td>
+               <td>gfjhghkjdgf</td>
+               <td>dfjdj</td>
+               <td>09/12/2023</td>
+               <td>shfdshf</td>
+               <td>fdhfsd</td>
+               <td>
+                  erwerwre
+               </td>
+               <td>fdhfsd</td>
+               <td>fdhfsd</td>
+               <td>fdhfsd</td>
+               <td>fdhfsd</td>
+               <td>fdhfsd</td>
+               <td>
+                  <ng-select class="pb-2 " placeholder="Vehicle No. Select" [searchable]="true" [clearable]="true"
+                     [closeOnSelect]="false" formControlName="vehicleId" appendTo="body" style="width: 150px;"
+                     [ngClass]="{'is-invalid':submitt && fs['vehicleId'].errors}">
+                     <ng-option value="" select>Select</ng-option>
+                     <ng-option [value]="item.vehicleTypeId" *ngFor="let item of vehicleList"
+                        [disabled]='!item.isActive'>{{item.vehicleNo }}</ng-option>
+                  </ng-select>
+               
+                  <div *ngIf="submitt && fs['vehicleId'].errors">
+                     <small class="text-danger" *ngIf="fs['vehicleId'].errors?.['required']">Please select Vehicle No.
+                     </small>
+               
+                     <small class="text-danger" *ngIf="fs['vehicleId'].errors?.serverError">{{
+                        fs['vehicleId'].errors.serverError}}</small>
+                  </div>
+               </td>
+               <td>
+                  <ng-select class="pb-2 " placeholder="Change Vehicle Select" [searchable]="true" [clearable]="true"
+                     [closeOnSelect]="true" formControlName="vehicleChangeRemarksId" appendTo="body"
+                     style="width: 200px;" [ngClass]="{'is-invalid':submitt && fs['vehicleChangeRemarksId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.generalId" *ngFor="let item of Change_Vehicle_Remarks"
+                        [disabled]='!item.isActive'><span [title]="item.codeDesc">{{item.codeDesc }}</span></ng-option>
+                  </ng-select>
+               
+                  <div *ngIf="submitt && fs['vehicleChangeRemarksId'].errors">
+                     <small class="text-danger" *ngIf="fs['vehicleChangeRemarksId'].errors?.['required']">Please select
+                        change vehicle remarks</small>
+               
+                     <small class="text-danger" *ngIf="fs['vehicleChangeRemarksId'].errors?.serverError">{{
+                        fs['vehicleChangeRemarksId'].errors.serverError}}</small>
+                  </div>
+               </td>
+               <td>
+                  <input type="text" class="form-control" style="width: 150px;"
+                     [ngClass]="{'is-invalid':submitt && fs['reason'].errors}">
+                  <div *ngIf="submitt && fs['reason'].errors">
+                     <small class="text-danger" *ngIf="fs['reason'].errors?.['required']">Please enter Change Vehicle
+                        Reason</small>
+               
+                     <small class="text-danger" *ngIf="fs['reason'].errors?.serverError">{{
+                        fs['reason'].errors.serverError}}</small>
+                  </div>
+               </td>
+               <td>fdhfsd</td>
+               <td class="display"><button type="button" (click)="onAssign()"
+                     class="btn btn-warning  rounded-pill btn-sm btn-padding "
+                     style="margin-right: 2px;">Assign</button>
+                  <button type="button" class="btn btn-warning  rounded-pill btn-sm btn-padding">Remove</button>
+               </td>
+               <td><button type="button" class="btn btn-info  rounded-pill btn-sm btn-padding display "
+                     (click)="modelOpen(modelmsg)"><i class="bi bi-eye " style="padding-right:3px;"></i> Previous
+                  </button>
+               
+               
+                  <ng-template #modelmsg let-modal>
+                     <div class="modal-header qut-hd">
+                        <h6 class="modal-title" id="exampleModalCenterTitle">Previous Assignment View</h6>
+                        <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                           aria-label="Close">
+                           <span aria-hidden="true">&times;</span>
+                        </button>
+                        <button type="button" rippleefect="" class="btn btn-icon"
+                           (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                              class="fa fa-times"></i></button>
+                     </div>
+                     <div class="modal-body" tabindex="0" ngbAutofocus>
+                        <div class="table-responsive">
+                           <table class="table table-bordered ">
+                              <thead>
+                                 <tr class="bg-secondary text-white">
+                                    <th>From city</th>
+                                    <th>To city</th>
+                                    <th>Route category</th>
+                                    <th>Date Assignment</th>
+                                    <th>THC no.</th>
+                                 </tr>
+                              </thead>
+                              <tbody>
+                                 <tr>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                    <td>-</td>
+                                 </tr>
+                              </tbody>
+                           </table>
+               
+                        </div>
+                        <br>
+                     </div>
+                  </ng-template>
+               
+               </td>
+               </tr> -->
+         </tbody>
+      </table>
+     
+
+         <!-- popup confirm-->
+         <ng-template #modelmsg let-modal>
+            <div class="modal-header qut-hd">
+               <h6 class="modal-title" id="exampleModalCenterTitle">Previous Assignment View</h6>
+               <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+                  aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+               </button>
+               <button type="button" rippleefect="" class="btn btn-icon"
+                  (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                     class="fa fa-times"></i></button>
+            </div>
+            <div class="modal-body" tabindex="0" ngbAutofocus>
+               <div class="table-responsive">
+                  <table class="table table-bordered ">
+                     <thead>
+                        <tr class="bg-secondary text-white">
+                           <th>From city</th>
+                           <th>To city</th>
+                           <th>Route category</th>
+                           <th>Date Assignment</th>
+                           <th>THC no.</th>
+                        </tr>
+                     </thead>
+                     <tbody>
+                        <tr>
+                           <td>-</td>
+                           <td>-</td>
+                           <td>-</td>
+                           <td>-</td>
+                           <td>-</td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+               <br>
+            </div>
+         </ng-template>
+         <!-- close popup confirm-->
+   </div>
+</div>

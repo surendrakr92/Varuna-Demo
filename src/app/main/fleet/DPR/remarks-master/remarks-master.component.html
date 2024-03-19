@@ -1,0 +1,214 @@
+
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+        <a routerLink="/fleet"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Fleet" placement="bottom"></i> </a>
+    </span>
+    <span class=" title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Remarks Master 
+    </h5>
+ 
+    <div class=" pb-2">
+       <button type="button" class="btn btn-success m-1" (click)="modelOpen(modelmsg)" ngbTooltip="Create Remarks Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+          ngbTooltip="Download List" placement="bottom" type="button" >
+          <i class="bi bi-download"></i>
+       </button>
+    </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No.</th>
+             <th>Record ID</th>
+             <th>Main Category</th>
+             <th>Sub Category</th>
+             <th>Remarks Name </th>
+             <th>Description </th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let item of remarkList; index as i;" >
+             <td>{{i+1}}</td>
+             <td>{{item.catId}}</td>
+             <td>{{item.catName}}</td>
+             <td>{{item.subCatName}}</td>
+             <td>{{item.remarks}}</td>
+             <td>{{item.description}}</td>
+           
+           <td>  <span class="{{item.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{item.isActive?'Active':'Inactive'}}</span>
+          </td> 
+ 
+ 
+             <td class="display2">
+                <a  ngbTooltip="view" routerLink="/fleet/remarks-master/remarks-master-view/{{item.remarksID}}" placement="bottom" class="view" ><i class="bi bi-eye-fill pr"></i></a> 
+             
+                    <a  ngbTooltip="Edit" (click)="onEdit(item,modelmsg)" placement="bottom" class="edit" ><i
+                          class="bi bi-pen-fill pr"></i></a>
+                
+               
+<!--  
+                      <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                         <div class="form-check form-switch ">
+                            <input type="checkbox" class="form-check-input" 
+                           
+                               checked title="Inactive">
+                         </div>
+                      </a> -->
+ 
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+
+
+ 
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+        <div class="modal-header qut-hd">
+           <h6 class="modal-title" id="exampleModalCenterTitle">Sub category Master</h6>
+           <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+              aria-label="Close">
+           <span aria-hidden="true">&times;</span>
+           </button>
+           <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+              aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+         
+            <form [formGroup]="formMaster">
+                <div class="row">
+            
+                    <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Main Category<span class="text-danger">*</span>
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                             
+                                    <ng-select class="pb-2 "  placeholder="Pin Code Select" formControlName="catId" [searchable]="true"
+                                    [clearable]="true" [ngClass]="{'is-invalid':submitted && f['catId'].errors}" 
+                                    (change)="handledropdn($event)" 
+                                    [readonly]="this.remarksDetailById!=''">
+                                    <ng-option value="" 
+                                    selected>Select</ng-option>
+                                    <ng-option 
+                                    [value]="item.catId" *ngFor="let item of MaincategoryMasterList">{{item.catName}}</ng-option>
+                                 </ng-select>
+                
+                                <div *ngIf="submitted && f['catId'].errors">
+                                    <small class="text-danger" *ngIf="f['catId'].errors?.['required']">Please enter Main Category
+                                        </small>
+                                        <small class="text-danger" *ngIf="f['catId'].errors?.serverError">{{
+                                            f['catId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                   <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Sub Category <span class="text-danger">*</span>
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                            
+
+                                    <ng-select class="pb-2 "  placeholder="Pin Code Select" formControlName="subCatId" [searchable]="true"
+                                    [clearable]="true" [ngClass]="{'is-invalid':submitted && f['subCatId'].errors}"
+                                    >
+                                    <ng-option value="" 
+                                    selected>Select</ng-option>
+                                    <ng-option 
+                                    [value]="item.subCatId" *ngFor="let item of updatedsubcatlist">{{item.subCatName}}</ng-option>
+                                 </ng-select>
+
+                
+                                <div *ngIf="submitted && f['subCatId'].errors">
+                                    <small class="text-danger" *ngIf="f['subCatId'].errors?.['required']">Please enter sub category
+                                        </small>
+                                        <small class="text-danger" *ngIf="f['subCatId'].errors?.serverError">{{
+                                            f['subCatId'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Remarks <span class="text-danger">*</span>
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <textarea type="text" class="form-control" formControlName="remarks"
+                                    [ngClass]="{'is-invalid':submitted && f['remarks'].errors}"></textarea>
+                
+                                <div *ngIf="submitted && f['remarks'].errors">
+                                    <small class="text-danger" *ngIf="f['remarks'].errors?.['required']">Please enter remarks
+                                        </small>
+                                        <small class="text-danger" *ngIf="f['remarks'].errors?.['pattern']">Invalid  remarks</small>
+                                        <small class="text-danger" *ngIf="f['remarks'].errors?.serverError">{{
+                                            f['remarks'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+    
+                   <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Description  <span class="text-danger">*</span>
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <textarea type="text" class="form-control" formControlName="description"
+                                    [ngClass]="{'is-invalid':submitted && f['description'].errors}"></textarea>
+                
+                                <div *ngIf="submitted && f['description'].errors">
+                                    <small class="text-danger" *ngIf="f['description'].errors?.['required']">Please enter description
+                                        </small>
+                                        <small class="text-danger" *ngIf="f['description'].errors?.['pattern']">Invalid  description</small>
+                                        <small class="text-danger" *ngIf="f['description'].errors?.serverError">{{
+                                            f['description'].errors.serverError}}</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                      <div class="col-lg-4">
+                        <div class="form-group ">
+                            <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                                Status
+                            </label>
+                            <div class=" col-sm-12 col-lg-12">
+                                <div class="form-check form-switch ">
+                                    <input type="checkbox" class="form-check-input" formControlName="isActive">
+                                </div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                <div class="row mt-2 mb-2">
+                    <div class="text-center">
+                        <button type="button" (click)="onsave()" class="btn btn-primary rounded-pill btn-padding btn-sm m-1">{{ this.remarksDetailById !='' ? 'Update' : 'Submit' }}</button>
+                        <button type="button" (click)="modal.dismiss('Cross click')" class="btn btn-primary rounded-pill btn-padding btn-sm">Cancel</button>
+                    </div>
+                
+                </div>
+                </form>
+
+
+        </div>
+     </ng-template>
+     <!-- close popup confirm-->
+ </div>

@@ -1,0 +1,84 @@
+.form-check-input {
+    width: 1rem;
+    height: 1rem;
+}
+/* For small screens (e.g., phones) */
+@media (max-width: 576px) {
+    .main-container {
+       padding: 10px; /* Add spacing to the container */
+    }
+ 
+    .col-lg-12 {
+       width: 100%; /* Make columns take full width */
+    }
+ }
+ 
+ /* For medium screens (e.g., tablets) */
+ @media (min-width: 576px) and (max-width: 992px) {
+    .main-container {
+       padding: 20px; /* Add more spacing to the container */
+    }
+ }
+ 
+ /* For large screens (e.g., desktops) */
+ @media (min-width: 992px) {
+    .main-container {
+       padding: 30px; /* Add even more spacing to the container */
+    }
+ }
+ 
+ .table>:not(caption)>*>* {
+   padding: 0.2rem 0.2rem !important;
+ 
+}
+
+// .table-responsive{
+//    padding-bottom: 80px;
+//    z-index: 0;
+// }
+.ng-option{
+   z-index: 40000;
+}
+
+// .maincontain{
+//    display: flex;
+//    // flex-wrap: wrap;
+//    overflow-x: scroll;
+//    z-index: 0;
+//    padding-bottom: 20px;
+// }
+
+
+// .item{
+//    flex-grow: 0;
+//    padding: 2px;
+
+// }
+
+.table td a.delete{
+   color: #E34724;
+   font-size: 16px;
+   cursor: pointer;
+   font-size: 15px;
+}
+.circles{
+   background-color: cadetblue;
+   width: 20px !important;
+   height: 20px !important;
+   border-radius: 50%;
+   padding: 5px;
+   margin-top:33px;
+   padding-top: 1px;
+   color: #fff;
+}
+::placeholder {
+   color: red;
+   opacity: 1; /* Firefox */
+ }
+ 
+ ::-ms-input-placeholder { /* Edge 12-18 */
+   color: red;
+ }
+ .bodyRow td input[type='text'], input[type='date']{
+   min-width: 160px;
+ }

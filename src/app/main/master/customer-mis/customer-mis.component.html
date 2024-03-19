@@ -1,0 +1,259 @@
+<div class="main-contianer">
+    <div class="display">
+        <span class="title">
+            <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+                    placement="right"></i> </a>
+        </span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i> </a>
+        </span>
+    </div>
+    <div class="display">
+        <h5 class="card-title">Customer MIS
+        </h5>
+        <div class="pb-2">
+            <button type="button" class="btn btn-success m-1" (click)="modelOpen(modelmsg,'createW')"
+                ngbTooltip="Create Vendor Master" placement="bottom"><i class="bi bi-plus-lg"></i> Create </button>
+            <button class="btn btn-secondary text-white" ngbTooltip="Download List" placement="bottom"
+                (click)="downloadExcel()" title="Download File" type="button"><i class="bi bi-download"></i>
+            </button>
+        </div>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+            <thead class="bg-secondary text-white">
+                <tr>
+                    <th>Sr. No.</th>
+                    <th>Customer Name</th>
+                    <th>MIS Email To</th>
+                    <th>MIS Email CC</th>
+                    <th>1st Email Time</th>
+                    <th>2nd Email Time </th>
+                    <th>3rd Email Time </th>
+                    <th>Status</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="zoom-in" *ngFor="let item of customerMisList; let i=index">
+                    <td>{{i+1}}</td>
+                    <td>{{item.custName}}</td>
+                    <td>{{item.misEmailIdTo}}</td>
+                    <td>{{item.misEmailIdCc}}</td>
+                    <td>{{item.emailTime1st | slice:0:5}}</td>
+                    <td>{{item.emailTime2nd | slice:0:5}}</td>
+                    <td>{{item.emailTime3rd | slice:0:5}}</td>
+                    <td> <span class="{{item.isActive ?'text-success':' text-danger'}}"><i
+                                class="bi bi-check2-square pr"></i>
+                            {{item.isActive?'Active':'Inactive'}}</span>
+                    </td>
+                    <td class="display2">
+                        <!-- <a href="javascript:voide(0)"
+                   ngbTooltip="View" placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a> -->
+                        <a (click)="modelOpen(modelmsg,item.misId)" ngbTooltip="Edit" placement="bottom" class="edit"><i
+                                class="bi bi-pen-fill pr"></i></a>
+                        <a ngbTooltip="Active/Inactive" placement="bottom" class="delete">
+                            <div class="form-check form-switch ">
+                                <input type="checkbox" class="form-check-input" *ngIf="item.isActive==true"
+                                    (click)="activeInactive(item.misId)" checked title="Inactive">
+                            </div>
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+        <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Customer MIS</h6>
+            <button type="button" class="clos-btn bg-light-blue"
+                (click)="modal.dismiss('Cross click');this.formValidation();" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                    aria-hidden="true" class="fa fa-times"></i></button>
+        </div>
+        <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form action="" [formGroup]="customerMIS">
+                <div class="row ">
+                    <div class="col-lg-4">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Customer Name<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <ng-select class="pb-2 " placeholder="customer select" formControlName="custId"
+                                [searchable]="true" [clearable]="true"
+                                [ngClass]="{'is-invalid':submitted && f['custId'].errors}">
+                                <ng-option value="" selected>Select</ng-option>
+                                <ng-option [value]="item.custId" *ngFor="let item of customerMasterList"
+                                    [disabled]='!item.isActive'>{{item.custName}}</ng-option>
+                            </ng-select>
+                            <div *ngIf="submitted && f['custId'].errors">
+                                <small class="text-danger" *ngIf="f['custId'].errors?.['required']">Please select
+                                    customer
+                                </small>
+                                <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                                    f['custId'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Select Period<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <ng-select formControlName="selectPeriod" placeholder="select period">
+                                <ng-option selected value="">Select</ng-option>
+                                <ng-option value="Daily">Daily</ng-option>
+                                <ng-option value="Weekly">Weekly</ng-option>
+                                <ng-option value="Monthly">Monthly</ng-option>
+                                <ng-option value="Quarterly">Quarterly</ng-option>
+                                <ng-option value="Half-Yearly">Half-Yearly</ng-option>
+                            </ng-select>
+
+                            <div *ngIf="submitted && f['selectPeriod'].errors">
+                                <small class="text-danger" *ngIf="f['selectPeriod'].errors?.['required']">Please select
+                                    period<span class="text-danger">*</span>
+                                </small>
+                                <small class="text-danger" *ngIf="f['selectPeriod'].errors?.serverError">{{
+                                    f['selectPeriod'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            MIS Email To<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <textarea class="form-control emailTextArea" formControlName="misEmailIdTo"
+                            cols="3"
+                                [ngClass]="{'is-invalid':submitted && f['misEmailIdTo'].errors}">
+                                </textarea>
+                            <div *ngIf="submitted && f['misEmailIdTo'].errors">
+                                <small class="text-danger" *ngIf="f['misEmailIdTo'].errors?.['required']">Please enter
+                                    mis email to
+                                </small>
+                                <small class="text-danger" *ngIf="f['misEmailIdTo'].errors?.['pattern']">Invalid mis
+                                    email
+                                    to</small>
+                                <small class="text-danger" *ngIf="f['misEmailIdTo'].errors?.serverError">{{
+                                    f['misEmailIdTo'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            MIS Email CC<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <textarea  class="form-control emailTextArea" formControlName="misEmailIdCc"
+                                [ngClass]="{'is-invalid':submitted && f['misEmailIdCc'].errors}">
+                            </textarea>
+                            <div *ngIf="submitted && f['misEmailIdCc'].errors">
+                                <small class="text-danger" *ngIf="f['misEmailIdCc'].errors?.['required']">Please enter
+                                    mis email cc
+                                </small>
+                                <small class="text-danger" *ngIf="f['misEmailIdCc'].errors?.['pattern']">Invalid mis
+                                    email
+                                    cc</small>
+                                <small class="text-danger" *ngIf="f['misEmailIdCc'].errors?.serverError">{{
+                                    f['misEmailIdCc'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            1st Email Time<span class="text-danger">*</span>
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="time" name="" id="" class="form-control" formControlName="emailTime1st"
+                                [ngClass]="{'is-invalid':submitted && f['emailTime1st'].errors}">
+                            <div *ngIf="submitted && f['emailTime1st'].errors">
+                                <small class="text-danger" *ngIf="f['emailTime1st'].errors?.['required']">Please enter
+                                    email time
+                                </small>
+                                <small class="text-danger" *ngIf="f['emailTime1st'].errors?.['email']">Invalid mis email
+                                    to</small>
+                                <small class="text-danger" *ngIf="f['emailTime1st'].errors?.serverError">{{
+                                    f['emailTime1st'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            2nd Email Time
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="time" name="" id="" class="form-control" formControlName="emailTime2nd"
+                                [ngClass]="{'is-invalid':submitted && f['emailTime2nd'].errors}">
+                            <div *ngIf="submitted && f['emailTime2nd'].errors">
+                                <small class="text-danger" *ngIf="f['emailTime2nd'].errors?.['required']">Please enter
+                                    email time
+                                </small>
+                                <small class="text-danger" *ngIf="f['emailTime2nd'].errors?.['email']">Invalid mis email
+                                    to</small>
+                                <small class="text-danger" *ngIf="f['emailTime2nd'].errors?.serverError">{{
+                                    f['emailTime2nd'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            3rd Email Time
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="time" name="" id="" class="form-control" formControlName="emailTime3rd"
+                                [ngClass]="{'is-invalid':submitted && f['emailTime3rd'].errors}">
+                            <div *ngIf="submitted && f['emailTime3rd'].errors">
+                                <small class="text-danger" *ngIf="f['emailTime3rd'].errors?.['required']">Please enter
+                                    email time
+                                </small>
+                                <small class="text-danger" *ngIf="f['emailTime3rd'].errors?.['email']">Invalid mis email
+                                    to</small>
+                                <small class="text-danger" *ngIf="f['emailTime3rd'].errors?.serverError">{{
+                                    f['emailTime3rd'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Mis Enable
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="checkbox" class=" checklistcls" formControlName="misEnable" checked>
+                            <div *ngIf="submitted && f['misEnable'].errors">
+                                <small class="text-danger" *ngIf="f['misEnable'].errors?.serverError">{{
+                                    f['misEnable'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-4 ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                            Is Active
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                            <input type="checkbox" class=" checklistcls" formControlName="isActive" checked>
+                            <div *ngIf="submitted && f['isActive'].errors">
+                                <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                                    f['isActive'].errors.serverError}}</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="float-end">
+                            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                                (click)="submitClaimTDetails()">{{this.claimPatchedValue?.claimDetailId?'Update':'Submit'}}</button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            <br>
+        </div>
+    </ng-template>
+    <!-- close popup confirm-->
+</div>

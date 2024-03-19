@@ -1,0 +1,138 @@
+<div class="main-contianer">
+   <div class="display display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/fleet"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Fleet"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Driver Performance Remarks Entry</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+               placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row ">
+      <form [formGroup]="formMaster">
+         <div class="row mt-2 d-flex justify-content-center mb-2">
+            <div class="col-lg-8">
+               <div class="row">
+                  <div class="col-lg-5  ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Driver Code/Name<span
+                              class="text-danger">*</span></span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Select Code/Name" formControlName="driverId"
+                           [searchable]="true" [clearable]="true" (change)="OnSerch()"
+                           [ngClass]="{'is-invalid':submitted && f['driverId'].errors}">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item.driverId" *ngFor="let item of driverList"
+                              [disabled]='!item.isDriverActive'>{{item.manualDriverCode}} -
+                              {{item.driverName}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="submitted && f['driverId'].errors">
+                           <small class="text-danger" *ngIf="f['driverId'].errors?.['required']">Please select driver
+                              code/name
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-5  ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Date of Remarks<span
+                              class="text-danger">*</span></span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <input type="date" class="form-control"
+                           [ngClass]="{'is-invalid':submitted && f['dateRemarks'].errors}" value="{{minDatePast}}"
+                           readonly>
+                        <div *ngIf="submitted && f['dateRemarks'].errors">
+                           <small class="text-danger" *ngIf="f['dateRemarks'].errors?.['required']">Please select date
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"></div>
+                  <div class="col-lg-5  " *ngIf="tripData.length!=0">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"><span>Trip Sheet Number<span
+                              class="text-danger">*</span></span></label>
+                     <div class=" col-sm-12 col-lg-12">
+                        <ng-select class="pb-2 " placeholder="Select trip Number" [searchable]="true"
+                           [clearable]="true"
+                           (change)="ontripSelection($event)">
+                           <ng-option value="" selected>Select</ng-option>
+                           <ng-option [value]="item" *ngFor="let item of tripData">
+                              {{item.vslipNo}}</ng-option>
+                        </ng-select>
+                        <div *ngIf="this.tripId==''">
+                           <small class="text-danger">please select trip sheet number
+                           </small>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"></div>
+               </div>
+            </div>
+         </div>
+      </form>
+      <ng-container>
+         <div class="row" *ngIf="this.tripId!=''">
+            <div class="pb-1">
+               <button type="button" class="btn btn-success m-1" style="float: right;"
+                 (click)="createForm()"><i
+                     class="bi bi-plus-lg "></i> Create</button>
+            </div>
+         </div>
+         <div class="table-responsive">
+            <table class="table table-report table-hover" #MyTable id="MyTable">
+               <thead class="bg-secondary text-white">
+                  <tr>
+                     <th>Sr. No.</th>
+                     <th>Driver Code/Name</th>
+                     <th>Vehicle No.</th>
+                     <th>Date of Remarks</th>
+                     <th>Driver Remarks</th>
+                     <th>Staff Remarks</th>
+                     <th>Action Taken</th>
+                     <th>Case Closed</th>
+                     <th>Action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr class="zoom-in" *ngFor="let item of tripdetailsByTripId; let i= index;">
+                     <td>{{i+1}}</td>
+                     <td>{{item.firstDriverName}}</td>
+                     <td>{{item.vehicleNo}}</td>
+                     <td>{{item}}</td>
+                     <td>{{item}}</td>
+                     <td>{{item}}</td>
+                     <td>{{item}}</td>
+                     <td>{{item}}</td>
+                     <td class="display2">
+                        <!-- <a ngbTooltip="View " placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a> -->
+                        <a ngbTooltip="Edit " placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </ng-container>
+   </div>
+   <!-- popup confirm-->
+   <ng-template #modalmsg let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">New Customer Contact master</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleeffect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <br>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-primary  d-inline  btn-sm">Submit</button>
+            <button type="button" class="btn btn-primary  d-inline  btn-sm"
+               (click)="modal.dismiss('Cross click')">cancel</button>
+         </div>
+         <!-- </center> -->
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+</div>

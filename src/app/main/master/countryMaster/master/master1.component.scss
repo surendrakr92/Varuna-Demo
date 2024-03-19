@@ -1,0 +1,31 @@
+.ng-option {
+    font-weight: normal;
+    display: block;
+    white-space: nowrap;
+    min-height: 1.2em;
+    padding: 0px 2px 1px;
+}
+
+.nav-tabs-bordered .nav-link.active {
+    background-color: #1c2c5e;
+    color: #ffffff;
+    border-bottom: 0px solid #1c2c5e;
+    // border-radius: 25px;
+    
+}
+.nav-tabs-bordered .nav-link {
+    margin-bottom: -2px;
+    border: none;
+    color: #2c384e;
+
+    transition: all .5s;
+}
+
+.nav-tabs-bordered .nav-link:hover {
+    background-color: #1c2c5e;
+    color: #ffffff;
+    border-bottom: 0px solid #1c2c5e;
+    // border-radius: 25px;
+
+    transition: all .5s;
+}

@@ -1,0 +1,450 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+               placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">PRQ Closure
+      </h5>
+   </div>
+   <form [formGroup]="formMaster">
+      <div class="row">
+         <div class="col-lg-2">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Select
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2  " placeholder=" Select" formControlName="prqDtMode" [searchable]="true"
+                     [clearable]="true"
+                     (change)="mngSelection($event)">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.id" *ngFor="let item of selectList">{{item.type}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitedNew && f['prqDtMode'].errors">
+                     <small class="text-danger" *ngIf="f['prqDtMode'].errors?.['required']">Please select selection
+                        type
+                     </small>
+                     <small class="text-danger" *ngIf="f['prqDtMode'].errors?.serverError">{{
+                        f['prqDtMode'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-2"*ngIf="this.formMaster.controls['prqDtMode'].value==2">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Enter PRQ No
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+               <input type="text" name="" id=""formControlName="prqNo" class="form-control"
+               [ngClass]="{'is-invalid':submitted && f['prqNo'].errors}">
+                  <div *ngIf="submitted && f['prqNo'].errors">
+                     <small class="text-danger" *ngIf="f['prqNo'].errors?.['required']">Please select prqNo
+                     </small>
+                     <small class="text-danger" *ngIf="f['prqNo'].errors?.serverError">{{
+                        f['prqNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-2"*ngIf="this.formMaster.controls['prqDtMode'].value==1">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  Select Date Range
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <ng-select class="pb-2  " (change)="selectionDate($event)" placeholder="Date Range Select"
+                     formControlName="dateRange" [ngModel]="3" [searchable]="true" [clearable]="true">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.id" *ngFor="let item of dateRange">{{item.type}}</ng-option>
+                  </ng-select>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-2"*ngIf="this.formMaster.controls['prqDtMode'].value==1">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  From
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="date" class="form-control" formControlName="fromDate"
+                     [ngClass]="{'is-invalid':submitted && f['fromDate'].errors}"
+                     [readOnly]="this.formMaster.controls['dateRange'].value==2||this.formMaster.controls['dateRange'].value==1">
+                  <div *ngIf="submitted && f['fromDate'].errors">
+                     <small class="text-danger" *ngIf="f['fromDate'].errors?.['required']">Please select from date
+                     </small>
+                     <small class="text-danger" *ngIf="f['fromDate'].errors?.serverError">{{
+                        f['fromDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-2"*ngIf="this.formMaster.controls['prqDtMode'].value==1">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                  To
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="date" class="form-control" formControlName="toDate"
+                     [ngClass]="{'is-invalid':submitted && f['toDate'].errors}"
+                     [readOnly]="this.formMaster.controls['dateRange'].value==2||this.formMaster.controls['dateRange'].value==1">
+                  <div *ngIf="submitted && f['toDate'].errors">
+                     <small class="text-danger" *ngIf="f['toDate'].errors?.['required']">Please select todate
+                     </small>
+                     <small class="text-danger" *ngIf="f['toDate'].errors?.serverError">{{
+                        f['toDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-2 mt-4">
+            <div class=" col-sm-12 col-lg-12">
+               <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="showDetails('testt')"><i
+                     class="bi bi-eye-fill"></i> Show</button>
+            </div>
+         </div>
+      </div>
+   </form>
+   <hr>
+   <div class="table-responsive">
+      <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" id="MyTable"
+      #MyTable>
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No.</th>
+               <th>PRQ No.</th>
+               <th>FTL Type</th>
+               <th>PRQ Date</th>
+               <th>From City</th>
+               <th>To City</th>
+               <th>Customer Code & Name</th>
+               <th>Original Placement Date</th>
+               <th>New Placement Date</th>
+               <!-- <th>View Placement History</th> -->
+               <th>Approval Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let data of closuresList ; index as i">
+               <td>{{i+1}}</td>
+               <td>{{data?.prqNo}}</td>
+               <td>{{data?.ftlType}}</td>
+               <td>{{data?.prqDt | date:'dd/MM/yyyy'}}</td>
+               <td>{{data?.fromCityName}}</td>
+               <td>{{data.toCityName}}</td>
+               <td>{{data?.custName}}</td>
+               <td>{{data?.placementDt | date:'dd/MM/yyyy'}}</td>
+               <!-- <td>NA</td> -->
+               <td>
+                  <button type="button" class="btn btn-info btn-sm text-white" ngbTooltip="View Placement Date"
+                     (click)="modelOpen(modelmsg,data.prqId)">View </button>
+               </td>
+               <td>{{data?.status}}</td>
+               <td class="display2" *ngIf="data.status==null">
+                  <a ngbTooltip="Edit " placement="bottom" class="edit" (click)="modelOpen2(modelmsg2,data)"><i
+                        class="bi bi-pen-fill pr"></i></a>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+      <!-- popup confirm-->
+      <ng-template #modelmsg let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">Pickup Request Placement Date History</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <!-- <div class="card-title text-center bgcolortitle">Pickup Request Placement Date History</div> -->
+            <div class="row">
+               <div class="col-lg-4">
+                  <p><b>Pickup Request No</b>
+                     <br>
+                     {{this.prqhistoryList[0]?.prqNo}}
+                  </p>
+               </div>
+               <div class="col-lg-4">
+                  <p><b>Origin Location</b> <br>{{this.prqhistoryList[0]?.orgnName}}</p>
+               </div>
+               <div class="col-lg-4">
+                  <p><b>Request Date</b> <br>{{this.prqhistoryList[0]?.prqDt | date:'dd/MM/yyyy'}}</p>
+               </div>
+            </div>
+            <table class="table table-bordered table-sm table-striped table-hover"
+            datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+            #MyTable id="MyTable">
+               <thead class="bg-info">
+                  <tr>
+                     <th>PRQ NO.</th>
+                     <th>Placement Date</th>
+                     <th>Reason for non-placement</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr *ngFor="let item of prqhistoryList">
+                     <td>
+                        {{item.prqNo}}
+                     </td>
+                     <td>{{item.prqDt | date:'dd/MM/yyyy'}}</td>
+                     <td>{{item.prqStatusReason}}</td>
+                  </tr>
+               </tbody>
+            </table>
+            <br>
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+      <!-- popup confirm-->
+      <ng-template #modelmsg2 let-modal>
+         <div class="modal-header qut-hd">
+            <h6 class="modal-title" id="exampleModalCenterTitle">PRQ Closure Criteria #{{prqDetails.prqNo}}:{{prqDetails.custName}}</h6>
+            <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+               aria-label="Close">
+               <span aria-hidden="true">&times;</span>
+            </button>
+            <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+                  aria-hidden="true" class="fa fa-times"></i></button>
+         </div>
+         <div class="modal-body" tabindex="0" ngbAutofocus>
+            <form [formGroup]="formMaster2">
+               <div class="row Placement  ">
+                  <div class="col-lg-5">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Status
+                        </label>
+                        <div class=" col-sm-12 col-lg-12 display">
+                           <div class="form-check">
+                              <input class="form-check-input m-1" type="radio" name="gridRadios1" value="placement_done"
+                                 checked (change)="lokedDetByD($event)">
+                              <label class="form-check-label" for="gridRadios1">
+                                 Placement Done
+                              </label>
+                           </div>
+                           <div class="form-check">
+                              <input class="form-check-input m-1" type="radio" name="gridRadios1" value="carry_forward"
+                                 (change)="lokedDetByD($event)">
+                              <label class="form-check-label" for="gridRadios2">
+                                 Carry Forward
+                              </label>
+                           </div>
+                           <div class="form-check">
+                              <input class="form-check-input m-1" type="radio" name="gridRadios1" value="cancelled"
+                                 (change)="lokedDetByD($event)">
+                              <label class="form-check-label" for="gridRadios3">
+                                 Cancelled
+                              </label>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-4"
+                     *ngIf="this.setupFormViewStruct!='carry_forward'&& this.setupFormViewStruct!='cancelled'&&this.validatePrqLr?.data=='False'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Enter LR No.
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="text" class="form-control" formControlName="dockNo"
+                              [ngClass]="{'is-invalid':submitedNew && fs['dockNo'].errors}">
+                           <div *ngIf="submitedNew && fs['dockNo'].errors">
+                              <small class="text-danger" *ngIf="fs['dockNo'].errors?.['required']">Please enter Enter LR
+                                 No.
+                              </small>
+                              <small class="text-danger" *ngIf="fs['dockNo'].errors?.serverError">{{
+                                 fs['dockNo'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"
+                     *ngIf="this.setupFormViewStruct!='carry_forward'&& this.setupFormViewStruct!='cancelled' && this.validatePrqLr?.data!='False'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Total no. of LR
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="number" min="0" class="form-control" formControlName="noOfLR"
+                              [ngClass]="{'is-invalid':submitedNew && fs['noOfLR'].errors}"
+                              max="5" min="1"oninput="this.value = this.value.replace(/[^0-9]/g, '')">
+                           <div *ngIf="submitedNew && fs['noOfLR'].errors">
+                              <small class="text-danger" *ngIf="fs['noOfLR'].errors?.['required']">Please enter Total
+                                 no. of LR
+                              </small>
+                              <small class="text-danger" *ngIf="fs['noOfLR'].errors?.serverError">{{
+                                 fs['noOfLR'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"
+                     *ngIf="this.setupFormViewStruct!='carry_forward'&& this.setupFormViewStruct!='cancelled'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Vehicle No.
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="text" class="form-control" formControlName="vehicleno"
+                           (change)="checkvendorDetails($event)"
+                              [ngClass]="{'is-invalid':submitedNew && fs['vehicleno'].errors}">
+                           <div *ngIf="submitedNew && fs['vehicleno'].errors">
+                              <small class="text-danger" *ngIf="fs['vehicleno'].errors?.['required']">Please correct vehicle number
+                              </small>
+                              <small class="text-danger" *ngIf="fs['vehicleno'].errors?.serverError">{{
+                                 fs['vehicleno'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"
+                     *ngIf="this.setupFormViewStruct!='carry_forward'&& this.setupFormViewStruct!='cancelled'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Vendor Name & Code
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="text" class="form-control" readonly formControlName="vendorNameCode"
+                              [ngClass]="{'is-invalid':submitedNew && fs['vendorNameCode'].errors}">
+                           <div *ngIf="submitedNew && fs['vendorNameCode'].errors">
+                              <small class="text-danger" *ngIf="fs['vendorNameCode'].errors?.['required']">enter vendor
+                                 name & code
+                              </small>
+                              <small class="text-danger" *ngIf="fs['vendorNameCode'].errors?.serverError">{{
+                                 fs['vendorNameCode'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"
+                     *ngIf="this.setupFormViewStruct!='carry_forward'&& this.setupFormViewStruct!='cancelled'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Current Placement Date
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="date" class="form-control" formControlName="currentPlaceDate"
+                              [ngClass]="{'is-invalid':submitedNew && fs['currentPlaceDate'].errors}">
+                           <div *ngIf="submitedNew && fs['currentPlaceDate'].errors">
+                              <small class="text-danger" *ngIf="fs['currentPlaceDate'].errors?.['required']">select
+                                 Current Placement Date
+                              </small>
+                              <small class="text-danger" *ngIf="fs['currentPlaceDate'].errors?.serverError">{{
+                                 fs['currentPlaceDate'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3"
+                     *ngIf="this.setupFormViewStruct!='placement_done'&& this.setupFormViewStruct!='cancelled'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           New Placement Date
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="date" class="form-control" formControlName="prqStatusEntryDateTime"
+                              [ngClass]="{'is-invalid':submitedNew && fs['prqStatusEntryDateTime'].errors}">
+                           <div *ngIf="submitedNew && fs['prqStatusEntryDateTime'].errors">
+                              <small class="text-danger"
+                                 *ngIf="fs['prqStatusEntryDateTime'].errors?.['required']">select New Placement Date
+                              </small>
+                              <small class="text-danger" *ngIf="fs['prqStatusEntryDateTime'].errors?.serverError">{{
+                                 fs['prqStatusEntryDateTime'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6"
+                     *ngIf="this.setupFormViewStruct!='placement_done'&& this.setupFormViewStruct!='cancelled'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Reason for Non-Placement
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Reason for Non-Placement Select"
+                              formControlName="prqStatusReasonId" [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitedNew && fs['prqStatusReasonId'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId"
+                                 *ngFor="let item of nonReplacementList ">{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitedNew && fs['prqStatusReasonId'].errors">
+                              <small class="text-danger" *ngIf="fs['prqStatusReasonId'].errors?.['required']">select
+                                 Reason for Non-Placement
+                              </small>
+                              <small class="text-danger" *ngIf="fs['prqStatusReasonId'].errors?.serverError">{{
+                                 fs['prqStatusReasonId'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-6"
+                     *ngIf="this.setupFormViewStruct!='placement_done'&&this.setupFormViewStruct!='carry_forward'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Cancellation Reason
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <ng-select class="pb-2 " placeholder="Reason for Non-Placement Select"
+                              formControlName="cancellationReas" [searchable]="true" [clearable]="true"
+                              [ngClass]="{'is-invalid':submitedNew && fs['cancellationReas'].errors}">
+                              <ng-option value="" selected>Select</ng-option>
+                              <ng-option [value]="item.generalId"
+                                 *ngFor="let item of cencelReason ">{{item.codeDesc}}</ng-option>
+                           </ng-select>
+                           <div *ngIf="submitedNew && fs['cancellationReas'].errors">
+                              <small class="text-danger" *ngIf="fs['cancellationReas'].errors?.['required']">select
+                                 Cancellation Reason
+                              </small>
+                              <small class="text-danger" *ngIf="fs['cancellationReas'].errors?.serverError">{{
+                                 fs['cancellationReas'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-lg-3" *ngIf="this.setupFormViewStruct!='placement_done'">
+                     <div class="form-group ">
+                        <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">
+                           Placement Stopped By
+                        </label>
+                        <div class=" col-sm-12 col-lg-12">
+                           <input type="text" class="form-control" formControlName="prqStatusEntryBy"
+                           readonly
+                              [ngClass]="{'is-invalid':submitedNew && fs['prqStatusEntryBy'].errors}">
+                           <div *ngIf="submitedNew && fs['prqStatusEntryBy'].errors">
+                              <small class="text-danger" *ngIf="fs['prqStatusEntryBy'].errors?.['required']">Placement
+                                 Stopped By
+                              </small>
+                              <small class="text-danger" *ngIf="fs['prqStatusEntryBy'].errors?.serverError">{{
+                                 fs['prqStatusEntryBy'].errors.serverError}}</small>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="row">
+                     <div class="col-lg-12 mt-3 mb-3 mt-4">
+                        <div class="text-center">
+                           <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                              (click)="onSubmit()">Submit</button>
+                        </div>
+                     </div>
+                  </div>
+                  <br>
+               </div>
+            </form>
+         </div>
+      </ng-template>
+      <!-- close popup confirm-->
+   </div>
+</div>

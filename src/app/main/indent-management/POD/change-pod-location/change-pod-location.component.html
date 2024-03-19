@@ -1,0 +1,131 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+       <span class="title">
+       <a routerLink="/indent"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Indent"
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Change POD Location </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <form [formGroup]="formMaster1">
+       <div class="row mt-3 d-flex justify-content-center  mb-2">
+          <div class="col-lg-6">
+             <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">PRQ No.
+                <span class="text-danger">*</span></span> </label>
+                <div class=" col-lg-5 ">
+                   <input type="text" class="form-control" formControlName="prqNo"
+                      [ngClass]="{'is-invalid':submitt && fs['prqNo'].errors}">
+                   <div *ngIf="submitt && fs['prqNo'].errors">
+                      <small class="text-danger" *ngIf="fs['prqNo'].errors?.['required']">please
+                      enter PRQ No.
+                      </small>
+                      <small class="text-danger" *ngIf="fs['prqNo'].errors?.serverError">{{
+                      fs['prqNo'].errors.serverError}}</small>
+                   </div>
+                </div>
+                <div class=" col-lg-3 ">
+                   <button type="button" class="btn btn-warning rounded-pill btn-padding2 btn-sm"
+                      (click)="OnSearch()"><i class="bi bi-search"></i>
+                   Search</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </form>
+    <form [formGroup]="formMaster">
+       <div class="table-responsive">
+          <table class="table table-report">
+             <thead>
+                <tr class="bg-secondary text-white">
+                   <th>LR No.</th>
+                   <th>User Name</th>
+                   <th>POD Received</th>
+                   <th>Reason of POD Not Received</th>
+                   <th>Existing Location</th>
+                   <th>New Location</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr class="zoom-in" *ngIf="changePodLocationList.docketNo">
+                   <td>
+                      {{changePodLocationList.docketNo}}
+                   </td>
+                   <td>
+                      <input type="text" class="form-control" formControlName="userId" style="min-width: 10rem;"
+                         readonly>
+                   </td>
+                   <td>
+                      <ng-select placeholder="POD Received Select" formControlName="isPodReceived" appendTo="body"
+                      [searchable]="true" [clearable]="true" style="width: 10rem;"
+                      [ngClass]="{'is-invalid':submitted && f['isPodReceived'].errors}">
+                      <ng-option value="" selected>Select</ng-option>
+                      <ng-option [value]="item.id"
+                      *ngFor="let item of POD_Received ">{{item.type}}</ng-option>
+                      </ng-select>
+                   </td>
+                   <td>
+                      <ng-select placeholder="Reason of POD Not received Select"
+                      formControlName="podNotRecdReasonId" appendTo="body" [searchable]="true"
+                      [clearable]="true" style="width: 16rem;"
+                      [ngClass]="{'is-invalid':submitted && f['podNotRecdReasonId'].errors}">
+                      <ng-option value="" selected>Select</ng-option>
+                      <ng-option [value]="item.generalId"
+                      *ngFor="let item of podNotRecdReasonList ">{{item.codeDesc}}</ng-option>
+                      </ng-select>
+                   </td>
+                   <td>
+                      <ng-select class="pb-2 " placeholder="Location Select" formControlName="existlcn"
+                      appendTo="body" [searchable]="true" [clearable]="true" style="width: 14rem;"
+                      [readonly]="true"
+                      [ngClass]="{'is-invalid':submitted && f['existlcn'].errors}">
+                      <ng-option value="" selected>Select</ng-option>
+                      <ng-option [value]="item.branchId"
+                      *ngFor="let item of branchMasterList ">{{item.branchName}}</ng-option>
+                      </ng-select>
+                   </td>
+                   <td>
+                      <ng-select class="pb-2 " placeholder="Location Select" formControlName="podRecdBranchId"
+                      appendTo="body" [searchable]="true" [clearable]="true" style="width: 14rem;"
+                      [ngClass]="{'is-invalid':submitted && f['podRecdBranchId'].errors}">
+                      <ng-option value="" selected>Select</ng-option>
+                      <ng-option [value]="item.branchId"
+                      *ngFor="let item of branchMasterList ">{{item.branchName}}</ng-option>
+                      </ng-select>
+                   </td>
+                </tr>
+                <!-- <span *ngIf="changePodLocationList && changePodLocationList.docketNo!='' "
+                class="text-center text-danger">Data Not Found []</span> -->
+             </tbody>
+          </table>
+       </div>
+       <div class="row mt-4">
+          <div class="text-center">
+             <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                (click)="Submit(modelmsg2)">Submit</button>
+          </div>
+       </div>
+    </form>
+    <!-- popup confirm-->
+    <ng-template #modelmsg2 let-modal>
+       <div class="modal-header qut-hd bg-success text-white">
+          <h6 class="modal-title" id="exampleModalCenterTitle">Confirmation Message</h6>
+          <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+             aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+             aria-hidden="true" class="fa fa-times"></i></button>
+       </div>
+       <div class="modal-body" tabindex="0" ngbAutofocus>
+          <p class="text-success">POD Location changed For #{{changePodLocationList.docketNo}}</p>
+          <br>
+          <div  class="text-center"><button  type="button" (click)="modal.dismiss('Cross click')" class="btn btn-primary rounded-pill btn-sm btn-padding">Cancel</button></div>
+       </div>
+    </ng-template>
+    <!-- close popup confirm-->
+ </div>

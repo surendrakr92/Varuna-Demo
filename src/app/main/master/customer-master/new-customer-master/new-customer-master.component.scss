@@ -1,0 +1,102 @@
+.card-title {
+    padding: 5px 0 5px 0;
+    font-size: 13px;
+    font-weight: 500;
+    color: #012970;
+    font-family: "Poppins", sans-serif;
+}
+.pl-0{
+    padding-left: 0px;
+}
+.pr-3{
+    padding-right: 3px;
+}
+.form-check-label{
+    margin-right: 20px;
+    margin-left: 4px;
+}
+.pr-4{
+    padding-right: 3px;
+    padding-left: 17px;
+    display: flex;
+    align-items: center;
+    justify-content: start;
+}
+.form-check {
+    display: inline-flex;
+    min-height: 0px;
+    padding-left: 0.5em;
+    margin-bottom: 0.125rem;
+    
+}
+span{
+    font-size: 11px;
+}
+
+@media screen and (max-width: 600px) {
+    .pl-0{
+        padding-left: 12px !important;
+    }
+    .pr-3{
+        padding-right: 12px !important;
+    }
+    .row .offset-4 {
+        margin-left:0px !important;
+    }
+    .row .g-3, .gy-3 {
+        --bs-gutter-y: 0rem !important;
+    }
+ 
+
+  }
+.nav-link {
+    font-size: 11px !important;
+    color: #002966;
+    font-weight: 500;
+}
+.nav-link.active{
+    color: #f7941d;
+}
+
+.btn-padding2 {
+    padding: 9px 20px;
+}
+li button{
+    padding-left: 2px;
+    padding-right: 2px;
+}
+
+.checkbox .form-check-input {
+    width: 1.5em;
+    height: 1.5em;
+    cursor: pointer;
+
+}
+.FixPosition{
+  height: 300px;
+   font-size: 10px;
+ transition: all 0.3s;
+  overflow-y: auto;
+}
+.checkbox table{
+    font-size: 9px !important;
+}
+
+
+.checkbox .display2 {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    min-height: 18px;
+}
+.removeFile{
+    position: absolute;
+    // left: 117px;
+    right: 0;
+    top: -11px;
+    cursor: pointer;
+    color: #fff;
+    font-size: revert;
+    background: #000000a3;
+    
+  }

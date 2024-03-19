@@ -1,0 +1,298 @@
+<div class="main-contianer">
+   <span class="float-left title">
+   <a routerLink="/master/event-master"><i class="bi bi-arrow-return-left booticon"></i> </a>
+   </span>
+   <span class="float-end title">
+   <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+   </span>
+   <h5 class="card-title">New Event Master
+   </h5>
+   <form [formGroup]="formMaster">
+      <div class="row">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText"
+                  class="col-sm-12 col-lg-12 col-form-label">Event Description<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <textarea type="text" class="form-control" formControlName="eventDesc"
+                     [ngClass]="{'is-invalid':submitted && f['eventDesc'].errors}" ></textarea>
+                  <div *ngIf="submitted && f['eventDesc'].errors">
+                     <small class="text-danger" *ngIf="f['eventDesc'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['eventDesc'].errors?.serverError">{{
+                     f['eventDesc'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Sub Event<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Country Select"
+                  formControlName="subEventId"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['subEventId'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.eventId"*ngFor="let item of eventSubMasterList ">{{item.eventDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['subEventId'].errors">
+                     <small class="text-danger" *ngIf="f['subEventId'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['subEventId'].errors?.serverError">{{
+                     f['subEventId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Main Event <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <!-- <input type="text" class="form-control" formControlName="mainEventId"
+                     [ngClass]="{'is-invalid':submitted && f['mainEventId'].errors}" > -->
+                  <ng-select class="pb-2 " placeholder="Country Select"
+                  formControlName="mainEventId"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['mainEventId'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.eventId"*ngFor="let item of eventMainMasterListMain ">{{item.eventDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['mainEventId'].errors">
+                     <small class="text-danger" *ngIf="f['mainEventId'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['mainEventId'].errors?.serverError">{{
+                     f['mainEventId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Is Reason</label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isReason">
+                     <small class="text-danger" *ngIf="f['isReason'].errors?.serverError">{{
+                     f['isReason'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Config Type <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Country Select"
+                  formControlName="configTypeId"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['configTypeId'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.generalId"*ngFor="let item of locationList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['configTypeId'].errors">
+                     <small class="text-danger" *ngIf="f['configTypeId'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['configTypeId'].errors?.serverError">{{
+                     f['configTypeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Main Group<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isMainGroup">
+                     <small class="text-danger" *ngIf="f['isMainGroup'].errors?.serverError">{{
+                     f['isMainGroup'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Main Event Change<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isMainEventChange">
+                     <small class="text-danger" *ngIf="f['isMainEventChange'].errors?.serverError">{{
+                     f['isMainEventChange'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Event Rules<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Country Select"
+                  formControlName="isRules"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['isRules'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.generalId"*ngFor="let item of eventRuleList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['isRules'].errors">
+                     <small class="text-danger" *ngIf="f['isRules'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['isRules'].errors?.serverError">{{
+                     f['isRules'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Owner<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Owner Select"
+                  formControlName="isOwner"
+                  [searchable]="true" [clearable]="true"
+                  [ngClass]="{'is-invalid':submitted && f['isOwner'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.generalId"*ngFor="let item of ownerList ">{{item.codeDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['isOwner'].errors">
+                     <small class="text-danger" *ngIf="f['isOwner'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['isOwner'].errors?.serverError">{{
+                     f['isOwner'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Description To Be Print<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="descToBePrint"
+                     [ngClass]="{'is-invalid':submitted && f['descToBePrint'].errors}" >
+                  <div *ngIf="submitted && f['descToBePrint'].errors">
+                     <small class="text-danger" *ngIf="f['descToBePrint'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['descToBePrint'].errors?.serverError">{{
+                     f['descToBePrint'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">GPS Event Type<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="gpsEventType"
+                     [ngClass]="{'is-invalid':submitted && f['gpsEventType'].errors}" >
+                  <div *ngIf="submitted && f['gpsEventType'].errors">
+                     <small class="text-danger" *ngIf="f['gpsEventType'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['gpsEventType'].errors?.serverError">{{
+                     f['gpsEventType'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Available On Mobile<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <select class="form-select" formControlName="availableOnMobile">
+                     <option value="">Select</option>
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                  </select>
+                  <div *ngIf="submitted && f['availableOnMobile'].errors">
+                     <small class="text-danger" *ngIf="f['availableOnMobile'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['availableOnMobile'].errors?.serverError">{{
+                     f['availableOnMobile'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Visible Control Tower<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <select class="form-select" formControlName="isVisibleControlTower">
+                     <option value="">Select</option>
+                     <option value="Yes">Yes</option>
+                     <option value="No">No</option>
+                  </select>
+                  <div *ngIf="submitted && f['isVisibleControlTower'].errors">
+                     <small class="text-danger" *ngIf="f['isVisibleControlTower'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['isVisibleControlTower'].errors?.serverError">{{
+                     f['isVisibleControlTower'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" style="display: none;">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Combined Event<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="combinedEvent"
+                     [ngClass]="{'is-invalid':submitted && f['combinedEvent'].errors}" >
+                  <div *ngIf="submitted && f['combinedEvent'].errors">
+                     <small class="text-danger" *ngIf="f['combinedEvent'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['combinedEvent'].errors?.serverError">{{
+                     f['combinedEvent'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" style="display: none;">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">New Combined Event<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="newCombinedEvent"
+                     [ngClass]="{'is-invalid':submitted && f['newCombinedEvent'].errors}" >
+                  <div *ngIf="submitted && f['newCombinedEvent'].errors">
+                     <small class="text-danger" *ngIf="f['newCombinedEvent'].errors?.['required']">Please enter Select Sub-Event</small>
+                     <small class="text-danger" *ngIf="f['newCombinedEvent'].errors?.serverError">{{
+                     f['newCombinedEvent'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-6">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Next Event Detail <span
+                  class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2 " placeholder="Select" [searchable]="true" [clearable]="true"
+                  [multiple]="true" [closeOnSelect]="false" formControlName="nextEvent"
+                  [ngClass]="{'is-invalid':submitted && f['nextEvent'].errors}">
+                 
+                  <ng-option  [disabled]='!item.isActive'
+                  [value]="item.eventId"*ngFor="let item of eventMainMasterList ">{{item.eventDesc}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['nextEvent'].errors">
+                     <small class="text-danger" *ngIf="f['nextEvent'].errors?.['required']">Please next event</small>
+                     <small class="text-danger" *ngIf="f['nextEvent'].errors?.serverError">{{
+                     f['nextEvent'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Is Active?
+               </label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch p-2">
+                     <input type="checkbox" class="form-check-input" formControlName="isActive">
+                     <small class="text-danger" *ngIf="f['isActive'].errors?.serverError">{{
+                     f['isActive'].errors?.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="row pb-2">
+            <div class="col-lg-12">
+               <div class="float-end">
+                  <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     (click)="submit()">Submit</button>
+               </div>
+            </div>
+         </div>
+      </div>
+   </form>
+</div>

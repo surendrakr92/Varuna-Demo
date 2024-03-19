@@ -1,0 +1,62 @@
+
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+       <a routerLink="/master/group-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Group Master" placement="right"></i> </a>
+       </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+    <div class="display">
+       <h5 class="card-title">Group Master View</h5>
+       <span class="title">
+          <a 
+          (click)="download_pdf_print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i> </a>
+          </span>
+    </div>
+    <div class="row " id="viewData_information">
+       <div class="col-lg-12">
+          <div class="row p-1 bgborder" >
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Group ID:</strong><span>{{groupMasterDetailsById.groupId
+                }} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Group Name:</strong><span>{{groupMasterDetailsById.groupName
+                }} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Group Desc.:</strong><span>{{groupMasterDetailsById.groupDesc}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Base Group:</strong><span>{{groupMasterDetailsById.isBaseGroup?'Yes':'No'}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Loaded Avg. Per KM/L:</strong><span>{{groupMasterDetailsById.loadedAvgPerKML}} </span></label>
+             </div>
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Empty Avg Per KM/L:</strong><span>{{groupMasterDetailsById.
+                    emptyAvgPerKML}} </span></label>
+             </div>
+            
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Excess Cash:</strong><span>{{groupMasterDetailsById.excessCash}} 
+                  {{groupMasterDetailsById.cashValueTypeId==1?'(%)':'₹'}}
+                </span></label>
+             </div>
+           
+             <div class="col-lg-4">
+                <label for="inputText"><strong>Excess Toll:</strong><span>{{groupMasterDetailsById.excessToll}} 
+                  {{groupMasterDetailsById.tollValueTypeId==1?'(%)':'₹'}}
+                </span></label>
+             </div>
+         
+          
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Active:</strong><span> {{groupMasterDetailsById.isActive?'Active':'In-Active'}}</span></label>
+             </div>
+          </div>
+       </div>
+    </div>
+ </div>

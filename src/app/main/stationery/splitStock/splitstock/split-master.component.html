@@ -1,0 +1,69 @@
+   <div class="main-contianer">
+    <div class="display">
+    <span class="title">
+       <a routerLink="/stationery"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="right"></i> </a>
+   </span>
+    <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">Split Master List
+    </h5>
+ 
+    <div class="pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/stationery/split-master/createsplit-master" ngbTooltip="Create State Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+             ngbTooltip="Download List" type="button" >
+             <i class="bi bi-download"></i>
+          </button>
+           </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable
+       id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No. </th>
+             <th>splitStockDate</th>
+             <th>Item Name</th>
+             <th>Issue to Branch </th>
+             <th>Split SerialStart No</th>
+             <th>Split SerialEnd No</th>
+              <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let item of itemList; let i=index">
+             <td>{{i+1}}</td>
+             <td>{{item.splitStockDate| date :'dd/MM/yyyy'}}</td>
+             <td>{{item.itemName}}</td>
+             <td>{{item.issueToBranchName}}</td>
+             <td>{{item.splitSerialStart}}</td>
+             <td>{{item.splitSerialEnd}}</td>
+          
+          
+           
+             <td>  <span class="{{item.isActive ?'text-Yes':' text-No'}}"><i class="bi bi-check2-square pr"></i>
+                {{item.isActive?'Active':'Inactive'}}</span>
+          </td>
+             <td class="display2">
+              
+                <a (click)="redirectionEdit(item.splitStockId)"  class="edit" ngbTooltip="Edit" placement="bottom" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+                <a  class="delete" ngbTooltip="Active/Inactive" placement="bottom" >
+                   <div class="form-check form-switch ">
+                      <input type="checkbox" class="form-check-input" 
+                      *ngIf="item.isActive==true"
+                         (click)="activeInactive(item.splitStockId)" checked >
+                   </div>
+                </a>
+             </td>
+          </tr>
+       </tbody>
+    </table>
+ </div>
+ </div>

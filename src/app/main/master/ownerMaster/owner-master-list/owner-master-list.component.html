@@ -1,0 +1,71 @@
+<div class="main-contianer">
+    <div class="display">
+       <span class="title">
+           <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master " placement="bottom"></i> </a>
+       </span>
+       <span class=" title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+       </span>
+    </div>
+ 
+     <div class="display">
+     <h5 class="card-title">Owner Master List
+     </h5>
+     <div class=" pb-2">
+       <button type="button" class="btn btn-success m-1" ngbTooltip="Create New Customer Master" placement="bottom" routerLink="/master/owner-master/new-owner-master/" ><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white"  (click)="downloadExcel(MyTable)"
+             ngbTooltip="Download List" placement="bottom" type="button" >
+             <i class="bi bi-download"></i>
+          </button>
+  </div>
+     </div>
+     <div class="table-responsive">
+        <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable id="MyTable">
+       <thead class="bg-secondary text-white">
+           <tr>
+             <th>Sr. No.</th>
+             <th>Owner Name </th>
+              <th>Owner Pan no.</th>
+              <th>Owner Address </th>
+              <th>Owner City</th>
+              <th>Owner State</th>
+              <th>Account Number</th>
+             <th>Status</th>
+              <th>Action</th>
+           </tr>
+        </thead>
+        <tbody>
+           <tr class="zoom-in" *ngFor="let data of ownerMasterList; index as i;">
+             <td>{{i+1}}</td>
+              <td>{{data?.name}}</td>
+              <td>{{data?.panNo}}</td>
+              <td>{{data?.address}}</td>
+              <td>{{data?.cityName}}</td>
+              <td>{{data?.stateName}}</td>
+              <td>{{data?.accountNo}}</td>
+              <td>  <span class="{{data?.isActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{data?.isActive?'Active':'Inactive'}}</span>
+          </td>
+                <td class="display2">
+                  <a ngbTooltip="view" placement="bottom" class="view"
+                   (click)="redirectionView(data?.ownerId)"><i
+                        class="bi bi-eye-fill pr"></i></a>
+                 <a (click)="redirectionEdit(data?.ownerId)" ngbTooltip="Edit " placement="bottom" class="edit"><i class="bi bi-pen-fill pr"></i></a>
+                 <a ngbTooltip="Active/Inactive " placement="bottom"class="delete">
+                      <div class="form-check form-switch ">
+                         <input type="checkbox" class="form-check-input" 
+                         *ngIf="data?.isActive==true" (click)="activeInactive(data?.ownerId)"
+                             checked >
+                      </div>
+                   </a>
+ 
+              </td>
+           </tr>
+  
+        </tbody>
+     </table>
+    </div>
+  </div>
+ 

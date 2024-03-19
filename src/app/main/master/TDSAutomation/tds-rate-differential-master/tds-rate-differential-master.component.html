@@ -1,0 +1,73 @@
+<div class="main-contianer">
+    <div class="display">
+    <span class="title">
+       <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master" placement="right"></i> </a>
+   </span>
+    <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i> </a>
+    </span>
+ </div>
+ <div class="display">
+    <h5 class="card-title">TDS Rate Differential Master List
+    </h5>
+ 
+    <div class="pb-2">
+       <button type="button" class="btn btn-success m-1" routerLink="/master/tds-rate-differential-master/create-tds-rate-differential-master" ngbTooltip="Create Vehicle Master" placement="bottom"><i
+          class="bi bi-plus-lg "></i> Create </button>
+          <button class="btn btn-secondary text-white" placement="bottom"
+             ngbTooltip="Download List" type="button" >
+             <i class="bi bi-download"></i>
+          </button>
+           </div>
+    </div>
+    <div class="table-responsive">
+       <table class="table table-report table-hover " datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger"
+       #MyTable id="MyTable" >
+       <thead class="bg-secondary text-white">
+          <tr>
+ 
+             <th>Sr. No. </th>
+             <th>Owner name</th>
+          
+             <th>rate Of Tds(%)</th>
+             <th>valid From</th>
+             <th>valid Upto</th>
+           
+            <th>Type</th>
+             <th>Status</th>
+             <th>Action</th>
+          </tr>
+       </thead>
+       <tbody>
+          <tr class="zoom-in" *ngFor="let item of tdsrateDiffMasterList; let i= index;  " >
+             <td>{{i+1}}</td>
+             <td>{{item.name}}</td>
+              <td>{{item.rateOfTds}}</td>
+             <td>{{item.validFrom | date}}</td>
+             <td>{{item.validUpto | date}}</td>
+             <td>{{item.type}}</td>
+           
+             
+            
+            <td>  <span class="{{item.isVehicleActive ?'text-success':' text-danger'}}"><i class="bi bi-check2-square pr"></i>
+                {{item.isVehicleActive?'Active':'Inactive'}}</span>
+          </td> 
+             <td class="display2">
+                <a  class="view" ngbTooltip="view" placement="bottom" ><i
+                      class="bi bi-eye-fill pr"></i></a>
+                <a   class="edit" ngbTooltip="Edit" placement="bottom" ><i
+                      class="bi bi-pen-fill pr"></i></a>
+                <a  class="delete" ngbTooltip="Active/Inactive" placement="bottom" >
+                   <div class="form-check form-switch ">
+                      <input type="checkbox" class="form-check-input" 
+                     
+                        checked >
+                   </div>
+                </a>
+             </td>
+          </tr>
+ 
+       </tbody>
+    </table>
+ </div>
+ </div>

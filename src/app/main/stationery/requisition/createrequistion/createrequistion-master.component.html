@@ -1,0 +1,77 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/stationery"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master List"
+               placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <h5 class="card-title">Stationery Requistion</h5>
+   <form action="" [formGroup]="formrequistion">
+      <div class="row">
+         <!-- <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Location
+                  Name <span class="text-danger">*</span></label>
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">{{branchname}}
+                  <span class="text-danger"></span></label>
+            </div>
+         </div> -->
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Item
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="hidden" formControlName="itemId" />
+                  <ng-select class="pb-2 " placeholder="Select Item " (change)='onItemSelected($event)'
+                     formControlName="itemId" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['itemId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.itemId" *ngFor="let item of itemList"
+                        [disabled]='!item.isActive'>{{item.itemCode+":"+item.itemName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['itemId'].errors">
+                     <small class="text-danger" *ngIf="f['itemId'].errors?.['required']">Please select item code
+                     </small>
+                  </div>
+               </div>
+            </div>
+         </div>
+
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Quantity in hand
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="qtyInHand" readonly>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class=" col-sm-12 col-lg-12 col-form-label">Quantity required
+                  <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12">
+                  <input type="text" class="form-control" formControlName="qtyReq"
+                     [ngClass]="{'is-invalid':submitted && f['qtyReq'].errors}" maxlength="5"
+                     onkeypress="return event.charCode >= 48 && event.charCode <= 57">
+                  <div *ngIf="submitted && f['qtyReq'].errors">
+                     <small class="text-danger" *ngIf="f['qtyReq'].errors?.['required']">Please enter qty
+                     </small>
+                     <!-- <small class="text-danger" *ngIf="f['qtyReq'].errors?.['pattern']">Invalid qty </small> -->
+                     <small class="text-danger" *ngIf="f['qtyReq'].errors?.serverError">{{
+                        f['qtyReq'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3 pt-4" *ngIf="btnHideShow== true">
+            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+               (click)="ReqAddon()">Add</button>
+         </div>
+      </div>
+   </form>
+</div>

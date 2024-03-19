@@ -1,0 +1,61 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+         <a routerLink="/stationery"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Stationery"
+               placement="right"></i> </a>
+      </span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Purchase Challan List</h5>
+      <div class="pb-2">
+         <button type="button" class="btn btn-success m-1" ngbTooltip="Create State Master" placement="bottom"
+            (click)="btnAdd()"><i class="bi bi-plus-lg "></i> Create </button>
+         <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+            ngbTooltip="Download List" type="button">
+            <i class="bi bi-download"></i>
+         </button>
+      </div>
+   </div>
+   <div class="table-responsive">
+      <table class="table table-report table-hover" datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" #MyTable
+         id="MyTable">
+         <thead class="bg-secondary text-white">
+            <tr>
+               <th>Sr. No. </th>
+               <th>Vendor</th>
+               <th>Challan No</th>
+               <th>Date of Receipt </th>
+               <th>Location</th>
+               <th>Status</th>
+               <th>Action</th>
+            </tr>
+         </thead>
+         <tbody>
+            <tr class="zoom-in" *ngFor="let pc of purchaseList; let i=index">
+               <td>{{i+1}}</td>
+               <td>{{pc.vendorName}}</td>
+               <td>{{pc.challanNo}}</td>
+               <td>{{pc.challanDate | date :'dd/MM/yyyy'}}</td>
+               <td>{{pc.branchName}}</td>
+               <td> <span class="{{pc.isCanceled ?'text-Yes':' text-No'}}">
+                     {{pc.isCanceled?'Cancelled':''}}</span>
+               </td>
+               <td class="display2">
+                  <a (click)="redirectionEdit(pc.challanId)" class="edit" ngbTooltip="Edit" placement="bottom"><i
+                        class="bi bi-pen-fill pr"></i></a>
+                  <a class="delete" ngbTooltip="Active/Inactive" placement="bottom">
+                     <div class="form-check form-switch ">
+                        <input type="checkbox" class="form-check-input" *ngIf="pc.isActive==true"
+                           (click)="activeInactive(pc.itemId)" checked>
+                     </div>
+                  </a>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+   </div>
+</div>

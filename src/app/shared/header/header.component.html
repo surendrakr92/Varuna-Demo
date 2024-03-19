@@ -1,0 +1,173 @@
+<header id="header" class="header fixed-top d-flex align-items-center">
+
+  <div class="d-flex align-items-center justify-content-between ">
+    <span class="ping"> <a (click)="toggle()"><i class="bi bi-grid toggle-sidebar-btn "></i></a></span>
+
+
+    <a href="/dashboard" class="logo d-flex align-items-center m-2">
+      <img src="assets/img/logo.png" alt="">
+    </a>
+
+  </div>
+
+  <div class="search-bar" [ngClass]="showsearchbar ? 'search-bar-show':''" >
+    <form class="search-form d-flex align-items-center" method="POST" action="/">
+      <input type="text" name="query" placeholder="Search by T code" title="Enter search keyword">
+      <button type="submit" title="Search"><i class="bi bi-search"></i></button>
+    </form>
+<div class="bgTcode">
+<ul>
+  <li><label><a href="#">List</a></label><span>2ndsdfgda  asfWDV  sDFsdac FDdcC  </span></li>
+  <li><label><a href="#">List</a></label><span>2nd</span></li>
+  <li><label><a href="#">List</a></label><span>2nd</span></li>
+  <li><label><a href="#">List</a></label><span>2nd</span></li>
+</ul>
+<hr>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">
+  Location Management</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">Company And Hierarchy</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">User And Access Management
+
+</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">
+  General Configuration</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">Financials</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">
+  Logistics And Operations</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">Mis And Other Utilities
+
+</button>
+<button type="button" class="btn btn-outline-primary btn-sm m-1">Master</button>
+
+</div>
+
+
+  </div>
+
+  <nav class="header-nav ms-auto">
+    <ul class="d-flex align-items-center">
+      <li class="nav-item d-block d-lg-none">
+        <a class="nav-link nav-icon search-bar-toggle " (click)="this.showsearchbar=!this.showsearchbar">
+          <i class="bi bi-search"></i>
+        </a>
+      </li>
+      <li class="nav-item nav-icon2 hidden-mobile">
+        <a class="nav-link " href="javascript:void(0)" title="">
+          <span>{{userCode??'Not Available'}}</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-icon2 hidden-mobile">
+        <a class="nav-link " href="javascript:void(0)" title="">
+          <span>{{userName}}</span>
+        </a>
+      </li>
+      <li class="nav-item nav-icon2 hidden-mobile">
+        <a class="nav-link " href="javascript:void(0)" title="">
+          <span>{{userBranch}}</span>
+        </a>
+      </li>
+      <li class="nav-item nav-icon2 hidden-mobile">
+        <a class="nav-link " href="javascript:void(0)" title="">
+          <span>TRT - TRANSPORT DIVISION</span>
+        </a>
+      </li>
+
+      <li class="nav-item nav-icon2 hidden-mobile" style="border: none;">
+        <a class="nav-link " href="javascript:void(0)" title="">
+          <span>2023 - 2024</span>
+        </a>
+      </li>
+
+      <li class="nav-item dropdown pe-3">
+
+        <a class="nav-link nav-3 d-flex align-items-center pe-0" href="javascript:void(0)" data-bs-toggle="dropdown">
+          <i class="bi bi-three-dots-vertical" style="font-size: 32px;"></i>
+
+        </a>
+
+        <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
+
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="/dashboard">
+              <i class="bi bi-house-door"></i>
+              <span>Home</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="/profile">
+              <i class="bi bi-person"></i>
+              <span>My Profile</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="profile/quick">
+              <i class="bi bi-repeat-1"></i>
+              <span>Quick Guide</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="profile/ChangeFinYear">
+              <i class="bi bi-coin"></i>
+              <span>Change FinYears & Company</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="profile/file-uploading-configration">
+              <i class="bi bi-file-earmark-image"></i>
+              <span>File Upload Configration</span>
+            </a>
+          </li>
+          <li>
+            <a class="dropdown-item d-flex align-items-center" (click)="logout()">
+              <i class="bi bi-box-arrow-left"></i>
+              <span>Logout</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="profile/VirtualLogin">
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>Virtual Login</span>
+            </a>
+          </li>
+          <li>
+            <hr class="dropdown-divider">
+          </li>
+
+          <li>
+            <a class="dropdown-item d-flex align-items-center" routerLink="profile/help">
+              <i class="bi bi-info-circle"></i>
+              <span>Help</span>
+            </a>
+          </li>
+
+
+
+
+        </ul>
+      </li>
+
+
+    </ul>
+  </nav>
+</header>

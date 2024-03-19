@@ -1,0 +1,207 @@
+<div class="main-contianer">
+
+    <div class="display bg-dark-light mb-2">
+        <span class="title">
+            <a routerLink="/fleet"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Fleet"
+                    placement="right"></i> </a>
+        </span>
+        <span class="titlemed">Trip Advance Detail</span>
+        <span class="title">
+            <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+                    placement="bottom"></i>
+            </a>
+        </span>
+    </div>
+
+    <form [formGroup]="formMaster">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Trip Advance For <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+
+                        <ng-select class="pb-2" placeholder="Select Driver 2 Manual Code " formControlName="tripId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.generalId" *ngFor="let item of tripAdvanceList"
+                                [disabled]='!item.isActive'>{{item.codeDesc}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter address1
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter LR No. <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="docketId"
+                            [ngClass]="{'is-invalid':submitted && f['docketId'].errors}">
+
+                        <div *ngIf="submitted && f['docketId'].errors">
+                            <small class="text-danger" *ngIf="f['docketId'].errors?.['required']">Please enter Enter LR
+                                No.
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['docketId'].errors?.serverError">{{
+                                f['docketId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Driver Code <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <ng-select class="pb-2" placeholder="Select Driver 2 Manual Code " formControlName="driverId"
+                            [searchable]="true" [clearable]="true"
+                            [ngClass]="{'is-invalid':submitted && f['driverId'].errors}">
+                            <ng-option value="" selected>Select</ng-option>
+                            <ng-option [value]="item.driverId" *ngFor="let item of driverCodeList" [disabled]='!item.isDriverActive
+               '>{{item.manualDriverCode}}</ng-option>
+                        </ng-select>
+
+                        <div *ngIf="submitted && f['driverId'].errors">
+                            <small class="text-danger" *ngIf="f['driverId'].errors?.['required']">Please enter Enter
+                                Driver Code
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['driverId'].errors?.serverError">{{
+                                f['driverId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Payment Mode<span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter Payment
+                                Mode
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Last 6 Digits of Happy <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter Card
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Mobile No. <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter Mobile No.
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Fuel Card Number <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter Fuel Card
+                                Number
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Fuel Request Mode<span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter Fuel
+                                Request Mode
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3">
+                <div class="form-group ">
+                    <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Confirm mobile no for fuel <span
+                            class="text-danger">*</span></label>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" formControlName="tripId"
+                            [ngClass]="{'is-invalid':submitted && f['tripId'].errors}">
+
+                        <div *ngIf="submitted && f['tripId'].errors">
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.['required']">Please enter request
+                            </small>
+
+                            <small class="text-danger" *ngIf="f['tripId'].errors?.serverError">{{
+                                f['tripId'].errors.serverError}}</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-12 mt-4 mb-3">
+               <div class="text-center">
+                  <button type="submit" (click)="OnSubmit()" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                     >Submit</button>
+               </div>
+            </div>
+   
+         </div>
+    </form>
+</div>

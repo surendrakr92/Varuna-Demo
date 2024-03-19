@@ -1,0 +1,21 @@
+<div class="row">
+  <div class="col-lg-3">
+  </div>
+  <div class="col-lg-6">
+    <div class="card-body">
+      <h5 class="card-title text-center">Select New Working Location</h5>
+      <div class="col-sm-12 ">
+        <label>Branch Location:</label>
+        <ng-select class="pb-2 w-50" placeholder="Select" [searchable]="true" [clearable]="true" (change)="branchLocationDtls($event)">
+          <ng-option value="" selected>Select</ng-option>
+          <ng-option [value]="item" *ngFor="let item of branchMasterList"
+            >{{item.location | uppercase}}</ng-option>
+        </ng-select>
+        <button type="submit" class="btn btn-primary mt-3" (click)="changeBranchs()">Change</button>
+
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-3">
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="main-contianer">
+   <div class="display">
+      <span class="title">
+      <a routerLink="/master/zone-master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Zone Master" placement="bottom"></i> </a>
+      </span>
+      <span class=" title">
+      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i> </a>
+      </span>
+   </div>
+   <div class="display">
+      <h5 class="card-title">Zone Master</h5>
+      <span class="title">
+         <a (click)="download_pdf_print()"> <i class="bi bi-printer booticon" ngbTooltip="Print" placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <div class="row" id="viewData_information">
+      <div class="col-lg-12">
+         <div class="row p-1 bgborder" >
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Short Code:</strong><span>{{zoneDetailsById?.shortCode}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Zone Name:</strong><span>{{zoneDetailsById?.zoneName}}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong> Created Date:</strong><span>{{zoneDetailsById?.createdOn | date }}</span></label>
+            </div>
+            <div class="col-lg-4">
+               <label for="inputText" ><strong>Active:  </strong><span>{{zoneDetailsById?.isActive?'Active':'InActive'}}</span></label>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>

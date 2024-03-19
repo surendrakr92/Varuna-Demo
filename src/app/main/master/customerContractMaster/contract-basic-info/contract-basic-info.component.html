@@ -1,0 +1,344 @@
+
+
+    <div class="main-contianer">
+        <div class="display">
+            <span class="title">
+               <a routerLink="/master/customer-contract-master/customer-contract-master-list"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Sub Customer Contact Master List"
+                     placement="right"></i> </a>
+            </span>
+            <span class=" title">
+               <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon" ngbTooltip="Dashboard" placement="bottom"></i>
+               </a>
+            </span>
+         </div>
+        <h5 class="card-title">Customer Contract Master
+        </h5>
+<!--  Tabs -->
+<ul class="nav nav-tabs d-flex" id="myTabjustified" role="tablist">
+   <li class="nav-item flex-fill" role="presentation">
+     <button class="nav-link w-100 active" id="contactBasicInfo-tab" data-bs-toggle="tab" data-bs-target="#contactBasicInfo-justified" type="button" role="tab" aria-controls="home" aria-selected="true">Contract Basic Information</button>
+   </li>
+   <li class="nav-item flex-fill" role="presentation">
+     <button class="nav-link w-100" id="serviceSelection-tab" data-bs-toggle="tab" data-bs-target="#serviceSelection-justified" type="button" role="tab" aria-controls="profile" aria-selected="false">Service Selection</button>
+   </li>
+   <li class="nav-item flex-fill" role="presentation">
+     <button class="nav-link w-100" id="standardCharges-tab" data-bs-toggle="tab" data-bs-target="#standardCharges-justified" type="button" role="tab" aria-controls="contact" aria-selected="false"> Standard Charges</button>
+   </li>
+   <li class="nav-item flex-fill" role="presentation">
+      <button class="nav-link w-100" id="freightChares-tab" data-bs-toggle="tab" data-bs-target="#freightChares-justified" type="button" role="tab" aria-controls="contact" aria-selected="false"> Freight Charges - FTL</button>
+    </li>
+    <li class="nav-item flex-fill" role="presentation">
+      <button class="nav-link w-100" id="contractClause-tab" data-bs-toggle="tab" data-bs-target="#contractClause-justified" type="button" role="tab" aria-controls="contact" aria-selected="false"> Contract Clause</button>
+    </li>
+    <li class="nav-item flex-fill" role="presentation">
+      <button class="nav-link w-100" id="loadingUnloading-tab" data-bs-toggle="tab" data-bs-target="#loadingUnloading-justified" type="button" role="tab" aria-controls="contact" aria-selected="false">	 Loading and Unloading Charges</button>
+    </li>
+    <li class="nav-item flex-fill" role="presentation">
+      <button class="nav-link w-100" id="productWiseFTL-tab" data-bs-toggle="tab" data-bs-target="#productWiseFTL-justified" type="button" role="tab" aria-controls="contact" aria-selected="false">Product Wise FTL Charges - FTL</button>
+    </li>
+    <li class="nav-item flex-fill" role="presentation">
+      <button class="nav-link w-100" id="SOB-tab" data-bs-toggle="tab" data-bs-target="#SOB-justified" type="button" role="tab" aria-controls="contact" aria-selected="false">	SOB</button>
+    </li>
+ </ul>
+ <div class="tab-content pt-2" id="myTabjustifiedContent">
+   <div class="tab-pane fade show active" id="contactBasicInfo-justified" role="tabpanel" aria-labelledby="contactBasicInfo-tab">
+      <form [formGroup]="formMaster">
+         <div class="row">
+ 
+            <div class="col-lg-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Code <span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="text" class="form-control" formControlName="customerCode"
+                     [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}" placeholder="C00010080 : HINDUSTAN UNILEVER LTD" >
+                  <div *ngIf="submitted && f['customerCode'].errors">
+                     <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract code
+                     </small>
+                  </div>
+               </div>
+            </div>
+   
+            <div class="col-lg-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Customer Cat Desc<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="text" class="form-control" formControlName="customerCode"
+                     [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                  <div *ngIf="submitted && f['customerCode'].errors">
+                     <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter custCat desc
+                     </small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Cat Desc<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract cat desc
+                   </small>
+                </div>
+             </div>
+          </div>
+            <div class="col-lg-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Type Desc<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="text" class="form-control" formControlName="customerCode"
+                     [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                  <div *ngIf="submitted && f['customerCode'].errors">
+                     <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract type desc
+                     </small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">contract Start Date<span class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 ">
+                  <input type="date" class="form-control" formControlName="customerCode"
+                     [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                  <div *ngIf="submitted && f['customerCode'].errors">
+                     <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please select contract start date
+                     </small>
+                  </div>
+               </div>
+            </div>
+            <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract End Date<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please select contract end date
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Effective Date<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please select contract effective date
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cust Representive<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cust representive
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">comp Emp Desc<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter comp emp desc
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cust Designation<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cust designation
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Emp Designation<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter emp designation
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cust Witness<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cust witness
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Comp Witness<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter comp Witness
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Single Slab<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12">
+                 <div class="form-check form-switch p-2">
+                    <input type="checkbox" class="form-check-input" formControlName="customerCode">
+                 </div>
+              </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Multiple Slab<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12">
+                 <div class="form-check form-switch p-2">
+                    <input type="checkbox" class="form-check-input" formControlName="customerCode">
+                 </div>
+              </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">contract Sign Branch Desc<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract Sign Branch Desc
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Sky<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12">
+                 <div class="form-check form-switch p-2">
+                    <input type="checkbox" class="form-check-input" formControlName="customerCode">
+                 </div>
+              </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">contract ModeId Desc<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract mode Desc
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cust Acc Person<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cust Acc Person
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Comp Phone<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter Comp Phone
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">comp Email<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter comp email
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cse Phone<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cse Phone
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">cse Email<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <input type="date" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  >
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter cse Email
+                   </small>
+                </div>
+             </div>
+          </div>
+          <div class="col-lg-3">
+             <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contract Description<span class="text-danger">*</span></label>
+             <div class=" col-sm-12 col-lg-12 ">
+                <textarea type="text" class="form-control" formControlName="customerCode"
+                   [ngClass]="{'is-invalid':submitted && f['customerCode'].errors}"  ></textarea>
+                <div *ngIf="submitted && f['customerCode'].errors">
+                   <small class="text-danger" *ngIf="f['customerCode'].errors?.['required']">Please enter contract Description
+                   </small>
+                </div>
+             </div>
+          </div>
+         </div>
+ 
+         <div class="row mt-3">
+             <div class="col-lg-12">
+                 <div class="float-end">
+                     <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="goToList()"
+                         >Submit</button>
+                 </div>
+             </div>
+ 
+         </div>
+      </form>
+   </div>
+
+   <div class="tab-pane fade" id="serviceSelection-justified" role="tabpanel" aria-labelledby="serviceSelection-tab">
+     Nesciunt totam et. Consequuntur magnam aliquid eos nulla dolor iure eos quia. Accusantium distinctio omnis et atque fugiat. Itaque doloremque aliquid sint quasi quia distinctio similique. Voluptate nihil recusandae mollitia dolores. Ut laboriosam voluptatum dicta.
+   </div>
+   
+   <div class="tab-pane fade" id="standardCharges-justified" role="tabpanel" aria-labelledby="standardCharges-tab">
+     Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+   </div>
+   <div class="tab-pane fade" id="freightChares-justified" role="tabpanel" aria-labelledby="freightChares-tab">
+      Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+    </div>
+    <div class="tab-pane fade" id="contractClause-justified" role="tabpanel" aria-labelledby="contractClause-tab">
+      Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+    </div>
+    <div class="tab-pane fade" id="loadingUnloading-justified" role="tabpanel" aria-labelledby="loadingUnloading-tab">
+      Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+    </div>
+    <div class="tab-pane fade" id="productWiseFTL-justified" role="tabpanel" aria-labelledby="productWiseFTL-tab">
+      Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+    </div>
+    <div class="tab-pane fade" id="SOB-justified" role="tabpanel" aria-labelledby="SOB-tab">
+      Saepe animi et soluta ad odit soluta sunt. Nihil quos omnis animi debitis cumque. Accusantium quibusdam perspiciatis qui qui omnis magnam. Officiis accusamus impedit molestias nostrum veniam. Qui amet ipsum iure. Dignissimos fuga tempore dolor.
+    </div>
+ </div><!-- End Default Tabs -->
+            
+
+           
+        </div>

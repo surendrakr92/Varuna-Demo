@@ -1,0 +1,98 @@
+<div class="main-contianer">
+    <div class="display bg-dark-light mb-2">
+       <span class="title">
+       <a routerLink="/master"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Master"
+          placement="right"></i> </a>
+       </span>
+       <span class="titlemed">Docket Club </span>
+       <span class="title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+          placement="bottom"></i>
+       </a>
+       </span>
+    </div>
+    <form [formGroup]="formMaster">
+       <div class="row mt-3 d-flex justify-content-center  mb-2">
+          <div class="col-lg-6">
+             <div class="row">
+                <label for="inputText" class="col-sm-4 col-lg-4 col-form-label"> <span class="float-end">LR No.
+                <span class="text-danger">*</span></span> </label>
+                <div class=" col-lg-5 ">
+                   <input type="text" class="form-control" formControlName="docketNo"
+                   placeholder="Enter LR No."
+                      [ngClass]="{'is-invalid':submitted && f['docketNo'].errors}">
+                   <div *ngIf="submitted && f['docketNo'].errors">
+                      <small class="text-danger" *ngIf="f['docketNo'].errors?.['required']">please
+                      enter LR No.
+                      </small>
+                      <small class="text-danger" *ngIf="f['docketNo'].errors?.serverError">{{
+                      f['docketNo'].errors.serverError}}</small>
+                   </div>
+                </div>
+                <div class=" col-lg-3 ">
+                   <button type="button" (click)="searchFilter()"
+                      class="btn btn-warning rounded-pill btn-padding2 btn-sm"><i class="bi bi-search"></i>
+                   Search</button>
+                </div>
+             </div>
+          </div>
+       </div>
+    </form>
+    <!-- datatable [dtOptions]="dtOptions" -->
+    <form >
+       <div class="table-responsive">
+          <table class="table table-borderless">
+             <thead class="bg-secondary text-white">
+                <tr>
+                   <th>S.No.</th>
+                   <th>LR No</th>
+                   <th>Party Name</th>
+                   <th>From City</th>
+                   <th>Freight Charges</th>
+                </tr>
+             </thead>
+             <tbody>
+                <tr class="border-bottom" *ngFor="let item of clubEditList ; index as i">
+                   <td>{{i+1}}</td>
+                   <td>{{item?.docketNo}}</td>
+                   <td>{{item?.custCode}}</td>
+                   <td>{{item?.fromCity??'NA'}}</td>
+                   <td><input type="number" min="0" class="form-control" style="width: 150px;"#freightCh
+                     placeholder="enter freight charge "
+                    (change)="freightChareg(freightCh.value,i)" >
+                   </td>
+                </tr>
+             </tbody>
+          </table>
+          <div class="row">
+             <span class="text-center" *ngIf="this.clubEditList.length==[]">Data Not Found</span>
+          </div>
+       </div>
+       <div class="row mt-1 mb-1">
+          <div class="text-center">
+             <button type="button" class="btn btn-primary rounded-pill btn-padding "
+                (click)="onSubmit(modelmsg)">Submit </button>
+          </div>
+       </div>
+    </form>
+    <!-- popup confirm-->
+    <ng-template #modelmsg let-modal>
+       <div class="modal-header qut-hd bg-success">
+          <h6 class="modal-title" id="exampleModalCenterTitle">Confirmation Message</h6>
+          <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')"
+             aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+          </button>
+          <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+             aria-hidden="true" class="fa fa-times"></i></button>
+       </div>
+       <div class="modal-body" tabindex="0" ngbAutofocus>
+          <p class="text-success" style="font-size: 1rem;">Club Docket Updated Successfully </p>
+                   <br>
+          <div  class="modal-footer">
+             <button type="button" class="btn btn-primary d-inline btn-sm" (click)="popClose()">Okay</button>
+          </div>
+       </div>
+    </ng-template>
+    <!-- close popup confirm-->
+ </div>

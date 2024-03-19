@@ -1,0 +1,723 @@
+<div class="main-contianer">
+   <div class="display bg-dark-light mb-2">
+      <span class="title">
+         <a routerLink="/fleet"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Fleet"
+               placement="right"></i> </a>
+      </span>
+      <span class="titlemed">Trip Open Details</span>
+      <span class="title">
+         <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboard"
+               placement="bottom"></i>
+         </a>
+      </span>
+   </div>
+   <form [formGroup]="formMaster" class="novalidate">
+      <div class="row ">
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Trip Sheet Id<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" value="System Generated" readonly style="color: red;">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Trip Sheet Date<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="date" class="form-control" formControlName="vslipDate"
+                     [ngClass]="{'is-invalid':submitted && f['vslipDate'].errors}">
+                  <div *ngIf="submitted && f['vslipDate'].errors">
+                     <small class="text-danger" *ngIf="f['vslipDate'].errors?.['required']">Please select Trip Sheet
+                        Date
+                     </small>
+                     <small class="text-danger" *ngIf="f['vslipDate'].errors?.serverError">{{
+                        f['vslipDate'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Manual Trip Sheet No.<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="manualVslipNo" placeholder="System Generated"
+                     readonly style="color: red;" [ngClass]="{'is-invalid':submitted && f['manualVslipNo'].errors}">
+                  <div *ngIf="submitted && f['manualVslipNo'].errors">
+                     <small class="text-danger" *ngIf="f['manualVslipNo'].errors?.['required']">Please enter Trip Sheet
+                        No.
+                     </small>
+                     <small class="text-danger" *ngIf="f['manualVslipNo'].errors?.serverError">{{
+                        f['manualVslipNo'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Start Location</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select Start Location" formControlName="vslipStartLocId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['vslipStartLocId'].errors}" [readonly]="true">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.branchId" *ngFor="let item of branchMasterList"
+                        [disabled]='!item.branchId'>{{item.branchName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['vslipStartLocId'].errors">
+                     <small class="text-danger" *ngIf="f['vslipStartLocId'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['vslipStartLocId'].errors?.serverError">{{
+                        f['vslipStartLocId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">End Location</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select End Location" formControlName="vslipEndLocId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['vslipEndLocId'].errors}" [readonly]="true">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.branchId" *ngFor="let item of branchMasterList"
+                        [disabled]='!item.branchId'>{{item.branchName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['vslipEndLocId'].errors">
+                     <small class="text-danger" *ngIf="f['vslipEndLocId'].errors?.['required']">select End Location
+                     </small>
+                     <small class="text-danger" *ngIf="f['vslipEndLocId'].errors?.serverError">{{
+                        f['vslipEndLocId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Vehicle No<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select Vehicle No " formControlName="vehicleId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['vehicleId'].errors}" (change)="vhClNo($event)">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.vehicleDetailId"
+                        *ngFor="let item of vehicleList">{{item.vehicleNo}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['vehicleId'].errors">
+                     <small class="text-danger" *ngIf="f['vehicleId'].errors?.['required']">Please select vehicle no
+                     </small>
+                     <small class="text-danger" *ngIf="f['vehicleId'].errors?.serverError">{{
+                        f['vehicleId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="card-title bg-dark-light text-center mt-2 p-1">Driver Details</div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Driver1 Manual Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select Driver 1 Manual Code " formControlName="firstDriver"
+                     [searchable]="true" [clearable]="true" (change)="eventChange($event)"
+                     [ngClass]="{'is-invalid':submitted && f['firstDriver'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item"
+                        *ngFor="let item of driverMasterList">{{item.manualDriverCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['firstDriverId'].errors">
+                     <small class="text-danger" *ngIf="f['firstDriverId'].errors?.['required']">Please select driver1
+                        manual
+                        code
+                     </small>
+                     <small class="text-danger" *ngIf="f['firstDriverId'].errors?.serverError">{{
+                        f['firstDriverId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="row">
+               <div class="col-lg-5" style="padding-right: 0px;">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver 1 Photo<span
+                           class="text-danger">*</span></label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <button class="btn btn-secondary btn-sm" (click)="modelOpen(modelmsg1)">View</button>
+                        <!-- popup confirm-->
+                        <ng-template #modelmsg1 let-modal>
+                           <div class="modal-header qut-hd">
+                              <h6 class="modal-title" id="exampleModalCenterTitle">Driver 1 Photo</h6>
+                              <button type="button" class="clos-btn bg-light-blue"
+                                 (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                              <button type="button" rippleefect="" class="btn btn-icon"
+                                 (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                                    class="fa fa-times"></i></button>
+                           </div>
+                           <div class="modal-body" tabindex="0" ngbAutofocus>
+                              <div class="row">
+                                 <div class=" col-sm-12 col-lg-12">
+                                    <div class="form-check form-switch p-0">
+                                       <div class="avatar-upload ">
+                                          <div class="avatar-edit">
+                                             <input type="file" id="imageUpload" formControlName="driverStatusId"
+                                                accept=".png, .jpg, .jpeg" />
+                                          </div>
+                                          <div class="avatar-preview">
+                                             <div id="imagePreview">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </ng-template>
+                        <!-- close popup confirm-->
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-7" style="padding-left: 0px;">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver1 License No.</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" value="System Generated"
+                           formControlName="driverLicenseNo"
+                           [ngClass]="{'is-invalid':submitted && f['driverLicenseNo'].errors}" readonly>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver1 Name</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" value="System Generated" formControlName="driverName" readonly
+                     [ngClass]="{'is-invalid':submitted && f['driverName'].errors}">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver1 License Valid upto </label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" value="System Generated"
+                     formControlName="licensenoValidityDate" readonly
+                     [ngClass]="{'is-invalid':submitted && f['licensenoValidityDate'].errors}"
+                     [value]="f['licensenoValidityDate'].value | date:'dd/MM/yyyy'">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Driver2 Manual Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select Driver 2 Manual Code " formControlName="secondDriver"
+                     [searchable]="true" [clearable]="true" (change)="keyup($event)"
+                     [ngClass]="{'is-invalid':submitted && f['secondDriverId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item" *ngFor="let item of driverMasterList"
+                        [disabled]='!item.driverId'>{{item.manualDriverCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['secondDriverId'].errors">
+                     <small class="text-danger" *ngIf="f['secondDriverId'].errors?.['required']">Please select driver2
+                        manual code
+                     </small>
+                     <small class="text-danger" *ngIf="f['secondDriverId'].errors?.serverError">{{
+                        f['secondDriverId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="row">
+               <div class="col-lg-5" style="padding-right: 0px;">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver 2 Photo</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <button class="btn btn-secondary btn-sm" (click)="modelOpen(modelmsg1)">View</button>
+                        <!-- popup confirm-->
+                        <ng-template #modelmsg1 let-modal>
+                           <div class="modal-header qut-hd">
+                              <h6 class="modal-title" id="exampleModalCenterTitle">Driver 1 Photo</h6>
+                              <button type="button" class="clos-btn bg-light-blue"
+                                 (click)="modal.dismiss('Cross click')" aria-label="Close">
+                                 <span aria-hidden="true">&times;</span>
+                              </button>
+                              <button type="button" rippleefect="" class="btn btn-icon"
+                                 (click)="modal.dismiss('Cross click')"><i aria-hidden="true"
+                                    class="fa fa-times"></i></button>
+                           </div>
+                           <div class="modal-body" tabindex="0" ngbAutofocus>
+                              <div class="row">
+                                 <div class=" col-sm-12 col-lg-12">
+                                    <div class="form-check form-switch p-0">
+                                       <div class="avatar-upload ">
+                                          <div class="avatar-edit">
+                                             <input type="file" id="imageUpload" formControlName="driverStatusId2"
+                                                accept=".png, .jpg, .jpeg" />
+                                          </div>
+                                          <div class="avatar-preview">
+                                             <div id="imagePreview">
+                                             </div>
+                                          </div>
+                                       </div>
+                                    </div>
+                                 </div>
+                              </div>
+                           </div>
+                        </ng-template>
+                        <!-- close popup confirm-->
+                     </div>
+                  </div>
+               </div>
+               <div class="col-lg-7" style="padding-left: 0px;">
+                  <div class="form-group ">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver2 License No.</label>
+                     <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="text" class="form-control" value="System Generated"
+                           formControlName="driverLicenseNo1"
+                           [ngClass]="{'is-invalid':submitted && f['driverLicenseNo1'].errors}" readonly>
+                     </div>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver2 Name</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" value="System Generated" formControlName="driverName2"
+                     readonly [ngClass]="{'is-invalid':submitted && f['driverName2'].errors}">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver2 License Valid upto </label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" value="System Generated"
+                     formControlName="licensenoValidityDate2" readonly
+                     [ngClass]="{'is-invalid':submitted && f['licensenoValidityDate2'].errors}"
+                     [value]="f['licensenoValidityDate2'].value | date:'dd/MM/yyyy'">
+               </div>
+            </div>
+         </div>
+         <div class="card-title bg-dark-light text-center mt-2 p-1">Other Details</div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Starting Km. Reading<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="number" class="form-control" formControlName="startKm"
+                     [ngClass]="{'is-invalid':submitted && f['startKm'].errors}">
+                  <div *ngIf="submitted && f['startKm'].errors">
+                     <small class="text-danger" *ngIf="f['startKm'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['startKm'].errors?.serverError">{{
+                        f['startKm'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Category<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Category Select" formControlName="categoryId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['categoryId'].errors}"
+                     (change)="categorySetup($event)">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.Id" *ngFor="let item of CategoryList">{{item.type}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['categoryId'].errors">
+                     <small class="text-danger" *ngIf="f['categoryId'].errors?.['required']">Please select category
+                     </small>
+                     <small class="text-danger" *ngIf="f['categoryId'].errors?.serverError">{{
+                        f['categoryId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['categoryId'].value==2">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Market/Own<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Select Market/Own" formControlName="marketOwnId"
+                     [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['marketOwnId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.Id" *ngFor="let item of ownList">{{item.type}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['marketOwnId'].errors">
+                     <small class="text-danger" *ngIf="f['marketOwnId'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['marketOwnId'].errors?.serverError">{{
+                        f['marketOwnId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['categoryId'].value==1">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Enter Customer Code<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Customer Code Select" formControlName="custId"
+                     [searchable]="true" [clearable]="true" [ngClass]="{'is-invalid':submitted && f['custId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.custId" *ngFor="let item of customerMasyterList"
+                        [disabled]='!item.custId'>{{item.custCode}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['custId'].errors">
+                     <small class="text-danger" *ngIf="f['custId'].errors?.['required']">select Customer Code
+                     </small>
+                     <small class="text-danger" *ngIf="f['custId'].errors?.serverError">{{
+                        f['custId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Route<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Route Select" (change)="routeSetupForm($event)"
+                     formControlName="routeSelctionId" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['routeSelctionId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.Id" *ngFor="let item of routeList">{{item.type}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['routeSelctionId'].errors">
+                     <small class="text-danger" *ngIf="f['routeSelctionId'].errors?.['required']">Please select route
+                     </small>
+                     <small class="text-danger" *ngIf="f['routeSelctionId'].errors?.serverError">{{
+                        f['routeSelctionId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['routeSelctionId'].value== 1">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From City<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="City Select" formControlName="fromCityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                        [disabled]='!item.cityId'>{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['fromCityId'].errors">
+                     <small class="text-danger" *ngIf="f['fromCityId'].errors?.['required']">Please select city
+                     </small>
+                     <small class="text-danger" *ngIf="f['fromCityId'].errors?.serverError">{{
+                        f['fromCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['routeSelctionId'].value== 1">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To City<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="City Select" formControlName="toCityId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.cityId" *ngFor="let item of cityList"
+                        [disabled]='!item.cityId'>{{item.cityName}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['toCityId'].errors">
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.['required']">Please select city
+                     </small>
+                     <small class="text-danger" *ngIf="f['toCityId'].errors?.serverError">{{
+                        f['toCityId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3" *ngIf="this.formMaster.controls['routeSelctionId'].value==2">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Select Trip Route</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select placeholder="Select Trip Route Select" formControlName="routeId" [searchable]="true"
+                     [clearable]="true" [ngClass]="{'is-invalid':submitted && f['routeId'].errors}"
+                     (change)="setUpJsonStruct($event,'fromCityId')" (keyup)="setUpJsonStructK($event,'fromCityId')">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.routeId" *ngFor="let item of routeMasterList">{{item.fromcity}}-
+                        {{item.tocity}}- {{item.rutcd}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['routeId'].errors">
+                     <small class="text-danger" *ngIf="f['routeId'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['routeId'].errors?.serverError">{{
+                        f['routeId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Transit Time</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="time" class="form-control" formControlName="transitTime"
+                     [ngClass]="{'is-invalid':submitted && f['transitTime'].errors}">
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Driver Reporting Timely<span
+                     class="text-danger">*</span></label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <ng-select class="pb-2" placeholder="Driver Reporting Timely Select"
+                     formControlName="isDriverReportingTimely" [searchable]="true" [clearable]="true"
+                     [ngClass]="{'is-invalid':submitted && f['isDriverReportingTimely'].errors}">
+                     <ng-option value="" selected>Select</ng-option>
+                     <ng-option [value]="item.Id" *ngFor="let item of DriverReportingTimely">{{item.type}}</ng-option>
+                  </ng-select>
+                  <div *ngIf="submitted && f['isDriverReportingTimely'].errors">
+                     <small class="text-danger" *ngIf="f['isDriverReportingTimely'].errors?.['required']">Please enter
+                        driver reporting timely
+                     </small>
+                     <small class="text-danger" *ngIf="f['isDriverReportingTimely'].errors?.serverError">{{
+                        f['isDriverReportingTimely'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Check List</label>
+               <div class=" col-sm-12 col-lg-12 has-validation pt-1">
+                  <a href="javascript:void(0)" class="link-primary titleBold" (click)="modelOpen3(modelmsg3)">Click Here
+                     for Check List</a>
+
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="card-title bg-dark-light text-center mt-2 p-1">In Transit LR Of Previous Trip of This Vehicle.
+            (Input Any One LR No.)</div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">LR No.</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="docketId"
+                     [ngClass]="{'is-invalid':submitted && f['docketId'].errors}">
+                  <div *ngIf="submitted && f['docketId'].errors">
+                     <small class="text-danger" *ngIf="f['docketId'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['docketId'].errors?.serverError">{{
+                        f['docketId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">THC No.</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="inTransitThcId"
+                     [ngClass]="{'is-invalid':submitted && f['inTransitThcId'].errors}" readonly>
+                  <div *ngIf="submitted && f['inTransitThcId'].errors">
+                     <small class="text-danger" *ngIf="f['inTransitThcId'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['inTransitThcId'].errors?.serverError">{{
+                        f['inTransitThcId'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">THC Date</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="addressLine1"
+                     [ngClass]="{'is-invalid':submitted && f['addressLine1'].errors}" readonly>
+                  <div *ngIf="submitted && f['addressLine1'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.serverError">{{
+                        f['addressLine1'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Source Hub</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="addressLine1" readonly
+                     [ngClass]="{'is-invalid':submitted && f['addressLine1'].errors}">
+                  <div *ngIf="submitted && f['addressLine1'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.serverError">{{
+                        f['addressLine1'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To Hub</label>
+               <div class=" col-sm-12 col-lg-12 has-validation">
+                  <input type="text" class="form-control" formControlName="addressLine1" readonly
+                     [ngClass]="{'is-invalid':submitted && f['addressLine1'].errors}">
+                  <div *ngIf="submitted && f['addressLine1'].errors">
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.['required']">Please enter address1
+                     </small>
+                     <small class="text-danger" *ngIf="f['addressLine1'].errors?.serverError">{{
+                        f['addressLine1'].errors.serverError}}</small>
+                  </div>
+               </div>
+            </div>
+         </div>
+         <div class="col-lg-3">
+            <div class="form-group ">
+               <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Split THC</label>
+               <div class=" col-sm-12 col-lg-12">
+                  <div class="form-check form-switch ">
+                     <input type="checkbox" class="form-check-input" formControlName="splitTHC">
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="row">
+         <div class="col-lg-12 mt-2 mb-3">
+            <div class="float-end">
+               <button type="submit" (click)="OnSubmit(modelmsgNew)"
+                  class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
+            </div>
+         </div>
+      </div>
+   </form>
+   <!-- popup confirm-->
+   <ng-template #modelmsgNew let-modal>
+      <div class="modal-header qut-hd bg-success">
+         <h6 class="modal-title " id="exampleModalCenterTitle">Request Generated Successfully</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <div class="display">
+            <div class=" pb-2">
+            </div>
+         </div>
+         <table class="table table-bordered">
+            <tbody>
+               <tr>
+                  <th>Document Name</th>
+                  <th colspan="2">Trip Details</th>
+               </tr>
+               <tr>
+                  <td>Trip Id</td>
+                  <td>{{responceData?.vslipNo}}</td>
+                  <td> </td>
+               </tr>
+            </tbody>
+         </table>
+         <button type="button" (click)="modal.dismiss('Cross click')"
+            class="btn btn-warning float-end btn-sm rounded-pill btn-sm btn-padding2">Done</button>
+         <br>
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+
+
+   <!-- popup confirm-->
+   <ng-template #modelmsg3 let-modal>
+      <div class="modal-header qut-hd">
+         <h6 class="modal-title" id="exampleModalCenterTitle">Check List</h6>
+         <button type="button" class="clos-btn bg-light-blue" (click)="modal.dismiss('Cross click')" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+         </button>
+         <button type="button" rippleefect="" class="btn btn-icon" (click)="modal.dismiss('Cross click')"><i
+               aria-hidden="true" class="fa fa-times"></i></button>
+      </div>
+      <div class="modal-body" tabindex="0" ngbAutofocus>
+         <table class="table table-bordered">
+            <thead class="bg-secondary text-white">
+               <tr>
+                  <th>Category</th>
+                  <th>CheckList</th>
+                  <th>Checking Done</th>
+                  <th>Comments</th>
+               </tr>
+            </thead>
+            <tbody>
+               <tr>
+                  <td>Document</td>
+                  <td>National Permit</td>
+                  <td>
+                     <div class="form-check"><input type="checkbox" id="gridCheck2"
+                           class="form-check-input m-1 checklistcls"></div>
+                  </td>
+                  <td><textarea class="form-control"></textarea></td>
+               </tr>
+               <tr>
+                  <td>Document</td>
+                  <td>National Permit</td>
+                  <td>
+                     <div class="form-check"><input type="checkbox" id="gridCheck2"
+                           class="form-check-input m-1 checklistcls"></div>
+                  </td>
+                  <td><textarea class="form-control"></textarea></td>
+               </tr>
+               <tr>
+                  <td>Document</td>
+                  <td>National Permit</td>
+                  <td>
+                     <div class="form-check"><input type="checkbox" id="gridCheck2"
+                           class="form-check-input m-1 checklistcls"></div>
+                  </td>
+                  <td><textarea class="form-control"></textarea></td>
+               </tr>
+               <tr class="bg-light">
+                  <td>Check By</td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Checked Date</td>
+                  <td><input type="date" class="form-control"></td>
+               </tr>
+               <tr class="bg-light">
+                  <td>Approved By</td>
+                  <td><input type="text" class="form-control"></td>
+                  <td>Approved</td>
+                  <td><input type="date" class="form-control"></td>
+               </tr>
+
+            </tbody>
+         </table>
+         <div class="float-end">
+            <button type="button" class="btn btn-primary rounded-pill btn-padding btn-sm mr-5">Ok
+            </button>
+            <button type="button" class="btn btn-primary rounded-pill btn-padding btn-sm" (click)="modal.dismiss('Cross click')">Cancel
+            </button>
+         </div>
+
+      </div>
+   </ng-template>
+   <!-- close popup confirm-->
+
+
+
+</div>
