@@ -1,4 +1,48 @@
-<div class="row">
+
+<div class="main-contianer">
+  <div class="display bg-dark-light mb-2">
+      <span class="title">
+          <a routerLink="/dashboard"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Dashboard"
+                  ></i> </a>
+      </span>
+      <span class="titlemed">Select New Working Location</span>
+      <span class="title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+                 ></i>
+          </a>
+      </span>
+  </div>
+
+
+
+
+<div class="row mt-5 d-flex justify-content-center  ">
+  <div class="col-lg-8">
+     <div class="row">
+        <label for="inputText" class="col-sm-3 col-lg-3 col-form-label"> <span class="float-end"> Branch Location
+        <span class="text-danger">*</span></span> </label>
+        <div class=" col-lg-5 ">
+          <ng-select  placeholder="Select" [searchable]="true" [clearable]="true" (change)="branchLocationDtls($event)">
+            <ng-option value="" selected>Select</ng-option>
+            <ng-option [value]="item" *ngFor="let item of branchMasterList"
+              >{{item.location | uppercase}}</ng-option>
+          </ng-select>
+      
+        </div>
+        <div class=" col-lg-2 ">
+          <button type="submit" class="btn btn-primary rounded-pill btn-sm btn-padding" (click)="changeBranchs()">Change</button>
+        </div>
+     </div>
+  </div>
+</div>
+</div>
+
+
+
+
+
+
+<!-- <div class="row">
   <div class="col-lg-3">
   </div>
   <div class="col-lg-6">
@@ -18,4 +62,4 @@
   </div>
   <div class="col-lg-3">
   </div>
-</div>
+</div> -->

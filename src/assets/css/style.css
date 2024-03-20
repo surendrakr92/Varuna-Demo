@@ -667,7 +667,7 @@ h6 {
 .sidebar {
   position: fixed;
   top: 24px;
-  left: -300px;
+  left: 0px;
   bottom: 0;
   width: 265px;
   z-index: 996;
@@ -700,7 +700,7 @@ h6 {
 
   #main,
   #footer {
-    margin-left: 0px;
+    margin-left: 265px;
   }
 }
 
@@ -714,11 +714,11 @@ h6 {
 
   .toggle-sidebar #main,
   .toggle-sidebar #footer {
-    margin-left: 265px;
+    margin-left: 0px;
   }
 
   .toggle-sidebar .sidebar {
-    left: 0px
+    left:-300px;
   }
 }
 
