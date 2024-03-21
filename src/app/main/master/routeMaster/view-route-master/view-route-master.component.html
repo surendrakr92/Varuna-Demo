@@ -18,7 +18,7 @@
        <div class="col-lg-12">
           <div class="row p-1 bgborder" >
             <div class="col-lg-4">
-               <label for="inputText" ><strong>System Generated Route Id:</strong><span> {{routeMasterDetailById?.routeId}}</span></label>
+               <label for="inputText" ><strong>Route ID:</strong><span> {{routeMasterDetailById?.rutcd}}</span></label>
             </div>
              <div class="col-lg-4">
                 <label for="inputText" ><strong>From City:</strong><span> {{routeMasterDetailById?.fromcity}}</span></label>
@@ -27,21 +27,20 @@
                 <label for="inputText" ><strong>To City:</strong><span> {{routeMasterDetailById?.tocity}}</span></label>
              </div>
              <div class="col-lg-4">
-                <label for="inputText" ><strong>Route Category Type:</strong><span> {{routeMasterDetailById?.routeCategoryType}}</span></label>
+               <label for="inputText" ><strong>Distance (In KM):</strong><span> {{routeMasterDetailById?.routeKm}}</span></label>
+            </div>
+             <div class="col-lg-4">
+                <label for="inputText" ><strong>Route Category Remarks:</strong><span> {{routeMasterDetailById?.routeCategoryType=='A'?'High Profit':routeMasterDetailById?.routeCategoryType=='B'?'General Profit':'No Profit'}}</span></label>
              </div>
              <div class="col-lg-4">
-                <label for="inputText" ><strong>Remarks:</strong><span> {{routeMasterDetailById?.routeCategoryType=='A'?'High Profit':routeMasterDetailById?.routeCategoryType=='B'?'General Profit':'No Profit'}}</span></label>
-             </div>
+               <label for="inputText" ><strong>Super Express Hours:</strong><span> {{routeMasterDetailById?.supperExpressHour}}</span></label>
+            </div>
              <div class="col-lg-4">
                 <label for="inputText" ><strong>Route Category :</strong><span> {{routeMasterDetailById?.routeCategory}}</span></label>
              </div>
              <div class="col-lg-4">
                 <label for="inputText" ><strong>Route Start Date:</strong><span> {{routeMasterDetailById?.routeStartDate | date}}</span></label>
-             </div>
-           
-             <div class="col-lg-4">
-                <label for="inputText" ><strong>Distance (In KM):</strong><span> {{routeMasterDetailById?.routeKm}}</span></label>
-             </div>
+             </div>                 
              <div class="col-lg-4">
                 <label for="inputText" ><strong>Transit Hour:</strong><span> {{routeMasterDetailById?.transitHour}}</span></label>
              </div>

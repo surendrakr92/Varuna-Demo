@@ -1,7 +1,23 @@
+<div class="main-contianer">
+  <div class="display bg-dark-light mb-4">
+      <span class="title">
+          <a routerLink="/dashboard"><i class="bi bi-arrow-return-left booticon" ngbTooltip="Back to Dashboard"
+                  ></i> </a>
+      </span>
+      <span class="titlemed">Help Desk</span>
+      <span class="title">
+          <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " ngbTooltip="Dashboad"
+                 ></i>
+          </a>
+      </span>
+  </div>
 
-          <table class="row-border hover " datatable [dtOptions]="dtOptions"
+        
+        
+        <div class="table-responsive "></div>
+        <table class="table table-report table-hover dataTable no-footer " datatable [dtOptions]="dtOptions"
           *ngIf="tableflag">
-            <thead>
+            <thead class="bg-secondary text-white">
               <tr>
                 <th scope="col">Sr.</th>
                 <th scope="col">Module</th>
@@ -11,8 +27,8 @@
               </tr>
             </thead>
             <tbody >
-              <tr *ngFor="let item of fackData; let i=index">
-                <th scope="row">{{i+1}}</th>
+              <tr class="zoom-in" *ngFor="let item of fackData; let i=index">
+                <td >{{i+1}}</td>
                 <td>{{item.name}}</td>
                 <td>{{item.username}}</td>
                 <td>{{item.email}}</td>
@@ -21,3 +37,4 @@
        
             </tbody>
           </table>
+</div>

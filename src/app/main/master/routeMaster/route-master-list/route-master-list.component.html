@@ -27,7 +27,7 @@
                   <label for="inputText" class="col-sm-12 col-lg-12 col-form-label"> <span>From City
                         </span> </label>
                   <div class=" col-lg-12 ">
-                     <ng-select placeholder="Select City Name" [searchable]="true" [clearable]="true"
+                     <ng-select placeholder="Select City Name" [searchable]="true" [clearable]="true" 
                      (change)="filterrest()"
                         formControlName="fromcity" [ngClass]="{'is-invalid':submitt && fs['fromcity'].errors}">
                         <ng-option value="" selected>Select</ng-option>
@@ -109,14 +109,17 @@
                   <div class="col-lg-3 ">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Route Code <span
                            class="text-danger">*</span></label>
-                     <div class=" col-sm-12 col-lg-12 ">
+                     <div class=" col-sm-12 col-lg-12 " style="display: none;">
                         <input type="text" class="form-control " formControlName="routeId" readonly>
+                     </div>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input type="text" class="form-control " formControlName="rutcd" readonly>
                      </div>
                   </div>
                   <div class="col-lg-3 ">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">From city <span class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <ng-select placeholder="City Select" formControlName="fromCityId" [searchable]="true"
+                        <ng-select placeholder="City Select" formControlName="fromCityId" [searchable]="true" [readonly]="true"
                            [clearable]="true" [ngClass]="{'is-invalid':submitted && f['fromCityId'].errors}">
                            <ng-option value="" selected>Select</ng-option>
                            <ng-option [disabled]='!item.isActive' [value]="item.cityId"
@@ -131,7 +134,7 @@
                   <div class="col-lg-3 ">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">To city<span class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <ng-select placeholder="City Select" formControlName="toCityId" [searchable]="true"
+                        <ng-select placeholder="City Select" formControlName="toCityId" [searchable]="true" [readonly]="true"
                            [clearable]="true" [ngClass]="{'is-invalid':submitted && f['toCityId'].errors}">
                            <ng-option value="" selected>Select</ng-option>
                            <ng-option [disabled]='!item.isActive' [value]="item.cityId"
@@ -144,18 +147,18 @@
                      </div>
                   </div>
                   <div class="col-lg-3">
-                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Route Category Type<span
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Route Category <span
                            class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <ng-select placeholder="Route Select" formControlName="routeCategoryTypeId" [searchable]="true"
+                        <ng-select placeholder="Route Select" formControlName="routeCategoryId" [searchable]="true"
                            (change)="routeChanges($event)" [clearable]="true"
-                           [ngClass]="{'is-invalid':submitted && f['routeCategoryTypeId'].errors}">
+                           [ngClass]="{'is-invalid':submitted && f['routeCategoryId'].errors}">
                            <ng-option value="" selected>Select</ng-option>
                            <ng-option [disabled]='!item.isActive' [value]="item.generalId"
                               *ngFor="let item of routeCategoryList">{{item.codeDesc}}</ng-option>
                         </ng-select>
-                        <div *ngIf="submitted && f['routeCategoryTypeId'].errors">
-                           <small class="text-danger" *ngIf="f['routeCategoryTypeId'].errors?.['required']">Please
+                        <div *ngIf="submitted && f['routeCategoryId'].errors">
+                           <small class="text-danger" *ngIf="f['routeCategoryId'].errors?.['required']">Please
                               select
                               route name
                            </small>
@@ -163,6 +166,13 @@
                      </div>
                   </div>
                   <div class="col-lg-3">
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Remarks </label>
+                     <div class=" col-sm-12 col-lg-12 ">
+                        <input class="form-control" [readOnly]="true" [value]="selectedRemakr" name="" id=""
+                            formControlName="routeCategoryRemarks">
+                     </div>
+                  </div>
+                <!-- <div class="col-lg-3">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Route Category <span
                            class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
@@ -179,7 +189,7 @@
                            </small>
                         </div>
                      </div>
-                  </div>
+                  </div>  -->
                   <div class="col-lg-3">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Contrl Branch Id <span
                            class="text-danger">*</span></label>
@@ -216,7 +226,7 @@
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Distance (In KM) <span
                            class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <input type="number" class="form-control" formControlName="routeKm"
+                        <input type="text" class="form-control" formControlName="routeKm" onkeypress="return event.charCode >= 48 && event.charCode <= 57"
                            [ngClass]="{'is-invalid':submitted && f['routeKm'].errors}" min="0"
                            (change)="setupValidation($event)">
                         <div *ngIf="submitted && f['routeKm'].errors">
@@ -244,8 +254,9 @@
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Express Hours <span
                            class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <input type="number" class="form-control" formControlName="expressHour" min="0" max="500"
-                           [ngClass]="{'is-invalid':submitted && f['expressHour'].errors}">
+                        <input type="text" class="form-control" formControlName="expressHour" min="0" max="500"  onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 58"
+                           [ngClass]="{'is-invalid':submitted && f['expressHour'].errors}"
+                            onkeypress="return event.charCode >= 48 && event.charCode <= 57">
                         <div *ngIf="submitted && f['expressHour'].errors">
                            <small class="text-danger" *ngIf="f['expressHour'].errors?.['required']">please express
                               hours
@@ -253,11 +264,12 @@
                         </div>
                      </div>
                   </div>
+        
                   <div class="col-lg-3">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Supper Express Hour <span
                            class="text-danger">*</span></label>
                      <div class=" col-sm-12 col-lg-12 ">
-                        <input type="number" class="form-control" formControlName="supperExpressHour" min="0" max="500"
+                        <input type="text" class="form-control" formControlName="supperExpressHour" min="0" max="500" onkeypress="return (event.charCode >= 48 && event.charCode <= 57) || event.charCode === 58"
                            [ngClass]="{'is-invalid':submitted && f['supperExpressHour'].errors}">
                         <div *ngIf="submitted && f['supperExpressHour'].errors">
                            <small class="text-danger" *ngIf="f['supperExpressHour'].errors?.['required']">please
@@ -266,7 +278,7 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-lg-3">
+                  <!-- <div class="col-lg-3">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Suggestion </label>
                      <div class=" col-sm-12 col-lg-12 ">
                         <input type="text" class="form-control" formControlName="suggestion" maxlength="10"
@@ -277,14 +289,8 @@
                            </small>
                         </div>
                      </div>
-                  </div>
-                  <div class="col-lg-3">
-                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Remarks </label>
-                     <div class=" col-sm-12 col-lg-12 ">
-                        <textarea class="form-control" [readOnly]="true" [value]="selectedRemakr" name="" id=""
-                           cols="30" rows="10" formControlName="routeCategoryRemarks"></textarea>
-                     </div>
-                  </div>
+                  </div> -->
+           
                   <div class="col-lg-3">
                      <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">is Two Point Diesel Allow
                      </label>
@@ -355,8 +361,8 @@
                         </div>
                      </div>
                   </div>
-                  <div class="col-lg-3">
-                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Updated Distance (wef .)(Date)
+                  <div class="col-lg-3" >
+                     <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Updated Distance (wef .)
                         <span *ngIf="valuchanges" class="text-danger">*</span> </label>
                      <div class=" col-sm-12 col-lg-12 ">
                         <input type="date" class="form-control" formControlName="wefDate"
@@ -411,11 +417,12 @@
          <thead class="bg-secondary text-white ">
             <tr>
                <th>Sr. No.</th>
+               <th>Route Code</th>
                <th>From City</th>
                <th>To City</th>
                <th>Route Start Date</th>
                <th>Route End Date</th>
-               <th>Control Branch</th>
+               <!-- <th>Control Branch</th> -->
                <th>Action</th>
             </tr>
          </thead>
@@ -423,11 +430,12 @@
             <tr class="zoom-in"
                *ngFor="let Item of routeMasterList| paginate: {id: 'paginationId', itemsPerPage: itemsPerPage, currentPage: p, totalItems:totalItems }; let i=index">
                <td>{{i+1}}</td>
+               <td>{{Item.rutcd}}</td>
                <td>{{Item.fromcity}}</td>
                <td>{{Item.tocity}}</td>
                <td>{{Item.routeStartDate | date}}</td>
                <td>{{Item.routeEndDate | date}}</td>
-               <td>{{Item.contrlBranch}}</td>
+               <!-- <td>{{Item.contrlBranch}}</td> -->
                <td class="display2">
                   <a routerLink="/master/route-master-list/view-route-master/{{Item.routeId}}" ngbTooltip="View"
                      placement="bottom" class="view"><i class="bi bi-eye-fill pr"></i></a>

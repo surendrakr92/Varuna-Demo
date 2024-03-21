@@ -79,7 +79,7 @@ export class CreateRouteRateMasterComponent implements OnInit {
       fromcity: textSearchFrom,
       tocity: textSearchCity
     };
-    this.masterService.getAllRouteMaster(data).subscribe((res: any) => {
+    this.masterService.getAllRouteMasterByCity(data).subscribe((res: any) => {
       if (cond == 'fromCityId') this.routeMasterList = res.data;
       else this.toRouteListData = res.data;
 
@@ -90,7 +90,7 @@ export class CreateRouteRateMasterComponent implements OnInit {
   setUpJsonStruct(value: any, index: any, cond: string) {
     debugger
     if (cond == 'fromCityId') {
-      this.formcityData = value?.fromcity
+      this.formcityData = value?.fromCity
       this.routeMasterDetails.rateEntities[index][cond] = value.fromCityId
       this.routeMasterDetails.rateEntities[index]['distance'] = value?.routeKm
     }

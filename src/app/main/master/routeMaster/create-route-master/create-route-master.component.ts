@@ -183,6 +183,11 @@ export class CreateRouteMasterComponent implements OnInit {
     this.Arrayindex[index]['expressHour'] = value.value;
     console.log(this.Arrayindex)
   }
+  ValueForsupperExpressHour(value: any, index: any) {
+    this.Arrayindex[index]['supperExpressHour'] = value.value;
+    console.log(this.Arrayindex)
+  }
+
   ValueForemptyAllowed(value: any, index: any) {
     this.Arrayindex[index]['isEmptyAllow'] = value.checked ? true : false;
     console.log(this.Arrayindex)

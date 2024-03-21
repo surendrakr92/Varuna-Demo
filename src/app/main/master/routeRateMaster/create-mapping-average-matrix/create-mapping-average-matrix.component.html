@@ -1,177 +1,117 @@
+
 <div class="main-contianer">
-   <span class="float-left title">
-      <a routerLink="/master/mapping-average-matrix"><i class="bi bi-arrow-return-left booticon"></i> </a>
-   </span>
-   <span class="float-end title">
-      <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
-   </span>
-   <h5 class="card-title"> Create Mapping Average Matrix
-   </h5>
-
-
-   <div class="exterior">
-      <div class="interior">
-         <div class="row borderClass">
-            <div class="col-lg-3 pb-3 left col1  colorbg">
-               <div class="row ">
-                  <div class="col-lg-6">
-                     <div class="form-group ">
-                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Matrix ID<span
-                              class="text-danger">*</span></label>
-                        <div class=" col-sm-12 col-lg-12 has-validation">
-                           <input type="text" class="form-control">
-                        </div>
+    <span class="float-left title">
+       <a routerLink="/master/mapping-average-matrix"><i class="bi bi-arrow-return-left booticon"></i> </a>
+    </span>
+    <span class="float-end title">
+       <a routerLink="/dashboard"> <i class="bi bi-house-gear booticon " style="font-size: 20px;"></i> </a>
+    </span>
+    <h5 class="card-title"> Create Mapping Average Matrix
+    </h5>
+ 
+    <div class="display mb-2" >
+       <span class="dis">
+          <span class="disflex">Number of Cases <input type="number" class="form-control" ></span>
+       </span>
+       <span class="dis">
+          <button type="button" class="btn btn-warning"  ><i
+                class="bi bi-plus-lg"></i> Add</button>
+       </span>
+    </div>
+<form [formGroup]="formMaster">
+    <div class="table-responsive">
+       <table class="table table-bordered ">
+          <thead class="bg-secondary text-white">
+             <tr>
+                <th>Matrix ID</th>
+                <th>Group Name</th>
+                <th>Start KM</th>
+                <th>End KM</th>
+                <th>Start Weight</th>
+                <th>End Weight</th>
+                <th>Date Validity From</th>
+                <th>Date Validity To</th>
+                <th>Loaded Avg. KM/L</th>
+           
+                <th>Delete</th>
+ 
+             </tr>
+          </thead>
+          <tbody>
+             <tr >
+                <td>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                      <input type="text" class="form-control" readonly >
+                   </div>
+                </td>
+         
+    
+                <td>
+                   <div class=" col-sm-12 col-lg-12 has-validation">
+                     <ng-select class="pb-2 " placeholder="Select Group Name" appendTo="body" [searchable]="true"
+                      formControlName="groupId" >
+                         <ng-option value="" selected>Select</ng-option>
+                         <ng-option [disabled]='!item.isActive' [value]="item.groupId"
+                            *ngFor="let item of groupList">{{item.groupName}}</ng-option>
+                      </ng-select> 
+                      
+                   </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" min="0" class="form-control" formControlName="startKM" >
                      </div>
-                  </div>
-                  <div class="col-lg-6 " style="padding-left: 0px;">
-                     <div class="form-group ">
-                        <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Group Name<span
-                              class="text-danger">*</span></label>
-                        <div class=" col-sm-12 col-lg-12 has-validation">
-                           <ng-select class="pb-2 " placeholder="Select Group Name" appendTo="body" [searchable]="true">
-                              <ng-option value="" selected>Select</ng-option>
-                              <ng-option [disabled]='!item.isActive' [value]="item.groupId"
-                                 *ngFor="let item of groupList"><span
-                                    [title]="item.groupName">{{item.groupName}}</span></ng-option>
-                           </ng-select>
-                        </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" min="0" class="form-control" formControlName="endKM" >
                      </div>
-                  </div>
-               </div>
-            </div>
-            <div class="col-lg-9 pb-3  colorbg2">
-               <form [formGroup]="formMaster">
-                  <div class="row" formArrayName="skills">
-                     <div class="NewDisplay">
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Start KM<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="text" class="form-control" formControlName="startKM">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">End KM<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="text" class="form-control" formControlName="endKM">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Start Weight<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="text" class="form-control" formControlName="startWeight">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">End Weight<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="text" class="form-control" formControlName="endWeight">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Date Validity From<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="date" class="form-control" formControlName="validityFrom">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Date Validity To<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="date" class="form-control" formControlName="validityTo">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1">
-                           <div class="form-group ">
-                              <label for="inputText" class="col-sm-12 col-lg-12 col-form-label">Loaded Avg. KM/L<span
-                                    class="text-danger">*</span></label>
-                              <div class=" col-sm-12 col-lg-12 has-validation">
-                                 <input type="text" class="form-control" formControlName="loadedAvgKM">
-                                 <div *ngIf="submitted && f['area'].errors">
-                                    <small class="text-danger" *ngIf="f['area'].errors?.['required']">Please enter
-                                       area</small>
-
-                                    <small class="text-danger" *ngIf="f['area'].errors?.serverError">{{
-                                       f['area'].errors.serverError}}</small>
-                                 </div>
-                              </div>
-                           </div>
-                        </div>
-                        <div class="col-lg-1 mt-4 p-0">
-                           <i class="bi bi-plus-circle-fill " (click)="addSkills()"> </i>
-                        </div>
-
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" min="0" class="form-control" formControlName="startWeight" >
                      </div>
-                  </div>
-               </form>
-
-            </div>
-
-         </div>
-      </div>
-   </div>
-   <div class="row pb-2 mt-3">
-      <div class="col-lg-12">
-         <div class="text-center">
-            <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding">Submit</button>
-         </div>
-      </div>
-
-
-
-   </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" min="0" class="form-control" formControlName="endWeight" >
+                     </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="date" class="form-control" formControlName="validityFrom" >
+                     </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="date" class="form-control" formControlName="validityTo" >
+                     </div>
+                </td>
+                <td>
+                    <div class=" col-sm-12 col-lg-12 has-validation">
+                        <input type="number" min="0" class="form-control" formControlName="loadedAvgKM" >
+                     </div>
+                </td>
+         
+          
+         
+             
+          
+         
+                <td ><a href="javascript:void(0)" class="delete"><i style="font-size: 14px;" class="bi bi-x-circle"></i></a></td>
+             </tr>
+          </tbody>
+       </table>
+    </div>
+    <div class="row pb-2 mt-3">
+       <div class="col-lg-12">
+          <div class="text-center">
+             <button type="button" class="btn btn-primary rounded-pill btn-sm btn-padding"
+                >Submit</button>
+          </div>
+       </div>
+ 
+    </div>
+</form>
+ 
+ </div>

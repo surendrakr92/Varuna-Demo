@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AbstractControl, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { CountryMasterService } from 'src/app/services/master-service/country-master.service';
 
 @Component({
@@ -10,9 +10,8 @@ import { CountryMasterService } from 'src/app/services/master-service/country-ma
 export class CreateMappingAverageMatrixComponent implements OnInit {
 groupList:any
 formMaster!:FormGroup
-submitted=false
-test=[]
-  constructor(private MasterService:CountryMasterService,private formbuilder:FormBuilder,){}
+
+  constructor(private MasterService:CountryMasterService,private fb:FormBuilder,){}
   ngOnInit(): void {
     this.APIbinding()
     this.formControl()
@@ -20,34 +19,18 @@ test=[]
 
 
 formControl(){
-this.formMaster= this.formbuilder.group({
-  startKM: new FormControl(null, Validators.required),
-  endKM :new  FormControl(null, Validators.required),
-  startWeight: new FormControl(null, Validators.required),
-  endWeight: new FormControl(null,Validators.required),
-  validityFrom: new FormControl(null,Validators.required),
-  validityTo: new FormControl(null,Validators.required),
-  loadedAvgKM: new FormControl(null,Validators.required),
-
-
-  skills: new FormArray([])
+this.formMaster= this.fb.group({
+  groupId:[""],
+  startKM:[""],
+  endKM:[""],
+  startWeight:[""],
+  endWeight:[""],
+  validityFrom:[""],
+  validityTo:[""],
+  loadedAvgKM:[""],
 })
 }
 
-
-get f(){
-  return this.formMaster.controls;
-}
-
-addSkills() {
-  const control = new FormControl(null, Validators.required);
-  (<FormArray>this.formMaster.get('skills')).push(control);
-}
-
-
-removeSkill(i:number) {
-  // this.skills.removeAt(i);
-}
 
 
   APIbinding(){

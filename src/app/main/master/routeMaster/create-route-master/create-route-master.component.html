@@ -37,12 +37,11 @@
          class="text-danger">*</span></th>
       <th>      To City <span
          class="text-danger">*</span></th>
-      <th>    Route Category Type <span
+      <th>    Route Category  <span
          class="text-danger">*</span></th>
-      <th>   Remarks<span
-         class="text-danger">*</span></th>
-      <th>Route Category <span
-         class="text-danger">*</span></th>
+      <th>   Remarks</th>
+      <!-- <th>Route Category <span
+         class="text-danger">*</span></th> -->
       <th> Route Start Date <span
          class="text-danger">*</span></th>
       <th>    Distance (In KM) <span
@@ -50,6 +49,7 @@
       <th>  Transit Hour <span
          class="text-danger">*</span></th>
       <th>Express Hours </th>
+      <th>Super Express Hours </th>
       <th> Empty Allow </th>
       <th> Action </th>
    </tr>
@@ -80,7 +80,7 @@
          </div>
       </td>
       <td>       <div class=" col-sm-12 col-lg-12 ">
-         <ng-select placeholder="Route Category type" [searchable]="true" [clearable]="true" appendTo="body"
+         <ng-select placeholder="Route Category " [searchable]="true" [clearable]="true" appendTo="body"
             style="width: 130px;" (change)="ValueForRoute($event, i)">
             <ng-option value="" selected>Select</ng-option>
             <ng-option [disabled]='!item.isActive' [value]="item.generalId"
@@ -96,7 +96,7 @@
              
          </div>
       </td>
-      <td>
+      <!-- <td>
          <div class=" col-sm-12 col-lg-12 ">
             <ng-select placeholder="Route Select" [searchable]="true" [clearable]="true" appendTo="body"
                style="width: 160px;" (change)="ValueForRoute2($event, i)">
@@ -105,7 +105,7 @@
                   *ngFor="let item of routeCategoryList2">{{item.codeDesc}}</ng-option>
             </ng-select>
          </div>
-      </td>
+      </td> -->
       <td>
          <div class=" col-sm-12 col-lg-12 ">
             <input type="date" class="form-control" #startDate (change)="ValueForStartDate(startDate, i)"
@@ -126,8 +126,14 @@
       </td>
       <td>
          <div class=" col-sm-12 col-lg-12 ">
-            <input type="text" class="form-control" min="1" max="24" #expressHour style="width: 120px;"
+            <input type="text" class="form-control" min="1" max="24" #expressHour style="width: 120px;" 
                (change)="ValueForexpressHours(expressHour, i)">
+         </div>
+      </td>
+      <td>
+         <div class=" col-sm-12 col-lg-12 ">
+            <input type="text" class="form-control" min="1" max="24" #SexpressHour style="width: 120px;"
+               (change)="ValueForsupperExpressHour(SexpressHour, i)">
          </div>
       </td>
       <td>

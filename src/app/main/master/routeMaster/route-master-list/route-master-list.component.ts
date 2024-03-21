@@ -71,7 +71,7 @@ this.topFrom()
     this.formMaster = this.formbuider.group({
       fromCityId: ['', Validators.required],
       toCityId: ['', Validators.required],
-      routeCategoryId: ['', Validators.required],
+     routeCategoryId: ['', Validators.required],
       routeCategoryTypeId: ['', Validators.required],
       routeKm: ['', Validators.required],
       routeStartDate: ['', Validators.required],//
@@ -80,7 +80,7 @@ this.topFrom()
       transitHour: [0],
       expressHour: [0],
       routeCategoryRemarks: [""],
-      supperExpressHour: [0],
+      supperExpressHour: [""],
       isTwoPointDieselAllow: [false],
       isMultiPointDieselAllow: [false],
       isEmptyAllow: [false],
@@ -90,6 +90,8 @@ this.topFrom()
       toDate: [''],
       wefDate: [''],
       routeId: [''],
+      rutcd: [''],
+    
 
     })
   }
@@ -127,6 +129,7 @@ FilterSearch(){
   };
   this.masterservice.getAllRouteMaster(data).subscribe((res: any) => {
     this.routeMasterList = res.data;
+    console.log(this.routeMasterList)
     this.totalItems = res.retrieved; // Assign the total count from API 
     this.activefilter=true
     this.itemsPerPage=res.retrieved

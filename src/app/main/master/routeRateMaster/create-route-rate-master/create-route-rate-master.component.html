@@ -62,13 +62,13 @@
                <td>
                   <div class=" col-sm-12 col-lg-12 has-validation">
                      <ng-select class="pb-2 " placeholder="Search And Select City" appendTo="body" [searchable]="true"
-                        [clearable]="true" style="width: 12rem;" [(ngModel)]="item.fromcity??item.fromCityName"
+                        [clearable]="true" style="width: 12rem;" [(ngModel)]="item.fromCity??item.fromCityName"
                         (change)="setUpJsonStruct($event,i,'fromCityId')"
                         (keyup)="setUpJsonStructK($event,i,'fromCityId')"
                         [readonly]="this.pathcedDetails">
                         <ng-option value="" selected>Select</ng-option>
-                        <ng-option [disabled]='!item.isActive' [value]="item"
-                           *ngFor="let item of routeMasterList">{{item.fromcity}}</ng-option>
+                        <ng-option  [value]="item"
+                           *ngFor="let item of routeMasterList">{{item.fromCity}}</ng-option>
                      </ng-select>
                   </div>
                </td>
@@ -79,8 +79,9 @@
                         (change)="setUpJsonStruct($event,i,'toCityId')" (keyup)="setUpJsonStructK($event,i,'toCityId')"
                         [readonly]="this.pathcedDetails">
                         <ng-option value="" selected>Select</ng-option>
-                        <ng-option [disabled]='!item.isActive' [value]="item"
-                           *ngFor="let item of toRouteListData">{{item.tocity}}</ng-option></ng-select>
+                        <ng-option [value]="item"
+                           *ngFor="let item of toRouteListData">{{item.tocity
+                           }}</ng-option></ng-select>
                   </div>
                </td>
                <td>

@@ -1038,6 +1038,10 @@ export class CountryMasterService {
       body: data
     });
   }
+  getAllRouteMasterByCity(data: any) {
+    let url = environment.baseWebApiUrl + 'varuna/v1/routemaster/getroutefilterbycity'
+    return this.http.post(url + `?fromcity=${data.fromcity}&tocity=${data.tocity}`,{});
+  }
 
   //---------------------vehicle master---------------------- 18 aug 2023
   getAllVehicleMaster() {
