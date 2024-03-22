@@ -48,39 +48,72 @@
         </div>
     </form>
     <div class="row">
-        <div class="pb-1">
-            <button type="button" class="btn btn-success m-1" style="float: right;"
+        <div class="pb-1 display3">
+            <button type="button" class="btn btn-success m-1" 
                 routerLink="/master/mapping-average-matrix/create-mapping-average-matrix/{{this.formMaster.controls['groupId'].value}}"><i
                     class="bi bi-plus-lg "></i> Create</button>
+                    <button class="btn btn-secondary text-white" placement="bottom" (click)="downloadExcel(MyTable)"
+                    ngbTooltip="Download List" type="button" >
+                    <i class="bi bi-download"></i>
+                 </button>
         </div>
     </div>
 
-    <table class="table table-report table-hover" >
+    <table class="table  table-borderless table-report"  #MyTable
+    id="MyTable" >
         <thead class="bg-secondary text-white">
             <tr>
-                <th>Matrix ID</th>
-                <th>Group Name</th>
-                <th>Start KM</th>
-                <th>End KM</th>
-                <th>Start Weight</th>
-                <th>End Weight</th>
-                <th>Date Validity From</th>
-                <th>Date Validity To</th>
-                <th>Loaded Avg. KM/L</th>
+                <th class="text-bg-success">Matrix ID</th>
+                <th class="text-bg-success">Group Name</th>
+                <th class="text-bg-primary">Start KM</th>
+                <th class="text-bg-primary">End KM</th>
+                <th class="text-bg-warning">Start Weight</th>
+                <th class="text-bg-warning">End Weight</th>
+                <th class="text-bg-warning">Date Validity From</th>
+                <th class="text-bg-warning">Date Validity To</th>
+                <th class="text-bg-warning">Loaded Avg. KM/L</th>
+                <th>Status</th>
                 <th>Action</th>
             </tr>
         </thead>
       <tbody>
-<tr class="zoom-in">
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
-    <td>wda</td>
+<tr class="zoom-in"  *ngFor="let item of AllmatrixList;">
+    <td class="text-success">{{item.matrixId}}</td>
+    <td class="text-success">{{item.groupName}}</td>
+    <td colspan="2">
+<table class="table table-borderless">
+    <tbody>
+    <tr *ngFor="let item of item.averageRange">
+        <td class="text-primary">{{item.startKM}}</td>
+        <td class="text-primary">{{item.endKM}}</td>
+    </tr>
+  
+</tbody>
+</table>
+    </td>
+    <td colspan="5">
+        <table class="table table-borderless">
+            <tbody >
+                <tr  *ngFor="let item of item.averageWeight" >
+                <td class="text-warning" >{{item.startWeight}}</td>
+                <td class="text-warning" >{{item.endWeight}}</td>
+                <td class="text-warning" >{{item.validityFrom | date}}</td>
+                <td class="text-warning" >{{item.validityTo | date}}</td>
+                <td class="text-warning">{{item.loadedAvgKM}}</td>
+            </tr>
+           
+        </tbody>
+        </table>
+
+    </td>
+
+  <td>
+    <span class="{{item.isActive ?'Successbg':' warningbg'}}">
+        {{item.isActive?'Active':'Inactive'}}</span>
+</td>
+   
+
+  
     <td class="display2">
      
         <a  class="edit" ngbTooltip="Edit" placement="bottom" ><i

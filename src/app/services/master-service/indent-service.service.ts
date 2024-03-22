@@ -252,4 +252,8 @@ getmfdatePRQ(data:any){
   return this.http.post(url, data);
 }
 
+getopentripbyvehicleno(data:any){
+  let url = environment.baseWebApiUrl + "varuna/v1/thc/getopentripbyvehicleno";
+  return this.http.post(url, data);
+}
 }

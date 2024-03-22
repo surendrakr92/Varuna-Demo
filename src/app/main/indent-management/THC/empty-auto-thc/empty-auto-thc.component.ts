@@ -3,6 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { event } from 'jquery';
 import { CountryMasterService } from 'src/app/services/master-service/country-master.service';
 import { CustomerMasterServiceService } from 'src/app/services/master-service/customer-master-service.service';
+import { IndentServiceService } from 'src/app/services/master-service/indent-service.service';
 
 @Component({
   selector: 'app-empty-auto-thc',
@@ -16,7 +17,6 @@ formMaster2!:FormGroup
 submitt= false
 vehicleList:any
 submitted= false
-showList= false
 showIcon=true
 vendorList:any
 cityList:any
@@ -27,19 +27,20 @@ totalItems: number = 5; // Initialize total items
 searchD: any = ''
 itemsPerPage: number = 5;
 p: number = 1;
+emptyAutoList:any
 
-  constructor(private fb:FormBuilder, private masterService2:CustomerMasterServiceService,
+  constructor(private fb:FormBuilder, private masterService2:CustomerMasterServiceService, private indentService:IndentServiceService,
     private formbuilder:FormBuilder, private MasterService:CountryMasterService,){}
   ngOnInit(): void {
     this.getvehicle()
     this.dropDownList()
     this.getfulldetail()
- 
   }
 getvehicle(){
   this.formMaster= this.fb.group({
     vehicleNo:['',Validators.required],
   })
+
 }
 
 get fs(){
@@ -47,13 +48,15 @@ return this.formMaster.controls
 }
 OnSearch(){
   this.submitt= true
-  this.showboxList= false
   if(this.formMaster.invalid){
     return
-    }else{
-      this.showboxList= true
     }
-    console.log(this.showboxList)
+    this.indentService.getopentripbyvehicleno(this.formMaster.value).subscribe((res:any)=>{
+this.emptyAutoList= res.data
+console.log(this.emptyAutoList)
+this.formMaster2.controls['vehicleNo'].setValue(this.emptyAutoList[0].vehicleNo);
+    })
+  
 }
 
 getfulldetail(){
@@ -77,6 +80,7 @@ getfulldetail(){
  
     
   })
+
 }
 
 get f(){
@@ -95,10 +99,11 @@ Submit(){
 dropDownList(){
   this.MasterService.getAllVehicleMaster().subscribe((res:any)=>{
 this.vehicleList= res.data
+console.log(this.vehicleList)
   })
   this.MasterService.getAllVendorMaster().subscribe((res:any)=>{
 this.vendorList= res.data
-console.log(this.vendorList)
+
   })
   this.MasterService.getAllCityMasterList().subscribe((res:any)=>{
     this.cityList= res.data
@@ -120,8 +125,9 @@ console.log(this.vendorList)
 
 }
 formMng(event:any){
-  this.formMaster2.controls['vehicleNo'].setValue(event.vehicleNo);
-
+  
+  // this.formMaster2.controls['vehicleNo'].setValue(event.vehicleNo);
+  // console.log(event)
 
 // if(event){
 
